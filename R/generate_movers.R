@@ -37,7 +37,9 @@ generate_movers <-
                           function(df) {
                             map2_dfc(.x = cross_tbl$all_funs,
                                      .y = cross_tbl$slide_periods,
-                                     ~slider::slide_dbl(.x = df[[var]], .f = .x, .before = .y,
+                                     ~slider::slide_dbl(.x = df[[var]],
+                                                        .f = .x, .before = .y,
+                                                        .after = -1,
                                                         .complete = complete)) %>%
                               rename_with(., ~paste("moving", attr(cross_tbl$all_funs, "name"), cross_tbl$slide_periods, sep = "_"))
                           }
