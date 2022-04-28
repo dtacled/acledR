@@ -65,9 +65,9 @@ generate_counts <-
 
     data %>%
       filter(event_type %in% filter_types) %>%
-      filter(between(event_date, as.Date(start_date), as.Date(end_date))) %>%
       mutate(event_date = ymd(.data[[time_id]]),
              event_time = floor_date(event_date, time_target, week_start = getOption('lubridate.week.start', 6))) %>%
+      filter(between(event_time, as.Date(start1), as.Date(end1))) %>%
 
       group_by(.data[[unit_id]], event_time) %>%
 
