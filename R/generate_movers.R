@@ -29,8 +29,6 @@ generate_movers <-
     data %>%
       group_by(.data[[unit_id]]) %>%
       arrange(.data[[unit_id]], .data[[time_id]]) %>%
-      # mutate(var_lag = case_when(isFALSE(include_present) ~ lag(.data[[var]], 1),
-      #                        TRUE ~ as.numeric(.data[[var]]))) %>%
 
       nest() %>%
       mutate(moving = map(data,
