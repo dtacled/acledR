@@ -1,0 +1,20 @@
+Package: acledR
+Type: Package
+Title: Manipulate ACLED Data
+Version: 0.1.0
+Author: Trey Billing
+Maintainer: Trey Billing <t.billing@acleddata.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    lubridate,
+    purrr,
+    slider,
+    tidyr
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
