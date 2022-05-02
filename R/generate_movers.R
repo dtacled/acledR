@@ -1,4 +1,4 @@
-#' Generate event counts from ACLED data
+#' Generate moving statistics
 #'
 #' @param data ACLED data.
 #' @param unit_id Unit variable.
