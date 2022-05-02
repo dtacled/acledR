@@ -1,7 +1,7 @@
 #' Generate event counts from ACLED data
 #'
 #' @param data ACLED data
-#' @param event_type Event types to include
+#' @param event_type Event types to include. If more than one event type is included, event counts per type and the total number of events is returned.
 #' @param unit_id Unit variable
 #' @param time_id Temporal variable
 #' @param time_target Target temporal unit
@@ -14,7 +14,8 @@
 #'
 #' @export
 generate_counts <-
-  function(data, event_type = NULL, unit_id, time_id, time_target,
+  function(data, event_type = NULL,
+           unit_id, time_id, time_target,
            start_date = NULL, end_date = NULL,
            add_unit_ids = NULL) {
 
@@ -44,6 +45,7 @@ generate_counts <-
 
 
 
+
     all_dates <- seq(floor_date(as.Date(start_date), time_target,
                                 week_start = getOption('lubridate.week.start', 6)),
                      floor_date(as.Date(end_date), time_target,
@@ -58,18 +60,23 @@ generate_counts <-
       filter_types <- event_type
     }
 
-    if(!is.null(add_unit_ids))
+
+
+    if(is.null(add_unit_ids)){
       add_unit_ids <- unique(data[[unit_id]])
-    else(add_unit_ids <- c(unique(data[[unit_id]], add_unit_ids)))
+    } else {
+      add_unit_ids <- c(unique(data[[unit_id]]), add_unit_ids)
+      }
 
 
-    data %>%
+    data <-
+      data %>%
       filter(event_type %in% filter_types) %>%
       mutate(event_date = ymd(.data[[time_id]]),
              event_time = floor_date(event_date, time_target, week_start = getOption('lubridate.week.start', 6))) %>%
-      filter(between(event_time, as.Date(start1), as.Date(end1))) %>%
+      filter(between(event_time, as.Date(start_date), as.Date(end_date))) %>%
 
-      group_by(.data[[unit_id]], event_time) %>%
+      group_by(.data[[unit_id]], event_time, event_type) %>%
 
       summarise(count = n()) %>%
       ungroup() %>%
@@ -79,7 +86,19 @@ generate_counts <-
       mutate(count = case_when(is.na(count) ~ as.numeric(0),
                                TRUE ~ as.numeric(count))) %>%
       rename(!!paste0("event_", time_target) := event_time) %>%
+      pivot_wider(., values_from = count, names_from = event_type) %>%
+      mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+      rowwise() %>%
+      mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+      janitor::clean_names() %>%
+      ungroup() %>%
       suppressMessages()
+
+
+    if(length(filter_types) == 1)
+      data <- data %>% select(-total_events)
+
+    return(data)
 
 
 
