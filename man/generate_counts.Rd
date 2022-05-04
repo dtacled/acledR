@@ -18,7 +18,7 @@ generate_counts(
 \arguments{
 \item{data}{ACLED data}
 
-\item{event_type}{Event types to include}
+\item{event_type}{Event types to include. If more than one event type is included, event counts per type and the total number of events is returned.}
 
 \item{unit_id}{Unit variable}
 

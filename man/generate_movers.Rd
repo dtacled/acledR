@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_movers.R
 \name{generate_movers}
 \alias{generate_movers}
-\title{Generate event counts from ACLED data}
+\title{Generate moving statistics}
 \usage{
 generate_movers(
   data,
@@ -32,5 +32,5 @@ generate_movers(
 Returns a tibble grouped by unit_id.
 }
 \description{
-Generate event counts from ACLED data
+Generate moving statistics
 }
