@@ -7,7 +7,10 @@
 #' @param slide_periods How many periods in the past to summarize over. Vector of one or more integers. Inf includes all previous periods.
 #' @param na.rm  Whether to include NAs in the calculations.
 #' @return Returns a tibble grouped by unit_id.
-#'
+#' @import dplyr
+#' @import tidyr
+#' @import slider
+#' @import purrr
 #'
 #'
 #' @export
