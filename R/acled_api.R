@@ -92,7 +92,7 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
 
   response <- GET(url)
   if(response[["status_code"]] != 200) {
-    stop(paste0("API request unsuccsefful with status code ", response[["status_code"]], "."))
+    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], "."))
     }
 
   out <- content(response)
