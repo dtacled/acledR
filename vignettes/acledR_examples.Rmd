@@ -1,20 +1,19 @@
 ---
-title: "acledR Examples"
-# author: "Vignette Author"
-date: "`r Sys.Date()`"
+title: "acledR_examples"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{acledR_examples}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
+
 
 
 
