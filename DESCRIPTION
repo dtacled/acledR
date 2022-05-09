@@ -12,6 +12,7 @@ LazyData: true
 Imports: 
     dplyr,
     lubridate,
+    magrittr,
     purrr,
     slider,
     tidyr
