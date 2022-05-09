@@ -22,11 +22,13 @@ generate_movers(
 
 \item{time_id}{Temporal variable.}
 
-\item{slide_funs}{Requested moving statistics. Character vector with options including mean, median, min, and max.}
+\item{slide_funs}{Requested moving statistics. Character vector with options including mean, median, sd, min, and max.}
 
 \item{slide_periods}{How many periods in the past to summarize over. Vector of one or more integers. Inf includes all previous periods.}
 
 \item{na.rm}{Whether to include NAs in the calculations.}
+
+\item{complete}{Whether to requre at least the requested time horizon to lapse prior to calculating moving statistics. For example, if slide_periods = 4, this would return NAs for the first 4 periods in the data and only begin calculating the moving statistic in the fifth time period. If FALSE, moving statistics for all available time periods are calculated, even if the requested time horizon has not elapsed.}
 }
 \value{
 Returns a tibble grouped by unit_id.

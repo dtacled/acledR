@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning=F, message=F
 )
 ```
 
@@ -87,7 +88,7 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
-```{r, cache = F}
+```{r}
 library(acledR)
 df_br <- acled_api(email = Sys.getenv("email_address"),
                 key = Sys.getenv("acled_key"),
@@ -115,7 +116,7 @@ df_sa <- acled_api(email = Sys.getenv("email_address"),
                 key = Sys.getenv("acled_key"),
                 regions = c("South America"),
                 start_date = "2022-01-01",
-                end_date = "2022-05-09",
+                end_date = "2022-04-30",
                 monadic = F)
 ```
 
@@ -175,6 +176,29 @@ df_sa_agg %>%
 ```
 
 
+
+
+
+
+## `generate_movers()`
+
+The `generate_movers()` function calculations moving statistics over some time period. The required parameters are:
+
+
+```{r, eval = F}
+generate_movers(
+  data,
+  var,
+  unit_id,
+  time_id,
+  slide_funs,
+  slide_periods
+)
+
+```
+
+In this example, I ask for the moving mean and standard deviation of `total_events` looking back 4 weeks and 8 weeks. 
+
 ```{r}
 df_sa_agg <- 
   df_sa_agg %>% 
@@ -187,41 +211,18 @@ df_sa_agg <-
 ```
 
 
-```{r, fig.width=6, fig.height=6}
-library(ggplot2)
+The new moving variables are then appended to the existing data with names indicating that it's a moving stat, the function name, and the number of periods. Note that the first 4 weeks for the 4 week moving stats and first 8 weeks for the 8 week moving stats are missing because there are not enough weeks to fill the requested time horizon yet. This is the default behavior but can be turned off if you set `complete=F`. In that case, the moving stats will start to fill in the second period, even though has not been enough lead time given the requested window. In this example, `moving_mean_4` for in Argentina would be 24 (the "average" of the previous periods, but only one prior period) and the third period would be (24 + 21) / 2 = 22.5. 
+
+```{r}
 df_sa_agg %>% 
-  dplyr::filter(country %in% c("Brazil", "Colombia")) %>% 
-  ggplot(data = .) +
-  geom_line(aes(x = event_week, y = total_events, 
-                color = country,
-                lty = "Total events"), size = 0.75) +
-  geom_line(aes(x = event_week, y = moving_mean_4, 
-                color = country,
-                lty = "4 week avg"), size = 0.75) +
-  scale_color_manual(values = c("darkorange", "steelblue4")) +
-  scale_linetype_manual(values = c(3, 1)) +
-  theme_light()
-```
-
-
-
-## `generate_movers()`
-
-The `generate_movers()` function calculations moving statistics over some time period. 
-
-
-```{r, eval = F}
-generate_movers(
-  data,
-  var,
-  unit_id,
-  time_id,
-  slide_funs,
-  slide_periods,
-  na.rm = T,
-  complete = T
-)
+  dplyr::select(country, event_week, total_events:moving_sd_8) %>% 
+  head(10) %>% 
+  kableExtra::kable()
 
 ```
+
+
+
+## `calculate_actors_index()`
 
 

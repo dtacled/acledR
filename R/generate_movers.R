@@ -10,9 +10,9 @@
 #' @return Returns a tibble grouped by unit_id.
 #' @import dplyr
 #' @import tidyr
-#' @import slider
-#' @import purrr
-#' @import rlang
+#' @importFrom slider slide_dbl
+#' @importFrom purrr map map2_dfc
+#' @importFrom rlang .data
 #' @importFrom stats sd median
 #'
 #' @export
@@ -41,7 +41,7 @@ generate_movers <-
                           function(df) {
                             map2_dfc(.x = cross_tbl$all_funs,
                                      .y = cross_tbl$slide_periods,
-                                     ~slider::slide_dbl(.x = df[[var]],
+                                     ~slide_dbl(.x = df[[var]],
                                                         .f = .x, .before = .y,
                                                         .after = -1,
                                                         .complete = complete)) %>%
