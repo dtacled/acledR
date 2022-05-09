@@ -8,12 +8,12 @@
 #' @param start_date Earliest date to include
 #' @param end_date  Latest date to include
 #' @param add_unit_ids Option to add in units with no events at certain time periods
-#' @return Returns a tibble grouped by unit_id
-#'
 #' @import dplyr
 #' @import tidyr
 #' @import lubridate
 #' @import janitor
+#' @import rlang
+#' @return Returns a tibble grouped by unit_id
 #'
 #'
 #' @export

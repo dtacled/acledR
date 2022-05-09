@@ -3,15 +3,17 @@
 #' @param data ACLED data.
 #' @param unit_id Unit variable.
 #' @param time_id Temporal variable.
-#' @param slide_funs Requested moving statistics. Character vector with options including mean, median, min, and max.
+#' @param slide_funs Requested moving statistics. Character vector with options including mean, median, sd, min, and max.
 #' @param slide_periods How many periods in the past to summarize over. Vector of one or more integers. Inf includes all previous periods.
 #' @param na.rm  Whether to include NAs in the calculations.
+#' @param complete Whether to requre at least the requested time horizon to lapse prior to calculating moving statistics. For example, if slide_periods = 4, this would return NAs for the first 4 periods in the data and only begin calculating the moving statistic in the fifth time period. If FALSE, moving statistics for all available time periods are calculated, even if the requested time horizon has not elapsed.
 #' @return Returns a tibble grouped by unit_id.
 #' @import dplyr
 #' @import tidyr
 #' @import slider
 #' @import purrr
-#'
+#' @import rlang
+#' @importFrom stats sd median
 #'
 #' @export
 
@@ -21,6 +23,7 @@ generate_movers <-
 
     all_funs <- list(mean = function(x) {mean(x, na.rm = na.rm)},
                      sd = function(x) {sd(x, na.rm = na.rm)},
+                     median = function(x) {sd(x, na.rm = na.rm)},
                      min = function(x) {min(x, na.rm = na.rm)},
                      max = function(x) {max(x, na.rm = na.rm)})
 

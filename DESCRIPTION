@@ -15,7 +15,11 @@ Imports:
     magrittr,
     purrr,
     slider,
-    tidyr
+    tidyr,
+    httr,
+    janitor,
+    rlang,
+    stats
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)

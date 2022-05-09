@@ -1,0 +1,228 @@
+---
+title: "acledR Examples"
+# author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+## Installation (for private repo)
+
+Since the package repo is currently private, you need to tell R and Github that you're a collaborator. To do so, you first create a Github personal access token (PAT). You can set this to expire after a certain time (the default) or be permanent. We can initiate this process internally via:
+
+```{r, eval=F}
+# install.packages("usethis") if not installed already
+# create personal access token - this should redirect to your github page where you can copy the token
+usethis::create_github_token()
+```
+
+
+After you've copied the PAT from the browser, return to R and run this, which will store the PAT locally. 
+
+```{r, eval=F}
+# paste the token where it says YourPAT
+credentials::set_github_pat("YourPAT")
+# if you run this, it should print your token; if not we've failed
+Sys.getenv("GITHUB_PAT")
+```
+
+I recommend also setting the PAT in your `.Rprofile` so it's stored for all R sessions (i.e., you don't have to save the PAT and paste it in each time you re-install).
+
+```{r, eval=F}
+# to set your PAT for all R sessions, run
+file.edit(file.path("~", ".Rprofile"))
+# and then paste credentials::set_github_pat("YourPAT") into the .Rprofile script
+# save the file
+```
+
+Now you can install the package and it will automatically locate your PAT.
+```{r, eval=F}
+# install from github
+devtools::install_github("billingtt/acledR")
+```
+
+## `acled_api()`
+
+`acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
+```{r, eval = F}
+acled_api(
+  email,
+  key,
+  countries = NULL,
+  regions = NULL,
+  start_date = NULL,
+  end_date = NULL,
+  monadic = FALSE
+)
+```
+
+The email and key must be those associated with your ACLED account registered at developer.acleddata.com. These can be passed as character strings, though I recommend storing them as an environmental variable so you can call them without pasting every session (and for security resons). To do so, run:
+```{r, eval = F}
+file.edit(file.path("~", ".Renviron"))
+```
+which will open your `.Renviron` file. Once there, set:
+```{r, eval = F}
+Sys.setenv(email_address="YourEmail")
+Sys.setenv(acled_key="YourKey")
+```
+and save the file. Now, if you run `Sys.getenv("email_address")`, your associated email will print; if you run `Sys.getenv("acled_key")`, your ACLED key will print. 
+
+
+The `countries` and `regions` parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, only Nigeria will be returned since Mexico is not in Western Africa. 
+
+The `start_date` and `end_date` parameters specify the time period requested in "yyyy-mm-dd" format. If NULL, all available time periods available will be returned. If either start or end date is NULL, both must be NULL or an error is returned. 
+
+`monadic` is a logical parameter, which is FALSE by default and returns the dyadic version of the data. If set TRUE, the monadic version will be returned. 
+
+To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
+
+```{r, cache = T}
+library(acledR)
+df_br <- acled_api(email = Sys.getenv("email_address"),
+                key = Sys.getenv("acled_key"),
+                countries = c("Brazil"),
+                start_date = "2022-01-01",
+                end_date = "2022-05-09",
+                monadic = F)
+```
+
+If instead, we wanted multiple countries, we could do:
+
+```{r}
+df_br_co <- acled_api(email = Sys.getenv("email_address"),
+                key = Sys.getenv("acled_key"),
+                countries = c("Brazil", "Colombia"),
+                start_date = "2022-01-01",
+                end_date = "2022-05-09",
+                monadic = F)
+```
+
+Or an entire region:
+
+```{r}
+df_sa <- acled_api(email = Sys.getenv("email_address"),
+                key = Sys.getenv("acled_key"),
+                regions = c("South America"),
+                start_date = "2022-01-01",
+                end_date = "2022-05-09",
+                monadic = F)
+```
+
+
+
+## `generate_counts()`
+
+The `generate_counts()` function quickly creates event counts by event type and unit of analysis. 
+
+In the most basic usage, the required arguments are:
+
+```{r, eval = F}
+generate_counts(
+  data,
+  unit_id,
+  time_id,
+  time_target
+  )
+```
+where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday).
+
+As an example, we can take the data for South America we just pulled and generate weekly counts. 
+```{r}
+df_sa_agg <-
+  df_sa %>% 
+  generate_counts(., unit_id = "country", 
+                  time_id = "event_date",
+                  time_target = "week")
+```
+
+This returns a tibble with columns for each event type in the data, as well as a column for the total events:
+```{r}
+df_sa_agg %>% 
+  head() %>% 
+  kableExtra::kable()
+```
+
+
+We can also request just certain event types. For example, we might only want political violence:
+
+```{r}
+df_sa_agg <-
+  df_sa %>% 
+  generate_counts(., unit_id = "country", 
+                  time_id = "event_date",
+                  time_target = "week",
+                  event_type = c('Battles', 'Violence against civilians', 
+                           'Explosions/Remote violence', 'Riots'))
+```
+
+And now we only retain the requested event typesn and the total corresponds to these types only
+
+```{r}
+df_sa_agg %>% 
+  head() %>% 
+  kableExtra::kable()
+```
+
+
+```{r}
+df_sa_agg <- 
+  df_sa_agg %>% 
+  generate_movers(., 
+                  var = "total_events",
+                  unit_id = "country",
+                  time_id = "event_week",
+                  slide_funs = c("mean", "sd"),
+                  slide_periods = c(4, 8))
+```
+
+
+```{r, fig.width=6, fig.height=6}
+library(ggplot2)
+df_sa_agg %>% 
+  dplyr::filter(country %in% c("Brazil", "Colombia")) %>% 
+  ggplot(data = .) +
+  geom_line(aes(x = event_week, y = total_events, 
+                color = country,
+                lty = "Total events"), size = 0.75) +
+  geom_line(aes(x = event_week, y = moving_mean_4, 
+                color = country,
+                lty = "4 week avg"), size = 0.75) +
+  scale_color_manual(values = c("darkorange", "steelblue4")) +
+  scale_linetype_manual(values = c(3, 1)) +
+  theme_light()
+```
+
+
+
+## `generate_movers()`
+
+The `generate_movers()` function calculations moving statistics over some time period. 
+
+
+```{r, eval = F}
+generate_movers(
+  data,
+  var,
+  unit_id,
+  time_id,
+  slide_funs,
+  slide_periods,
+  na.rm = T,
+  complete = T
+)
+
+```
+
+
