@@ -37,6 +37,7 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
   }
   if(is.character(countries)) {
     countries_internal <- paste0("&country=", paste( gsub("\\s{1}", "%20", countries), collapse = ":OR:country="))
+    countries_internal <- paste0(countries_internal, "&country_where=%3D")
   }
   if(is.null(countries)) {
     countries_internal <- ""
