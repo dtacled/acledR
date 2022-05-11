@@ -12,7 +12,7 @@
 #' @import tidyr
 #' @import lubridate
 #' @import janitor
-#' @import rlang
+#' @importFrom rlang .data
 #' @return Returns a tibble grouped by unit_id
 #'
 #'
