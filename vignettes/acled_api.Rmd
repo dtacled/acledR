@@ -52,7 +52,6 @@ To see how this works in practice, here's an example calling just Brazil since J
 
 ```{r}
 library(acledR)
-library(dplyr)
 df_br <- acled_api(email = Sys.getenv("email_address"),
                 key = Sys.getenv("acled_key"),
                 countries = c("Brazil"),
@@ -104,6 +103,6 @@ df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
                 monadic = T)
 ```
 
-In both the dyadic and monadic versions, the API returns `r unique(df_sa$event_id_cnty) %>% length()` unique events. However, the number of unique entries for the dyadic version is also `r df_sa$event_id_cnty %>% length()`, while it's `r df_sa_monadic$event_id_cnty %>% length()` for the monadic version.
+In both the dyadic and monadic versions, the API returns `r length(unique(df_sa$event_id_cnty))` unique events. However, the number of unique entries for the dyadic version is also `r length(df_sa$event_id_cnty)`, while it's `r length(df_sa_monadic$event_id_cnty)` for the monadic version.
 
 
