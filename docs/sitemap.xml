@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://billingtt.github.io/acledR/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/articles/acledR_examples.html</loc>
+    <loc>/articles/acledR_examples.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/articles/acled_api.html</loc>
+    <loc>/articles/acled_api.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/articles/generate_counts.html</loc>
+    <loc>/articles/generate_counts.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/acled_api.html</loc>
+    <loc>/reference/acled_api.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/calculate_actor_index.html</loc>
+    <loc>/reference/calculate_actor_index.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/generate_counts.html</loc>
+    <loc>/reference/generate_counts.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/generate_movers.html</loc>
+    <loc>/reference/generate_movers.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/pipe.html</loc>
+    <loc>/reference/pipe.html</loc>
   </url>
 </urlset>
