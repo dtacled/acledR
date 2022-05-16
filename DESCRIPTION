@@ -20,7 +20,6 @@ Imports:
     janitor,
     rlang,
     stats,
-    secret,
     here
 RoxygenNote: 7.1.1
 Depends: 
