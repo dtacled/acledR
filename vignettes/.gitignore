@@ -1,2 +1,4 @@
 *.html
 *.R
+acled_api_cache
+generate_counts_cache
