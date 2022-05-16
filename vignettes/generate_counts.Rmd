@@ -34,6 +34,11 @@ where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysi
 
 As an example, we can take the data for South America.
 
+```{r, echo = F}
+source(here::here(".Rprofile"))
+```
+
+
 ```{r}
 library(acledR)
 df_sa <- acled_api(email = EMAIL_ADDRESS,

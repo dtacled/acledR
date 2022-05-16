@@ -50,6 +50,10 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
+```{r, echo = F}
+source(here::here(".Rprofile"))
+```
+
 
 ```{r}
 library(acledR)
