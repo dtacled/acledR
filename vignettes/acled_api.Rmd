@@ -51,6 +51,8 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
 ```{r, echo = F}
+library(here)
+library(secret)
 vault <- file.path(here::here(".vault"))
 EMAIL_ADDRESS <- secret::get_secret("email_address", key = secret::local_key(), vault = vault)[[1]]
 ACLED_KEY <- secret::get_secret("acled_key", key = secret::local_key(), vault = vault)[[1]]
@@ -60,11 +62,11 @@ ACLED_KEY <- secret::get_secret("acled_key", key = secret::local_key(), vault = 
 ```{r}
 library(acledR)
 df_br <- acled_api(email = EMAIL_ADDRESS,
-                key = ACLED_KEY,
-                countries = c("Brazil"),
-                start_date = "2022-01-01",
-                end_date = "2022-05-09",
-                monadic = F)
+                   key = ACLED_KEY,
+                   countries = c("Brazil"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-05-09",
+                   monadic = F)
 ```
 
 The results return a tibble with each ACLED event in Brazil during this time period:
@@ -79,35 +81,35 @@ df_br %>%
 If instead we wanted multiple countries, we could execute:
 
 ```{r}
-df_br_co <- acled_api(email = Sys.getenv("email_address"),
-                key = Sys.getenv("acled_key"),
-                countries = c("Brazil", "Colombia"),
-                start_date = "2022-01-01",
-                end_date = "2022-05-09",
-                monadic = F)
+df_br_co <- acled_api(email = EMAIL_ADDRESS,
+                      key = ACLED_KEY,
+                      countries = c("Brazil", "Colombia"),
+                      start_date = "2022-01-01",
+                      end_date = "2022-05-09",
+                      monadic = F)
 ```
 
 For an entire region, we omit the `countries` parameter and supply a `regions` argument:
 
 ```{r}
-df_sa <- acled_api(email = Sys.getenv("email_address"),
-                key = Sys.getenv("acled_key"),
-                regions = c("South America"),
-                start_date = "2022-01-01",
-                end_date = "2022-04-30",
-                monadic = F)
+df_sa <- acled_api(email = EMAIL_ADDRESS,
+                   key = ACLED_KEY,
+                   regions = c("South America"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-04-30",
+                   monadic = F)
 ```
 
 
 We could also request the monadic version of the data by setting `monadic = TRUE`:
 
 ```{r}
-df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
-                key = Sys.getenv("acled_key"),
-                regions = c("South America"),
-                start_date = "2022-01-01",
-                end_date = "2022-04-30",
-                monadic = T)
+df_sa_monadic <- acled_api(email = EMAIL_ADDRESS,
+                           key = ACLED_KEY,
+                           regions = c("South America"),
+                           start_date = "2022-01-01",
+                           end_date = "2022-04-30",
+                           monadic = T)
 ```
 
 In both the dyadic and monadic versions, the API returns `r length(unique(df_sa$event_id_cnty))` unique events. However, the number of unique entries for the dyadic version is also `r length(df_sa$event_id_cnty)`, while it's `r length(df_sa_monadic$event_id_cnty)` for the monadic version.

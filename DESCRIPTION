@@ -19,7 +19,9 @@ Imports:
     httr,
     janitor,
     rlang,
-    stats
+    stats,
+    secret,
+    here
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)

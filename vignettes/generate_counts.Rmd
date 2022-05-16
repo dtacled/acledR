@@ -35,6 +35,8 @@ where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysi
 As an example, we can take the data for South America.
 
 ```{r, echo = F}
+library(here)
+library(secret)
 vault <- file.path(here::here(".vault"))
 EMAIL_ADDRESS <- secret::get_secret("email_address", key = secret::local_key(), vault = vault)[[1]]
 ACLED_KEY <- secret::get_secret("acled_key", key = secret::local_key(), vault = vault)[[1]]
