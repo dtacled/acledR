@@ -50,10 +50,17 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
+```{r, echo = F}
+vault <- file.path(here::here(".vault"))
+EMAIL_ADDRESS <- secret::get_secret("email_address", key = secret::local_key(), vault = vault)[[1]]
+ACLED_KEY <- secret::get_secret("acled_key", key = secret::local_key(), vault = vault)[[1]]
+```
+
+
 ```{r}
 library(acledR)
-df_br <- acled_api(email = Sys.getenv("email_address"),
-                key = Sys.getenv("acled_key"),
+df_br <- acled_api(email = EMAIL_ADDRESS,
+                key = ACLED_KEY,
                 countries = c("Brazil"),
                 start_date = "2022-01-01",
                 end_date = "2022-05-09",
