@@ -10,6 +10,7 @@
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic data.
 #' @returns Returns a tibble of of ACLED events.
 #' @import httr
+#' @import readr
 #'
 #' @export
 
