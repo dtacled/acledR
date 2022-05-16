@@ -35,7 +35,7 @@ where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysi
 As an example, we can take the data for South America.
 
 ```{r, echo = F}
-source(here::here("R", "keys.R"))
+source(here::here("vault", "keys.R"))
 ```
 
 
