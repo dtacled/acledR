@@ -1,0 +1,9 @@
+pandoc: 2.11.4
+pkgdown: 2.0.3
+pkgdown_sha: ~
+articles:
+  acledR_examples: acledR_examples.html
+  acled_api: acled_api.html
+  generate_counts: generate_counts.html
+last_built: 2022-05-16T19:48Z
+
