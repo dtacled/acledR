@@ -21,8 +21,6 @@ Imports:
     rlang,
     stats,
     here
-Suggests:
-    readr
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
@@ -31,5 +29,6 @@ URL: https://github.com/billingtt/acledR,
 BugReports: https://github.com/billingtt/acledR/issues
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    readr
 VignetteBuilder: knitr
