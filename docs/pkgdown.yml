@@ -1,11 +1,11 @@
 pandoc: 2.11.4
-pkgdown: 2.0.3
-pkgdown_sha: ~
+pkgdown: 2.0.3.9000
+pkgdown_sha: 9dee019f9983b86585a77a3b1a1459b9f0390fe6
 articles:
   acledR_examples: acledR_examples.html
   acled_api: acled_api.html
   generate_counts: generate_counts.html
-last_built: 2022-05-16T20:09Z
+last_built: 2022-05-16T20:17Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
