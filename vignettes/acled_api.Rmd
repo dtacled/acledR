@@ -52,6 +52,7 @@ To see how this works in practice, here's an example calling just Brazil since J
 
 ```{r}
 library(acledR)
+library(dplyr)
 df_br <- acled_api(email = Sys.getenv("email_address"),
                 key = Sys.getenv("acled_key"),
                 countries = c("Brazil"),
