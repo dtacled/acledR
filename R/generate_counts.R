@@ -86,7 +86,7 @@ generate_counts <-
       ungroup() %>%
       full_join(merge(add_unit_ids, all_dates) %>%
                   as_tibble() %>%
-                  rename(country = x, event_time = y)) %>%
+                  rename({{unit_id}} := x, event_time = y)) %>%
       mutate(count = case_when(is.na(count) ~ as.numeric(0),
                                TRUE ~ as.numeric(count))) %>%
       rename(!!paste0("event_", time_target) := event_time) %>%
