@@ -39,7 +39,7 @@ As an example, we can take the data for South America.
 library(secret)
 library(here)
 my_vault <- here("vault","secret-vault.vault")
-tb_priv_key <- file.path("/Users/trey/acledR_vault")
+tb_priv_key <- here("vault","secret-vault.vault", "acledR_vault")
 EMAIL_ADDRESS = get_secret("EMAIL_ADDRESS", key = tb_priv_key, vault = my_vault)[[1]]
 ACLED_KEY = get_secret("ACLED_KEY", key = tb_priv_key, vault = my_vault)[[1]]
 ```
