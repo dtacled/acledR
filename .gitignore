@@ -10,3 +10,5 @@ docs
 .Renviron
 .Rprofile
 vault
+vault/secret-keys.R
+vault/secret-vault.vault
