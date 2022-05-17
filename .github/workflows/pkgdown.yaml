@@ -31,10 +31,10 @@ jobs:
           needs: website
 
         - name: Create and populate .Renviron file
-        run: |
-          echo acled_key=ACLED_KEY >> ~/.Renviron
-          echo email_address=EMAIL_ADDRESS" >> ~/.Renviron
-          shell: bash
+          run: |
+            echo acled_key=ACLED_KEY >> ~/.Renviron
+            echo email_address=EMAIL_ADDRESS" >> ~/.Renviron
+            shell: bash
 
 
       - name: Deploy package
