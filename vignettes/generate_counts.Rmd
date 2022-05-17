@@ -28,7 +28,7 @@ generate_counts(
   unit_id,
   time_id,
   time_target
-  )
+)
 ```
 where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday).
 
@@ -36,21 +36,16 @@ As an example, we can take the data for South America.
 
 
 
-```{r, echo = F}
-source(file.path("vault", "secret-keys.R"))
-```
-
-
 
 
 ```{r}
 library(acledR)
-df_sa <- acled_api(email = EMAIL_ADDRESS,
-                key = ACLED_KEY,
-                regions = c("South America"),
-                start_date = "2022-01-01",
-                end_date = "2022-04-30",
-                monadic = F)
+df_sa <- acled_api(email = Sys.getenv("email_address"),
+                   key = Sys.getenv("acled_key"),
+                   regions = c("South America"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-04-30",
+                   monadic = F)
 ```
 
 We can then generate event counts at the country-week level:
@@ -127,12 +122,12 @@ africa_regions <- c("Western Africa",
                     "Southern Africa",
                     "Northern Africa")
 
-df_africa <- acled_api(email = EMAIL_ADDRESS,
-                key = ACLED_KEY,
-                regions = africa_regions,
-                start_date = "2018-01-01",
-                end_date = "2022-04-30",
-                monadic = F)
+df_africa <- acled_api(email = Sys.getenv("email_address"),
+                       key = Sys.getenv("acled_key"),
+                       regions = africa_regions,
+                       start_date = "2018-01-01",
+                       end_date = "2022-04-30",
+                       monadic = F)
 ```
 
 We can then generate event counts for each month by each region in Africa:
@@ -158,7 +153,7 @@ df_africa_monthly %>%
   tidyr::pivot_longer(cols = -c(region, event_month)) %>% 
   dplyr::filter(name != "total_events") %>% 
   
-ggplot() +
+  ggplot() +
   geom_bar(aes(x = event_month, 
                fill = name,
                y = value,

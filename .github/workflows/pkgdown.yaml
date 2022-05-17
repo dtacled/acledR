@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ACLED_KEY: ${{ secrets.ACLED_KEY }}
+      EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
     steps:
       - uses: actions/checkout@v2
 
@@ -27,6 +29,11 @@ jobs:
         with:
           extra-packages: pkgdown
           needs: website
+      - name: Create and populate .Renviron file
+        run: |
+          echo ACLED_KEY="$ACLED_KEY" >> ~/.Renviron
+          echo EMAIL_ADDRESS="$EMAIL_ADDRESS" >> ~/.Renviron
+          shell: bash
 
       - name: Deploy package
         run: |

@@ -51,16 +51,14 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
 
-```{r, echo = F}
-source(file.path("vault", "secret-keys.R"))
-```
+
 
 
 
 ```{r}
 library(acledR)
-df_br <- acled_api(email = EMAIL_ADDRESS,
-                   key = ACLED_KEY,
+df_br <- acled_api(email = Sys.getenv("email_address"),
+                   key = Sys.getenv("acled_key"),
                    countries = c("Brazil"),
                    start_date = "2022-01-01",
                    end_date = "2022-05-09",
@@ -79,8 +77,8 @@ df_br %>%
 If instead we wanted multiple countries, we could execute:
 
 ```{r}
-df_br_co <- acled_api(email = EMAIL_ADDRESS,
-                      key = ACLED_KEY,
+df_br_co <- acled_api(email = Sys.getenv("email_address"),
+                      key = Sys.getenv("acled_key"),
                       countries = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
                       end_date = "2022-05-09",
@@ -90,8 +88,8 @@ df_br_co <- acled_api(email = EMAIL_ADDRESS,
 For an entire region, we omit the `countries` parameter and supply a `regions` argument:
 
 ```{r}
-df_sa <- acled_api(email = EMAIL_ADDRESS,
-                   key = ACLED_KEY,
+df_sa <- acled_api(email = Sys.getenv("email_address"),
+                   key = Sys.getenv("acled_key"),
                    regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
@@ -102,8 +100,8 @@ df_sa <- acled_api(email = EMAIL_ADDRESS,
 We could also request the monadic version of the data by setting `monadic = TRUE`:
 
 ```{r}
-df_sa_monadic <- acled_api(email = EMAIL_ADDRESS,
-                           key = ACLED_KEY,
+df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
+                           key = Sys.getenv("acled_key"),
                            regions = c("South America"),
                            start_date = "2022-01-01",
                            end_date = "2022-04-30",
