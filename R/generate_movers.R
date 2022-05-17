@@ -45,7 +45,9 @@ generate_movers <-
                                                         .f = .x, .before = .y,
                                                         .after = -1,
                                                         .complete = complete)) %>%
-                              rename_with(., ~paste("moving", attr(cross_tbl$all_funs, "name"), cross_tbl$slide_periods, sep = "_"))
+                              rename_with(., ~paste(var, "moving",
+                                                    attr(cross_tbl$all_funs, "name"),
+                                                    cross_tbl$slide_periods, sep = "_"))
                           }
       )
       ) %>%
