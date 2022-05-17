@@ -52,9 +52,6 @@ To see how this works in practice, here's an example calling just Brazil since J
 
 
 
-
-
-
 ```{r}
 library(acledR)
 df_br <- acled_api(email = Sys.getenv("email_address"),

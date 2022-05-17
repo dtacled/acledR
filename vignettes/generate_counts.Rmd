@@ -30,7 +30,7 @@ generate_counts(
   time_target
 )
 ```
-where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday).
+where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday).
 
 As an example, we can take the data for South America.
 
