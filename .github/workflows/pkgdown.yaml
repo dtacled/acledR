@@ -11,11 +11,14 @@ name: pkgdown
 
 jobs:
   pkgdown:
+  if: github.event_name == 'push'
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      isPush: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v2
+
 
       - uses: r-lib/actions/setup-pandoc@v1
 
