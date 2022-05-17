@@ -30,5 +30,6 @@ BugReports: https://github.com/billingtt/acledR/issues
 Suggests: 
     knitr,
     rmarkdown,
-    readr
+    readr,
+    kableExtra
 VignetteBuilder: knitr
