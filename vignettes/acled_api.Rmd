@@ -51,7 +51,12 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
 
 ```{r, echo = F}
-source(here::here("vault", "keys.R"))
+library(secret)
+library(here)
+my_vault <- here("vault","secret-vault.vault")
+tb_priv_key <- file.path("/Users/trey/acledR_vault")
+EMAIL_ADDRESS = get_secret("EMAIL_ADDRESS", key = tb_priv_key, vault = my_vault)[[1]]
+ACLED_KEY = get_secret("ACLED_KEY", key = tb_priv_key, vault = my_vault)[[1]]
 ```
 
 
