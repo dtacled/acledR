@@ -11,7 +11,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-  if: github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
