@@ -30,11 +30,12 @@ jobs:
           extra-packages: pkgdown
           needs: website
 
-       - name: "[Custom block] Add ACLED Key"
-        run: echo "acled_key = '${{ secrets.ACLED_KEY }}'" >> .Renviron
+        - name: Create and populate .Renviron file
+        run: |
+          echo acled_key=ACLED_KEY >> ~/.Renviron
+          echo email_address=EMAIL_ADDRESS" >> ~/.Renviron
+          shell: bash
 
-       - name: "[Custom block] Add Email"
-        run: echo "email_address = '${{ secrets.EMAIL_ADDRESS }}'" >> .Renviron
 
       - name: Deploy package
         run: |
