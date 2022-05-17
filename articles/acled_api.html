@@ -102,8 +102,8 @@
 <p>To see how this works in practice, here’s an example calling just Brazil since January 2022. Note that I call my email and key directly with <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code> rather than pasting.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span>
-<span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="va">EMAIL_ADDRESS</span>,
-                   key <span class="op">=</span> <span class="va">ACLED_KEY</span>,
+<span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>,
+                   key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span>,
                    countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,
                    start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,
                    end_date <span class="op">=</span> <span class="st">"2022-05-09"</span>,
@@ -147,24 +147,24 @@
 <span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA…</span></code></pre></div>
 <p>If instead we wanted multiple countries, we could execute:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="va">EMAIL_ADDRESS</span>,
-                      key <span class="op">=</span> <span class="va">ACLED_KEY</span>,
+<code class="sourceCode R"><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>,
+                      key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span>,
                       countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,
                       start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,
                       end_date <span class="op">=</span> <span class="st">"2022-05-09"</span>,
                       monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>For an entire region, we omit the <code>countries</code> parameter and supply a <code>regions</code> argument:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="va">EMAIL_ADDRESS</span>,
-                   key <span class="op">=</span> <span class="va">ACLED_KEY</span>,
+<code class="sourceCode R"><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>,
+                   key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span>,
                    regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,
                    start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,
                    end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,
                    monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>We could also request the monadic version of the data by setting <code>monadic = TRUE</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_sa_monadic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="va">EMAIL_ADDRESS</span>,
-                           key <span class="op">=</span> <span class="va">ACLED_KEY</span>,
+<code class="sourceCode R"><span class="va">df_sa_monadic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>,
+                           key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span>,
                            regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,
                            start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,
                            end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,
