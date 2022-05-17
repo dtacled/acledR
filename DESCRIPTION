@@ -32,5 +32,6 @@ Suggests:
     rmarkdown,
     readr,
     kableExtra,
-    ggplot2
+    ggplot2,
+    covr
 VignetteBuilder: knitr
