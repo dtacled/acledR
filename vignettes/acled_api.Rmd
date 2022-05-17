@@ -52,8 +52,7 @@ To see how this works in practice, here's an example calling just Brazil since J
 
 
 ```{r, echo = F}
-EMAIL_ADDRESS = "t.billing@acleddata.com"
-ACLED_KEY = "U8nril1AUoGf7Srz7RY!"
+source(file.path("vault", "secret-keys.R"))
 ```
 
 

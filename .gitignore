@@ -11,4 +11,3 @@ docs
 .Rprofile
 vault
 vault/secret-keys.R
-vault/secret-vault.vault

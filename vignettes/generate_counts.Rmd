@@ -37,8 +37,7 @@ As an example, we can take the data for South America.
 
 
 ```{r, echo = F}
-EMAIL_ADDRESS = "t.billing@acleddata.com"
-ACLED_KEY = "U8nril1AUoGf7Srz7RY!"
+source(file.path("vault", "secret-keys.R"))
 ```
 
 
