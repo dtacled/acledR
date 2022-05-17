@@ -29,6 +29,11 @@ jobs:
         with:
           extra-packages: pkgdown
           needs: website
+      - name: Add keys
+        run: |
+          acled_key = Sys.getenv("acled_key")
+          email_address = Sys.getenv("email_address")
+        shell: Rscript {0}
 
 
       - name: Deploy package
