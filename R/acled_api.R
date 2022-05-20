@@ -21,7 +21,7 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
 
   if((!is.character(email) | is.na(email) | email == "") == TRUE) {
     stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('email_adress'). Register your email for access at https://developer.acleddata.com.")
-    }
+  }
   email_internal <- paste0("&email=", email)
 
   if((!is.character(key) | is.na(key) | key == "") == TRUE) {
@@ -70,8 +70,10 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
   if(is.null(start_date) != is.null(end_date)) {
     stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
   }
-  if(start_date > end_date) {
-    stop("Requested 'start_date' is after the requested 'end_date'.")
+  if(!is.null(start_date) & !is.null(end_date)){
+    if(start_date > end_date) {
+      stop("Requested 'start_date' is after the requested 'end_date'.")
+    }
   }
   if(is.null(start_date) & is.null(end_date)) {
     dates_internal <- ""
@@ -95,12 +97,12 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
   response <- GET(url)
   if(response[["status_code"]] != 200) {
     stop(paste0("API request unsuccessful with status code ", response[["status_code"]], "."))
-    }
+  }
 
   out <- content(response)
 
   return(out)
 
-  }
+}
 
 
