@@ -18,6 +18,8 @@ generate_movers(
 \arguments{
 \item{data}{ACLED data.}
 
+\item{var}{Variable of interest.}
+
 \item{unit_id}{Unit variable.}
 
 \item{time_id}{Temporal variable.}

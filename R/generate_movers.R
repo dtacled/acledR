@@ -1,6 +1,7 @@
 #' Generate moving statistics
 #'
 #' @param data ACLED data.
+#' @param var Variable of interest.
 #' @param unit_id Unit variable.
 #' @param time_id Temporal variable.
 #' @param slide_funs Requested moving statistics. Character vector with options including mean, median, sd, min, and max.
