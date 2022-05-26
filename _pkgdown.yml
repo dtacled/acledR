@@ -2,3 +2,20 @@ url: https://billingtt.github.io/acledR/
 template:
   bootstrap: 5
 
+
+navbar:
+  title: acledR
+  left:
+  - icon: fa-home
+    href: docs/index.html
+  - text: Articles
+    href: articles/index.html
+    menu:
+    - text: ACLED API
+      href: articles/acled_api.html
+    - text: Generate Event Counts
+      href: articles/generate_counts.html
+    - text: Generate Moving Statistics
+      href: articles/generate_movers.html
+  - text: ACLED Codebook
+    href: articles/acled_codebook.html
