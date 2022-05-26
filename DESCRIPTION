@@ -36,5 +36,6 @@ Suggests:
     here,
     secret,
     sf,
-    raster
+    raster,
+    forcats
 VignetteBuilder: knitr
