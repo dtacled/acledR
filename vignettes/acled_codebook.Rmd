@@ -37,10 +37,8 @@ The fundamental unit of observation in ACLED is the _event_. Events involve desi
 ## Variable List {#variable-list}
 
 ```{r}
-
-
-library(tidyverse)
 library(kableExtra)
+library(dplyr)
 acledR::acled_codebook %>% 
   kable() %>%
   kable_styling("striped", full_width = F) %>%

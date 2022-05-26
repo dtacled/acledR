@@ -34,5 +34,7 @@ Suggests:
     ggplot2,
     covr,
     here,
-    secret
+    secret,
+    sf,
+    raster
 VignetteBuilder: knitr
