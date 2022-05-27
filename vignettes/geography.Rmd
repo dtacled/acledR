@@ -1,0 +1,94 @@
+---
+title: "Geography"
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning=F, message=F,
+  echo = F,
+  cache = T
+)
+library(acledR)
+library(dplyr)
+library(kableExtra)
+
+```
+
+
+There are up to six different types of spatial information recorded for each ACLED event:
+  
+1. the continental sub-region in which the event occurred;
+1. the country in which the event occurred and its associated ISO code;
+1. the name of the first, second and third level administrative zones that the specific location is found in according to GIS-based assessments and updated administrative codes;
+1. the name of the specific location of an event;
+1. the geographic coordinates of that specific location; and
+1. a spatial precision code.
+
+The most specific location for an event is sought for each ACLED code, using multiple sources to triangulate better location information.
+
+# Administrative Levels
+
+# Precision Codes
+
+# `acledR` Example
+
+```{r, echo = T}
+library(acledR)
+df_nigeria <- acled_api(email = Sys.getenv("email_address"),
+                        key = Sys.getenv("acled_key"),
+                        countries = c("Nigeria"),
+                        start_date = "2022-01-01",
+                        end_date = "2022-01-31",
+                        monadic = F)
+```
+
+
+```{r, echo = T}
+df_nigeria %>% 
+  janitor::tabyl(admin1) %>% 
+  janitor::adorn_rounding(2) %>% 
+  arrange(-n) %>% 
+  head(5)
+```
+
+
+```{r, echo = T}
+library(sf)
+library(ggplot2)
+
+# grab admin1 level shapefile for Nigeria via the raster package
+admin1_nigeria <- raster::getData(name = "GADM", country = "Nigeria", level = 1) %>% 
+  # convert to sf object
+  st_as_sf()
+
+# generate admin1 level counts and join to sf object of admin1s
+df_nigeria_admin1_counts <-
+  df_nigeria %>% 
+  group_by(admin1) %>% 
+  tally() %>% 
+  left_join(admin1_nigeria, by = c("admin1" = "NAME_1")) %>% 
+  st_as_sf()
+
+# start plotting
+ggplot() +
+  geom_sf(data = df_nigeria_admin1_counts, 
+          aes(fill = n),
+          color = "white") +
+  geom_sf_text(data = df_nigeria_admin1_counts %>% 
+                 arrange(-n) %>% 
+                 head(5), 
+               aes(fill = n, label = admin1),
+               color = "gray10") +
+  scale_fill_viridis_c(option = "inferno",
+                       guide = guide_colorbar(title = "Event count")) +
+  coord_sf() +
+  theme_minimal() +
+  labs(x = "Longitude",
+       y = "Latitude", 
+       title = "ACLED Events across Nigeria",
+       subtitle = "January 2022")
+
+```

@@ -1,0 +1,104 @@
+---
+title: "Time"
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning=F, message=F,
+  echo = F,
+  cache = T
+)
+library(acledR)
+library(dplyr)
+library(kableExtra)
+
+```
+
+Dates are a necessary component of each ACLED event. ACLED events are atomic as events are coded by day; if a military campaign in an area starts on March 1, 1999 and lasts until March 5, 1999 with violent activity reported on each day, this is coded as five different events in ACLED, with a different date for each entry. This episode would not be entered as a single campaign of violence. This allows ACLED to record the exact number of active days. Events which source material note occurred in the space of three months – like long-running protests – are only coded for the days in which reported activity took place (not as 90+ days). This avoids over-counting event occurrence.
+  
+There are three types of temporal information for each ACLED event:
+  
+1. `event_date`: the date of each event in yyyy-mm-dd format;
+1. `year`: the year of each event in yyyy format;
+1. `time_precision`: the temporal precision of each event.
+
+# Precision Codes
+
+If sources include an actual date of an event, a time precision code of "1" is entered. If sources note that an event happened during a specific week or in the weekend, "2" is noted in the time precision field and the middle of that week (or of the weekend) is used as the reference date. If sources note only that an event took place within a particular month, without reference to the particular date, the month mid-point is chosen unless the beginning or end of the month is noted (in which case, the first and last date are used, respectively) and "3" is noted as the time precision level. ACLED does not include events with less temporal information.
+
+```{r}
+library(dplyr)
+library(kableExtra)
+tibble(time_precision = c(1, 2, 3),
+       " " = c("Actual event date", 
+               "Within specific week/weekend",
+               "Within a particular month")) %>% 
+  kable() %>%
+  kable_styling("striped", full_width = F)
+```
+
+# `acledR` Example
+
+```{r, echo = T}
+library(acledR)
+df_france <- acled_api(email = Sys.getenv("email_address"),
+                       key = Sys.getenv("acled_key"),
+                       countries = c("France"),
+                       start_date = "2021-01-01",
+                       end_date = "2021-12-31",
+                       monadic = F)
+```
+
+
+```{r, echo = T}
+df_france %>% 
+  janitor::tabyl(time_precision) %>% 
+  janitor::adorn_rounding(2)
+
+```
+
+
+```{r, echo = T}
+library(dplyr)
+library(ggplot2)
+
+df_france %>% 
+  group_by(event_date) %>% 
+  tally() %>% 
+  
+  ggplot() +
+  geom_line(aes(x = event_date, y = n)) +
+  theme_light() +
+  labs(x = "Event Date",
+       y = "Events per Day",
+       title = "ACLED Events in France",
+       subtitle = "January through December 2021")
+```
+
+
+```{r, echo = T}
+df_france <- 
+  df_france %>% 
+  # create month indicator using lubridate; label = T creates the month abbreviation rather than number
+  mutate(month = lubridate::month(event_date, label = T)) %>% 
+  group_by(month, time_precision) %>% 
+  tally()
+
+
+df_france %>%   
+  ggplot() +
+  geom_bar(aes(x = month, 
+               y = n, 
+               fill = as.factor(time_precision)),
+           stat = "identity") +
+  scale_fill_viridis_d(guide = guide_legend(title = "time_precision")) +
+  theme_light() +
+  labs(x = "Event Date",
+       y = "Events per Month",
+       title = "ACLED Events in France",
+       subtitle = "January through December 2021")
+```
+
