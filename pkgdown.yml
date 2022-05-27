@@ -10,7 +10,7 @@ articles:
   generate_movers: generate_movers.html
   geography: geography.html
   time: time.html
-last_built: 2022-05-27T17:44Z
+last_built: 2022-05-27T17:54Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
