@@ -12,7 +12,7 @@ navbar:
     href: articles/index.html
     menu:
     - text: Functions
-      href: articles/index.html
+      href: docs/reference/index.html
     - text: ACLED API
       href: articles/acled_api.html
     - text: Generate Event Counts
@@ -26,3 +26,5 @@ navbar:
       href: articles/acled_codebook.html
     - text: Event and Sub-Event Types
       href: articles/event_types.html
+    - text: Artciles and Interactions
+      href: articles/actors_interactions.html
