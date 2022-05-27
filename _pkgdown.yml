@@ -25,5 +25,5 @@ navbar:
       href: articles/acled_codebook.html
     - text: Event and Sub-Event Types
       href: articles/event_types.html
-    - text: Artciles and Interactions
+    - text: Actors and Interactions
       href: articles/actors_interactions.html
