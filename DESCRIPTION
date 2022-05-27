@@ -2,7 +2,7 @@ Package: acledR
 Type: Package
 Title: Manipulate ACLED Data
 Version: 0.1.0
-Author: Trey Billing
+Author: ACLED
 Maintainer: Trey Billing <t.billing@acleddata.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.

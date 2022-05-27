@@ -27,3 +27,5 @@ navbar:
       href: articles/event_types.html
     - text: Actors and Interactions
       href: articles/actors_interactions.html
+    - text: Time
+      href: articles/time.html

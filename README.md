@@ -1,9 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# acledR
+# Overview
 
-Manipulate ACLED Data
+This package provides tools to extract and manipulate data from the
+[Armed Conflict Event and Location Data Project
+(ACLED)](https://acleddata.com/).
+
+To access ACLED data, register an account at
+[developer.acleddata.com](developer.acleddata.com).
 
 ## Installation (for private repo)
 
