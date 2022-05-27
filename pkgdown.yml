@@ -6,7 +6,7 @@ articles:
   acled_codebook: acled_codebook.html
   generate_counts: generate_counts.html
   generate_movers: generate_movers.html
-last_built: 2022-05-26T16:57Z
+last_built: 2022-05-27T12:10Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
