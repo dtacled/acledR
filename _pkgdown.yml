@@ -29,3 +29,5 @@ navbar:
       href: articles/actors_interactions.html
     - text: Time
       href: articles/time.html
+    - text: Geography
+      href: articles/geography.html
