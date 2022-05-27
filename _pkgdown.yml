@@ -7,8 +7,6 @@ navbar:
   left:
   - icon: fa-home
     href: docs/index.html
-  - text: Reference
-    href: reference/index.html
   - text: Articles
     href: articles/index.html
     menu:
