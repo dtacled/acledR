@@ -4,9 +4,11 @@ pkgdown_sha: ~
 articles:
   acled_api: acled_api.html
   acled_codebook: acled_codebook.html
+  actors_interactions: actors_interactions.html
+  event_types: event_types.html
   generate_counts: generate_counts.html
   generate_movers: generate_movers.html
-last_built: 2022-05-27T12:10Z
+last_built: 2022-05-27T15:40Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
