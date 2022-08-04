@@ -1,0 +1,95 @@
+---
+title: "Pivoting ACLED data and ACLED Transform"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{acled_transform}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# ACLED Transform
+
+ACLED's data is wide-rangeing and comprehensive. Our dataset records coordinates, actors, sources, event types, and many other aspect of a particular political violence event. As such, ACLED's use cases are wideranging. Thus, our data is for the most part organized in a dyadic or wide form, where some columns such as actors are repeated (see e.g. Actor 1 and Actor 2), and others have multiple values in one cell (see e.g. Associated Actor 1). While this allows the users to more easily read the data and to compress an already large dataset, it is not always the best format for analysis that requires "tidy" or data in long form (one value per row and less columns but more rows), such as network analysis. 
+
+For that purpose, users of this package will be able to utilize the `acled_transform()` function of the package, to transform their datasets from wide to long, or from dyadic to monadic. While the ACLED API includes an option to provide a monadic file, this function provides some extra benefits relative to the API approach:
+  + Users can "save" API calls by providing already-gathered dyadic dataset, whereas the API monadic options requires two distict calls for a monadic and a dyadic dataset. 
+  + Users are able to fully pivot the dataset to their desired option. ACLED's dataset includes several columns that users may be interested on transposing, namely: *actor 1 & 2, associated_actor 1 & 2, source*. The API only transforms data by actor 1 & actor 2. 
+
+## How to use the function
+
+`acled_transform()` is composed as follows:
+
+
+```{r setup, eval = FALSE}
+
+acled_transform(data, 
+                type = "full_actor") 
+
+```
+
+To utilize the function users just have to provide the ACLED dataset (e.g. the result of `acled_api()`), and select the type of transformation they prefer to utilize. The options for transformation are finite, if users may be interested in transposing other columns as those offered below these are highly encourage to visit `tidyr::pivot_longer()` for a tidyverse approach on transposing columns to rows. These are the available options to transpose the ACLED data:
+  + full_actors: Transposes all the actor columns in the dataset (actor 1, actor 2, associated_actor_1, associated_actor_2)
+  + main_actors: Transposes only actor 1 and actor 2. 
+  + assoc_actors: Transposes only associated actor columns. 
+  + source: Transposes only the source column. 
+  + all: transposes all of the aforementioned columns (actor 1, actor 2, associated_actor_1, associated_actor_2, source)
+  
+The function returns the tibble, similarly as `acled_api()`, but with the data into long form. 
+
+## Example
+
+Let's imagine we are trying to do a network analysis of ACLED data, more specifically of events in Argentina during June 2022. A crucial step for every network analysis is creating an edges and nodes lists/data frames. For the purpose of the example we will be looking to create the nodes list, an unique list of actors present in the dataset. Given the structure of the ACLED's dyadic dataset, there are four columns to consider: actor 1, actor 2, associated_actor_1, and associated_actor_2. The question then is, **how do we build the nodes list?**
+
+To solve that question one could:
+ 1. Gather ACLED data
+ 2. Find every unique actor in actor_1
+ 3. Find every unique actor in actor_2
+ 4. Find every unique actor in associated_actor_1
+ 5. Find every unique actor in associated_actor_2
+ 6. Join these lists
+ 7.  Find the unique actors in the joined lists. 
+
+With `acled_transform()` we can save ourselves from doing steps 2 to 6 and let the function do it for us. 
+
+First, we grab ACLED data. 
+
+```{r, eval=TRUE}
+library(acledR)
+
+#acled_access("your_email","your_key")  # This part is commented out to avoid including sensitive information. 
+
+argen_acled <- acled_api(countries = "Argentina",
+                         start_date = "2022-06-01",
+                         end_date="2022-06-30", 
+                         acled_access = TRUE)
+
+print(argen_acled)
+
+```
+
+The code above provides us with the dataset of events in Argentina during June 2022. 
+
+After this we need to transform our dataset to long form, where each actor is a new row. For that we use `acled_transform()`:
+
+```{r, eval=TRUE}
+
+argen_acled_long_actors <- acled_transform(argen_acled,type = "full_actors")
+
+print(argen_acled)
+```
+
+Now we have a dataset where every row contains only one actor, meaning that now we only have to call unique in the dataset's actor column. For this, we will utilize `dplyr::distinct()`. 
+
+```{r, eval=TRUE}
+
+argen_acled_nodes <- argen_acled_long_actors %>%
+  dplyr::distinct(actor) ## When utilizing the option "full_actors", the actors will be stored in the column named "actor"
+
+argen_acled_nodes 
+
+```
+
+From this point onwards, if our research requires so, we can add descriptions or attributes to our node list, but the code above provided us with a unique dataframe of actors in our dataset - in just a few lines of code. 
+
+This example aimed to portray just one case where `acled_transform()` may be of use, however, many more uses can be found on working with long data, like actor-based statistics.
+

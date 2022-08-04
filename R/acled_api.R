@@ -1,20 +1,48 @@
 #' @title Request data from ACLED API
 #' @name acled_api
-#' @description Processes requests to ACLED's API
-#' @param email character string. Email associated with your ACLED account registered at https://developer.acleddata.com.
-#' @param key character string. Access key associated with your ACLED account registered at https://developer.acleddata.com.
+#' @description This function allows users to easily request data in ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+#' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
+#' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries,
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions,
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
-#' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic data.
+#' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
+#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.
 #' @returns Returns a tibble of of ACLED events.
+#' @family API and Access
+#' @seealso
+#' \itemize{
+#' \item ACLED API guide. <https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf>
+#' \item [acled_transform()]
+#' }
+#' @examples
+#' \dontrun{
+#'
+#' ## Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022 in dyadic-wide form
+#' argen_acled <- acled_api(jane.doe.email,jane.doe.key,countries = "Argentina",start_date = "2022-01-01",end_date="2022-02-01", acled_access = FALSE)
+#'
+#' ## tibble with all the events from Argentina where each row is one event.
+#' argen_acled
+#'
+#' ## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form
+#' carib_acled <- acled_api(john.doe.email,john.doe.key,regions = "Caribbean",start_date = "2022-01-01",end_date="2022-01-10", monadic=TRUE, acled_access = FALSE)
+#'
+#' ## Tibble with all the events from the Caribbean where each row is one actor
+#' carib_acled
+#' }
+#' @md
 #' @import httr
 #'
 #' @export
 
-acled_api <- function(email, key, countries = NULL, regions = NULL,
-                      start_date = NULL, end_date = NULL, monadic = FALSE) {
+acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
+                      start_date = NULL, end_date = NULL, monadic = FALSE, acled_access = TRUE) {
+
+  if(acled_access == TRUE){   # My suggestion on how to add the acledd_acess function or something for the user to store their keys (and in the future authenticate them prior to making a call)
+    email <- Sys.getenv("acled_email")
+    key <- Sys.getenv("acled_key")
+  }
 
   # Required components
   base_url <- "https://api.acleddata.com/acled/read.csv?"
@@ -94,9 +122,14 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
                 dates_internal,
                 "&limit=0")
 
-  response <- GET(url)
-  if(response[["status_code"]] != 200) {
-    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], "."))
+  try
+
+  response <- httr::GET(url) ## I added the direct reference to httr here because when I reinstalled R and R studio, it kept giving an error that it couldn't find GET.
+
+  if(response[["status_code"]] == 500) { ## In an effort to reduce the amount of people asking us questions which are really Access related, I am adding some more specificity to the messages
+    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n",rlang::format_error_bullets(c("Make sure you have not execeeded your API calls (2/year for a standard account)","Verify your API credentials (key and email)", "If nothing works contact us through GitHub Issues or at access@acleddata.com."))))
+  } else if(response[["status_code"]] == 503 | response[["status_code"]] == 502){ ## I cannot test this one, and I got the error codes from a generic webpage, so perhaps they are not quite so. Needs testing.
+    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n","Our server may be under maintenance or it may momentarily be unavailable; please try again in a couple of minutes."))
   }
 
   out <- content(response)
@@ -104,5 +137,3 @@ acled_api <- function(email, key, countries = NULL, regions = NULL,
   return(out)
 
 }
-
-

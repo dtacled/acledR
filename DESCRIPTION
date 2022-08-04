@@ -4,8 +4,7 @@ Title: Manipulate ACLED Data
 Version: 0.1.0
 Author: ACLED
 Maintainer: Trey Billing <t.billing@acleddata.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: The package allows users to easily interact with ACLED data by providing wrappers for the API and other functions to manipulate ACLED data. 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
@@ -20,7 +19,7 @@ Imports:
     janitor,
     rlang,
     stats
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 URL: https://github.com/billingtt/acledR,

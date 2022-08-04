@@ -1,0 +1,65 @@
+
+#' @title Transform ACLED data from wide to long
+#' @name acled_transform
+#' @description Function to convert your ACLED's API calls (if dyadic) into desired monadic forms.
+#' @param data, Dataframe or tibble containing your dataset.
+#' @param type, character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
+#' \itemize{
+#' \item full_actors: All actor and associated actor columns
+#' \item main_actors: Actor 1 and Actor 2 columns
+#' \item assoc_actors: All associated actor columns
+#' \item source: The source column becomes monadic
+#' \item all: All actor, associated actor and source columns become monadic
+#' }
+#' @return
+#' A tibble with the data transformed into long form.
+#' @examples
+#' \dontrun{
+#' argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",end_date="2022-02-01") # To get the data
+#'
+#' argen_acled_long_actors <- acled_transform(argen_acled, type = "full_actor") # Transforming the data
+#'
+#' nrow(argen_acled_long_actors) # Number of rows in the dataset
+#' [1] 263 # Long form
+#'
+#' nrow(argen_acled) ) # Number of rows in the dataset
+#' [1] 145 # Wide form
+#' }
+#' @seealso [acled_api()]
+#' @md
+#' @export
+
+
+
+acled_transform <- function(data,type="full_actor"){ ## types: full_actors, main_actors,assoc_actors,source, all
+
+  if(type == "full_actors") { ## full actor -> pivot + separate into rows all actor columns
+    separated_data <- data %>%
+      pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
+      separate_rows(actor, sep = ";") %>%
+      filter(actor != "") %>%
+      relocate(c("type_of_actor","actor"),.after="sub_event_type")
+  }else if (type == "main_actors"){ ## main_actors -> only pivot actor columns
+    separated_data <- data %>%
+      pivot_longer(cols = c("actor1","actor2"),names_to = "type_of_actor",values_to = "actor") %>%
+      filter(actor != "") %>%
+      relocate(c("type_of_actor","actor"),.after="sub_event_type")
+  }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
+    separated_data <- data %>%
+      pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
+      separate_rows(assoc_actor, sep = ";") %>%
+      relocate(c("type_of_assoc_actor","assoc_actor"),.after="sub_event_type")
+  }else if(type == "source"){
+    separated_data <- data %>%
+      separate_rows(source, sep = ";") %>%
+      mutate(source = str_trim(source,side = "both")) %>%
+      relocate(source,.before="source_scale")
+  }else if(type == "all"){
+    separated_data <- data %>%
+      pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
+      separate_rows(c("actor","source"), sep = ";") %>%
+      filter(actor != "") %>%
+      relocate(c("type_of_actor","actor"),.after="sub_event_type") %>%
+      relocate(source, .before = "source_scale")
+  }
+}

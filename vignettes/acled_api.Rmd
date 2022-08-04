@@ -1,5 +1,5 @@
 ---
-title: "ACLED API"
+title: "Accessing and Utilizing ACLED's API"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{acled_api}
@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 `acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
 
 ```{r, eval = F}
@@ -31,35 +30,53 @@ acled_api(
 )
 ```
 
-The email and key must be those associated with your ACLED account registered at developer.acleddata.com. These can be passed as character strings, though I recommend storing them as an environmental variable so you can call them without pasting every session (and for security reasons). To do so, run:
+## Access to the API
+
+The email and key must be those associated with your ACLED account registered at [ACLED's Access Portal](developer.acleddata.com). Once you acquired your credentials (email and key), you can either utilize `acled_access()` to store these in the environment for a given session, or manually store them in the enviorment file to utilize them permanently across every session. 
+
+To utilize `acled_access()`, run the following:
+
+```{r,eval=F}
+acled_access("your_email","your_key") # to be run every session before doing an API call. 
+```
+
+Alternatively, to manually store them as an environmental variable so you can call them without pasting every session (and for security reasons), run:
+
 ```{r, eval = F}
 file.edit(file.path("~", ".Renviron"))
 ```
+
 which will open your `.Renviron` file. Once there, set:
+
 ```{r, eval = F}
 Sys.setenv(email_address = "YourEmail")
 Sys.setenv(acled_key = "YourKey")
 ```
-and save the file. If you run `Sys.getenv("email_address")`, your associated email will print; if you run `Sys.getenv("acled_key")`, your ACLED key will print. 
 
-The `countries` and `regions` parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, only Nigeria will be returned since Mexico is not in Western Africa. 
+and save the file. If you run `Sys.getenv("email_address")`, your associated email will print; if you run `Sys.getenv("acled_key")`, your ACLED key will print.
 
-The `start_date` and `end_date` parameters specify the time period requested in "yyyy-mm-dd" format. If NULL, all available time periods available will be returned. If either start or end date is NULL, both must be NULL or an error is returned. 
+## Parameters for the API
 
-`monadic` is a logical parameter, which is FALSE by default and returns the dyadic version of the data. If set to TRUE, the monadic version will be returned. 
+The `countries` and `regions` parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, only Nigeria will be returned since Mexico is not in Western Africa.
 
-To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting. 
+The `start_date` and `end_date` parameters specify the time period requested in "yyyy-mm-dd" format. If NULL, all available time periods available will be returned. If either start or end date is NULL, both must be NULL or an error is returned.
 
+`monadic` is a logical parameter, which is FALSE by default and returns the dyadic version of the data . If set to TRUE, the monadic version based on actor 1 and actor 2 will be returned.
 
+## Example
 
-```{r}
+To see how this works in practice, here's an example calling just Brazil since January 2022. Note that I call my email and key directly with `Sys.getenv()` rather than pasting, and I set `acled_acess=FALSE`. If before hand I would have run `acled_access()` then I would have ignored email and key, and set `acled_access = TRUE`.
+
+```{r} 
+#change eval to T
 library(acledR)
 df_br <- acled_api(email = Sys.getenv("email_address"),
                    key = Sys.getenv("acled_key"),
                    countries = c("Brazil"),
                    start_date = "2022-01-01",
                    end_date = "2022-05-09",
-                   monadic = F)
+                   monadic = F,
+                   acled_access = FALSE)
 ```
 
 The results return a tibble with each ACLED event in Brazil during this time period:
@@ -68,8 +85,6 @@ The results return a tibble with each ACLED event in Brazil during this time per
 df_br %>% 
   dplyr::glimpse()
 ```
-
-
 
 If instead we wanted multiple countries, we could execute:
 
@@ -93,8 +108,7 @@ df_sa <- acled_api(email = Sys.getenv("email_address"),
                    monadic = F)
 ```
 
-
-We could also request the monadic version of the data by setting `monadic = TRUE`:
+We could also request the monadic version of the data based on actor 1 and actor 2 by setting `monadic = TRUE`:
 
 ```{r}
 df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
@@ -106,5 +120,3 @@ df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
 ```
 
 In both the dyadic and monadic versions, the API returns `r length(unique(df_sa$event_id_cnty))` unique events. However, the number of unique entries for the dyadic version is also `r length(df_sa$event_id_cnty)`, while it's `r length(df_sa_monadic$event_id_cnty)` for the monadic version.
-
-
