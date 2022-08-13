@@ -14,9 +14,27 @@
 #' @export
 #' @md
 
+
 acled_access <- function(email,key) {
 
-  Sys.setenv(acled_email = email)
-  Sys.setenv(acled_key = key)
+  url <- paste0("https://api.acleddata.com/check/read/?email=",email,"&","key=",key)
 
+
+  response <- httr::GET(url) ## I added the direct reference to httr here because when I reinstalled R and R studio, it kept giving an error that it couldn't find GET.
+  out <- httr::content(response)
+
+  if (out$status != 200) {
+    if ((out$error$message) == "Access key and email address are not authorized") {
+      stop(paste0("Error: ",out$error$message, ". Error code: ", out$status,". \n"
+                  ,rlang::format_error_bullets(c("Please verify your API credentials (key and email) and try again",
+                                                 "If the error persists please contact us at access@acleddata.com."))))
+    } else {
+      stop(paste0("Error: ",out$error$message, ". Error code: ", out$status))
+    }} else {
+
+      Sys.setenv(acled_email = email)
+      Sys.setenv(acled_key = key)
+
+      return(out$messages)
+    }
 }

@@ -1,5 +1,10 @@
 ---
 title: "ACLED Codebook"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r, include = FALSE}
@@ -12,18 +17,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-Pages under the ACLED Codebook tab describe the variables in the ACLED data and shows provides usage examples via the `acledR` package. Users should consult the complete guide summarizing ACLED's methodology at [here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Codebook_v1_January-2021.pdf) for more details on each variable. 
+Pages under the ACLED Codebook tab describe the variables in the ACLED data and shows provides usage examples via the `acledR` package. Users should consult the complete guide summarizing ACLED's methodology at [here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Codebook_v1_January-2021.pdf) for more details on each variable.
 
 # ACLED Overview
 
 The ACLED project codes reported information on the type, agents, location, date, and other characteristics of political violence events, demonstrations and select politically relevant non-violent events. ACLED focuses on tracking a range of violent and non-violent actions by political agents, including governments, rebels, militias, identity groups, political parties, external actors, rioters, protesters and civilians.
 
-Political violence is defined as the use of force by a group with a political purpose or motivation. ACLED records political violence through its constituent events, the intent of which is to produce a comprehensive overview of all forms of political disorder, expressed through violence and demonstrations, within and across states. A politically violent event is a single altercation where often force is used by one or more groups toward a political end, although some non-violent instances – including protests and strategic developments – are included in the dataset to capture the potential pre-cursors or critical junctures of a violent conflict. 
+Political violence is defined as the use of force by a group with a political purpose or motivation. ACLED records political violence through its constituent events, the intent of which is to produce a comprehensive overview of all forms of political disorder, expressed through violence and demonstrations, within and across states. A politically violent event is a single altercation where often force is used by one or more groups toward a political end, although some non-violent instances -- including protests and strategic developments -- are included in the dataset to capture the potential pre-cursors or critical junctures of a violent conflict.
 
-The fundamental unit of observation in ACLED is the _event_. Events involve designated actors – e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day. 
-
-
+The fundamental unit of observation in ACLED is the *event*. Events involve designated actors -- e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day.
 
 # Variable List {#variable-list}
 
@@ -36,4 +38,3 @@ acledR::acled_codebook %>%
   column_spec(2, width = "20em") %>% 
   column_spec(3, width = "50em")
 ```
-

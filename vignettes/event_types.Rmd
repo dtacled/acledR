@@ -1,6 +1,9 @@
 ---
 title: "Event and Sub-Event Types"
 ---
+Not to be included yet:
+ - With rachel we discussed how much of document we wanted related to methodology. As it stands, this is a very heavy methodological piece, which perhaps would be better of to be re-directed to the actual codebook. 
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -148,6 +151,8 @@ The following sub-event types are associated with the 'Protests' event type: 'Pe
 ## Non-Violent Actions
 
 ### Strategic Developments:
+
+In some cases, ACLED also records events which are not necesarrily politically violent events. 
 
 -   Agreement
 -   Arrests

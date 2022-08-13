@@ -11,7 +11,9 @@ acled_api(
   regions = NULL,
   start_date = NULL,
   end_date = NULL,
+  timestamp = NULL,
   monadic = FALSE,
+  ...,
   acled_access = TRUE
 )
 }
@@ -27,6 +29,8 @@ acled_api(
 \item{start_date}{character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.}
 
 \item{end_date}{character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.}
+
+\item{timestamp}{numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.}
 
 \item{monadic}{logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.}
 
@@ -57,7 +61,6 @@ carib_acled
 \seealso{
 \itemize{
 \item ACLED API guide. \url{https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf}
-\item \code{\link[=acled_transform]{acled_transform()}}
 }
 
 Other API and Access: 

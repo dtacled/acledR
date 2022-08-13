@@ -8,13 +8,13 @@
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
+#' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
 #' @param acled_access logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
 #' \itemize{
 #' \item ACLED API guide. <https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf>
-#' \item [acled_transform()]
 #' }
 #' @examples
 #' \dontrun{
@@ -37,7 +37,7 @@
 #' @export
 
 acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
-                      start_date = NULL, end_date = NULL, monadic = FALSE, acled_access = TRUE) {
+                      start_date = NULL, end_date = NULL, timestamp = NULL, monadic = FALSE,..., acled_access = TRUE) {
 
   if(acled_access == TRUE){   # My suggestion on how to add the acledd_acess function or something for the user to store their keys (and in the future authenticate them prior to making a call)
     email <- Sys.getenv("acled_email")
@@ -108,8 +108,65 @@ acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
   }
 
   # What
-  ## TO DO (event types, inter codes)
 
+  # From when - timestamp
+
+  if(!is.null(timestamp)) {
+
+    timestamp_into_date <- tryCatch({
+
+      lubridate::ymd(timestamp)
+
+      timestamp_into_date <- "string"
+    },
+    warning = function(w){
+      a <- "numerical"
+    },
+    error = function(e){
+      a <- "numerical"
+    })
+
+    if(timestamp_into_date == "string"){
+      timestamp_parsable <- lubridate::ymd(timestamp)
+      do_i_include_timestamp <- "Yes"
+    } else {
+      timestamp_parsable <- tryCatch({
+        lubridate::date(lubridate::as_datetime(timestamp))
+        do_i_include_timestamp <- "Yes_but_numerical"
+
+      },
+      warning = function(w){
+        za <- utils::menu(c("Yes","No"),title=paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n","Do you want me to continue and ignore timestamp?"))
+        if(za == 1){
+          assign("do_i_include_timestamp","No")} else{
+            stop("User requested to abort when timestamp was not recognized.")
+          }
+      },
+      error = function(e){
+        stop("User requested to abort when timestamp was not recognized.")})
+
+    }
+
+
+    if(do_i_include_timestamp == "Yes"){
+      if(timestamp_parsable > lubridate::now()) {
+        stop("The timestamp cannot be later than today. Please change the timestamp and try again.")
+      }
+      else if(is.na(timestamp_parsable)){
+        stop("The timestamp must be formated as YYYY-MM-DD")
+      }
+      else{
+        timestamp_internal <- paste0("&timestamp=", timestamp_parsable)}
+    }
+    else if(do_i_include_timestamp == "Yes_but_numerical"){
+      timestamp_internal <- paste0("&timestamp=", timestamp)
+    }
+    else{
+      timestamp_internal <- "&timestamp="}}
+  else{
+    timestamp_internal <- "&timestamp="}
+
+  # How
   if(isTRUE(monadic))
     monadic_internal <- "&export_type=monadic"
   else
@@ -119,7 +176,7 @@ acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
   url <- paste0(base_url, monadic_internal,
                 email_internal, key_internal,
                 countries_internal, regions_internal,
-                dates_internal,
+                dates_internal,timestamp_internal,...,
                 "&limit=0")
 
   try
