@@ -8,8 +8,8 @@
 <meta name="description" content="acledR">
 <title>Actors and Interactions • acledR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Actors and Interactions">
 <meta property="og:description" content="acledR">
@@ -36,7 +36,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="../docs/index.html">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home"></span>
      
   </a>
@@ -85,7 +85,7 @@
 
 <script src="actors_interactions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="actors_interactions_files/kePrint-0.0.1/kePrint.js"></script><link href="actors_interactions_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Actors and Interactions</h1>
             
       
@@ -216,7 +216,7 @@ Small categories of “other” actors include international organisations, stat
 <h2 id="joined-interaction-codes">Joined Interaction Codes<a class="anchor" aria-label="anchor" href="#joined-interaction-codes"></a>
 </h2>
 <p>The joined interaction code is the combination of the two <code>inter</code> codes associated with the two main actors. Single actor type codes are recorded in <code>inter1</code> and <code>inter2</code> columns, and the compounded number is recorded in the <code>interaction</code> column. For example, if a country’s military fights a political militia group, and the respective <code>inter1</code> and <code>inter2</code> codes are “1” and “3”, respectively, the compounded Interaction is recorded as “13”.</p>
-<p>Interaction numbers are always the smallest possible number (for example, 37 instead of 73), regardless of the order of <code>actor1</code> and <code>actor2</code>. Interaction codes are recorded for all events, including non-violent activity. For one-sided events, the empty second actor category is coded as “0”. If a non-violent rebel event occurs where only <code>inter1</code> is noted with a “2”, “20” is coded in the <code>interaction</code> column. Only the main actors recorded in the “actor1” and “actor2” columns are the basis for the interaction codes.</p>
+<p>Interaction numbers are always the smallest possible number (for example, 37 instead of 73), regardless of the order of <code>actor1</code> and <code>actor2</code>. Interaction codes are recorded for all events, including non-violent activity. For one-sided events, the empty second actor category is coded as “0”. If a non-violent rebel event occurs where only <code>inter1</code> is noted with a “2”, “20” is coded in the <code>interaction</code> column. Only the main actors recorded in the <code>actor1</code> and <code>actor2</code> columns are the basis for the interaction codes.</p>
 <table class="table kable_wrapper table" style="font-size: 10px; margin-left: auto; margin-right: auto;"><tbody><tr>
 <td>
 <table class="table table table-striped" style="margin-left: auto; margin-right: auto;"><tbody>
@@ -623,89 +623,90 @@ Sole other Action
 </h2>
 <p>As an example of the actors and interactions in ACLED, let’s consider Yemen in January 2022 using the <code><a href="../reference/acled_api.html">acled_api()</a></code> function to call the API (read about conflict in Yemen at <a href="https://acleddata.com/middle-east/yemen/" class="external-link">ACLED’s Yemen Research Hub</a>):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span>
-<span class="va">df_yemen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>,
-                      key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span>,
-                      countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yemen"</span><span class="op">)</span>,
-                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,
-                      end_date <span class="op">=</span> <span class="st">"2022-01-31"</span>,
-                      monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; $Success</span></span>
+<span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
+<span><span class="va">df_yemen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yemen"</span><span class="op">)</span>,</span>
+<span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
+<span>                      end_date <span class="op">=</span> <span class="st">"2022-01-31"</span>,</span>
+<span>                      monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>During this month, there were 894 ACLED events, 28 unique <code>actor1</code> entries, and 24 unique <code>actor2</code> entries.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># number of ACLED events</span>
-<span class="va">df_yemen</span><span class="op">$</span><span class="va">event_id_cnty</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 894</span>
-<span class="co"># number of unique actor1s</span>
-<span class="va">df_yemen</span><span class="op">$</span><span class="va">actor1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 28</span>
-<span class="co"># number of unique actor2s</span>
-<span class="va">df_yemen</span><span class="op">$</span><span class="va">actor2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 24</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># number of ACLED events</span></span>
+<span><span class="va">df_yemen</span><span class="op">$</span><span class="va">event_id_cnty</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 895</span></span>
+<span><span class="co"># number of unique actor1s</span></span>
+<span><span class="va">df_yemen</span><span class="op">$</span><span class="va">actor1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 28</span></span>
+<span><span class="co"># number of unique actor2s</span></span>
+<span><span class="va">df_yemen</span><span class="op">$</span><span class="va">actor2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 24</span></span></code></pre></div>
 <p>The most common <code>actor1</code> was “Operation Restoring Hope”, accounting for over 50% of events.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">actor1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;                                                      actor1   n percent</span>
-<span class="co">#&gt;                                    Operation Restoring Hope 460    0.51</span>
-<span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 145    0.16</span>
-<span class="co">#&gt;                                              Giants Brigade 115    0.13</span>
-<span class="co">#&gt;                            Military Forces of Yemen (2012-)  70    0.08</span>
-<span class="co">#&gt;                            Unidentified Armed Group (Yemen)  22    0.02</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">actor1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                                      actor1   n percent</span></span>
+<span><span class="co">#&gt;                                    Operation Restoring Hope 460    0.51</span></span>
+<span><span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 146    0.16</span></span>
+<span><span class="co">#&gt;                                              Giants Brigade 115    0.13</span></span>
+<span><span class="co">#&gt;                            Military Forces of Yemen (2012-)  70    0.08</span></span>
+<span><span class="co">#&gt;                            Unidentified Armed Group (Yemen)  22    0.02</span></span></code></pre></div>
 <p>We can see that “Operation Restoring Hope” is coded with <code>inter1 = 8</code>, indicating that this actor falls in the “External/Other Forces” category.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor1</span> <span class="op">==</span> <span class="st">"Operation Restoring Hope"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">pull</span><span class="op">(</span><span class="va">inter1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 8</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor1</span> <span class="op">==</span> <span class="st">"Operation Restoring Hope"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">inter1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 8</span></span></code></pre></div>
 <p>The most common <code>actor2</code> was <code>NA</code> at 43%, indicating that no <code>actor2</code> was coded for these events. The next most frequent <code>actor2</code> was the Military Forces of Yemen.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">actor2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">valid_percent</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;                                                      actor2   n    percent</span>
-<span class="co">#&gt;                                                        &lt;NA&gt; 384 0.42953020</span>
-<span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 301 0.33668904</span>
-<span class="co">#&gt;                                           Civilians (Yemen) 111 0.12416107</span>
-<span class="co">#&gt;                            Military Forces of Yemen (2012-)  29 0.03243848</span>
-<span class="co">#&gt;                                              Giants Brigade  24 0.02684564</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">actor2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">valid_percent</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                                      actor2   n    percent</span></span>
+<span><span class="co">#&gt;                                                        &lt;NA&gt; 384 0.42905028</span></span>
+<span><span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 301 0.33631285</span></span>
+<span><span class="co">#&gt;                                           Civilians (Yemen) 112 0.12513966</span></span>
+<span><span class="co">#&gt;                            Military Forces of Yemen (2012-)  29 0.03240223</span></span>
+<span><span class="co">#&gt;                                              Giants Brigade  24 0.02681564</span></span></code></pre></div>
 <p>Inspecting further, we see from the joined <code>interaction</code> column that most events were coded as “Sole other Action”, mostly from the activity of “Operation Restoring Hope”.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;  interaction   n percent</span>
-<span class="co">#&gt;           80 324    0.36</span>
-<span class="co">#&gt;           13 154    0.17</span>
-<span class="co">#&gt;           18 110    0.12</span>
-<span class="co">#&gt;           11  95    0.11</span>
-<span class="co">#&gt;           17  54    0.06</span>
-
-<span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor1</span> <span class="op">==</span> <span class="st">"Operation Restoring Hope"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;  interaction   n percent</span>
-<span class="co">#&gt;           80 320    0.70</span>
-<span class="co">#&gt;           18 103    0.22</span>
-<span class="co">#&gt;           78  34    0.07</span>
-<span class="co">#&gt;           38   3    0.01</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  interaction   n percent</span></span>
+<span><span class="co">#&gt;           80 324    0.36</span></span>
+<span><span class="co">#&gt;           13 154    0.17</span></span>
+<span><span class="co">#&gt;           18 110    0.12</span></span>
+<span><span class="co">#&gt;           11  95    0.11</span></span>
+<span><span class="co">#&gt;           17  55    0.06</span></span>
+<span></span>
+<span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor1</span> <span class="op">==</span> <span class="st">"Operation Restoring Hope"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  interaction   n percent</span></span>
+<span><span class="co">#&gt;           80 320    0.70</span></span>
+<span><span class="co">#&gt;           18 103    0.22</span></span>
+<span><span class="co">#&gt;           78  34    0.07</span></span>
+<span><span class="co">#&gt;           38   3    0.01</span></span></code></pre></div>
 <p>Using the <code>sub_event_type</code> column in tandem with the <code>actor1</code> column, we see that “Operation Restoring Hope” mostly conducted air/drone strikes over this period.</p>
-<pre><code><span class="co">#&gt;                     sub_event_type   n percent</span>
-<span class="co">#&gt;                   Air/drone strike 439    0.95</span>
-<span class="co">#&gt;  Shelling/artillery/missile attack  11    0.02</span>
-<span class="co">#&gt;                             Attack   2    0.00</span>
-<span class="co">#&gt;           Change to group/activity   2    0.00</span>
-<span class="co">#&gt;              Disrupted weapons use   2    0.00</span></code></pre>
+<pre><code><span><span class="co">#&gt;                     sub_event_type   n percent</span></span>
+<span><span class="co">#&gt;                   Air/drone strike 439    0.95</span></span>
+<span><span class="co">#&gt;  Shelling/artillery/missile attack  11    0.02</span></span>
+<span><span class="co">#&gt;                             Attack   2    0.00</span></span>
+<span><span class="co">#&gt;           Change to group/activity   2    0.00</span></span>
+<span><span class="co">#&gt;              Disrupted weapons use   2    0.00</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -720,7 +721,7 @@ Sole other Action
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
