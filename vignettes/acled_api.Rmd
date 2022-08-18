@@ -90,11 +90,10 @@ Finally, the acled_access parameter is used to let the function know that you ha
 
 To see how this works in practice, we will display an example where we are trying to gather data of events in Brazil from January 2022 to now. 
 
-```{r} 
-#change eval to T
+```{r, eval = F} 
 library(acledR)
 
-acled_access(email = "acledexamples@gmail.com",key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
 df_br <- acled_api(countries = c("Brazil"),
                    start_date = "2022-01-01",
@@ -102,6 +101,19 @@ df_br <- acled_api(countries = c("Brazil"),
                    monadic = F,
                    acled_access = TRUE)
 ```
+
+```{r, echo = F} 
+library(acledR)
+
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) #  This is an example, you will need to input your credentials.
+
+df_br <- acled_api(countries = c("Brazil"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-05-09",
+                   monadic = F,
+                   acled_access = TRUE)
+```
+
 
 The results return a tibble with each ACLED event in Brazil during this time period:
 

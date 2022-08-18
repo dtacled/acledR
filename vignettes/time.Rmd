@@ -44,9 +44,8 @@ tibble(time_precision = c(1, 2, 3),
 
 ```{r, echo = T}
 library(acledR)
-df_france <- acled_api(email = Sys.getenv("email_address"),
-                       key = Sys.getenv("acled_key"),
-                       countries = c("France"),
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+df_france <- acled_api(countries = c("France"),
                        start_date = "2021-01-01",
                        end_date = "2021-12-31",
                        monadic = F)

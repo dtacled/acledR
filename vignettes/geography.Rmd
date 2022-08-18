@@ -67,9 +67,8 @@ On the example below we will explore events distribution across Nigeria by utili
 
 ```{r, echo = T}
 library(acledR)
-df_nigeria <- acled_api(email = Sys.getenv("acled_email"),
-                        key = Sys.getenv("acled_key"),
-                        countries = c("Nigeria"),
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+df_nigeria <- acled_api(countries = c("Nigeria"),
                         start_date = "2022-01-01",
                         end_date = "2022-01-31",
                         monadic = F,

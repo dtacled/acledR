@@ -169,9 +169,8 @@ To see how event types and sub-event types look in practice, let's pull data fro
 
 ```{r, echo = T}
 library(acledR)
-df_haiti <- acled_api(email = Sys.getenv("email_address"),
-                   key = Sys.getenv("acled_key"),
-                   countries = c("Haiti"),
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+df_haiti <- acled_api(countries = c("Haiti"),
                    start_date = "2022-01-01",
                    end_date = "2022-03-31",
                    monadic = F)

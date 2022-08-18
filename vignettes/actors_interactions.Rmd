@@ -174,9 +174,8 @@ As an example of the actors and interactions in ACLED, let's consider Yemen in J
   
 ```{r, echo = T}
 library(acledR)
-df_yemen <- acled_api(email = Sys.getenv("email_address"),
-                      key = Sys.getenv("acled_key"),
-                      countries = c("Yemen"),
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+df_yemen <- acled_api(countries = c("Yemen"),
                       start_date = "2022-01-01",
                       end_date = "2022-01-31",
                       monadic = F)

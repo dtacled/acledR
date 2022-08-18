@@ -40,9 +40,8 @@ As an example, we can take the data for South America.
 
 ```{r}
 library(acledR)
-df_sa <- acled_api(email = Sys.getenv("email_address"),
-                   key = Sys.getenv("acled_key"),
-                   regions = c("South America"),
+acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
                    monadic = F)
@@ -122,9 +121,7 @@ africa_regions <- c("Western Africa",
                     "Southern Africa",
                     "Northern Africa")
 
-df_africa <- acled_api(email = Sys.getenv("email_address"),
-                       key = Sys.getenv("acled_key"),
-                       regions = africa_regions,
+df_africa <- acled_api(regions = africa_regions,
                        start_date = "2018-01-01",
                        end_date = "2022-04-30",
                        monadic = F)
