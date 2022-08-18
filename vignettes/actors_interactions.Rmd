@@ -61,7 +61,7 @@ tibble(`Interaction Code` = 1:8,
 
 The joined interaction code is the combination of the two `inter` codes associated with the two main actors. Single actor type codes are recorded in `inter1` and `inter2` columns, and the compounded number is recorded in the `interaction` column. For example, if a country’s military fights a political militia group, and the respective `inter1` and `inter2` codes are "1" and "3", respectively, the compounded Interaction is recorded as "13". 
 
-Interaction numbers are always the smallest possible number (for example, 37 instead of 73), regardless of the order of `actor1` and `actor2`. Interaction codes are recorded for all events, including non-violent activity. For one-sided events, the empty second actor category is coded as "0". If a non-violent rebel event occurs where only `inter1` is noted with a "2", "20" is coded in the `interaction` column. Only the main actors recorded in the "actor1" and "actor2" columns are the basis for the interaction codes.
+Interaction numbers are always the smallest possible number (for example, 37 instead of 73), regardless of the order of `actor1` and `actor2`. Interaction codes are recorded for all events, including non-violent activity. For one-sided events, the empty second actor category is coded as "0". If a non-violent rebel event occurs where only `inter1` is noted with a "2", "20" is coded in the `interaction` column. Only the main actors recorded in the `actor1` and `actor2` columns are the basis for the interaction codes.
 
 ```{r}
 

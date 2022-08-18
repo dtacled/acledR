@@ -1,6 +1,7 @@
-#' Calculate actor concentration indices from ACLED data
+#' @title Calculate actor concentration indices from ACLED data
+#' @name calculate_actor_index
 #'
-#' @param events Vector of event counts per actor.
+#' @param events Vector of outcomes per actor (i.e., event counts or fatalities).
 #' @param method Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.
 #' @return Returns a data.frame of the index value, number of unique actors, and average number of events per actor.
 #'

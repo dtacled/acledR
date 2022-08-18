@@ -8,7 +8,7 @@
 #' \dontrun{
 #' acled_access("joe.doe\\@email.com","random_sequence_of_numbers_and_letters")
 #' Sys.getenv("acled_key")
-#' [1] "random_sequence_of_numbers_and_letters"
+#' "random_sequence_of_numbers_and_letters"
 #' }
 #' @seealso ACLED API Access guide. <https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf>
 #' @export

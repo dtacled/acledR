@@ -7,7 +7,7 @@
 calculate_actor_index(events, method = "Effective actors")
 }
 \arguments{
-\item{events}{Vector of event counts per actor.}
+\item{events}{Vector of outcomes per actor (i.e., event counts or fatalities).}
 
 \item{method}{Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.}
 }
