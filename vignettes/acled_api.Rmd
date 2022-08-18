@@ -17,11 +17,11 @@ knitr::opts_chunk$set(
 ```
 
 
-The workflow of this package is as follows:
-  1. Validate and store your credentials with acled_access().
-  2. Download data with acled_api().
-  3. (Optional) Transform your data from wide form (dyadic) to long form (monadic) with acled_transform().
-  4. (Optional) Do some basic statistics with generate_counts() and generate_movers(). 
+<!-- The workflow of this package is as follows: -->
+<!--   1. Validate and store your credentials with acled_access(). -->
+<!--   2. Download data with acled_api(). -->
+<!--   3. (Optional) Transform your data from wide form (dyadic) to long form (monadic) with acled_transform(). -->
+<!--   4. (Optional) Do some basic statistics with generate_counts() and generate_movers().  -->
   
 
 ## Access to the API

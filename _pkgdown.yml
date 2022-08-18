@@ -6,7 +6,7 @@ navbar:
   title: acledR
   left:
   - icon: fa-home
-    href: docs/index.html
+    href: index.html
   - text: Reference
     href: reference/index.html
   - text: Articles
