@@ -5,11 +5,12 @@
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries,
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions,
+#' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
-#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.
+#' @param acled_access logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
@@ -43,6 +44,7 @@ acled_api <- function(email = NULL,
                       start_date = NULL,
                       end_date = NULL,
                       timestamp = NULL,
+                      event_types = NULL,
                       monadic = FALSE,
                       ...,
                       acled_access = TRUE) {
@@ -99,7 +101,8 @@ acled_api <- function(email = NULL,
   }
 
 
-  # When
+
+  # Dates
   if(!is.null(start_date) & !is.null(end_date)) {
     dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
   }
@@ -115,10 +118,8 @@ acled_api <- function(email = NULL,
     dates_internal <- ""
   }
 
-  # What
 
-  # From when - timestamp
-
+  # Timestamps
   if(!is.null(timestamp)) {
 
     timestamp_into_date <- tryCatch({
@@ -144,7 +145,8 @@ acled_api <- function(email = NULL,
 
       },
       warning = function(w){
-        za <- utils::menu(c("Yes","No"),title=paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n","Do you want me to continue and ignore timestamp?"))
+        za <- utils::menu(c("Yes","No"),
+                          title=paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n","Do you want me to continue and ignore timestamp?"))
         if(za == 1){
           assign("do_i_include_timestamp","No")} else{
             stop("User requested to abort when timestamp was not recognized.")
@@ -181,11 +183,28 @@ acled_api <- function(email = NULL,
     monadic_internal <- ""
 
 
+
+  # Event types
+  if(!is.null(event_types)) {
+    event_types <- str_to_upper(event_types)
+    if(FALSE %in% unique(event_types %in% str_to_upper(c("Battles", "Violence against civilians", "Protests",
+                                       "Riots", "Strategic Developments", "Explosions/Remote violence")))) {
+      stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
+    }
+
+    event_types_internal <- paste0("&event_type=", paste(gsub("\\s{1}", "%20", event_types), collapse = ":OR:event_type="))
+  }
+  else
+    event_types_internal <- ""
+
+
+
+
   url <- paste0(base_url, monadic_internal,
                 email_internal, key_internal,
                 countries_internal, regions_internal,
-                dates_internal, timestamp_internal, ...,
-                "&limit=0")
+                dates_internal, timestamp_internal,
+                event_types_internal, ..., "&limit=0")
 
   try
 

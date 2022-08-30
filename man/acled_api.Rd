@@ -12,6 +12,7 @@ acled_api(
   start_date = NULL,
   end_date = NULL,
   timestamp = NULL,
+  event_types = NULL,
   monadic = FALSE,
   ...,
   acled_access = TRUE
@@ -32,9 +33,11 @@ acled_api(
 
 \item{timestamp}{numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.}
 
+\item{event_types}{vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.}
+
 \item{monadic}{logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.}
 
-\item{acled_access}{logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.}
+\item{acled_access}{logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.}
 }
 \value{
 Returns a tibble of of ACLED events.
