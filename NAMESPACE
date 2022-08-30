@@ -3,6 +3,7 @@
 export("%>%")
 export(acled_access)
 export(acled_api)
+export(acled_deletions_api)
 export(calculate_actor_index)
 export(generate_counts)
 export(generate_movers)

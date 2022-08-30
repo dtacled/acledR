@@ -16,15 +16,16 @@ Simple function to store (through \code{Sys.setenv()} ) ACLED access keys for th
 }
 \examples{
 \dontrun{
-acled_access("joe.doe\\\\@email.com","random_sequence_of_numbers_and_letters")
-Sys.getenv("acled_key")
-[1] "random_sequence_of_numbers_and_letters"
+# acled_access("joe.doe\\@email.com","random_sequence_of_numbers_and_letters")
+# Sys.getenv("acled_key")
+# "random_sequence_of_numbers_and_letters"
 }
 }
 \seealso{
 ACLED API Access guide. \url{https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf}
 
 Other API and Access: 
-\code{\link{acled_api}()}
+\code{\link{acled_api}()},
+\code{\link{acled_deletions_api}()}
 }
 \concept{API and Access}

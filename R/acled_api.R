@@ -36,10 +36,18 @@
 #'
 #' @export
 
-acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
-                      start_date = NULL, end_date = NULL, timestamp = NULL, monadic = FALSE,..., acled_access = TRUE) {
+acled_api <- function(email = NULL,
+                      key = NULL,
+                      countries = NULL,
+                      regions = NULL,
+                      start_date = NULL,
+                      end_date = NULL,
+                      timestamp = NULL,
+                      monadic = FALSE,
+                      ...,
+                      acled_access = TRUE) {
 
-  if(acled_access == TRUE){   # My suggestion on how to add the acledd_acess function or something for the user to store their keys (and in the future authenticate them prior to making a call)
+  if(acled_access == TRUE){
     email <- Sys.getenv("acled_email")
     key <- Sys.getenv("acled_key")
   }
@@ -176,16 +184,16 @@ acled_api <- function(email=NULL,key=NULL, countries = NULL, regions = NULL,
   url <- paste0(base_url, monadic_internal,
                 email_internal, key_internal,
                 countries_internal, regions_internal,
-                dates_internal,timestamp_internal,...,
+                dates_internal, timestamp_internal, ...,
                 "&limit=0")
 
   try
 
-  response <- httr::GET(url) ## I added the direct reference to httr here because when I reinstalled R and R studio, it kept giving an error that it couldn't find GET.
+  response <- httr::GET(url)
 
-  if(response[["status_code"]] == 500) { ## In an effort to reduce the amount of people asking us questions which are really Access related, I am adding some more specificity to the messages
+  if(response[["status_code"]] == 500) {
     stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n",rlang::format_error_bullets(c("Make sure you have not execeeded your API calls (2/year for a standard account)","Verify your API credentials (key and email)", "If nothing works contact us through GitHub Issues or at access@acleddata.com."))))
-  } else if(response[["status_code"]] == 503 | response[["status_code"]] == 502){ ## I cannot test this one, and I got the error codes from a generic webpage, so perhaps they are not quite so. Needs testing.
+  } else if(response[["status_code"]] == 503 | response[["status_code"]] == 502){
     stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n","Our server may be under maintenance or it may momentarily be unavailable; please try again in a couple of minutes."))
   }
 

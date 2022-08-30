@@ -64,6 +64,7 @@ carib_acled
 }
 
 Other API and Access: 
-\code{\link{acled_access}()}
+\code{\link{acled_access}()},
+\code{\link{acled_deletions_api}()}
 }
 \concept{API and Access}
