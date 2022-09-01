@@ -34,6 +34,7 @@
 #' }
 #' @md
 #' @import httr
+#' @import stringr
 #'
 #' @export
 
