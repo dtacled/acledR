@@ -4,7 +4,7 @@
 # Overview
 
 This package provides tools to extract and manipulate data from the
-[Armed Conflict Event and Location Data Project
+[Armed Conflict Location and Event Data Project
 (ACLED)](https://acleddata.com/).
 
 To access ACLED data, please register an account at
@@ -59,7 +59,7 @@ PAT.
 devtools::install_github("billingtt/acledR")
 ```
 
-## Installation (for public use) **I’m adding these to prepare the package for launch**
+## Installation (for public use)
 
 Until the acledR package gets added into the Comprehensive R Archive
 Network (CRAN), users can utilize devtools to install the package from
