@@ -7,8 +7,39 @@
 #' @param slide_funs Requested moving statistics. Character vector with options including mean, median, sd, min, and max.
 #' @param slide_periods How many periods in the past to summarize over. Vector of one or more integers. Inf includes all previous periods.
 #' @param na.rm  Whether to include NAs in the calculations.
-#' @param complete Whether to requre at least the requested time horizon to lapse prior to calculating moving statistics. For example, if slide_periods = 4, this would return NAs for the first 4 periods in the data and only begin calculating the moving statistic in the fifth time period. If FALSE, moving statistics for all available time periods are calculated, even if the requested time horizon has not elapsed.
+#' @param complete Whether to reqiure at least the requested time horizon to lapse prior to calculating moving statistics. For example, if slide_periods = 4, this would return NAs for the first 4 periods in the data and only begin calculating the moving statistic in the fifth time period. If FALSE, moving statistics for all available time periods are calculated, even if the requested time horizon has not elapsed.
+#'
 #' @return Returns a tibble grouped by unit_id.
+#'
+#' @family Data Manipulation
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # Request all events in India since 2018
+#' df_india <- acled_api(countries = "India",
+#'                       start_date = "2018-01-01",
+#'                       end_date = "2022-08-30",
+#'                       monadic = F)
+#'
+#' # Aggregate to event counts per month across India
+#' df_india_agg <-
+#'    df_india %>%
+#'    generate_counts(.,
+#'    unit_id = "country",
+#'    time_id = "event_date",
+#'    time_target = "month")
+#'
+#' # Generate 3 moving average of total events per month
+#' df_india_agg_movers <-
+#'    generate_movers(data = df_india_agg,
+#'    var = "total_events",
+#'    unit_id = "country",
+#'    time_id = "event_month",
+#'    slide_funs = "mean",
+#'    slide_periods = 3)
+#'}
+#'
 #' @import dplyr
 #' @import tidyr
 #' @importFrom slider slide_dbl

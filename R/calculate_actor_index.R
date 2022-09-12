@@ -5,6 +5,8 @@
 #' @param method Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.
 #' @return Returns a data.frame of the index value, number of unique actors, and average number of events per actor.
 #'
+#' @family Data Manipulation
+#'
 #' @export
 calculate_actor_index <-
   function(events, method = "Effective actors") {

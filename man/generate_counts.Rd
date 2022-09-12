@@ -18,19 +18,19 @@ generate_counts(
 \arguments{
 \item{data}{ACLED data}
 
-\item{event_type}{Event types to include. If more than one event type is included, event counts per type and the total number of events is returned.}
+\item{event_type}{Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.}
 
-\item{unit_id}{Unit variable}
+\item{unit_id}{Unit variable (e.g., country, region, admin1, etc.)}
 
-\item{time_id}{Temporal variable}
+\item{time_id}{Temporal variable, usually event_date}
 
-\item{time_target}{Target temporal unit}
+\item{time_target}{Target temporal unit (week, month, year)}
 
-\item{start_date}{Earliest date to include}
+\item{start_date}{Earliest date to include (yyyy-mm-dd)}
 
-\item{end_date}{Latest date to include}
+\item{end_date}{Latest date to include (yyyy-mm-dd)}
 
-\item{add_unit_ids}{Option to add in units with no events at certain time periods}
+\item{add_unit_ids}{Option to add in units with no events in throughout the time period of interest}
 }
 \value{
 Returns a tibble grouped by unit_id
@@ -38,3 +38,55 @@ Returns a tibble grouped by unit_id
 \description{
 Generate event counts from ACLED data
 }
+\examples{
+\dontrun{
+
+### General example ###
+# Request all events from a few countries
+df_events <- acled_api(countries = c("Brazil", "Mexico", "Argentina"),
+                       start_date = "2022-01-01",
+                       end_date = "2022-07-30",
+                       monadic = F,
+                       acled_access = TRUE)
+
+# Generate event counts at the admin1-month level
+df_counts <- generate_counts(data = df_events,
+                             unit_id = "admin1",
+                             time_id = "event_date",
+                             time_target = "month")
+
+
+
+### add_unit_ids example ###
+# Request riots in the United States and Canada between January 1st and January 30th 2020
+df_riots <- acled_api(countries = c("United States", "Canada"),
+                       start_date = "2022-01-01",
+                       end_date = "2022-01-30",
+                       event_types = "Riots",
+                       monadic = F,
+                       acled_access = TRUE)
+
+Notice that there are no riot events in Canada over this period
+table(df_riots$country)
+
+# Generate weekly riot counts
+# Use the add_unit_ids paramater so Canada is assigned 0 events each week
+# If add_unit_ids was not included, only weekly counts for the United States would be returned since Canada had no riots in the requested time period
+df_counts_riots <- generate_counts(data = df_riots,
+                                   unit_id = "country",
+                                   event_type = "Riots",
+                                   time_id = "event_date",
+                                   time_target = "week",
+                                   add_unit_ids = "Canada")
+
+}
+}
+\seealso{
+\itemize{
+\item ACLED API guide. \url{https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf}
+}
+
+Other Data Manipulation: 
+\code{\link{generate_movers}()}
+}
+\concept{Data Manipulation}
