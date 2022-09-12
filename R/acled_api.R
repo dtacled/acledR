@@ -39,16 +39,16 @@
 #' @export
 
 acled_api <- function(email = NULL,
-                      key = NULL,
-                      countries = NULL,
-                      regions = NULL,
-                      start_date = NULL,
-                      end_date = NULL,
-                      timestamp = NULL,
-                      event_types = NULL,
-                      monadic = FALSE,
-                      ...,
-                      acled_access = TRUE) {
+                       key = NULL,
+                       countries = NULL,
+                       regions = NULL,
+                       start_date = NULL,
+                       end_date = NULL,
+                       timestamp = NULL,
+                       event_types = NULL,
+                       monadic = FALSE,
+                       ...,
+                       acled_access = TRUE) {
 
   if(acled_access == TRUE){
     email <- Sys.getenv("acled_email")
@@ -69,18 +69,77 @@ acled_api <- function(email = NULL,
   key_internal <- paste0("&key=", key)
 
 
+  # Setup base data to check how many country-days are being requested
+  if(!is.null(countries) & is.null(regions)) {
+    df <- acledR::acled_countries %>%
+      filter(country %in% countries)
+  }
+  else if(is.null(countries) & !is.null(regions)) {
+    df <- acledR::acled_countries %>%
+      filter(region %in% regions)
+  }
+  else if(!is.null(countries) & !is.null(regions)){
+    df <- acledR::acled_countries %>%
+      filter(country %in% countries & region %in% regions)
+  }
+  else {df <- acledR::acled_countries}
+
+  if(is.null(start_date)) {start_date_check <- "1997-01-01"}
+  if(is.null(end_date)) {end_date_check <- Sys.Date()}
+
+  out <- df %>%
+    mutate(t_start = lubridate::as_date(start_date_check),
+           t_end = lubridate::as_date(end_date_check),
+
+           t_start = case_when(as.numeric(lubridate::year(t_start)) < start_year ~ lubridate::as_date(paste0(start_year, "-01-01")),
+                               TRUE ~ t_start),
+           time = t_end - t_start)
+
+  n_countries <- length(unique(out$country))
+  country_days <- as.numeric(sum(out$time))
+
+  # Note for how much data is being requested
+  size_note <- paste("Requesting data for",
+                     n_countries,
+                     "countries.",
+                     "Accounting for the requested time period and ACLED coverage dates, this request includes",
+                     format(country_days, big.mark = ","), "country-days.")
+
+  message(size_note)
+
+
+  # Approx how many calls are required with 1 call sized at 300k country-days
+  time_units <- ceiling(country_days / 300000)
+
+  # Split call into roughly equally sized groups depending on how many country-days are in each country
+  # This randomly assigns countries into bins
+  out_groups <- split(out, sample(1:time_units, nrow(out), replace = T))
+
+  # Dates
+  if(!is.null(start_date) & !is.null(end_date)) {
+    dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
+  }
+  if(is.null(start_date) != is.null(end_date)) {
+    stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
+  }
+  if(!is.null(start_date) & !is.null(end_date)){
+    if(start_date > end_date) {
+      stop("Requested 'start_date' is after the requested 'end_date'.")
+    }
+  }
+  if(is.null(start_date) & is.null(end_date)) {
+    dates_internal <- ""
+  }
+
   # Where
   ## Countries
-  if(!is.null(countries) & sum(unique(countries) %in% acled_countries[["country"]]) < length(unique(countries))) {
-    stop("One or more requested countries not in the ACLED country list. The full list of ACLED countries is available at 'acledR::acled_countries'.")
+  countries_internal <- vector("list", length = length(out_groups))
+  for(i in 1:length(out_groups)){
+    countries_internal[[i]] <- paste0("&country=", paste( gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:country="))
+    countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
   }
-  if(is.character(countries)) {
-    countries_internal <- paste0("&country=", paste( gsub("\\s{1}", "%20", countries), collapse = ":OR:country="))
-    countries_internal <- paste0(countries_internal, "&country_where=%3D")
-  }
-  if(is.null(countries)) {
-    countries_internal <- ""
-  }
+
+
 
   ## Regions
   if(is.character(regions) & sum(unique(regions) %in% acled_regions[["region_name"]]) < length(unique(regions))) {
@@ -102,7 +161,6 @@ acled_api <- function(email = NULL,
   }
 
 
-
   # Dates
   if(!is.null(start_date) & !is.null(end_date)) {
     dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
@@ -118,7 +176,6 @@ acled_api <- function(email = NULL,
   if(is.null(start_date) & is.null(end_date)) {
     dates_internal <- ""
   }
-
 
   # Timestamps
   if(!is.null(timestamp)) {
@@ -158,7 +215,6 @@ acled_api <- function(email = NULL,
 
     }
 
-
     if(do_i_include_timestamp == "Yes"){
       if(timestamp_parsable > lubridate::now()) {
         stop("The timestamp cannot be later than today. Please change the timestamp and try again.")
@@ -183,13 +239,11 @@ acled_api <- function(email = NULL,
   else
     monadic_internal <- ""
 
-
-
   # Event types
   if(!is.null(event_types)) {
     event_types <- str_to_upper(event_types)
     if(FALSE %in% unique(event_types %in% str_to_upper(c("Battles", "Violence against civilians", "Protests",
-                                       "Riots", "Strategic Developments", "Explosions/Remote violence")))) {
+                                                         "Riots", "Strategic Developments", "Explosions/Remote violence")))) {
       stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
     }
 
@@ -201,24 +255,47 @@ acled_api <- function(email = NULL,
 
 
 
-  url <- paste0(base_url, monadic_internal,
-                email_internal, key_internal,
-                countries_internal, regions_internal,
-                dates_internal, timestamp_internal,
-                event_types_internal, ..., "&limit=0")
-
-  try
-
-  response <- httr::GET(url)
-
-  if(response[["status_code"]] == 500) {
-    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n",rlang::format_error_bullets(c("Make sure you have not execeeded your API calls (2/year for a standard account)","Verify your API credentials (key and email)", "If nothing works contact us through GitHub Issues or at access@acleddata.com."))))
-  } else if(response[["status_code"]] == 503 | response[["status_code"]] == 502){
-    stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n","Our server may be under maintenance or it may momentarily be unavailable; please try again in a couple of minutes."))
+  # Interactive choice for users after prompting how many calls are required
+  message(paste0("This request requires ",
+                 time_units,
+                 " API calls. Do you want to proceed with this request?\nIf you need to increase your API quota, please contact access@acleddata.com"))
+  user_input <- readline("Proceed? (Yes/No) \n")
+  if(user_input != 'Yes') {
+    stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
+         call. = F)
   }
 
-  out <- content(response)
+  # Loop through country bins to define each api call
+  url_internal <- vector("list", length = length(out_groups))
+  for(i in 1:length(out_groups)) {
+    url_internal[[i]] <- paste0(base_url, monadic_internal,
+                                email_internal, key_internal,
+                                countries_internal[[i]], regions_internal,
+                                dates_internal, timestamp_internal,
+                                event_types_internal, ..., "&limit=0")
+  }
+
+  # Loop through the api requests
+  response <- vector("list", length = length(out_groups))
+  message("Processing API request")
+  for(i in 1:length(out_groups)) {
+
+    response[[i]] <- httr::GET(url_internal[[i]])
+
+    if(response[[i]][["status_code"]] == 500) {
+      stop(paste0("API request unsuccessful with status code ", response[[i]][["status_code"]], ". \n",rlang::format_error_bullets(c("Make sure you have not execeeded your API calls (2/year for a standard account)","Verify your API credentials (key and email)", "If nothing works contact us through GitHub Issues or at access@acleddata.com."))))
+    } else if(response[[i]][["status_code"]] == 503 | response[[i]][["status_code"]] == 502){
+      stop(paste0("API request unsuccessful with status code ", response[[i]][["status_code"]], ". \n","Our server may be under maintenance or it may momentarily be unavailable; please try again in a couple of minutes."))
+    }
+  }
+
+  # Map through each get request to convert to one tibble
+  message("Extracting content from API request")
+  out <- suppressMessages(map_df(.x = response,
+                                 ~content(.x)))
+
 
   return(out)
+
 
 }
