@@ -91,31 +91,31 @@
 
 
 <dt>event_type</dt>
-<dd><p>Event types to include. If more than one event type is included, event counts per type and the total number of events is returned.</p></dd>
+<dd><p>Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.</p></dd>
 
 
 <dt>unit_id</dt>
-<dd><p>Unit variable</p></dd>
+<dd><p>Unit variable (e.g., country, region, admin1, etc.)</p></dd>
 
 
 <dt>time_id</dt>
-<dd><p>Temporal variable</p></dd>
+<dd><p>Temporal variable, usually event_date</p></dd>
 
 
 <dt>time_target</dt>
-<dd><p>Target temporal unit</p></dd>
+<dd><p>Target temporal unit (week, month, year)</p></dd>
 
 
 <dt>start_date</dt>
-<dd><p>Earliest date to include</p></dd>
+<dd><p>Earliest date to include (yyyy-mm-dd)</p></dd>
 
 
 <dt>end_date</dt>
-<dd><p>Latest date to include</p></dd>
+<dd><p>Latest date to include (yyyy-mm-dd)</p></dd>
 
 
 <dt>add_unit_ids</dt>
-<dd><p>Option to add in units with no events at certain time periods</p></dd>
+<dd><p>Option to add in units with no events in throughout the time period of interest</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -124,7 +124,18 @@
 
 <p>Returns a tibble grouped by unit_id</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p>ACLED API guide. <a href="https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf" class="external-link">https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf</a></p></li>
+</ul><p>Other Data Manipulation: 
+<code><a href="generate_movers.html">generate_movers</a>()</code></p></div>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
