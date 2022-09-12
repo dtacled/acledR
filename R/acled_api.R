@@ -35,6 +35,7 @@
 #' @md
 #' @import httr
 #' @import stringr
+#' @import lubridate
 #'
 #' @export
 
@@ -84,8 +85,15 @@ acled_api <- function(email = NULL,
   }
   else {df <- acledR::acled_countries}
 
-  if(is.null(start_date)) {start_date_check <- "1997-01-01"}
-  if(is.null(end_date)) {end_date_check <- Sys.Date()}
+  if(is.null(start_date)) {
+    start_date_check <- "1997-01-01"
+  }
+  else {start_date_check <- start_date}
+
+  if(is.null(end_date)) {
+    end_date_check <- Sys.Date()
+  }
+  else {end_date_check <- end_date}
 
   out <- df %>%
     mutate(t_start = lubridate::as_date(start_date_check),
@@ -259,10 +267,13 @@ acled_api <- function(email = NULL,
   message(paste0("This request requires ",
                  time_units,
                  " API calls. Do you want to proceed with this request?\nIf you need to increase your API quota, please contact access@acleddata.com"))
-  user_input <- readline("Proceed? (Yes/No) \n")
-  if(user_input != 'Yes') {
-    stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
-         call. = F)
+
+  if(interactive()) {
+    user_input <- readline("Proceed? (Yes/No) \n")
+    if(user_input != 'Yes') {
+      stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
+           call. = F)
+      }
   }
 
   # Loop through country bins to define each api call
@@ -291,7 +302,7 @@ acled_api <- function(email = NULL,
 
   # Map through each get request to convert to one tibble
   message("Extracting content from API request")
-  out <- suppressMessages(map_df(.x = response,
+  out <- suppressMessages(purrr::map_df(.x = response,
                                  ~content(.x)))
 
 
