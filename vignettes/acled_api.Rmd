@@ -16,25 +16,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 <!-- The workflow of this package is as follows: -->
+
 <!--   1. Validate and store your credentials with acled_access(). -->
+
 <!--   2. Download data with acled_api(). -->
+
 <!--   3. (Optional) Transform your data from wide form (dyadic) to long form (monadic) with acled_transform(). -->
+
 <!--   4. (Optional) Do some basic statistics with generate_counts() and generate_movers().  -->
-  
 
 ## Access to the API
 
-The email and key must be those associated with your ACLED account registered at [ACLED's Access Portal](developer.acleddata.com). Once you acquired your credentials (email and key), you can either utilize `acled_access()` to verify that the credentials are correct (note that this count as one download) and store these in the environment for a given session, or manually store them in the environment file to utilize them permanently across every session. 
+The email and key must be those associated with your ACLED account registered at [ACLED's Access Portal](developer.acleddata.com). Once you acquired your credentials (email and key), you can either utilize `acled_access()` to verify that the credentials are correct (note that this count as one download) and store these in the environment for a given session, or manually store them in the environment file to utilize them permanently across every session.
 
-To utilize `acled_access()`, run the following:
+To utilize `acled_access()` (recommended), run the following:
 
 ```{r,eval=F}
 acled_access("your_email","your_key") # to be run every session before doing an API call. 
 ```
 
-Alternatively, to manually store them as an environmental variable so you can call them without pasting every session (and for security reasons), run:
+Alternatively, to manually store them as an environmental variable, run:
 
 ```{r, eval = F}
 file.edit(file.path("~", ".Renviron"))
@@ -49,9 +51,7 @@ Sys.setenv(acled_key = "YourKey")
 
 and save the file. If you run `Sys.getenv("email_address")`, your associated email will print; if you run `Sys.getenv("acled_key")`, your ACLED key will print.
 
-
 ## Acled API
-
 
 `acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
 
@@ -70,7 +70,6 @@ acled_api(
 )
 ```
 
-
 ## Parameters for the API
 
 The `countries` and `regions` parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, only Nigeria will be returned since Mexico is not in Western Africa.
@@ -81,16 +80,19 @@ The `start_date` and `end_date` parameters specify the time period requested in 
 
 With `timestamp` users can keep their datasets updated, as it allows them to indicate a timestamp from when to collect events. `timestamp` is not the same `event_date`, as timestamp indicates when the event was added/modified in ACLED's dataset. To learn more about how to keep your datasets up to date, please visit this [guide](https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf).
 
-The `extra` argument stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as "&paramenter=value", so for example: "iso=4" (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf). 
+The `extra` argument stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as "&paramenter=value", so for example: "iso=4" (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf).
 
-Finally, the acled_access parameter is used to let the function know that you have utilized acled_access during the current session, thus, avoiding the need to include email and key on the function. If acled_access is set to FALSE then the email and key arguments are necessary. 
+Finally, the acled_access parameter is used to let the function know that you have utilized acled_access during the current session, thus, avoiding the need to include email and key on the function. If acled_access is set to FALSE then the email and key arguments are necessary.
 
+## Handling big API calls
+
+Normally, to 
 
 ## Example
 
-To see how this works in practice, we will display an example where we are trying to gather data of events in Brazil from January 2022 to now. 
+To see how this works in practice, we will display an example where we are trying to gather data of events in Brazil from January 2022 to now.
 
-```{r, eval = F} 
+```{r, eval = F}
 library(acledR)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
@@ -102,7 +104,7 @@ df_br <- acled_api(countries = c("Brazil"),
                    acled_access = TRUE)
 ```
 
-```{r, echo = F} 
+```{r, echo = F}
 library(acledR)
 
 acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) #  This is an example, you will need to input your credentials.
@@ -113,7 +115,6 @@ df_br <- acled_api(countries = c("Brazil"),
                    monadic = F,
                    acled_access = TRUE)
 ```
-
 
 The results return a tibble with each ACLED event in Brazil during this time period:
 
@@ -164,7 +165,6 @@ df_sa <- acled_api(countries = c("Brazil", "Colombia"),
                    extra = "&interaction=57",
                    acled_access = TRUE)
 ```
-
 
 We could also request the monadic version of the data based on actor 1 and actor 2 by setting `monadic = TRUE`:
 
