@@ -1,0 +1,107 @@
+---
+title: "Deletions API"
+date: "2022-09-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# The Deletions API and how to keep your database updated.
+
+ACLED is a living dataset, which means changes happen often.
+
+Three types of changes are recurrent in ACLED's dataset:
+
+-   New events
+    -   These are the weekly updates of events, all are published with a new distinctive id (in the event_id_cnty column).
+-   Modification of previous events
+    -   In some cases we are required to do modifications to published events, as new information may appear. For example, a particular actor has claimed responsibility over an attack, or the number of fatalities has changed. In these cases, the event_id_cnty remains the same, but the new information is updated during that week publication. (So if an event from January has been modified in April, when users request data from April they will find the modified January event) (**check this bit please**)
+-   Deletion of events
+    -   While the least common of these three, deletion of events is something that also happens in our data set. This comes from new information that may appear which makes the event no longer fit the scope of ACLED's data set, or in cases where we merge events to avoid duplication after new information rises. In these cases, the event is removed, as well as its event_id_cnty.
+
+For users with a personal ACLED file, which appends/adds events regularly (e.g weekly or monthly), there is a need to check which events are no longer in the data set. Otherwise, Users risk having an outdated version of the dataset. To satisfy this need, users can use the acled_deletion_api() function to gather the event_id_cnty of deleted events. While users can find an example below, we kindly suggest you to visit our [guide](https://acleddata.com/download/35179/) .
+
+## Example
+
+In this section we will show how to use the acled_deletions_api() to keep our data sets updated. For the examples we will make the following assumptions:
+
+1\. Our data sets are saved as a .rda file.
+
+2\. We don't know if our data sets contains deleted data or not.
+
+### Dataset n°1
+
+First lets load the first dataset.
+
+```{r}
+
+library(acledR)
+library(tidyverse)
+
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
+load(file="~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/argen_dummy_acled_file.rda") # Here is our personal ACLED dataset
+
+nrow(argen_dummy_acled_file)
+
+```
+
+We can see then that our dataset consists of 326 rows or 326 events. A relatively smaller dataset and its data was gathered on the 25th of July 2022.
+
+Lets check if there are any deleted events since then.
+
+```{r}
+
+acled_deleted_events <- acled_deletions_api(date_deleted = "2022/07/25")
+
+glimpse(acled_deleted_events)
+```
+
+Quite a lot of deleted events, 14326. Lets check if any of these are part of my dataset.
+
+```{r}
+
+my_deleted_events <- argen_dummy_acled_file %>%
+  filter(event_id_cnty %in% acled_deleted_events$event_id_cnty)
+
+glimpse(my_deleted_events)
+
+```
+
+As shown by the number of rows (0), there are no deleted events! ... But it is always important to check. Lets go to another example where we may not be that lucky.
+
+### Dataset n°2
+
+Now lets load our second dataset.
+
+```{r}
+
+load(file="~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/dummy_acled_file.rda") # Here is our personal ACLED dataset
+
+nrow(dummy_acled_file)
+
+```
+
+With this we have loaded the dataset, and we can see that there are 143956 rows in it. Now we proceed to retrieve the deleted events since the last time we gather data.
+
+```{r}
+
+deleted_events <- acled_deletions_api(date_deleted = max(dummy_acled_file$timestamp)) # We are using the largest Unix timestamp as that is the last time we gathered data. 
+
+nrow(deleted_events)
+
+```
+
+As we can see 191 events have been removed since the last time I uploaded my data (1st August 2022, around 1 month and a half at the time writting). Now that we know there are deleted events, lets check if any of these are in my dataset.
+
+```{r}
+
+updated_dataset <- dummy_acled_file %>%
+  filter(!(event_id_cnty %in% deleted_events$event_id_cnty)) # We exclude every event_id_cnty that also appears in the deleted_events result
+
+nrow(updated_dataset)
+```
+
+As you can see there were deleted events, and we have excluded them through the dplyr::filter() function. Now our dataset has only 143905 rows, thus 51 events were deleted.

@@ -5,12 +5,14 @@
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries,
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions,
-#' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
-#' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
+#' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
+#' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
+#' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
 #' @param acled_access logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.
+#' @param prompt logical. If TRUE, users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, it continues as normal, but still splits the call and returns a message specifying how many calls are being made.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
@@ -49,7 +51,8 @@ acled_api <- function(email = NULL,
                        event_types = NULL,
                        monadic = FALSE,
                        ...,
-                       acled_access = TRUE) {
+                       acled_access = TRUE,
+                       prompt = TRUE) {
 
   if(acled_access == TRUE){
     email <- Sys.getenv("acled_email")
@@ -264,17 +267,22 @@ acled_api <- function(email = NULL,
 
 
   # Interactive choice for users after prompting how many calls are required
-  message(paste0("This request requires ",
-                 time_units,
-                 " API calls. Do you want to proceed with this request?\nIf you need to increase your API quota, please contact access@acleddata.com"))
 
-  if(interactive()) {
-    user_input <- readline("Proceed? (Yes/No) \n")
-    if(user_input != 'Yes') {
-      stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
-           call. = F)
-      }
-  }
+  if(prompt == TRUE){
+
+    message(paste0("This request requires ",
+                   time_units,
+                   " API calls. Do you want to proceed with this request?\nIf you need to increase your API quota, please contact access@acleddata.com"))
+
+    if(interactive()) {
+      user_input <- readline("Proceed? (Yes/No) \n")
+      if(!((user_input == "Yes") | (user_input == "yes"))){
+        stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
+             call. = F)
+        }
+    }} else { message("Proceeding with ",
+                   time_units,
+                   " API calls")}
 
   # Loop through country bins to define each api call
   url_internal <- vector("list", length = length(out_groups))

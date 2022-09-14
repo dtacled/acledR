@@ -15,7 +15,8 @@ acled_api(
   event_types = NULL,
   monadic = FALSE,
   ...,
-  acled_access = TRUE
+  acled_access = TRUE,
+  prompt = TRUE
 )
 }
 \arguments{
@@ -37,7 +38,11 @@ acled_api(
 
 \item{monadic}{logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.}
 
+\item{...}{string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)}
+
 \item{acled_access}{logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.}
+
+\item{prompt}{logical. If TRUE, users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, it continues as normal, but still splits the call and returns a message specifying how many calls are being made.}
 }
 \value{
 Returns a tibble of of ACLED events.
