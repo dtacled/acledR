@@ -56,18 +56,18 @@ and save the file. If you run `Sys.getenv("email_address")`, your associated ema
 `acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
 
 ```{r, eval = F}
-acled_api(
-  email = NULL,
-  key = NULL,
-  countries = NULL,
-  regions = NULL,
-  start_date = NULL,
-  end_date = NULL,
-  monadic = FALSE,
-  timestamp = NULL,
-  extra = NULL,
-  acled_access = TRUE
-)
+acled_api <-(email = NULL,
+             key = NULL,
+             countries = NULL,
+             regions = NULL,
+             start_date = NULL,
+             end_date = NULL,
+             timestamp = NULL,
+             event_types = NULL,
+             monadic = FALSE,
+             ...,
+             acled_access = TRUE,
+             prompt = TRUE
 ```
 
 ## Parameters for the API
@@ -76,17 +76,28 @@ The `countries` and `regions` parameters specify where in the world to pull data
 
 The `start_date` and `end_date` parameters specify the time period requested in "yyyy-mm-dd" format. If NULL, all available time periods available will be returned. If either start or end date is NULL, both must be NULL or an error is returned.
 
+With `timestamp` users can keep their data sets updated, as it allows them to indicate a time stamp from when to collect events. `timestamp` is not the same `event_date`, as time stamp indicates when the event was added/modified in ACLED's data set. To learn more about how to keep your data sets up to date, please visit this [guide](https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf).
+
+Users can also utilize `event_types` to specify an event type that they would be interested on. For this, users are required to enter the event type of interest as a string. For example `event_types="battles"`.
+
 `monadic` is a logical parameter, which is FALSE by default and returns the dyadic version of the data . If set to TRUE, the monadic version based on actor 1 and actor 2 will be returned.
 
-With `timestamp` users can keep their datasets updated, as it allows them to indicate a timestamp from when to collect events. `timestamp` is not the same `event_date`, as timestamp indicates when the event was added/modified in ACLED's dataset. To learn more about how to keep your datasets up to date, please visit this [guide](https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf).
+The `...` argument stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as "&paramenter=value", so for example: "&iso=4" (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf).
 
-The `extra` argument stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as "&paramenter=value", so for example: "iso=4" (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf).
+The `acled_access` parameter is used to let the function know that you have utilized acled_access during the current session, thus, avoiding the need to include email and key on the function. If acled_access is set to FALSE then the email and key arguments are necessary.
 
-Finally, the acled_access parameter is used to let the function know that you have utilized acled_access during the current session, thus, avoiding the need to include email and key on the function. If acled_access is set to FALSE then the email and key arguments are necessary.
+Finally, the `prompt` argument corresponds to how the function handles big calls, and whether the user is interested on receiving the interactive prompt which includes, among other information, if their API call will be split in more than 1 call, and if the user wants to do so. In cases where the users may not want to have this interactive prompt, such as users utilizing this function as part of a routine script, users can set `prompt=FALSE` to run the function without the need of the interactive prompt. 
 
 ## Handling big API calls
 
-Normally, to 
+As it is common across APIs, handling big data requires particular tweaks. In our case, the base API offers the possibility of utilizing pagination to address some of these issues, a process that can be confusing for newer users working with APIs, and making very big pulls of data is often unreliable - which is why we recommend to do smaller calls. However, in this package we provide a solution to both of these issues.
+
+First, in terms of pagination, our wrapper does this for the user automatically, so there is no need to include pagination in their calls. 
+
+Second, in terms of big calls, the acled_api() function will first evaluate approximately how much data is the user requesting, and after this, the user will be prompted with a message which includes: number of countries requested, number of country-days, number of API calls needed, and a question whether the user would like to proceed. Currently, acled_api() works with a threshold of 300,000 country-days to determine whether to split the function. This way users can be rest assured that the call will not hit any issues because of it being too large (a problem some users encountered before), but also, users now have more control over the calls they make in relation to the API quota. 
+
+If users are utilizing the function in a script where they would prefer to skip the interactive prompt, they can do so by using the argument 'prompt=FALSE'. That way the prompt will be ignored, however, the call will still be split if it reaches the threshold. 
+
 
 ## Example
 
@@ -133,17 +144,18 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       acled_access = TRUE)
 ```
 
-For an entire region, we omit the `countries` parameter and supply a `regions` argument:
+For an entire region, we omit the `countries` parameter and supply a `regions` argument. Additionally, for only gathering protests we provide an event_type argument:
 
 ```{r}
 df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
+                   event_type = "Protests",
                    monadic = F,
                    acled_access = TRUE)
 ```
 
-To include timestamps from when to download the data, we add it as either a string ("yyyy-mm-dd) or as a numeric Unix timestamp:
+To include time stamps from when to download the data, we add it as either a string ("yyyy-mm-dd) or as a numeric Unix time stamp:
 
 ```{r}
 df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
@@ -162,7 +174,7 @@ df_sa <- acled_api(countries = c("Brazil", "Colombia"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
                    monadic = F,
-                   extra = "&interaction=57",
+                   ...="&interaction=57",
                    acled_access = TRUE)
 ```
 
