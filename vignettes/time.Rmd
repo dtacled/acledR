@@ -17,7 +17,11 @@ library(kableExtra)
 
 ```
 
-Dates are a necessary component of each ACLED event. ACLED events are atomic as events are coded by day; if a military campaign in an area starts on March 1, 1999 and lasts until March 5, 1999 with violent activity reported on each day, this is coded as five different events in ACLED, with a different date for each entry. This episode would not be entered as a single campaign of violence. This allows ACLED to record the exact number of active days. Events which source material note occurred in the space of three months – like long-running protests – are only coded for the days in which reported activity took place (not as 90+ days). This avoids over-counting event occurrence.
+
+MENTION THAT EVERY TIME THAT A FUNCTION WORKS WITH WEEK IT WORKS WITH ACLED WEEKS, SO TAHT THEY KNOW. (WE START ON SATURDAY AND NOT MONDAY)
+
+
+Dates are a necessary component of each ACLED event. ACLED events are atomic, as events are coded by day; if a military campaign in an area starts on March 1, 1999 and lasts until March 5, 1999 with violent activity reported on each day, this is coded as five different events in ACLED, with a different date for each entry. This episode would not be entered as a single campaign of violence. This allows ACLED to record the exact number of active days. Events where the source material notes that they occurred in the space of three months – like long-running protests – are only coded for the days in which reported activity took place (not as 90+ days). This avoids over-counting event occurrence.
   
 There are three types of temporal information for each ACLED event:
   
@@ -27,7 +31,7 @@ There are three types of temporal information for each ACLED event:
 
 # Precision Codes
 
-If sources include an actual date of an event, a time precision code of "1" is entered. If sources note that an event happened during a specific week or in the weekend, "2" is noted in the time precision field and the middle of that week (or of the weekend) is used as the reference date. If sources note only that an event took place within a particular month, without reference to the particular date, the month mid-point is chosen unless the beginning or end of the month is noted (in which case, the first and last date are used, respectively) and "3" is noted as the time precision level. ACLED does not include events with less temporal information.
+If sources include an actual date of an event, a time precision code of "1" is recorded. If sources note that an event happened during a specific week or in the weekend, "2" is noted in the time precision column and the middle of that week (or of the weekend) is used as the reference date. If sources note only that an event took place within a particular month, without reference to the particular date, the month mid-point is chosen unless the beginning or end of the month is noted (in which case, the first and last date are used, respectively) and "3" is noted as the time precision level. ACLED does not include events with less temporal information.
 
 ```{r}
 library(dplyr)
@@ -42,13 +46,16 @@ tibble(time_precision = c(1, 2, 3),
 
 # `acledR` Example
 
+In order to explore the concept of time in ACLED's data, we can look at the following example, where we are analyzing France's events throughout 2021. 
+
 ```{r, echo = T}
 library(acledR)
-acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_france <- acled_api(countries = c("France"),
                        start_date = "2021-01-01",
                        end_date = "2021-12-31",
-                       monadic = F)
+                       monadic = F,
+                       prompt=FALSE)
 ```
 
 

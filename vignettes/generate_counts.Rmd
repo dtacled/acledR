@@ -40,7 +40,7 @@ As an example, we can take the data for South America.
 
 ```{r}
 library(acledR)
-acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
