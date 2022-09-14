@@ -66,7 +66,7 @@ df_riots <- acled_api(countries = c("United States", "Canada"),
                        monadic = F,
                        acled_access = TRUE)
 
-Notice that there are no riot events in Canada over this period
+# Notice that there are no riot events in Canada over this period
 table(df_riots$country)
 
 # Generate weekly riot counts
@@ -87,6 +87,7 @@ df_counts_riots <- generate_counts(data = df_riots,
 }
 
 Other Data Manipulation: 
+\code{\link{calculate_actor_index}()},
 \code{\link{generate_movers}()}
 }
 \concept{Data Manipulation}

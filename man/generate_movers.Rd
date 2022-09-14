@@ -68,6 +68,7 @@ df_india_agg_movers <-
 }
 \seealso{
 Other Data Manipulation: 
+\code{\link{calculate_actor_index}()},
 \code{\link{generate_counts}()}
 }
 \concept{Data Manipulation}

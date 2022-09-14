@@ -15,11 +15,8 @@ acled_access(email, key)
 Simple function to store (through \code{Sys.setenv()} ) ACLED access keys for the acled_api() function.
 }
 \examples{
-\dontrun{
-# acled_access("joe.doe\\@email.com","random_sequence_of_numbers_and_letters")
+# acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 # Sys.getenv("acled_key")
-# "random_sequence_of_numbers_and_letters"
-}
 }
 \seealso{
 ACLED API Access guide \url{https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf}

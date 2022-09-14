@@ -17,3 +17,9 @@ Returns a data.frame of the index value, number of unique actors, and average nu
 \description{
 Calculate actor concentration indices from ACLED data
 }
+\seealso{
+Other Data Manipulation: 
+\code{\link{generate_counts}()},
+\code{\link{generate_movers}()}
+}
+\concept{Data Manipulation}
