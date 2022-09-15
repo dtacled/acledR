@@ -72,7 +72,8 @@ df_nigeria <- acled_api(countries = c("Nigeria"),
                         start_date = "2022-01-01",
                         end_date = "2022-01-31",
                         monadic = F,
-                        acled_access = T)
+                        acled_access = T, 
+                   prompt = F)
 ```
 
 

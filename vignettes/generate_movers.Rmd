@@ -40,7 +40,8 @@ acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key"))
 df_india <- acled_api(countries = "India",
                    start_date = "2018-01-01",
                    end_date = "2022-04-30",
-                   monadic = F)
+                   monadic = F, 
+                   prompt = F)
 ```
 
 Next, we can aggregate to event counts per month using the `generate_counts()` function:
