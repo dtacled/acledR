@@ -4,7 +4,7 @@
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param date_deleted character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.
-#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.
+#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.
 #' @returns Returns a tibble of ACLED data with columns for event_id_cnty and deleted_timestamp.
 #' @family API and Access
 #' @seealso
