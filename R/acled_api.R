@@ -1,18 +1,18 @@
 #' @title Request data from ACLED API
 #' @name acled_api
-#' @description This function allows users to easily request data in ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+#' @description This function allows users to easily request data from the ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
-#' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries,
-#' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions,
+#' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries.
+#' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
 #' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
-#' @param acled_access logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.
-#' @param prompt logical. If TRUE, users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, it continues as normal, but still splits the call and returns a message specifying how many calls are being made.
+#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
+#' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
@@ -23,13 +23,14 @@
 #' \dontrun{
 #'
 #' ## Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022 in dyadic-wide form
-#' argen_acled <- acled_api(jane.doe.email,jane.doe.key,countries = "Argentina",start_date = "2022-01-01",end_date="2022-02-01", acled_access = FALSE)
+#' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key, countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01", acled_access = FALSE)
 #'
 #' ## tibble with all the events from Argentina where each row is one event.
 #' argen_acled
 #'
-#' ## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form
-#' carib_acled <- acled_api(john.doe.email,john.doe.key,regions = "Caribbean",start_date = "2022-01-01",end_date="2022-01-10", monadic=TRUE, acled_access = FALSE)
+#' ## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form using email and key saved in environment
+#' acled_access(email = "jane.doe.email", key = "jane.doe.key")
+#' carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01", end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
 #'
 #' ## Tibble with all the events from the Caribbean where each row is one actor
 #' carib_acled
@@ -63,7 +64,7 @@ acled_api <- function(email = NULL,
   base_url <- "https://api.acleddata.com/acled/read.csv?"
 
   if((!is.character(email) | is.na(email) | email == "") == TRUE) {
-    stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('email_adress'). Register your email for access at https://developer.acleddata.com.")
+    stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('acled_email'). Register your email for access at https://developer.acleddata.com.")
   }
   email_internal <- paste0("&email=", email)
 
