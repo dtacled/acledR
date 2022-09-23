@@ -20,11 +20,11 @@ generate_counts(
 
 \item{event_type}{Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.}
 
-\item{unit_id}{Unit variable (e.g., country, region, admin1, etc.)}
+\item{unit_id}{string. Unit variable (e.g., country, region, admin1, etc.)}
 
-\item{time_id}{Temporal variable, usually event_date}
+\item{time_id}{string. Temporal variable, usually event_date}
 
-\item{time_target}{Target temporal unit (week, month, year)}
+\item{time_target}{string. Target temporal unit (week, month, year)}
 
 \item{start_date}{Earliest date to include (yyyy-mm-dd)}
 

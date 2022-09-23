@@ -46,13 +46,13 @@ region to another throughout a range of time. Administrative levels are
 generally composed as followed (examples in parenthesis refer to
 Ethiopia / US):
 
--    Administrative Level 1 (Admin 1): Province or Equivalent (e.g. Afar
+-   Administrative Level 1 (Admin 1): Province or Equivalent (e.g. Afar
     / California))
 
--    Administrative Level 2 (Admin 2): District or Equivalent. (e.g.
+-   Administrative Level 2 (Admin 2): District or Equivalent. (e.g.
     Kilbati-Zone 2 / San Diego )
 
--    Administrative Level 3 (Admin 3): County or Equivalent. (e.g.
+-   Administrative Level 3 (Admin 3): County or Equivalent. (e.g.
     Abaala)
 
 However, administrative levels are hardly an uniform topic across
@@ -70,17 +70,17 @@ in Africa include Admin 3s, countries in Europe often don't.
 To account for some of these differences, ACLED researchers are
 instructed to :
 
-1.   Follow what sources report in terms of location.
+1.  Follow what sources report in terms of location.
 
-2.   If sources have incomplete information on the location, researchers
+2.  If sources have incomplete information on the location, researchers
     are to triangulate information through following landmarks or
     relevant information mentioned by the source, and utilize the
     precision code (see below) to denote that.
 
-3.   If sources include administrative levels which are not part of the
+3.  If sources include administrative levels which are not part of the
     standardized list of administrative levels of ACLED, then
     researchers are allowed to include new entries to out master list by
-    checking Openstreetmap, Google Maps and NGA GeoNames database.
+    checking OpenStreetMap, Google Maps and NGA GeoNames database.
 
 Our approach allows a standardized way of coding events' locations,
 often an issue when covering events around the world. However, if users
@@ -116,8 +116,8 @@ tibble(time_precision = c(1, 2, 3),
 
 # `acledR` Example
 
-On the example below we will explore events distribution across Nigeria
-by utilizing ACLED's administrative level columns.
+On the example below we will explore events distribution during January
+2022 across Nigeria by utilizing ACLED's administrative level columns.
 
 ```{r, echo = T}
 library(acledR)
@@ -130,13 +130,23 @@ df_nigeria <- acled_api(countries = c("Nigeria"),
                         prompt = FALSE)
 ```
 
+We start by pulling the data out of ACLED's API. First, we call
+`acled_acess()`, and then we make our API call with `acled_api()`. Lets
+explore which are the top 5 admin1s of Nigeria (also called states).
+
 ```{r, echo = T}
 df_nigeria %>% 
   janitor::tabyl(admin1) %>% 
   janitor::adorn_rounding(2) %>% 
   arrange(-n) %>% 
-  head(5)
+  head(5) 
+
 ```
+
+As observed by our table, Kaduna and Borno are the two most
+conflict-ridden admin1s in Nigeria, however, conflicts appears generally
+evenly distributed from there on. Lets plot the geographical
+distribution:
 
 ```{r, echo = T}
 library(sf)
@@ -175,3 +185,9 @@ ggplot() +
        subtitle = "January 2022")
 
 ```
+
+Given the fact that every event comes paired with a number of
+geographical variables, ACLED's data is particularly useful to map
+conflict in a given region, country, or administrative level. As we will
+see in the ... vignitte (I will put a link here), we can go even further
+to map conflict in a given administrative level thanks to this.

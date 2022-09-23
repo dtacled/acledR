@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-
+# Generating counts of ACLED events
 
 The `generate_counts()` function quickly creates event counts by event type and unit of analysis. 
 
@@ -30,13 +30,10 @@ generate_counts(
   time_target
 )
 ```
-where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday).
+
+`data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday) - see (time)[__here would go the time vignitte link__]
 
 As an example, we can take the data for South America.
-
-
-
-
 
 ```{r}
 library(acledR)
@@ -48,6 +45,7 @@ df_sa <- acled_api(regions = c("South America"),
 ```
 
 We can then generate event counts at the country-week level:
+
 ```{r}
 df_sa_agg_weekly <-
   df_sa %>% 
@@ -58,6 +56,7 @@ df_sa_agg_weekly <-
 ```
 
 This returns a tibble with columns for each event type in the data, as well as a column for the total events:
+
 ```{r}
 df_sa_agg_weekly %>% 
   head() %>% 
@@ -66,6 +65,7 @@ df_sa_agg_weekly %>%
 
 
 We can also request just certain event types. For example, we might only want political violence:
+
 ```{r}
 df_sa_agg_weekly_pv <-
   df_sa %>% 
@@ -79,6 +79,7 @@ df_sa_agg_weekly_pv <-
 ```
 
 And now we only retain the requested event types and the total corresponds to these types only:
+
 ```{r}
 df_sa_agg_weekly %>% 
   head() %>% 
@@ -87,6 +88,7 @@ df_sa_agg_weekly %>%
 
 
 If instead we wanted violent event counts by month rather than week, we would simply swap `time_target = week` to `time_target = month`:
+
 ```{r}
 df_sa_agg_monthly_pv <-
   df_sa %>% 
@@ -114,6 +116,7 @@ acledR::acled_regions
 ```
 
 We can store these region names in a vector called `africa_regions` and request data for each country within these regions since 2018.
+
 ```{r}
 africa_regions <- c("Western Africa", 
                     "Middle Africa", 
@@ -128,6 +131,7 @@ df_africa <- acled_api(regions = africa_regions,
 ```
 
 We can then generate event counts for each month by each region in Africa:
+
 ```{r}
 df_africa_monthly <-
   df_africa %>% 

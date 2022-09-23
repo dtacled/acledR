@@ -2,9 +2,9 @@
 #'
 #' @param data ACLED data
 #' @param event_type Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.
-#' @param unit_id Unit variable (e.g., country, region, admin1, etc.)
-#' @param time_id Temporal variable, usually event_date
-#' @param time_target Target temporal unit (week, month, year)
+#' @param unit_id string. Unit variable (e.g., country, region, admin1, etc.)
+#' @param time_id string. Temporal variable, usually event_date
+#' @param time_target string. Target temporal unit (week, month, year)
 #' @param start_date Earliest date to include (yyyy-mm-dd)
 #' @param end_date  Latest date to include (yyyy-mm-dd)
 #' @param add_unit_ids Option to add in units with no events in throughout the time period of interest

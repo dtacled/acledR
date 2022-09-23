@@ -18,20 +18,24 @@ library(kableExtra)
 ```
 
 
-MENTION THAT EVERY TIME THAT A FUNCTION WORKS WITH WEEK IT WORKS WITH ACLED WEEKS, SO TAHT THEY KNOW. (WE START ON SATURDAY AND NOT MONDAY)
-
-
 Dates are a necessary component of each ACLED event. ACLED events are atomic, as events are coded by day; if a military campaign in an area starts on March 1, 1999 and lasts until March 5, 1999 with violent activity reported on each day, this is coded as five different events in ACLED, with a different date for each entry. This episode would not be entered as a single campaign of violence. This allows ACLED to record the exact number of active days. Events where the source material notes that they occurred in the space of three months – like long-running protests – are only coded for the days in which reported activity took place (not as 90+ days). This avoids over-counting event occurrence.
   
 There are three types of temporal information for each ACLED event:
   
-1. `event_date`: the date of each event in yyyy-mm-dd format;
-1. `year`: the year of each event in yyyy format;
-1. `time_precision`: the temporal precision of each event.
+1\. `event_date`: the date of each event in yyyy-mm-dd format;
+2\. `year`: the year of each event in yyyy format;
+3\. `time_precision`: the temporal precision of each event;
+4\. `timestamp`: Unix timestamp on when the data was requested.  
+
+When it comes to `event_date`, ACLED utilizes the sources' information to determine the date of the event, and depending on how sources report on the date of the event, we assign a different `time_precision` (find more information below). The year column is an auto generated column based of the `event_date`. Finally, `timestamp` is a particularly useful column to maintain your data set updated (see our [guide](https://acleddata.com/download/35179/)), as it allows you to have a reference point from where to gather new events, and check for deleted events. 
 
 # Precision Codes
 
-If sources include an actual date of an event, a time precision code of "1" is recorded. If sources note that an event happened during a specific week or in the weekend, "2" is noted in the time precision column and the middle of that week (or of the weekend) is used as the reference date. If sources note only that an event took place within a particular month, without reference to the particular date, the month mid-point is chosen unless the beginning or end of the month is noted (in which case, the first and last date are used, respectively) and "3" is noted as the time precision level. ACLED does not include events with less temporal information.
+As mentioned above, when recording event's dates ACLED utilizes different precision codes, stored in the `time_precision` column, to highlight how accurate such date is. The precision codes are assigned as follows:
+
+1\. If sources include an actual date of an event, a time precision code of "1" is recorded. 
+2\. If sources note that an event happened during a specific week or in the weekend, time precision equals "2" and the middle of that week (or the weekend) is used as the reference date. 
+3\. If sources note only that an event took place within a particular month, without reference to the particular date, the month's mid-point is chosen as `event_date` unless the beginning or end of the month is noted (in which case, the first and last date are used, respectively) and "3" is noted as the `time_precision`. 
 
 ```{r}
 library(dplyr)
@@ -44,12 +48,18 @@ tibble(time_precision = c(1, 2, 3),
   kable_styling("striped", full_width = F)
 ```
 
+
+# ACLED Week and acledR
+
+ACLED's week is not like "normal" weeks, as we follow the submission process of the project. This means that ACLED's week starts in Saturday, and finishes in Friday. For that matter, current and future functions of the project will utilize this range (Sat-Fri) to define what constitutes a week. The reason for this decision lies on the efforts from the team at ACLED to avoid pitfalls on how we analyse ACLED data. **If researchers would like to use a "normal" week (Monday-Sunday), they should be aware that data collection in ACLED occurs on Saturday, thus, they may be have incomplete data for the proceeding week.**
+
 # `acledR` Example
 
-In order to explore the concept of time in ACLED's data, we can look at the following example, where we are analyzing France's events throughout 2021. 
+In order to explore the uses of time in ACLED's data, we can look at the following example analyzing France's events throughout 2021. 
 
 ```{r, echo = T}
 library(acledR)
+library(tidyverse)
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_france <- acled_api(countries = c("France"),
                        start_date = "2021-01-01",
@@ -57,54 +67,84 @@ df_france <- acled_api(countries = c("France"),
                        monadic = F,
                        prompt=FALSE)
 ```
-
+Now that we have gathered our data, we want to explore how precise are the event dates and which are our floor and celling date (min/max) in our data frame. 
 
 ```{r, echo = T}
 df_france %>% 
-  janitor::tabyl(time_precision) %>% 
+  janitor::tabyl(time_precision) %>% # Summarize data groupped by time_precision
   janitor::adorn_rounding(2)
 
+paste0("Earliest Date: ",as.character(min(df_france$event_date)))
+paste0("Latest Date: ", as.character(max(df_france$event_date)))
 ```
+As we can see, our data is very precise, with 99% being `time_precision` 1, followed by `time_precision` 2, and finally `time_precision` 3. This follows the efforts in ACLED to be precise when managing dates, and make our best effort to find the date of the event. It would be very rare to find a data set where `time_precision` 2 is the most present, let alone `time_precision` 3. 
+
+Next we move to do one of the best analysis we can do with ACLED's data, time-series. 
 
 
 ```{r, echo = T}
 library(dplyr)
 library(ggplot2)
+library(plotly)
 
-df_france %>% 
+plot <- df_france %>% 
   group_by(event_date) %>% 
   tally() %>% 
-  
-  ggplot() +
-  geom_line(aes(x = event_date, y = n)) +
+  ggplot(aes(x = event_date, y = n)) +
+  geom_point() +
+  geom_smooth()+
   theme_light() +
   labs(x = "Event Date",
        y = "Events per Day",
        title = "ACLED Events in France",
        subtitle = "January through December 2021")
+
+ggplotly(plot)
+
+
 ```
 
 
-```{r, echo = T}
-df_france <- 
-  df_france %>% 
-  # create month indicator using lubridate; label = T creates the month abbreviation rather than number
-  mutate(month = lubridate::month(event_date, label = T)) %>% 
-  group_by(month, time_precision) %>% 
-  tally()
+One of the things that we are interested in looking first is the number of events per day in France throughout 2021. From what we see in our plot, while throughout moments of the year this number appears to spike up and down - like on the 1st of May where there were 183 events - the trend line remains fairly stable. ACLED's data is particularly fitted for this as our precise use of dates means that we can have a continuous monitoring of a given country throughout time. 
 
+However, we would like to go slightly more specific, by looking at the divergence across months. Basically, we want to explore, which is the most volatile month. 
 
-df_france %>%   
-  ggplot() +
-  geom_bar(aes(x = month, 
-               y = n, 
-               fill = as.factor(time_precision)),
-           stat = "identity") +
-  scale_fill_viridis_d(guide = guide_legend(title = "time_precision")) +
+```{r, echo=T}
+plot <- df_france %>% 
+  group_by(month = lubridate::floor_date(event_date, "month",
+                                week_start = getOption('lubridate.week.start', 6))) %>% 
+  tally() %>% 
+  ggplot(aes(x = week, y = n)) +
+  geom_line(size=1.2)+
+  # geom_bar(stat = "identity") +
   theme_light() +
   labs(x = "Event Date",
-       y = "Events per Month",
+       y = "Events per Day",
        title = "ACLED Events in France",
        subtitle = "January through December 2021")
+
+ggplotly(plot)
 ```
 
+With this we can see that May 2021 was the month hosting the biggest number of events, with 1024. That should hardly be a surprise, considering that it was also on the 1st of May that we saw the highest number of daily events. However, what it is more interesting perhaps is that the next highest peak was March, and April being the 4th highest peak, which would perhaps clash with what the previous daily analysis showed. In the previous plot one could get the impression that it was the latter months which were the most volatile (they had more notable peaks than the days prior to May). 
+
+Lets try to add more nuance to our analysis, and lets analyse the count of different event_types across months. 
+
+```{r,echo=T}
+
+french_counts <- generate_counts(df_france,unit_id="country",time_id="event_date",time_target = "month")%>%
+  select(-country) %>%
+  pivot_longer(!event_month,names_to="event_type",values_to = "n_events") 
+
+pfc <- ggplot(french_counts, aes(x=event_month, y=n_events, fill=event_type, text=event_type))+
+  geom_bar(stat="identity",position = "dodge")+
+  labs(title = "Monthly distribution of event types in France",
+       x= "Months",
+       y="Number of events")
+
+pfcly <- ggplotly(pfc)
+pfcly
+
+```
+
+As we can see from the graph, France's 2021 was primarely riddled with protests. However, this is hardly enough to conclude anything about France. In another vignitte we go through this example and compare it with the regional averages. 
