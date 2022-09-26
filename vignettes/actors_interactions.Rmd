@@ -178,8 +178,10 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 df_yemen <- acled_api(countries = c("Yemen"),
                       start_date = "2022-01-01",
                       end_date = "2022-01-31",
+
                       monadic = F,
                       prompt= FALSE)
+
 ```
 
 During this month, there were 894 ACLED events, 28 unique `actor1` entries, and 24 unique `actor2` entries. 

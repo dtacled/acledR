@@ -128,6 +128,7 @@ df_nigeria <- acled_api(countries = c("Nigeria"),
                         monadic = F,
                         acled_access = T,
                         prompt = FALSE)
+
 ```
 
 We start by pulling the data out of ACLED's API. First, we call

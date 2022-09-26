@@ -41,7 +41,8 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
-                   monadic = F)
+                   monadic = F, 
+                   prompt = F)
 ```
 
 We can then generate event counts at the country-week level:

@@ -170,8 +170,10 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 df_haiti <- acled_api(countries = c("Haiti"),
                    start_date = "2022-01-01",
                    end_date = "2022-03-31",
+
                    monadic = F,
                    prompt = FALSE)
+
 ```
 
 With some quick data wrangling with `dplyr` and plotting with `ggplot2`, we see that the most common `event_type` was violence against civilians.

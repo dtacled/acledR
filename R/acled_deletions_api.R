@@ -1,11 +1,11 @@
-#' @title Request data from the ACLED deletions API
+#' @title Request data from the ACLED Deletions API
 #' @name acled_deletions_api
-#' @description This function allows users to pull deleted ACLED events from the API to keep their data up to date.
+#' @description This function allows users to pull deleted ACLED event IDs from the Deletions API. 
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param date_deleted character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.
-#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.
-#' @returns Returns a tibble of of ACLED data with columns for event_id_cnty and deleted_timestamp.
+#' @param acled_access logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.
+#' @returns Returns a tibble of ACLED data with columns for event_id_cnty and deleted_timestamp.
 #' @family API and Access
 #' @seealso
 #' \itemize{
@@ -15,7 +15,7 @@
 #' @examples
 #' \dontrun{
 #'
-#' # Request deleted ACLED events since January 1 2022
+#' # Request deleted ACLED events since January 1, 2022
 #' acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 #'
 #' }
