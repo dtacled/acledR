@@ -1,9 +1,6 @@
 ---
 title: "Event and Sub-Event Types"
 ---
-Not to be included yet:
- - With rachel we discussed how much of document we wanted related to methodology. As it stands, this is a very heavy methodological piece, which perhaps would be better of to be re-directed to the actual codebook. 
-
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -19,9 +16,9 @@ library(kableExtra)
 
 ```
 
-ACLED collects and codes reported information on three general types of events: political violence, demonstrations, and select non-violent, politically important events. Under the general categories, there are 6 __event types__ and 25 __sub-event types__. 
+ACLED collects and codes reported information on three general types of events: political violence, demonstrations, and select non-violent politically important events. Under these general categories, there are 6 **event types** and 25 **sub-event types**. This vignette provides only an introduction to these event types, for a more detailed explanation please visit our [guide](https://acleddata.com/download/35134/).
 
-This page describes each event and sub-event type in ACLED and shows how to access them via `acledR`. 
+This page describes each event and sub-event type in ACLED and shows how to access them via `acledR`.
 
 -   To see all event and sub-event types, jump to the [Full List]
 -   To read more about the violent event types, jump to [Violent Events]
@@ -137,31 +134,31 @@ Protesters are noted by generic terms (e.g. 'Protesters (Country)'); if represen
 
 The following sub-event types are associated with the 'Protests' event type: 'Peaceful protest', 'Protest with intervention', and 'Excessive force against protesters'.
 
--   **Peaceful protest:** This sub-event type is used when demonstrators are engaged in a protest while not engaging in violence or other forms of rioting behaviour and are not faced with any sort of force or engagement.
+-   **Peaceful protest:** This sub-event type is used when demonstrators are engaged in a protest while not engaging in violence or other forms of rioting behavior and are not faced with any sort of force or engagement.
 -   **Protest with intervention:** This sub-event type should be used when individuals are engaged in a peaceful protest during which there is an attempt to disperse or suppress the protest without serious/lethal injuries being reported or the targeting of protesters with lethal weapons. Additionally, this sub-event type should cover any instance where armed groups or rioters interact with peaceful protesters without resulting in serious/lethal injuries.
--   **Excessive force against protestors:** This sub-event type should be used when individuals are engaged in a peaceful protest and are targeted with violence by an actor leading to (or if it could lead to) serious/lethal injuries.
+-   **Excessive force against protesters:** This sub-event type should be used when individuals are engaged in a peaceful protest and are targeted with violence by an actor leading to (or if it could lead to) serious/lethal injuries.
 
 ## Riots:
 
-'Riots' are violent events where demonstrators or mobs engage in disruptive acts, including but not limited to rock throwing, property destruction, etc. They may target other individuals, property, businesses, other rioting groups or armed actors. Rioters are noted by generic terms (e.g. 'Rioters (Country)'); if representing a group, the name of that group is recorded in the respective 'Associated actor' column. Rioters may begin as peaceful protesters, or may be intent on engaging in spontaneous and disorganized violence from the beginning of their actions. Contrary to armed groups, rioters do not use sophisticated weapons such as guns, knives or swords. "Crude bombs" (e.g. Molotov cocktails, petrol bombs, firecrackers) may be used in rioting behaviour. The following sub-event types are associated with the 'Riots' event type: 'Violent demonstration' and 'Mob violence'.
+'Riots' are violent events where demonstrators or mobs engage in disruptive acts, including but not limited to rock throwing, property destruction, etc. They may target other individuals, property, businesses, other rioting groups or armed actors. Rioters are noted by generic terms (e.g. 'Rioters (Country)'); if representing a group, the name of that group is recorded in the respective 'Associated actor' column. Rioters may begin as peaceful protesters, or may be intent on engaging in spontaneous and disorganized violence from the beginning of their actions. Contrary to armed groups, rioters do not use sophisticated weapons such as guns, knives or swords. "Crude bombs" (e.g. Molotov cocktails, petrol bombs, firecrackers) may be used in rioting behavior. The following sub-event types are associated with the 'Riots' event type: 'Violent demonstration' and 'Mob violence'.
 
--   **Violent demonstration:** This sub-event type is used when a group of individuals engages in a demonstration involving violence. Examples of rioting behaviour include vandalism; road-blocking using barricades, burning tires, or other material; other types of violent and/or destructive behaviour are also included here.
+-   **Violent demonstration:** This sub-event type is used when a group of individuals engages in a demonstration involving violence. Examples of rioting behavior include vandalism; road-blocking using barricades, burning tires, or other material; other types of violent and/or destructive behavior are also included here.
 -   **Mob violence:** This sub-event type is used when rioters violently interact with other rioters, another armed group or civilians, outside of demonstrations and without the use of lethal weapons like guns, knives, swords, etc. A mob is defined as "a large crowd of people, especially one that is disorderly and intent on causing trouble or violence." Note that this type of violence can also include (unarmed or crudely armed) vigilante mobs clashing with other armed groups or attacking civilians. Vigilante groups that are more than crudely armed are not considered to be spontaneous mobs and rather are assumed to be organized and would hence not be included here.
 
 ## Non-Violent Actions
 
 ### Strategic Developments:
 
-In some cases, ACLED also records events which are not necesarrily politically violent events. 
+In some cases, ACLED also records events which could be broadly categorized as "non-violent" but that differ in its role inside context. These events, coded as "strategic Developments" are important pieces of context which may be connected to future upticks of violence, thus they are included in the data set to provide a better understanding a given context of disorder. Users are free to visit our [guide on how to use strategic developments for analysis](https://acleddata.com/download/35141/) to find examples on how to use this event type. `Strategic Developmets` include:
 
--   Agreement
--   Arrests
--   Change to group/activity
--   Disrupted weapons use
+-   Agreements (e.g. Peace agreements / summits)
+-   Arrests (e.g. Politically sensitive arrests)
+-   Change to measures/activity (e.g. mergers or splinters of violent groups, movement of forces, recruitment by force, or particular security measures)
+-   Disrupted weapons use (e.g. Defuseing of explosives, 'ineffective' detonations, interceptions or weapon seizures)
 -   Headquarters or base established
--   Looting/property destruction
+-   Looting/property destruction (e.g. Land seizure, looting, property destruction)
 -   Non-violent transfer of territory
--   Other
+-   Other (e.g. mass graves, displacements, military takeovers, explosive remnants of war like cluster bombs or mines, elections/referendums)
 
 # `acledR` Example
 
@@ -169,12 +166,14 @@ To see how event types and sub-event types look in practice, let's pull data fro
 
 ```{r, echo = T}
 library(acledR)
-acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_haiti <- acled_api(countries = c("Haiti"),
                    start_date = "2022-01-01",
                    end_date = "2022-03-31",
-                   monadic = F, 
-                   prompt = F)
+
+                   monadic = F,
+                   prompt = FALSE)
+
 ```
 
 With some quick data wrangling with `dplyr` and plotting with `ggplot2`, we see that the most common `event_type` was violence against civilians.

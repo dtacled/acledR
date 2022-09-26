@@ -30,13 +30,14 @@ generate_movers(
   slide_periods
 )
 ```
-where `data` is event counts from ACLED, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (e.g., week, month, year), `slide_funs` are the requested moving statistics (e.g., mean, sd, median, min, max), and `slide_periods` are the number of temporal periods over which to calculate the moving statistics. 
 
-As an initial example, let's  first pull ACLED data for India since 2018 using the `acled_api()` function:
+IN the function structure, `data` is event counts from ACLED, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (e.g., week, month, year), `slide_funs` are the requested moving statistics (e.g., mean, sd, median, min, max), and `slide_periods` are the number of temporal periods over which to calculate the moving statistics. 
+
+As an initial example, let's first pull ACLED data for India since 2018 using the `acled_api()` function:
 
 ```{r}
 library(acledR)
-acled_access(email = Sys.getenv("email_address"), key = Sys.getenv("acled_key")) 
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_india <- acled_api(countries = "India",
                    start_date = "2018-01-01",
                    end_date = "2022-04-30",
@@ -55,11 +56,12 @@ df_india_agg <-
 ```
 
 We now have a tibble of ACLED event counts by month for each event type, as well the sum across event types:
+
 ```{r}
 df_india_agg %>% dplyr::glimpse()
 ```
 
-With these event counts, we can use `generate_movers()` to calculate moving statistics of these variables. Let's create two new variables, one for the moving average of `total_events` over the last 3 months:
+With these event counts, we can use `generate_movers()` to calculate moving statistics of these variables. Let's create a new variables for the moving average of `total_events` over the last 3 months:
 
 ```{r}
 df_india_agg_movers <- 
@@ -71,7 +73,7 @@ df_india_agg_movers <-
                   slide_periods = 3)
 ```
 
-We now have two new columns for the two requested moving averages: `total_events_moving_mean_3`. We can look at the first few rows of our variables of interest:
+We now have two new columns for the requested moving average: `total_events_moving_mean_3`. We can look at the first few rows of our variables of interest:
 
 ```{r}
 df_india_agg_movers %>% 
