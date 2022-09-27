@@ -2,7 +2,7 @@
 title: "Accessing and Utilizing ACLED's API"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{acled_api}
+  %\VignetteIndexEntry{Accessing and Utilizing ACLED's API}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,5 +1,10 @@
 ---
 title: "Event and Sub-Event Types"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Event and Sub-Event Types}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

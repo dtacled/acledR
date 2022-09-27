@@ -1,9 +1,10 @@
 ---
 title: "Geography"
-editor_options: 
-  markdown: 
-    wrap: 72
----
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Geography}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(

@@ -1,5 +1,10 @@
 ---
 title: "Actors and Interactions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Actors and Interactions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
