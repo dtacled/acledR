@@ -2,7 +2,7 @@
 % Please edit documentation in R/acled_deletions_api.R
 \name{acled_deletions_api}
 \alias{acled_deletions_api}
-\title{Request data from the ACLED deletions API}
+\title{Request data from the ACLED Deletions API}
 \usage{
 acled_deletions_api(
   email = NULL,
@@ -18,18 +18,18 @@ acled_deletions_api(
 
 \item{date_deleted}{character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.}
 
-\item{acled_access}{logical. If TRUE it means that you have utilized the acled_access function, thus there is no need for email and key arguments.}
+\item{acled_access}{logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.}
 }
 \value{
-Returns a tibble of of ACLED data with columns for event_id_cnty and deleted_timestamp.
+Returns a tibble of ACLED data with columns for event_id_cnty and deleted_timestamp.
 }
 \description{
-This function allows users to pull deleted ACLED events from the API to keep their data up to date.
+This function allows users to pull deleted ACLED event IDs from the Deletions API.
 }
 \examples{
 \dontrun{
 
-# Request deleted ACLED events since January 1 2022
+# Request deleted ACLED events since January 1, 2022
 acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 
 }

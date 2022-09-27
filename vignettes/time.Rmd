@@ -1,5 +1,11 @@
 ---
 title: "Time"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Time}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 ---
 
 
@@ -114,7 +120,7 @@ plot <- df_france %>%
   group_by(month = lubridate::floor_date(event_date, "month",
                                 week_start = getOption('lubridate.week.start', 6))) %>% 
   tally() %>% 
-  ggplot(aes(x = week, y = n)) +
+  ggplot(aes(x = month, y = n)) +
   geom_line(size=1.2)+
   # geom_bar(stat = "identity") +
   theme_light() +

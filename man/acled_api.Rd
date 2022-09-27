@@ -24,9 +24,9 @@ acled_api(
 
 \item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 
-\item{countries}{character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries,}
+\item{countries}{character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries.}
 
-\item{regions}{vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions,}
+\item{regions}{vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions.}
 
 \item{start_date}{character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.}
 
@@ -40,27 +40,28 @@ acled_api(
 
 \item{...}{string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)}
 
-\item{acled_access}{logical. If TRUE, you have used the acled_access function and the email and key arguments are not required.}
+\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.}
 
-\item{prompt}{logical. If TRUE, users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, it continues as normal, but still splits the call and returns a message specifying how many calls are being made.}
+\item{prompt}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
 }
 \value{
 Returns a tibble of of ACLED events.
 }
 \description{
-This function allows users to easily request data in ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+This function allows users to easily request data from the ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 }
 \examples{
 \dontrun{
 
 ## Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022 in dyadic-wide form
-argen_acled <- acled_api(jane.doe.email,jane.doe.key,countries = "Argentina",start_date = "2022-01-01",end_date="2022-02-01", acled_access = FALSE)
+argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key, countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01", acled_access = FALSE)
 
 ## tibble with all the events from Argentina where each row is one event.
 argen_acled
 
-## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form
-carib_acled <- acled_api(john.doe.email,john.doe.key,regions = "Caribbean",start_date = "2022-01-01",end_date="2022-01-10", monadic=TRUE, acled_access = FALSE)
+## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form using email and key saved in environment
+acled_access(email = "jane.doe.email", key = "jane.doe.key")
+carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01", end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
 
 ## Tibble with all the events from the Caribbean where each row is one actor
 carib_acled

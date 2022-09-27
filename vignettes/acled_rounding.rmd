@@ -1,8 +1,10 @@
 ---
 title: "ACLED Rounding"
-output: html_document
-date: "2022-09-20"
----
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ACLED Rounding}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

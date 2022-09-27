@@ -1,17 +1,14 @@
 ---
 title: "Fatalities"
-date: "2022-09-22"
-output: html_document
-editor_options: 
-  markdown: 
-    wrap: 72
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fatalities}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-# Fatalities
 
 The study of fatalities in regions of conflict is one of the most
 popular ways approaches of looking at conflict. However, while popular,

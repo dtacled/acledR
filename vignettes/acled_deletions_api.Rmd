@@ -1,7 +1,11 @@
 ---
-title: "Deletions API"
-date: "2022-09-13"
-output: html_document
+title: "Deletions API: Keeping your dataset up to date"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Deletions API: Keeping your dataset up to date}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
 ---
 
 ```{r setup, include=FALSE}

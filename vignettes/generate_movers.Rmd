@@ -2,7 +2,7 @@
 title: "Generate Moving Statistics"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{generate_movers}
+  %\VignetteIndexEntry{Generate Moving Statistics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
