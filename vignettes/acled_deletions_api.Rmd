@@ -39,7 +39,7 @@ In this section we will show how to use the acled_deletions_api() to keep our da
 
 First lets load the first dataset.
 
-```{r}
+```{r, eval = F}
 
 library(acledR)
 library(tidyverse)
@@ -56,7 +56,7 @@ We can see then that our dataset consists of 326 rows or 326 events. A relativel
 
 Lets check if there are any deleted events since then.
 
-```{r}
+```{r, eval = F}
 
 acled_deleted_events <- acled_deletions_api(date_deleted = "2022/07/25")
 
@@ -65,7 +65,7 @@ glimpse(acled_deleted_events)
 
 Quite a lot of deleted events, 14326. Lets check if any of these are part of my dataset.
 
-```{r}
+```{r, eval = F}
 
 my_deleted_events <- argen_dummy_acled_file %>%
   filter(event_id_cnty %in% acled_deleted_events$event_id_cnty)
@@ -80,7 +80,7 @@ As shown by the number of rows (0), there are no deleted events! ... But it is a
 
 Now lets load our second dataset.
 
-```{r}
+```{r, eval = F}
 
 load(file="~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/dummy_acled_file.rda") # Here is our personal ACLED dataset
 
@@ -90,7 +90,7 @@ nrow(dummy_acled_file)
 
 With this we have loaded the dataset, and we can see that there are 143956 rows in it. Now we proceed to retrieve the deleted events since the last time we gather data.
 
-```{r}
+```{r, eval = F}
 
 deleted_events <- acled_deletions_api(date_deleted = max(dummy_acled_file$timestamp)) # We are using the largest Unix timestamp as that is the last time we gathered data. 
 
@@ -98,9 +98,9 @@ nrow(deleted_events)
 
 ```
 
-As we can see 191 events have been removed since the last time I uploaded my data (1st August 2022, around 1 month and a half at the time writting). Now that we know there are deleted events, lets check if any of these are in my dataset.
+As we can see 191 events have been removed since the last time I uploaded my data (1st August 2022, around 1 month and a half at the time writing). Now that we know there are deleted events, lets check if any of these are in my dataset.
 
-```{r}
+```{r, eval = F}
 
 updated_dataset <- dummy_acled_file %>%
   filter(!(event_id_cnty %in% deleted_events$event_id_cnty)) # We exclude every event_id_cnty that also appears in the deleted_events result
