@@ -5,8 +5,8 @@
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries.
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
-#' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.
-#' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.
+#' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is `1997-01-01`, which is the earliest date available.
+#' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is Sys.Date(), which is the most present date.
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
 #' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
@@ -46,8 +46,8 @@ acled_api <- function(email = NULL,
                        key = NULL,
                        countries = NULL,
                        regions = NULL,
-                       start_date = NULL,
-                       end_date = NULL,
+                       start_date = "1997-01-01",
+                       end_date = Sys.Date(),
                        timestamp = NULL,
                        event_types = NULL,
                        monadic = FALSE,

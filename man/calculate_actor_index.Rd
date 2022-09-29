@@ -19,6 +19,7 @@ Calculate actor concentration indices from ACLED data
 }
 \examples{
 # These examples show the use of this function with simulated event counts from 5 actors
+library(acledR)
 
 # In the first case, each actor is attributed the same event count (10 events)
 df1 <- data.frame(actor = 1:5,
