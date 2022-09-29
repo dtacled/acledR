@@ -15,6 +15,6 @@ A data frame:
 acled_countries
 }
 \description{
-ACLED Country Names, Regions, and Coding Start Year
+ACLED country names, regions, and coding start year
 }
 \keyword{datasets}

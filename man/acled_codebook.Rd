@@ -15,6 +15,6 @@ A data frame:
 acled_codebook
 }
 \description{
-Codebook for ACLED Data
+Codebook for ACLED data
 }
 \keyword{datasets}

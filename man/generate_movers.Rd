@@ -20,9 +20,9 @@ generate_movers(
 
 \item{var}{Variable of interest.}
 
-\item{unit_id}{Unit variable.}
+\item{unit_id}{Spatial unit of analysis (e.g., country, ADMIN1, region).}
 
-\item{time_id}{Temporal variable.}
+\item{time_id}{Temporal variable (e.g., week, month, year).}
 
 \item{slide_funs}{Requested moving statistics. Character vector with options including mean, median, sd, min, and max.}
 

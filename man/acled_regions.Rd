@@ -15,6 +15,6 @@ A data frame:
 acled_regions
 }
 \description{
-ACLED Region Names, Region Numbers, and Coding Start Dates
+ACLED region names, region numbers, and coding start dates
 }
 \keyword{datasets}
