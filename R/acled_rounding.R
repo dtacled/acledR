@@ -22,7 +22,7 @@
 
 
 
-acled_rounding <- function(num, digits=0){
+acled_rounding <- function(num, digits=0){a
   num <- as.numeric(num)
   digits <- as.numeric(digits)
 
@@ -34,5 +34,5 @@ acled_rounding <- function(num, digits=0){
                        ceiling,
                        round)
 
-  return(plyr::round_any(num, accuracy, f = round_type))
+  return(round_any(num, accuracy, f = round_type))
 }
