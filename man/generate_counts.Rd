@@ -88,6 +88,7 @@ df_counts_riots <- generate_counts(data = df_riots,
 
 Other Data Manipulation: 
 \code{\link{calculate_actor_index}()},
+\code{\link{filter_event_types}()},
 \code{\link{generate_movers}()}
 }
 \concept{Data Manipulation}

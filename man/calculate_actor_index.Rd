@@ -53,6 +53,7 @@ calculate_actor_index(df3$event_count, method = "Concentration")
 }
 \seealso{
 Other Data Manipulation: 
+\code{\link{filter_event_types}()},
 \code{\link{generate_counts}()},
 \code{\link{generate_movers}()}
 }

@@ -39,8 +39,8 @@
 #' \describe{
 #' \item{event_type}{ACLED event type}
 #' \item{sub_event_type}{ACLED sub-event type}
-#' \item{political_violence}{Dummy indicator for whether sub-event type falls within \textit{political violence}}
-#' \item{organized_political_violence}{Dummy indicator for whether sub-event type falls within \textit{organized political violence}}
-#' \item{disorder}{Dummy indicator for whether sub-event type falls within \textit{disorder}}
-#' \item{demonstrations}{Dummy indicator for whether sub-event type falls within \textit{demonstrations}}
+#' \item{political_violence}{Dummy indicator for whether sub-event type falls within political violence}
+#' \item{organized_political_violence}{Dummy indicator for whether sub-event type falls within organized political violence}
+#' \item{disorder}{Dummy indicator for whether sub-event type falls within disorder}
+#' \item{demonstrations}{Dummy indicator for whether sub-event type falls within demonstrations}}
 "acled_event_categories"
