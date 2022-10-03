@@ -15,7 +15,6 @@
 #' acled_rounding(x3)
 #' acled_rounding(x4)
 #' @md
-#' @importFrom plyr round_any
 #' @export
 
 
@@ -33,6 +32,8 @@ acled_rounding <- function(num, digits = 0) {
   round_type <- ifelse(key_digit == 5,
                        ceiling,
                        round)
+
+  round_any = function(x, accuracy, f = round){f(x / accuracy) * accuracy}
 
   return(round_any(num, accuracy, f = round_type))
 }
