@@ -145,7 +145,9 @@ generate_counts <-
       janitor::clean_names() %>%
       ungroup() %>%
       select(-one_of("na")) %>%
-      suppressMessages()
+      arrange(.data[[unit_id]], !!paste0("event_", time_target)) %>%
+      suppressMessages() %>%
+      suppressWarnings()
 
 
     if(length(filter_types) == 1)
