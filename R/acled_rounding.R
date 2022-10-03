@@ -22,13 +22,13 @@
 
 
 
-acled_rounding <- function(num, digits=0){a
+acled_rounding <- function(num, digits = 0) {
   num <- as.numeric(num)
   digits <- as.numeric(digits)
 
-  accuracy <- 1/(10^digits)
-  extract_factor <- 10^(digits+1)
-  key_digit <- (trunc(num*extract_factor)) %% 10
+  accuracy <- 1 / (10 ^ digits)
+  extract_factor <- 10 ^ (digits + 1)
+  key_digit <- (trunc(num * extract_factor)) %% 10
 
   round_type <- ifelse(key_digit == 5,
                        ceiling,
