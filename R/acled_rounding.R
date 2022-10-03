@@ -15,6 +15,7 @@
 #' acled_rounding(x3)
 #' acled_rounding(x4)
 #' @md
+#' @importFrom plyr round_any
 #' @export
 
 
