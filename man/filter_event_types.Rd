@@ -4,15 +4,17 @@
 \alias{filter_event_types}
 \title{Filter ACLED data by event type categories}
 \usage{
-filter_event_types(data, acled_categories)
+filter_event_types(data, acled_categories, keep_all_events = FALSE)
 }
 \arguments{
-\item{data}{ACLED data}
+\item{data}{ACLED event data}
 
 \item{acled_categories}{character vector of ACLED event type categories. Options include: political_violence, organized_political_violence, disorder, and demonstrations. More than one category may be requested at one time (e.g., acled_categories = c("organized_political_violence", "disorder")).}
+
+\item{keep_all_events}{logical. If FALSE (default), the returned data will include only events within the requested categories. If TRUE, the returned data will retain all events, even those that do not fall within the requested categories. New dummy columns for each requested category denote which categories each event type falls within.}
 }
 \value{
-Returns a tibble including only ACLED events that fall within the requested event categories, including new columns (dummy variables) indicating which categories each event falls under.
+Returns a tibble of ACLED events and new columns (dummy variables) indicating which categories each event falls under. If \code{keep_all_events = FALSE}, only events that fall within one of the requested categories are returned. If \code{keep_all_events = TRUE}, all events, including those not within a requested category, are returned.
 }
 \description{
 Filter ACLED data by event type categories
