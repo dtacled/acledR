@@ -49,18 +49,18 @@ and save the file. If you run `Sys.getenv("email_address")`, your associated ema
 `acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
 
 ```{r, eval = F}
-acled_api <- function(email = NULL,
-                      key = NULL,
-                      countries = NULL,
-                      regions = NULL,
-                      start_date = "1997-01-01",
-                      end_date = Sys.Date(),
-                      timestamp = NULL,
-                      event_types = NULL,
-                      monadic = FALSE,
-                      ...,
-                      acled_access = TRUE,
-                      prompt = TRUE)
+acled_api(email = NULL,
+          key = NULL,
+          countries = NULL,
+          regions = NULL,
+          start_date = "1997-01-01",
+          end_date = Sys.Date(),
+          timestamp = NULL,
+          event_types = NULL,
+          monadic = FALSE,
+          ...,
+          acled_access = TRUE,
+          prompt = TRUE)
 ```
 
 ## Parameters for the API

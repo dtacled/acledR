@@ -46,7 +46,7 @@ library(tidyverse)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
-load(file="~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/argen_dummy_acled_file.rda") # Here is our personal ACLED dataset
+load(file = "~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/argen_dummy_acled_file.rda") # Here is our personal ACLED dataset
 
 nrow(argen_dummy_acled_file)
 
