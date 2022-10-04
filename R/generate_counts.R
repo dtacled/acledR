@@ -117,7 +117,7 @@ generate_counts <-
     if(is.null(add_unit_ids)){
       add_unit_ids <- unique(data[[unit_id]])
     } else {
-      add_unit_ids <- c(unique(data[[unit_id]]), add_unit_ids)
+      add_unit_ids <- unique(c(unique(data[[unit_id]]), add_unit_ids))
       }
 
 
