@@ -63,10 +63,11 @@ In order to address these short comings, ACLED develops regionally tailor-made a
 In order to demonstrate the use of the fatalities columns, we will look at fatalities in violence against civilians across 2021 and 2022 (the first half until August).
 
 ```{r, echo=FALSE}
+
 library(acledR)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
-library(plotly)
+library(ggplot2)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
@@ -114,27 +115,26 @@ df_fatalities %>%
 
 Now that we have a better understanding on how our fatalities data set is distributed, lets look at its evolution across 2021 and 2022.
 
-```{r, fig.height = 4, fig.width = 8}
+```{r, fig.height = 4, fig.width = 6}
 
 df_fatalities_monthly <- df_fatalities %>%
   group_by(Month = floor_date(ymd(event_date), "month")) %>%
-  summarise(fatalities_sum = sum(fatalities)) %>%
-  mutate(column = "fatalities") ## we create this column just to make a workaround in the tooltip in the plotly graph. 
+  summarise(fatalities_sum = sum(fatalities))
 
-g <- ggplot(df_fatalities_monthly, 
-            aes(x=Month,y=fatalities_sum)) +
-  geom_line(aes(group = column ,text=paste("Sum of fatalities: ", fatalities_sum)),
-            color = "navyblue")+
-  labs(title = "Total of fatalities per month across 2021 and the first half of 2022",
+ggplot(df_fatalities_monthly, 
+            aes(x = Month, y = fatalities_sum)) +
+  
+  geom_line(color = "navy") +
+  labs(title = "Total of fatalities per month",
+       subtitle = "Jan 2021-Aug 2022",
        x = "Year-Month",
-       y = "Sum of fatalities")
-
-ggplotly(g, tooltip = c("x", "text"))
+       y = "Sum of fatalities") +
+  theme_light()
 ```
 
 From this graph, we can observe a peak in the number of fatalities in March 2022. To go slightly more in-depth, let's explore the countries that saw the highest difference compared to the prior month.
 
-```{r, fig.height = 4, fig.width = 6}
+```{r, fig.height = 6, fig.width = 6}
 df_fatalities_monthly_country <- df_fatalities %>%
   group_by(Month = floor_date(ymd(event_date), "month"), country) %>%
   summarise(fatalities_sum = sum(fatalities)) %>%
@@ -145,15 +145,17 @@ df_fatalities_monthly_country <- df_fatalities %>%
   arrange(-difference) %>%
   filter(difference != 0) ## We are filtering out those countries which didn't change to make a more polished graph. 
 
-gp <- ggplot(df_fatalities_monthly_country, 
-             aes(y = reorder(country, difference),
-                 x = difference)) +
-  geom_col()+
-  labs(title = "Difference of total fatalities per country between \n February and March 2022\n",
-       x= "Total difference of fatalities",
-       y= "Countries")
+ggplot(df_fatalities_monthly_country, 
+       aes(y = reorder(country, difference), x = difference)) +
+  geom_col() +
+  labs(title = "Difference in total fatalities per country ",
+       subtitle = "February versus March 2022",
+       x = "Total difference in fatalities",
+       y = "Countries") +
+  theme_light() +
+  # theme(panel.grid = element_blank()) +
+  coord_cartesian(expand = F)
 
-ggplotly(gp)
 ```
 
 Interestingly, we see Mali and Ukraine as the top countries making contributions to the new peak in fatalities, as these two were the countries with the biggest uptick in fatalities in March 2022 compared to February. If a reader saw the peak from the previous line chart, one may have swiftly explained it by the outbreak of the Russian invasion into Ukraine in late February. However, this would have missed the uptick in violence in Mali by Malian and Wagner forces (see our [analysis](%22https://acleddata.com/10-conflicts-to-worry-about-in-2022/sahel/mid-year-update/%22) for more information).
