@@ -12,6 +12,7 @@ Imports:
     dplyr,
     lubridate,
     magrittr,
+    countrycode,
     purrr,
     slider,
     stringr,
