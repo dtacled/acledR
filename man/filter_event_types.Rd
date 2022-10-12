@@ -46,6 +46,7 @@ df_demonstrations_disorder
 \seealso{
 Other Data Manipulation: 
 \code{\link{calculate_actor_index}()},
+\code{\link{filter_actors}()},
 \code{\link{generate_counts}()},
 \code{\link{generate_movers}()}
 }
