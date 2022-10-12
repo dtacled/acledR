@@ -21,5 +21,6 @@ This formula allows to regenerate columns (when applicable) that may have been d
 Please note that as of today, the one columns available to be regenerated are
 \itemize{
 \item event_id_no_cnty
+\item iso3
 }
 }
