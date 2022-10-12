@@ -59,8 +59,9 @@ acled_api(email = NULL,
           event_types = NULL,
           monadic = FALSE,
           ...,
-          acled_access = TRUE,
+          acled_access = TRUE,#acled_access=TRUE only works when acled_access() was run beforehand, eliminating the need of email-key in acled_api()
           prompt = TRUE)
+
 ```
 
 ## Parameters for the API
