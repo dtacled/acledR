@@ -27,7 +27,7 @@ Political violence is defined as the use of force by a group with a political pu
 
 The fundamental unit of observation in ACLED is the *event*. Events involve designated actors -- e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day.
 
-# Variable List {#variable-list}
+## Variable List {#variable-list}
 
 ```{r}
 library(kableExtra)
@@ -38,3 +38,21 @@ acledR::acled_codebook %>%
   column_spec(2, width = "20em") %>% 
   column_spec(3, width = "50em")
 ```
+
+## ACLED Help
+
+To further assist our users to understand what each column in our dataset represents, we have added a function that redirects users to relevant documentation for the column in question. That function is `acled_help()`:
+
+```{r,eval = FALSE}
+
+acled_help(column = NULL)
+
+```
+
+As users can observe, the function is relatively straightforward, only requiring one argument. In this case `column` refers to the column which users may be interested on exploring further. Note: `acled_help()` only supports one column at a time. 
+
+For example, if an user would like to know more about the fatalities column, he/she/they can write `acled_help(column="fatalities")` which will prompt the fatalities vignette.
+
+Some columns have an standalone documentation vignette, e.g. Fatalities. However, others will be either part of another vignette, e.g. admins and geographical vignette.
+
+

@@ -2,7 +2,7 @@
 title: "Generate Event Counts"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generate Event Counts}
+  %\VignetteIndexEntry{generate_counts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 # Generating counts of ACLED events
 
-The `generate_counts()` function quickly creates event counts by event type and unit of analysis. 
+The `generate_counts()` function creates event counts by event type and spacial and temporal units of analysis. 
 
-In the most basic usage, the required arguments are:
+The required arguments are:
 
 ```{r, eval = F}
 generate_counts(
@@ -31,7 +31,7 @@ generate_counts(
 )
 ```
 
-`data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregations (e.g., week, month, year). If `time_target = week`, it automatically uses the ACLED week (starting on Saturday) - see (time)[__here would go the time vignitte link__]
+where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregation (e.g., week, month, year). If `time_target = week`, the ACLED week (starting on Saturday) is used - see (time)[__here would go the time vignette link__]
 
 As an example, we can take the data for South America.
 
@@ -41,8 +41,7 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-04-30",
-                   monadic = F, 
-                   prompt = F)
+                   monadic = F)
 ```
 
 We can then generate event counts at the country-week level:
@@ -64,8 +63,7 @@ df_sa_agg_weekly %>%
   kableExtra::kable()
 ```
 
-
-We can also request just certain event types. For example, we might only want political violence:
+We can also limit the request to certain event types. For example, we might only want political violence events:
 
 ```{r}
 df_sa_agg_weekly_pv <-
@@ -76,17 +74,16 @@ df_sa_agg_weekly_pv <-
                   event_type = c("Battles", 
                                  "Violence against civilians", 
                                  "Explosions/Remote violence", 
-                                 "Riots"))
+                                 "Riots"))  ## This needs to be changed, it is only mob violence
 ```
 
-And now we only retain the requested event types and the total corresponds to these types only:
+Now we only retain the requested event types and the total corresponds to these types only:
 
 ```{r}
 df_sa_agg_weekly %>% 
   head() %>% 
   kableExtra::kable()
 ```
-
 
 If instead we wanted violent event counts by month rather than week, we would simply swap `time_target = week` to `time_target = month`:
 
@@ -102,13 +99,11 @@ df_sa_agg_monthly_pv <-
                                  "Riots"))
 ```
 
-
 # Examples
 
 ## How have event types in Africa changed over time?
 
-An analyst might be interested in how conflict event types have changed over time within a continent. In this example, let's consider Africa since 2018. Since ACLED codes multiple regions within each continent, we need to identify all regions that fall within Africa. We can see all ACLED regions by calling the `acledR::acled_regions` data:
-
+An analyst may be interested in how conflict event types have changed over time within a continent. In this example, consider Africa since 2018. Since ACLED can code multiple regions within each continent, we need to identify all regions that fall within Africa. We can see all ACLED regions by calling the `acledR::acled_regions` data.
 
 Here, we see 5 regions in Africa, as well as the first date for which events were coded in each region. 
 
@@ -145,8 +140,7 @@ df_africa_monthly <-
                                  "Riots"))
 ```
 
-
-With some quick data wrangling to pivot the data such that each region-event type combination is one row and filtering out the `total_events` event type, we can create a stacked bar plot of event types over time by country with `ggplot2`:
+We can create a stacked bar plot of event types over time by country with `ggplot2` by pivoting the data such that each region-event type combination is one row and filtering out the `total_events` event type:
 
 ```{r, fig.width=6, fig.height=8}
 library(ggplot2)
@@ -174,7 +168,3 @@ df_africa_monthly %>%
 
 
 ```
-
-
-
-
