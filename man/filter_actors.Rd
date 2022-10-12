@@ -19,6 +19,23 @@ Returns a tibble of ACLED data filtered to selected actors.
 \description{
 This function allows users to filter ACLED data by actor.
 }
+\examples{
+\dontrun{
+
+# Request events from Yemen
+df_events <- acled_api(countries = "Yemen",
+                       start_date = "2022-01-01",
+                       end_date = "2022-07-30",
+                       monadic = F,
+                       acled_access = TRUE)
+
+# Create vector of actors of interest
+yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council', 'Military Forces of Yemen (2012-)')
+
+# Filter to selected actors
+filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols = 'all')
+}
+}
 \seealso{
 Other Data Manipulation: 
 \code{\link{calculate_actor_index}()},
