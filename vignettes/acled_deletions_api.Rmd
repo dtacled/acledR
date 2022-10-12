@@ -42,7 +42,8 @@ First lets load the first dataset.
 ```{r, eval = F}
 
 library(acledR)
-library(tidyverse)
+library(dplyr)
+
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 

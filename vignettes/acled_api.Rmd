@@ -114,7 +114,7 @@ The results return a tibble with each ACLED event in Brazil during this time per
 
 ```{r}
 df_br %>% 
-  dplyr::glimpse()
+  glimpse()
 ```
 
 If instead we wanted multiple countries, we could execute:

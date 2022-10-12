@@ -20,7 +20,10 @@ knitr::opts_chunk$set(
 library(acledR)
 library(dplyr)
 library(kableExtra)
-
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(plotly)
 ```
 
 
@@ -64,8 +67,7 @@ ACLED's week is not like "normal" weeks, as we follow the submission process of 
 To explore the uses of time in ACLED's data, we can look at the following example analyzing France's events throughout 2021. 
 
 ```{r, echo = T}
-library(acledR)
-library(tidyverse)
+
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_france <- acled_api(countries = c("France"),
                        start_date = "2021-01-01",
@@ -90,10 +92,6 @@ Next we move to do one of the best analysis we can do with ACLED's data, time-se
 
 
 ```{r, echo = T}
-library(dplyr)
-library(ggplot2)
-library(plotly)
-
 plot <- df_france %>% 
   group_by(event_date) %>% 
   tally() %>% 
