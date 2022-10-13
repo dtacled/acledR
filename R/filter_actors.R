@@ -20,11 +20,11 @@
 #' yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council', 'Military Forces of Yemen (2012-)')
 #'
 #' # Filter to selected actors
-#' filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols = 'all)
-#'
+#' filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols = 'all')
 #' }
 #' @md
-#' @import tidyverse
+#' @import dplyr
+#' @import stringr
 #'
 #' @export
 

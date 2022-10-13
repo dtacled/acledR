@@ -42,11 +42,12 @@ First lets load the first dataset.
 ```{r, eval = F}
 
 library(acledR)
-library(tidyverse)
+library(dplyr)
+
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
-load(file = "~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/argen_dummy_acled_file.rda") # Here is our personal ACLED dataset
+argen_dummy_acled_file <- acledR::acled_deletion_old_dummy # Here is our old personal ACLED dataset
 
 nrow(argen_dummy_acled_file)
 
@@ -82,7 +83,7 @@ Now lets load our second dataset.
 
 ```{r, eval = F}
 
-load(file="~/ACLED/Data Literacy/R 4 Finance/R 4 finance project/dummy_acled_file.rda") # Here is our personal ACLED dataset
+dummy_acled_file <- acledR::acled_deletion_old_dummy_n2 # Here is our personal ACLED dataset
 
 nrow(dummy_acled_file)
 
