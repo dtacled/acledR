@@ -94,8 +94,11 @@
 
     
     
-<p>The <code><a href="../reference/generate_counts.html">generate_counts()</a></code> function quickly creates event counts by event type and unit of analysis.</p>
-<p>In the most basic usage, the required arguments are:</p>
+<div class="section level2">
+<h2 id="generating-counts-of-acled-events">Generating counts of ACLED events<a class="anchor" aria-label="anchor" href="#generating-counts-of-acled-events"></a>
+</h2>
+<p>The <code><a href="../reference/generate_counts.html">generate_counts()</a></code> function creates event counts by event type and spacial and temporal units of analysis.</p>
+<p>The required arguments are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
@@ -103,11 +106,11 @@
 <span>  <span class="va">time_id</span>,</span>
 <span>  <span class="va">time_target</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>where <code>data</code> is ACLED event-level data, <code>unit_id</code> is the spatial unit of analysis (e.g., country, ADMIN1, region), <code>time_id</code> is the temporal unit (i.e., <code>event_date</code> normally), and <code>time_target</code> is the temporal unit of aggregations (e.g., week, month, year). If <code>time_target = week</code>, it automatically uses the ACLED week (starting on Saturday).</p>
+<p>where <code>data</code> is ACLED event-level data, <code>unit_id</code> is the spatial unit of analysis (e.g., country, ADMIN1, region), <code>time_id</code> is the temporal unit (i.e., <code>event_date</code> normally), and <code>time_target</code> is the temporal unit of aggregation (e.g., week, month, year). If <code>time_target = week</code>, the ACLED week (starting on Saturday) is used - see (time)[<strong>here would go the time vignette link</strong>]</p>
 <p>As an example, we can take the data for South America.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
 <span><span class="co">#&gt; $Success</span></span>
 <span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
 <span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
@@ -224,10 +227,10 @@ Argentina
 2022-01-15
 </td>
 <td style="text-align:right;">
-42
+43
 </td>
 <td style="text-align:right;">
-5
+6
 </td>
 <td style="text-align:right;">
 1
@@ -242,7 +245,7 @@ Argentina
 0
 </td>
 <td style="text-align:right;">
-48
+50
 </td>
 </tr>
 <tr>
@@ -334,7 +337,7 @@ Argentina
 </tr>
 </tbody>
 </table>
-<p>We can also request just certain event types. For example, we might only want political violence:</p>
+<p>We can also limit the request to certain event types. For example, we might only want political violence events:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_weekly_pv</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -344,8 +347,8 @@ Argentina
 <span>                  event_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Battles"</span>, </span>
 <span>                                 <span class="st">"Violence against civilians"</span>, </span>
 <span>                                 <span class="st">"Explosions/Remote violence"</span>, </span>
-<span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>And now we only retain the requested event types and the total corresponds to these types only:</p>
+<span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span>  <span class="co">## This needs to be changed, it is only mob violence</span></span></code></pre></div>
+<p>Now we only retain the requested event types and the total corresponds to these types only:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_weekly</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -447,10 +450,10 @@ Argentina
 2022-01-15
 </td>
 <td style="text-align:right;">
-42
+43
 </td>
 <td style="text-align:right;">
-5
+6
 </td>
 <td style="text-align:right;">
 1
@@ -465,7 +468,7 @@ Argentina
 0
 </td>
 <td style="text-align:right;">
-48
+50
 </td>
 </tr>
 <tr>
@@ -568,36 +571,37 @@ Argentina
 <span>                                 <span class="st">"Violence against civilians"</span>, </span>
 <span>                                 <span class="st">"Explosions/Remote violence"</span>, </span>
 <span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <div class="section level3">
 <h3 id="how-have-event-types-in-africa-changed-over-time">How have event types in Africa changed over time?<a class="anchor" aria-label="anchor" href="#how-have-event-types-in-africa-changed-over-time"></a>
 </h3>
-<p>An analyst might be interested in how conflict event types have changed over time within a continent. In this example, let’s consider Africa since 2018. Since ACLED codes multiple regions within each continent, we need to identify all regions that fall within Africa. We can see all ACLED regions by calling the <code>acledR::acled_regions</code> data:</p>
+<p>An analyst may be interested in how conflict event types have changed over time within a continent. In this example, consider Africa since 2018. Since ACLED can code multiple regions within each continent, we need to identify all regions that fall within Africa. We can see all ACLED regions by calling the <code><a href="../reference/acled_regions.html">acledR::acled_regions</a></code> data.</p>
 <p>Here, we see 5 regions in Africa, as well as the first date for which events were coded in each region.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va">acled_regions</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 × 4</span></span></span>
-<span><span class="co">#&gt;    region region_name               first_event_date last_event_date</span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      1 Western Africa            1997-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      2 Middle Africa             1997-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      3 Eastern Africa            1997-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      4 Southern Africa           1997-01-05       2022-04-14     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      5 Northern Africa           1997-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      7 South Asia                2010-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      9 Southeast Asia            2010-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     11 Middle East               2015-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     12 Europe                    2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     13 Caucasus and Central Asia 2017-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     14 Central America           2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     15 South America             2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     16 Caribbean                 2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     17 East Asia                 2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     18 North America             2018-01-01       2022-04-15     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>     19 Oceania                   2021-01-01       2022-04-14     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span>     20 Antarctica                2021-03-19       2022-03-25</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_regions.html">acled_regions</a></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 × 3</span></span></span>
+<span><span class="co">#&gt;    region region_name               first_event_date</span></span>
+<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      1 Western Africa            1997-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      2 Middle Africa             1997-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      3 Eastern Africa            1997-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      4 Southern Africa           1997-01-05      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      5 Northern Africa           1997-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      7 South Asia                2010-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      9 Southeast Asia            2010-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     11 Middle East               2015-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     12 Europe                    2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     13 Caucasus and Central Asia 2017-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     14 Central America           2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     15 South America             2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     16 Caribbean                 2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     17 East Asia                 2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     18 North America             2018-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>     19 Oceania                   2021-01-01      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span>     20 Antarctica                2021-03-19</span></span></code></pre></div>
 <p>We can store these region names in a vector called <code>africa_regions</code> and request data for each country within these regions since 2018.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">africa_regions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Western Africa"</span>, </span>
@@ -621,7 +625,7 @@ Argentina
 <span>                                 <span class="st">"Violence against civilians"</span>, </span>
 <span>                                 <span class="st">"Explosions/Remote violence"</span>, </span>
 <span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>With some quick data wrangling to pivot the data such that each region-event type combination is one row and filtering out the <code>total_events</code> event type, we can create a stacked bar plot of event types over time by country with <code>ggplot2</code>:</p>
+<p>We can create a stacked bar plot of event types over time by country with <code>ggplot2</code> by pivoting the data such that each region-event type combination is one row and filtering out the <code>total_events</code> event type:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>

@@ -95,8 +95,7 @@
 
     
     
-<p>Not to be included yet: - With rachel we discussed how much of document we wanted related to methodology. As it stands, this is a very heavy methodological piece, which perhaps would be better of to be re-directed to the actual codebook.</p>
-<p>ACLED collects and codes reported information on three general types of events: political violence, demonstrations, and select non-violent, politically important events. Under the general categories, there are 6 <strong>event types</strong> and 25 <strong>sub-event types</strong>.</p>
+<p>ACLED collects and codes reported information on three general types of events: political violence, demonstrations, and select non-violent politically important events. Under these general categories, there are 6 <strong>event types</strong> and 25 <strong>sub-event types</strong>. This vignette provides only an introduction to these event types, for a more detailed explanation please visit our <a href="https://acleddata.com/download/35134/" class="external-link">guide</a>.</p>
 <p>This page describes each event and sub-event type in ACLED and shows how to access them via <code>acledR</code>.</p>
 <ul>
 <li>To see all event and sub-event types, jump to the <a href="#full-list">Full List</a>
@@ -386,20 +385,20 @@ Other
 <p>The following sub-event types are associated with the ‘Protests’ event type: ‘Peaceful protest’, ‘Protest with intervention’, and ‘Excessive force against protesters’.</p>
 <ul>
 <li>
-<strong>Peaceful protest:</strong> This sub-event type is used when demonstrators are engaged in a protest while not engaging in violence or other forms of rioting behaviour and are not faced with any sort of force or engagement.</li>
+<strong>Peaceful protest:</strong> This sub-event type is used when demonstrators are engaged in a protest while not engaging in violence or other forms of rioting behavior and are not faced with any sort of force or engagement.</li>
 <li>
 <strong>Protest with intervention:</strong> This sub-event type should be used when individuals are engaged in a peaceful protest during which there is an attempt to disperse or suppress the protest without serious/lethal injuries being reported or the targeting of protesters with lethal weapons. Additionally, this sub-event type should cover any instance where armed groups or rioters interact with peaceful protesters without resulting in serious/lethal injuries.</li>
 <li>
-<strong>Excessive force against protestors:</strong> This sub-event type should be used when individuals are engaged in a peaceful protest and are targeted with violence by an actor leading to (or if it could lead to) serious/lethal injuries.</li>
+<strong>Excessive force against protesters:</strong> This sub-event type should be used when individuals are engaged in a peaceful protest and are targeted with violence by an actor leading to (or if it could lead to) serious/lethal injuries.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="riots">Riots:<a class="anchor" aria-label="anchor" href="#riots"></a>
 </h3>
-<p>‘Riots’ are violent events where demonstrators or mobs engage in disruptive acts, including but not limited to rock throwing, property destruction, etc. They may target other individuals, property, businesses, other rioting groups or armed actors. Rioters are noted by generic terms (e.g. ‘Rioters (Country)’); if representing a group, the name of that group is recorded in the respective ‘Associated actor’ column. Rioters may begin as peaceful protesters, or may be intent on engaging in spontaneous and disorganized violence from the beginning of their actions. Contrary to armed groups, rioters do not use sophisticated weapons such as guns, knives or swords. “Crude bombs” (e.g. Molotov cocktails, petrol bombs, firecrackers) may be used in rioting behaviour. The following sub-event types are associated with the ‘Riots’ event type: ‘Violent demonstration’ and ‘Mob violence’.</p>
+<p>‘Riots’ are violent events where demonstrators or mobs engage in disruptive acts, including but not limited to rock throwing, property destruction, etc. They may target other individuals, property, businesses, other rioting groups or armed actors. Rioters are noted by generic terms (e.g. ‘Rioters (Country)’); if representing a group, the name of that group is recorded in the respective ‘Associated actor’ column. Rioters may begin as peaceful protesters, or may be intent on engaging in spontaneous and disorganized violence from the beginning of their actions. Contrary to armed groups, rioters do not use sophisticated weapons such as guns, knives or swords. “Crude bombs” (e.g. Molotov cocktails, petrol bombs, firecrackers) may be used in rioting behavior. The following sub-event types are associated with the ‘Riots’ event type: ‘Violent demonstration’ and ‘Mob violence’.</p>
 <ul>
 <li>
-<strong>Violent demonstration:</strong> This sub-event type is used when a group of individuals engages in a demonstration involving violence. Examples of rioting behaviour include vandalism; road-blocking using barricades, burning tires, or other material; other types of violent and/or destructive behaviour are also included here.</li>
+<strong>Violent demonstration:</strong> This sub-event type is used when a group of individuals engages in a demonstration involving violence. Examples of rioting behavior include vandalism; road-blocking using barricades, burning tires, or other material; other types of violent and/or destructive behavior are also included here.</li>
 <li>
 <strong>Mob violence:</strong> This sub-event type is used when rioters violently interact with other rioters, another armed group or civilians, outside of demonstrations and without the use of lethal weapons like guns, knives, swords, etc. A mob is defined as “a large crowd of people, especially one that is disorderly and intent on causing trouble or violence.” Note that this type of violence can also include (unarmed or crudely armed) vigilante mobs clashing with other armed groups or attacking civilians. Vigilante groups that are more than crudely armed are not considered to be spontaneous mobs and rather are assumed to be organized and would hence not be included here.</li>
 </ul>
@@ -410,16 +409,16 @@ Other
 <div class="section level4">
 <h4 id="strategic-developments">Strategic Developments:<a class="anchor" aria-label="anchor" href="#strategic-developments"></a>
 </h4>
-<p>In some cases, ACLED also records events which are not necesarrily politically violent events.</p>
+<p>In some cases, ACLED also records events which could be broadly categorized as “non-violent” but that differ in its role inside context. These events, coded as “strategic Developments” are important pieces of context which may be connected to future upticks of violence, thus they are included in the data set to provide a better understanding a given context of disorder. Users are free to visit our <a href="https://acleddata.com/download/35141/" class="external-link">guide on how to use strategic developments for analysis</a> to find examples on how to use this event type. <code>Strategic Developmets</code> include:</p>
 <ul>
-<li>Agreement</li>
-<li>Arrests</li>
-<li>Change to group/activity</li>
-<li>Disrupted weapons use</li>
+<li>Agreements (e.g. Peace agreements / summits)</li>
+<li>Arrests (e.g. Politically sensitive arrests)</li>
+<li>Change to measures/activity (e.g. mergers or splinters of violent groups, movement of forces, recruitment by force, or particular security measures)</li>
+<li>Disrupted weapons use (e.g. Defuseing of explosives, ‘ineffective’ detonations, interceptions or weapon seizures)</li>
 <li>Headquarters or base established</li>
-<li>Looting/property destruction</li>
+<li>Looting/property destruction (e.g. Land seizure, looting, property destruction)</li>
 <li>Non-violent transfer of territory</li>
-<li>Other</li>
+<li>Other (e.g. mass graves, displacements, military takeovers, explosive remnants of war like cluster bombs or mines, elections/referendums)</li>
 </ul>
 </div>
 </div>
@@ -431,13 +430,16 @@ Other
 <p>To see how event types and sub-event types look in practice, let’s pull data from Haiti for the first few months of 2022 sing the <code><a href="../reference/acled_api.html">acled_api()</a></code> function:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
 <span><span class="co">#&gt; $Success</span></span>
 <span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
+<span></span>
 <span><span class="va">df_haiti</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Haiti"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-03-31"</span>,</span>
-<span>                   monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>                   prompt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>With some quick data wrangling with <code>dplyr</code> and plotting with <code>ggplot2</code>, we see that the most common <code>event_type</code> was violence against civilians.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>

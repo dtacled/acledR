@@ -95,46 +95,90 @@
 
 
 <dt>unit_id</dt>
-<dd><p>Unit variable (e.g., country, region, admin1, etc.)</p></dd>
+<dd><p>string. Unit variable (e.g., country, region, admin1, etc.).</p></dd>
 
 
 <dt>time_id</dt>
-<dd><p>Temporal variable, usually event_date</p></dd>
+<dd><p>string. Temporal variable, usually event_date.</p></dd>
 
 
 <dt>time_target</dt>
-<dd><p>Target temporal unit (week, month, year)</p></dd>
+<dd><p>string. Target temporal unit (e.g. week, month, year).</p></dd>
 
 
 <dt>start_date</dt>
-<dd><p>Earliest date to include (yyyy-mm-dd)</p></dd>
+<dd><p>Earliest date to include (yyyy-mm-dd).</p></dd>
 
 
 <dt>end_date</dt>
-<dd><p>Latest date to include (yyyy-mm-dd)</p></dd>
+<dd><p>Latest date to include (yyyy-mm-dd).</p></dd>
 
 
 <dt>add_unit_ids</dt>
-<dd><p>Option to add in units with no events in throughout the time period of interest</p></dd>
+<dd><p>Option to add in units with no events throughout the time period of interest.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a tibble grouped by unit_id</p>
+<p>Returns a tibble grouped by unit_id.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
 <ul><li><p>ACLED API guide. <a href="https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf" class="external-link">https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf</a></p></li>
 </ul><p>Other Data Manipulation: 
+<code><a href="calculate_actor_index.html">calculate_actor_index</a>()</code>,
+<code><a href="filter_actors.html">filter_actors</a>()</code>,
+<code><a href="filter_event_types.html">filter_event_types</a>()</code>,
 <code><a href="generate_movers.html">generate_movers</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### General example ###</span></span></span>
+<span class="r-in"><span><span class="co"># Request all events from a few countries</span></span></span>
+<span class="r-in"><span><span class="va">df_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Mexico"</span>, <span class="st">"Argentina"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                       start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span></span>
+<span class="r-in"><span>                       end_date <span class="op">=</span> <span class="st">"2022-07-30"</span>,</span></span>
+<span class="r-in"><span>                       monadic <span class="op">=</span> <span class="cn">F</span>,</span></span>
+<span class="r-in"><span>                       acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate event counts at the admin1-month level</span></span></span>
+<span class="r-in"><span><span class="va">df_counts</span> <span class="op">&lt;-</span> <span class="fu">generate_counts</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_events</span>,</span></span>
+<span class="r-in"><span>                             unit_id <span class="op">=</span> <span class="st">"admin1"</span>,</span></span>
+<span class="r-in"><span>                             time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span></span>
+<span class="r-in"><span>                             time_target <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add_unit_ids example ###</span></span></span>
+<span class="r-in"><span><span class="co"># Request riots in the United States and Canada between January 1st and January 30th 2020</span></span></span>
+<span class="r-in"><span><span class="va">df_riots</span> <span class="op">&lt;-</span> <span class="fu"><a href="acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"United States"</span>, <span class="st">"Canada"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                       start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span></span>
+<span class="r-in"><span>                       end_date <span class="op">=</span> <span class="st">"2022-01-30"</span>,</span></span>
+<span class="r-in"><span>                       event_types <span class="op">=</span> <span class="st">"Riots"</span>,</span></span>
+<span class="r-in"><span>                       monadic <span class="op">=</span> <span class="cn">F</span>,</span></span>
+<span class="r-in"><span>                       acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Notice that there are no riot events in Canada over this period</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">df_riots</span><span class="op">$</span><span class="va">country</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate weekly riot counts</span></span></span>
+<span class="r-in"><span><span class="co"># Use the add_unit_ids paramater so Canada is assigned 0 events each week</span></span></span>
+<span class="r-in"><span><span class="co"># If add_unit_ids was not included, only weekly counts for the United States would be returned since Canada had no riots in the requested time period</span></span></span>
+<span class="r-in"><span><span class="va">df_counts_riots</span> <span class="op">&lt;-</span> <span class="fu">generate_counts</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_riots</span>,</span></span>
+<span class="r-in"><span>                                   unit_id <span class="op">=</span> <span class="st">"country"</span>,</span></span>
+<span class="r-in"><span>                                   event_type <span class="op">=</span> <span class="st">"Riots"</span>,</span></span>
+<span class="r-in"><span>                                   time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span></span>
+<span class="r-in"><span>                                   time_target <span class="op">=</span> <span class="st">"week"</span>,</span></span>
+<span class="r-in"><span>                                   add_unit_ids <span class="op">=</span> <span class="st">"Canada"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

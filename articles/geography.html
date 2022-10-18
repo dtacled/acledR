@@ -108,15 +108,25 @@
 <div class="section level2">
 <h2 id="administrative-levels">Administrative Levels<a class="anchor" aria-label="anchor" href="#administrative-levels"></a>
 </h2>
-<p>As mentioned aboved, ACLED’s dataset incldues up to six different types of spatial information. In it, administrative levels are included, stored in columns <strong>Admin1</strong>, <strong>Admin2</strong> and <strong>Admin3</strong>. These columns provide further information to our users on the location of the event, making it easier to triangulate and locate the particular event, as well as to allow analysis across regions, e.g. how events moved from one region to another throughout a range of time. Administrative levels are generally composed as followed (examples in parenthesis refer to Ethiopia / US): * Administrative Level 1 (Admin 1): Province or Equivalent (e.g. Afar / California)) * Administrative Level 2 (Admin 2): District or Equivalent. (e.g. Kilbati-Zone 2 / San Diego ) * Administrative Level 3 (Admin 3): County or Equivalent. (e.g. Abaala)</p>
-<p>However, administrative levels are hardly an easy topic. Administrative levels vary, and in some cases, information about these administrative levels becomes unreliable, especially in the Admin 3 level. For instance, when covering certain countries in Africa, their administrative levels may change, and in some cases, locations such as small cities are not always covered. Additionally, some sources may utilize different names, sometimes resulting of language or dialect variations, or the names of administrative levels may not be unique. Furthermore, not every country defines sub-national boundaries the same way, thus, while many countries in Africa include Admin 3s, countries in Europe often don’t.</p>
-<p>To account for some of these differences, ACLED researchers are instructed to : 1. Follow what sources report in terms of location. 1. If sources have incomplete information on the location, researchers are to triangulate information through following landmarks or relevant information mentioned by the source, and utilize the precision code (see below) to denote that. 1. If sources include administrative levels which are not part of the standardized list of administrative levels of ACLED, then researchers are allowed to include new entries to out master list by checking Openstreetmap, Google Maps and NGA GeoNames database.</p>
-<p>Our approach allows a standarized way of coding events’ locations, often an issue when covering events around the world. However, if users utilize a different names for some administrative levels, which sometimes occurs in other humanitarian-related datasets, then it is important to take differences into consideration. At the moment, our dataset does not include P-Codes. However, we do include an ISO column to allow easier connection with other datasets.</p>
+<p>As mentioned above, ACLED’s data set includes up to six different types of spatial information. In it, administrative levels are included, stored in columns <strong>Admin1</strong>, <strong>Admin2</strong> and <strong>Admin3</strong>. These columns provide further information to our users on the location of the event, making it easier to triangulate and locate the particular event, as well as to allow analysis across regions, e.g. how events moved from one region to another throughout a range of time. Administrative levels are generally composed as followed (examples in parenthesis refer to Ethiopia / US):</p>
+<ul>
+<li><p>Administrative Level 1 (Admin 1): Province or Equivalent (e.g. Afar / California))</p></li>
+<li><p>Administrative Level 2 (Admin 2): District or Equivalent. (e.g. Kilbati-Zone 2 / San Diego )</p></li>
+<li><p>Administrative Level 3 (Admin 3): County or Equivalent. (e.g. Abaala)</p></li>
+</ul>
+<p>However, administrative levels are hardly an uniform topic across conflict studies. Administrative levels vary, and in some cases, information about these administrative levels becomes unreliable, especially in the Admin 3 level. For instance, when covering certain countries in Africa, their administrative levels may change, and in some cases, locations such as small cities are not always covered. Additionally, some sources may utilize different names, sometimes resulting of language or dialect variations, or the names of administrative levels may not be unique. Furthermore, not every country defines sub-national boundaries the same way, thus, while many countries in Africa include Admin 3s, countries in Europe often don’t.</p>
+<p>To account for some of these differences, ACLED researchers are instructed to :</p>
+<ol style="list-style-type: decimal">
+<li><p>Follow what sources report in terms of location.</p></li>
+<li><p>If sources have incomplete information on the location, researchers are to triangulate information through following landmarks or relevant information mentioned by the source, and utilize the precision code (see below) to denote that.</p></li>
+<li><p>If sources include administrative levels which are not part of the standardized list of administrative levels of ACLED, then researchers are allowed to include new entries to out master list by checking OpenStreetMap, Google Maps and NGA GeoNames database.</p></li>
+</ol>
+<p>Our approach allows a standardized way of coding events’ locations, often an issue when covering events around the world. However, if users utilize a different names for some administrative levels, which sometimes occurs in other humanitarian-related data sets, then it is important to take differences into consideration. At the moment, our data set does not include P-Codes. However, we do include an ISO column to allow easier connection with other data sets.</p>
 </div>
 <div class="section level2">
 <h2 id="precision-codes">Precision Codes<a class="anchor" aria-label="anchor" href="#precision-codes"></a>
 </h2>
-<p>Very often sources have different degrees of certainty regarding an event occuring in a particular location. For instance, some sources may report an event as “near the 66 highway near City X”, while others may report it at “the event occured at the town hall of city X along the 66 highway”. In that example, we can see two different degrees of precision. To distinguish these different degrees of precision, as with the case of <a href="https://billingtt.github.io/acledR/articles/time.html">time</a>, ACLED utilizes different “Precision Codes”. These are as follow:</p>
+<p>Very often sources have different degrees of certainty regarding an event occurring in a particular location. For instance, some sources may report an event as “near the 66 highway near City X”, while others may report it at “the event occurred at the town hall of city X along the 66 highway”. In that example, we can see two different degrees of precision. To distinguish these different degrees of precision, as with the case of <a href="https://billingtt.github.io/acledR/articles/time.html">time</a>, ACLED utilizes different “Precision Codes”. These are as follow:</p>
 <table class="table table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:right;">
@@ -157,29 +167,32 @@ If the event was reported in a region without specifying further details
 <h2 id="acledr-example">
 <code>acledR</code> Example<a class="anchor" aria-label="anchor" href="#acledr-example"></a>
 </h2>
-<p>On the example below we will explore events distribution across Nigeria by utilizing ACLED’s administrative level columns.</p>
+<p>On the example below we will explore events distribution during January 2022 across Nigeria by utilizing ACLED’s administrative level columns.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"email_address"</span><span class="op">)</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"acled_key"</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
 <span><span class="co">#&gt; $Success</span></span>
 <span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
 <span><span class="va">df_nigeria</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Nigeria"</span><span class="op">)</span>,</span>
 <span>                        start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                        end_date <span class="op">=</span> <span class="st">"2022-01-31"</span>,</span>
 <span>                        monadic <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>                        acled_access <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<span>                        acled_access <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                        prompt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>We start by pulling the data out of ACLED’s API. First, we call <code>acled_acess()</code>, and then we make our API call with <code><a href="../reference/acled_api.html">acled_api()</a></code>. Lets explore which are the top 5 admin1s of Nigeria (also called states).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_nigeria</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">admin1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> </span>
 <span><span class="co">#&gt;   admin1  n percent</span></span>
-<span><span class="co">#&gt;   Kaduna 40    0.10</span></span>
-<span><span class="co">#&gt;    Borno 37    0.09</span></span>
-<span><span class="co">#&gt;    Niger 32    0.08</span></span>
-<span><span class="co">#&gt;  Zamfara 26    0.06</span></span>
-<span><span class="co">#&gt;  Plateau 21    0.05</span></span></code></pre></div>
+<span><span class="co">#&gt;    Borno 47    0.11</span></span>
+<span><span class="co">#&gt;   Kaduna 40    0.09</span></span>
+<span><span class="co">#&gt;    Niger 32    0.07</span></span>
+<span><span class="co">#&gt;  Zamfara 31    0.07</span></span>
+<span><span class="co">#&gt;  Katsina 23    0.05</span></span></code></pre></div>
+<p>As observed by our table, Kaduna and Borno are the two most conflict-ridden admin1s in Nigeria, however, conflicts appears generally evenly distributed from there on. Lets plot the geographical distribution:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -216,6 +229,7 @@ If the event was reported in a region without specifying further details
 <span>       title <span class="op">=</span> <span class="st">"ACLED Events across Nigeria"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"January 2022"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="geography_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>Given the fact that every event comes paired with a number of geographical variables, ACLED’s data is particularly useful to map conflict in a given region, country, or administrative level. As we will see in the … vignitte (I will put a link here), we can go even further to map conflict in a given administrative level thanks to this.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

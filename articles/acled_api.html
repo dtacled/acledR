@@ -94,147 +94,155 @@
 
     
     
-<!-- The workflow of this package is as follows: -->
-<!--   1. Validate and store your credentials with acled_access(). -->
-<!--   2. Download data with acled_api(). -->
-<!--   3. (Optional) Transform your data from wide form (dyadic) to long form (monadic) with acled_transform(). -->
-<!--   4. (Optional) Do some basic statistics with generate_counts() and generate_movers().  -->
 <div class="section level2">
 <h2 id="access-to-the-api">Access to the API<a class="anchor" aria-label="anchor" href="#access-to-the-api"></a>
 </h2>
-<p>The email and key must be those associated with your ACLED account registered at <a href="developer.acleddata.com">ACLED’s Access Portal</a>. Once you acquired your credentials (email and key), you can either utilize <code><a href="../reference/acled_access.html">acled_access()</a></code> to verify that the credentials are correct (note that this count as one download) and store these in the environment for a given session, or manually store them in the environment file to utilize them permanently across every session.</p>
-<p>To utilize <code><a href="../reference/acled_access.html">acled_access()</a></code>, run the following:</p>
+<p>In order to use the ACLED API, you must first register an account at <a href="developer.acleddata.com">ACLED’s Access Portal</a>. You can then pass your account information to <code>R</code> to use the <code><a href="../reference/acled_api.html">acled_api()</a></code> function. This information includes the email and access key associated with your ACLED account.</p>
+<p>Once you have acquired your credentials (email and key), you can either use <code><a href="../reference/acled_access.html">acled_access()</a></code> to verify that the credentials are correct (note that this counts as one download against your quota) and store these in the environment for a given session, or manually store them in the environment file to use them permanently across every session.</p>
+<p>To use <code><a href="../reference/acled_access.html">acled_access()</a></code> (recommended), run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span><span class="st">"your_email"</span>,<span class="st">"your_key"</span><span class="op">)</span> <span class="co"># to be run every session before doing an API call. </span></span></code></pre></div>
-<p>Alternatively, to manually store them as an environmental variable so you can call them without pasting every session (and for security reasons), run:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span><span class="st">"your_email"</span>, <span class="st">"your_key"</span><span class="op">)</span> <span class="co"># to be run every session before doing an API call. </span></span></code></pre></div>
+<p>Alternatively, to manually store them as an environmental variable, run:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"~"</span>, <span class="st">".Renviron"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>which will open your <code>.Renviron</code> file. Once there, set:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>email_address <span class="op">=</span> <span class="st">"YourEmail"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>acled_key <span class="op">=</span> <span class="st">"YourKey"</span><span class="op">)</span></span></code></pre></div>
-<p>and save the file. If you run <code>Sys.getenv("email_address")</code>, your associated email will print; if you run <code>Sys.getenv("acled_key")</code>, your ACLED key will print.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>email_address <span class="op">=</span> <span class="st">"your_email"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>acled_key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span></span></code></pre></div>
+<p>and save the file. If you run <code>Sys.getenv("email_address")</code>, your associated email will print; if you run <code>Sys.getenv("acled_key")</code>, your ACLED key will print to the console.</p>
 </div>
 <div class="section level2">
 <h2 id="acled-api">Acled API<a class="anchor" aria-label="anchor" href="#acled-api"></a>
 </h2>
 <p><code><a href="../reference/acled_api.html">acled_api()</a></code> is a wrapper to request and process ACLED API calls. The function takes the following parameters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span></span>
-<span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  start_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  end_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  timestamp <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          key <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          start_date <span class="op">=</span> <span class="st">"1997-01-01"</span>,</span>
+<span>          end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          timestamp <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>          <span class="va">...</span>,</span>
+<span>          acled_access <span class="op">=</span> <span class="cn">TRUE</span>,<span class="co">#acled_access=TRUE only works when acled_access() was run beforehand, eliminating the need of email-key in acled_api()</span></span>
+<span>          prompt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="parameters-for-the-api">Parameters for the API<a class="anchor" aria-label="anchor" href="#parameters-for-the-api"></a>
 </h2>
-<p>The <code>countries</code> and <code>regions</code> parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. <code>acledR::acled_countries</code> and <code>acledR::acled_regions</code> shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request <code>countries = c("Nigeria", "Mexico")</code> and <code>regions = c("Western Africa")</code>, only Nigeria will be returned since Mexico is not in Western Africa.</p>
-<p>The <code>start_date</code> and <code>end_date</code> parameters specify the time period requested in “yyyy-mm-dd” format. If NULL, all available time periods available will be returned. If either start or end date is NULL, both must be NULL or an error is returned.</p>
-<p><code>monadic</code> is a logical parameter, which is FALSE by default and returns the dyadic version of the data . If set to TRUE, the monadic version based on actor 1 and actor 2 will be returned.</p>
-<p>With <code>timestamp</code> users can keep their datasets updated, as it allows them to indicate a timestamp from when to collect events. <code>timestamp</code> is not the same <code>event_date</code>, as timestamp indicates when the event was added/modified in ACLED’s dataset. To learn more about how to keep your datasets up to date, please visit this <a href="https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf" class="external-link">guide</a>.</p>
-<p>The <code>extra</code> argument stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as “&amp;paramenter=value”, so for example: “iso=4” (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our <a href="https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf" class="external-link">API guide</a>.</p>
-<p>Finally, the acled_access parameter is used to let the function know that you have utilized acled_access during the current session, thus, avoiding the need to include email and key on the function. If acled_access is set to FALSE then the email and key arguments are necessary.</p>
+<p>The <code>countries</code> and <code>regions</code> parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. <code><a href="../reference/acled_countries.html">acledR::acled_countries</a></code> and <code><a href="../reference/acled_regions.html">acledR::acled_regions</a></code> shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request <code>countries = c("Nigeria", "Mexico")</code> and <code>regions = c("Western Africa")</code>, only Nigeria will be returned since Mexico is not in Western Africa.</p>
+<p>The <code>start_date</code> and <code>end_date</code> parameters specify the time period requested in “yyyy-mm-dd” format.</p>
+<p>With <code>timestamp</code> users can keep their data sets updated, as it allows them to indicate a time stamp from when to collect events. <code>timestamp</code> is not the same <code>event_date</code>, as time stamp indicates when the event was added/modified in ACLED’s data set. To learn more about how to keep your data sets up to date, please visit this <a href="https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf" class="external-link">guide</a>.</p>
+<p>Users can also use <code>event_types</code> to specify an event type that they would be interested on. For this, users are required to enter the event type of interest as a string. For example <code>event_types = "battles"</code>.</p>
+<p><code>monadic</code> is a logical parameter, which is <code>FALSE</code> by default and returns the dyadic version of the data . If set to <code>TRUE</code>, the monadic version based on actor 1 and actor 2 will be returned.</p>
+<p>The <code>...</code> parameter stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as “&amp;paramenter=value”, so for example: “&amp;iso=4” (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our <a href="https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf" class="external-link">API guide</a>.</p>
+<p>The <code>acled_access</code> parameter is used to let the function know that you have used <code>acled_access</code> during the current session, thus, avoiding the need to include email and key on the function. If <code>acled_access</code> is set to <code>FALSE</code>, then the email and key arguments are necessary.</p>
+<p>Finally, the <code>prompt</code> argument corresponds to how the function handles big calls, and whether the user is interested on receiving the interactive prompt which includes, among other information, if their API call will be split in more than 1 call, and if the user wants to do so. In cases where the users may not want to have this interactive prompt, such as users utilizing this function as part of a routine script, users can set <code>prompt = FALSE</code> to run the function without the need of the interactive prompt.</p>
+</div>
+<div class="section level2">
+<h2 id="handling-big-api-calls">Handling big API calls<a class="anchor" aria-label="anchor" href="#handling-big-api-calls"></a>
+</h2>
+<p>As it is common across APIs, handling big data requires particular tweaks. In our case, the base API offers the possibility of utilizing pagination to address some of these issues, a process that can be confusing for newer users working with APIs, and making very big pulls of data is often unreliable - which is why we recommend to do smaller calls. However, in this package we provide a solution to both of these issues.</p>
+<p>First, in terms of pagination, our wrapper does this for the user automatically, so there is no need to include pagination in their calls.</p>
+<p>Second, in terms of big calls, the <code><a href="../reference/acled_api.html">acled_api()</a></code> function will first evaluate approximately how much data is the user requesting, and after this, the user will be prompted with a message which includes: number of countries requested, number of country-days, number of API calls needed, and a question whether the user would like to proceed. Currently, <code><a href="../reference/acled_api.html">acled_api()</a></code> works with a threshold of 300,000 country-days to determine whether to split the function. This way users can be rest assured that the call will not hit any issues because of it being too large (a problem some users encountered before), but also, users now have more control over the calls they make in relation to the API quota.</p>
+<p>If users prefer to skip the interactive prompt, they can do so by using the argument <code>prompt = FALSE</code>. While this ignores the interactive prompt, the call will still be split if it reaches the threshold.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>To see how this works in practice, we will display an example where we are trying to gather data of events in Brazil from January 2022 to now.</p>
+<p>To see how this works in practice, we will show an example gathering events from Brazil from January 2022 to the present.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
+<span><span class="co">#&gt; $Success</span></span>
+<span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
 <span></span>
 <span><span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                   end_date <span class="op">=</span> <span class="st">"2022-05-09"</span>,</span>
+<span>                   end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; $Success</span></span>
-<span><span class="co">#&gt; [1] "Authorisation accepted"</span></span></code></pre>
 <p>The results return a tibble with each ACLED event in Brazil during this time period:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 3,811</span></span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 8,803</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
-<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9236728, 9236742, 9236744, 9236745, 9236748, 9236750,…</span></span>
+<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9573010, 9573012, 9573072, 9573077, 9573107, 9573112,…</span></span>
 <span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 7…</span></span>
-<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA53525", "BRA53580", "BRA53593", "BRA53608", "BRA5…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 53525, 53580, 53593, 53608, 53625, 53636, 53724, 5358…</span></span>
-<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-05-09, 2022-05-09, 2022-05-09, 2022-05-09, 2022…</span></span>
+<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA58678", "BRA58692", "BRA58683", "BRA58519", "BRA5…</span></span>
+<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 58678, 58692, 58683, 58519, 58594, 58598, 58676, 5864…</span></span>
+<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-10-14, 2022-10-14, 2022-10-14, 2022-10-14, 2022…</span></span>
 <span><span class="co">#&gt; $ year             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022,…</span></span>
-<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Battles", "Violence against civilians", "Violence ag…</span></span>
-<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Armed clash", "Attack", "Attack", "Attack", "Armed c…</span></span>
-<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Military Forces of Brazil (2019-) Military Police", …</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, "LGBT (Brazil)", NA, …</span></span>
-<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 3, 3, 3, 1, 1, 3, 5, 6, 3, 1, 3, 6, 3, 6, 3, 3, 3,…</span></span>
-<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Gang and/or Police Militia", "Civilians…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "Women (Brazil)", NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
-<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 7, 7, 7, 3, 3, 3, 0, 0, 3, 3, 7, 0, 3, 0, 7, 3, 7,…</span></span>
-<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13, 37, 37, 37, 13, 13, 33, 50, 60, 33, 13, 37, 60, 3…</span></span>
+<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Violence against civil…</span></span>
+<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Attack", "Attack", "Attack", "Looting/prop…</span></span>
+<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Gang and/or Police Militia", "Unidentif…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, "Police Forces of Brazil (2019-) Fede…</span></span>
+<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 3, 3, 1, 3, 3, 3, 1, 1, 3, 6, 3, 3, 3, 3, 3, 3,…</span></span>
+<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Brazil)", "Civilians (Italy)", "Civilians…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Brazil (2019-) Prison Guards", NA, …</span></span>
+<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 7, 7, 7, 3, 3, 7, 1, 3, 3, 7, 0, 7, 7, 1, 3, 3, 7,…</span></span>
+<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 37, 37, 37, 37, 13, 33, 37, 13, 13, 13, 37, 60, 37, 3…</span></span>
 <span><span class="co">#&gt; $ region           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", "S…</span></span>
 <span><span class="co">#&gt; $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Brazil", "Brazil", "Brazil", "Brazil", "Brazil", "Br…</span></span>
-<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Piaui", "Bahia", "Amazonas", "Bahi…</span></span>
-<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Luis Correia", "Salvador", "Irandu…</span></span>
+<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Rio de Janeiro", "Rio Grande do No…</span></span>
+<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Duque de Caxias", "Rio de Janeiro", "Natal", "Piacab…</span></span>
 <span><span class="co">#&gt; $ admin3           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro - West Zone", "Luis Correia", "Salvad…</span></span>
-<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -22.9147, -2.8800, -12.9711, -3.2847, -12.9711, -19.9…</span></span>
-<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -43.4879, -41.6643, -38.5108, -60.1861, -38.5108, -44…</span></span>
-<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "G1; Informe Agora; OTT-RJ", "Portal Fato; G1; Lupa 1…</span></span>
-<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "New media-Subnational", "Subnational-National", "Sub…</span></span>
-<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 9 May 2022, in Rio de Janeiro - West Zone (Rio de…</span></span>
-<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 1, 1, 1, 3, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1,…</span></span>
-<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1652719218, 1652719218, 1652719218, 1652719218, 16527…</span></span>
+<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Duque de Caxias", "Rio de Janeiro - North Zone", "Na…</span></span>
+<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -22.7856, -22.8569, -5.7950, -10.4066, -27.6427, -22.…</span></span>
+<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -43.3117, -43.3008, -35.2094, -36.4336, -48.6695, -43…</span></span>
+<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Globo Extra; Informe Agora; G1", "Crimes News RJ; Fo…</span></span>
+<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Subnational-National", "New media-Subnational", "Sub…</span></span>
+<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 14 October 2022, in Duque de Caxias (Rio de Janei…</span></span>
+<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 1, 1, 0, 1, 1, 0, 2, 2, 1, 0, 0, 1, 0, 0, 0, 1,…</span></span>
+<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1666032892, 1666032892, 1666032892, 1666032892, 16660…</span></span>
 <span><span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA…</span></span></code></pre></div>
 <p>If instead we wanted multiple countries, we could execute:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                      end_date <span class="op">=</span> <span class="st">"2022-05-09"</span>,</span>
+<span>                      end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                      monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                      acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>For an entire region, we omit the <code>countries</code> parameter and supply a <code>regions</code> argument:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>For an entire region, we omit the <code>countries</code> parameter and supply a <code>regions</code> argument. Additionally, for only gathering protests we provide an event_type argument:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                   end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
+<span>                   end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                   event_type <span class="op">=</span> <span class="st">"Protests"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>To include timestamps from when to download the data, we add it as either a string ("yyyy-mm-dd) or as a numeric Unix timestamp:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>To include time stamps from when to download the data, we add it as either a string (“yyyy-mm-dd”) or as a numeric Unix time stamp:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                      end_date <span class="op">=</span> <span class="st">"2022-08-09"</span>,</span>
+<span>                      end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                      monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                      <span class="co"># timestamp = "2022-01-24" -&gt; in the case of string</span></span>
 <span>                      timestamp <span class="op">=</span> <span class="fl">1643056974</span>, <span class="co"># -&gt; in the case of a numeric Unix timestamp</span></span>
 <span>                      acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>If we would like to include only one type of interaction, in this case “Rioters versus Civilians” - 57, we add the interaction code to the <code>extra</code> argument:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>If we would like to include only one type of interaction, in this case “Rioters versus Civilians” = 57, we add the interaction code to the <code>extra</code> argument:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>                   extra <span class="op">=</span> <span class="st">"&amp;interaction=57"</span>,</span>
+<span>                   ... <span class="op">=</span> <span class="st">"&amp;interaction=57"</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>We could also request the monadic version of the data based on actor 1 and actor 2 by setting <code>monadic = TRUE</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_monadic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
 <span>                           start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                           end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
+<span>                           end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                           monadic <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                           acled_access <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>In both the dyadic and monadic versions, the API returns 137 unique events. However, the number of unique entries for the dyadic version is also 137, while it’s 13351 for the monadic version.</p>
+<p>In both the dyadic and monadic versions, the API returns 138 unique events. However, the number of unique entries for the dyadic version is also 138, while it’s 33165 for the monadic version.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

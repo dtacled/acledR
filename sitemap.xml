@@ -10,10 +10,22 @@
     <loc>https://billingtt.github.io/acledR/articles/acled_codebook.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/articles/acled_deletions_api.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/articles/acled_rounding.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/articles/acled_sources.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/articles/actors_interactions.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/articles/event_types.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/articles/fatalities.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/articles/generate_counts.html</loc>
@@ -31,9 +43,6 @@
     <loc>https://billingtt.github.io/acledR/articles/time.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/articles/to_do.html</loc>
-  </url>
-  <url>
     <loc>https://billingtt.github.io/acledR/authors.html</loc>
   </url>
   <url>
@@ -46,10 +55,37 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_api.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_codebook.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_countries.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/acled_deletions_api.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_event_categories.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_help.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_regen.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_regions.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_rounding.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/calculate_actor_index.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/filter_actors.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/filter_event_types.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/reference/generate_counts.html</loc>
