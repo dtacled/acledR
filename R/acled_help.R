@@ -36,7 +36,7 @@ acled_help <- function(column = NULL){
   } else if(column == "region" | column == "country"|column == "admin1"|column == "admin2"|column == "admin3"|column == "location"|column == "latitude"|column == "longitude"|column == "geo_precision"){  # region,country,admin1,admin2,admin3,location,latitude,longitude,geo_precision
     vignette("geography", package="acledR")
   } else if(column == "source"|column == "source_scale"){  # source,source_scale
-    vignette("acled_codebook", package="acledR")
+    vignette("acled_sources", package="acledR")
   } else if(column == "notes"){ # notes
     vignette("acled_codebook", package="acledR")
   } else if(column == "fatalities"){   # fatalities

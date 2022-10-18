@@ -1,0 +1,107 @@
+---
+title: "Sourcing in ACLED"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Sourcing in ACLED}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+The Armed Conflict Location and Event Data database is a real time events dataset. ACLED does not report what occurs on the ground through eyewitnesses or reporters, as some other actors in the area do, but instead it collects reports from partners and media outlets across international, national and sub-national levels. ACLED currently has researchers across 56 countries collecting data from the entire world, through reading and analysing numerous media outlets and local partners. 
+
+When researching events, researchers are required to triangulate information across different sources, especially when it involves events with fatalities. Because researchers and reviewers are required to triangulate the information across sources, ACLED does not include a "Source link" column, but instead, includes two columns to inform the user about the sources consulted. These two columns are:
+
+- `source`: Here users can find the most relevant source included, which contributed the most amount of information for the event
+- `source_scale`: In this column users find the scale of the source, divided between multiple levels which will be discussed below. 
+
+
+## What is a source in ACLED? 
+
+A source in ACLED is often a local partner (e.g. Kivu Security Tracker in Congo), an international media outlet (BBC News), or local/regional media outlets (e.g. mediacongo.net in Congo). However, as we will see in the example below, events sometimes include more than one source. ACLED hires researchers and research managers with an adept knowledge of the regions, thus, have an acute understanding of local sources, which are then proposed to be included as part of ACLED's source checklist. The source checklist is a list of sources which researchers are required to monitor, the sources of which are often evaluated on their reliability, recurrence, and validity. 
+
+## What does ACLED mean by 'Source scale'?
+
+Source scale refers to the scale by which the relevant source operates on. ACLED traditionally codes the following scales in the `source_scale` column:
+
+- Local
+- Sub-national
+- National
+- Regional 
+- International 
+- Other
+
+Often times users can find the source scale to contain more than one of the above mentioned categories delimited by a `-`. This is a result of an event utilizing multiple sources which vary across scope. 
+
+However, users of the `source_scale`` column must remember that source scale does not imply more or less legitimacy, accuracy or direct information. It is important to mention, still, that ACLED supports gathering and utilizing local sources, which is reflected in the numerous partnerships of ACLED with local organizations. 
+
+
+## acledR Example
+
+In the following example we will be exploring the use of sources and source scales in our data. In the following chunk we will retrieve data from Georgia during the year 2021, and explore the composition of sources in the dataset.  
+
+
+```{r}
+library(acledR)
+library(dplyr)
+
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
+
+df_geo <- acled_api(countries = c("Georgia"),
+                   start_date = "2021-01-01",
+                   end_date = "2022-01-01",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
+
+Now that we have the data for Georgia throughout 2021, we would like to start exploring the distribution of sources and source scale in this dataset. However, there are two important things to note about both the source, and source_scale. These have delimiters in their cells which lead to multiple values in one cell - often an issue when we try to operate directly with these values. Thus, to be able to generate meaningful statistics of this, we have to separate values and pivot them. 
+
+Let's do this for the sources column, which has sources delimited by `;`
+
+```{r}
+
+sources_df_geo <- df_geo %>%
+      tidyr::separate_rows(source, sep = ";") %>%
+      mutate(source = stringr::str_trim(source,side = "both")) %>%
+      relocate(source,.before="source_scale")
+
+
+sources_df_geo %>%
+  group_by(source)%>%
+  tally() %>%
+  arrange(-n)
+
+```
+
+As we can see, the three main sources in the Georgian dataset for 2021 are Rustavi 2, interpressnews, and RFE/RL also known as Radio Free Europe/Radio Liberty. From here we can already gather some information about the source used in ACLED. Two of these three are Georgian sources, with a lot of the content in Georgian language, and one (RFE/RL) is an international source which has coverage in Georgia.
+
+This emphasis on local, national and sometimes non-english reporting allows us to avoid some of the pitfalls of english and international coverage of political violence outside traditionally western countries. See (**need to add clionah & roudabeh article**)
+
+Now that we know our sources, let's explore the scale of these. 
+
+```{r}
+
+
+df_geo %>%
+    tidyr::separate_rows(source_scale, sep = "-") %>%
+    mutate(source_scale = stringr::str_trim(source_scale,side = "both")) %>%
+    relocate(source_scale,.after="source") %>%
+    janitor::tabyl(source_scale) %>% # Summarize data groupped by time_precision
+    janitor::adorn_rounding(2) %>%
+    arrange(-n)
+    
+```
+
+We can see confirm what we saw before, in some regions there is a particular reliance on national sources. This precisely what we see in our Georgian data set, with National sources being used in 73% of the data set, followed by international sources by 25%. Note that this does not represent that 668 events have exclusively national sources, or there are 668 counts of national sources. This is because of how ACLED writes source scales, where it is meant to represent the aggregated scales in the source columns. For example: 
+- If the source column has 1 source which is national, 1 source which is international, source will be "national-international"
+- If the source column has 2 national sources, and 1 international, source will be "national-international". Note that national is not repeated twice (thus following the number of national sources) but only once. 
+
+
+
+  
