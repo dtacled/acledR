@@ -21,17 +21,19 @@
 
 
 
-acled_rounding <- function(num, digits=0){
+acled_rounding <- function(num, digits = 0) {
   num <- as.numeric(num)
   digits <- as.numeric(digits)
 
-  accuracy <- 1/(10^digits)
-  extract_factor <- 10^(digits+1)
-  key_digit <- (trunc(num*extract_factor)) %% 10
+  accuracy <- 1 / (10 ^ digits)
+  extract_factor <- 10 ^ (digits + 1)
+  key_digit <- (trunc(num * extract_factor)) %% 10
 
   round_type <- ifelse(key_digit == 5,
                        ceiling,
                        round)
 
-  return(plyr::round_any(num, accuracy, f = round_type))
+  round_any = function(x, accuracy, f = round){f(x / accuracy) * accuracy}
+
+  return(round_any(num, accuracy, f = round_type))
 }

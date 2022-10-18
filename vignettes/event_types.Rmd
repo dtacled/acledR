@@ -171,11 +171,12 @@ To see how event types and sub-event types look in practice, let's pull data fro
 
 ```{r, echo = T}
 library(acledR)
+
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
 df_haiti <- acled_api(countries = c("Haiti"),
                    start_date = "2022-01-01",
                    end_date = "2022-03-31",
-
                    monadic = F,
                    prompt = FALSE)
 

@@ -2,18 +2,18 @@
 #'
 #' @param data ACLED data
 #' @param event_type Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.
-#' @param unit_id string. Unit variable (e.g., country, region, admin1, etc.)
-#' @param time_id string. Temporal variable, usually event_date
-#' @param time_target string. Target temporal unit (week, month, year)
-#' @param start_date Earliest date to include (yyyy-mm-dd)
-#' @param end_date  Latest date to include (yyyy-mm-dd)
-#' @param add_unit_ids Option to add in units with no events in throughout the time period of interest
+#' @param unit_id string. Unit variable (e.g., country, region, admin1, etc.).
+#' @param time_id string. Temporal variable, usually event_date.
+#' @param time_target string. Target temporal unit (e.g. week, month, year).
+#' @param start_date Earliest date to include (yyyy-mm-dd).
+#' @param end_date  Latest date to include (yyyy-mm-dd).
+#' @param add_unit_ids Option to add in units with no events throughout the time period of interest.
 #' @import dplyr
 #' @import tidyr
 #' @import lubridate
 #' @import janitor
 #' @importFrom rlang .data
-#' @return Returns a tibble grouped by unit_id
+#' @return Returns a tibble grouped by unit_id.
 #' @family Data Manipulation
 #' @seealso
 #' \itemize{
@@ -117,7 +117,7 @@ generate_counts <-
     if(is.null(add_unit_ids)){
       add_unit_ids <- unique(data[[unit_id]])
     } else {
-      add_unit_ids <- c(unique(data[[unit_id]]), add_unit_ids)
+      add_unit_ids <- unique(c(unique(data[[unit_id]]), add_unit_ids))
       }
 
 
@@ -145,7 +145,9 @@ generate_counts <-
       janitor::clean_names() %>%
       ungroup() %>%
       select(-one_of("na")) %>%
-      suppressMessages()
+      arrange(.data[[unit_id]], !!paste0("event_", time_target)) %>%
+      suppressMessages() %>%
+      suppressWarnings()
 
 
     if(length(filter_types) == 1)

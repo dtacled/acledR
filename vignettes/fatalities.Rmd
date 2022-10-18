@@ -7,148 +7,76 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-The study of fatalities in regions of conflict is one of the most
-popular ways approaches of looking at conflict. However, while popular,
-it is not always reliable. Tracking fatalities is often a complicated
-subject within conflict studies. While it can provide important context
-on escalations of violence, it can sometimes mislead audiences. Conflict
-and political violence does not need to include fatalities for it to
-devastate the life of people impacted by the conflict. Additionally,
-fatalities are an elusive metric, as information about them can
-sometimes be incomplete or erroneous, and if presented incorrectly, it
-can lead to misinformation.
-
-Yet, given the importance of tracking fatalities in a region of
-conflict, ACLED puts a lot of effort on maintaining a transparent,
-consistent and reliable methodology on how it tracks fatalities. While
-this vignette briefly introduces such methodology, users are encouraged
-to visit our [guide](https://acleddata.com/download/35143/) to get a
-more comprehensive picture on how ACLED measures fatalities.
+Fatality estimates associated with conflict events provide a measure of the scale and intensity political violence. While of clear importance, reliably tracking fatalities associated with violent events is notoriously difficult. Balancing the importance of understanding conflict fatalities with the difficulties of doing so with confidence, ACLED relies on a transparent and consistent methodology for tracking fatalities. This vignette briefly introduces this methodology; users are encouraged to visit our [guide](https://acleddata.com/download/35143/) to get a more comprehensive picture on how ACLED measures fatalities.
 
 ## How do we code fatalities?
 
-ACLED's researchers are tasked with seeking more information about the
-event to triangulate the numbers of a particular event reports, to avoid
-over-relying in one source, mostly relaying on media and local partners
-to gather information on fatalities of a given event. Furthermore,
-researchers look for reports of **fatalities instead of casualties, as
-casualties may also include injuries**. Thus, if researchers encounter
-reports of casualties, ACLED counts it as 0 fatalities - unless there
-are reports of deaths.
+ACLED researchers triangulate event information across multiple sources, often combining information from local media outlets as well as local partners. ACLED codes the **most conservative fatality estimate available** for each conflict event. Researchers then identify reports of **fatalities rather than casualties, as casualties may also include injuries**. If a researcher encounters a report of casualties but no deaths, ACLED codes the event as having 0 fatalities. 
 
-Given the fact that in almost any case reports over fatalities are
-estimations, ACLED attempts to find the **most conservative available
-estimate**, the lowest possible estimation of fatalities. While ACLED
-acknowledges that this approach can lead to an underestimation of
-fatalities, our efforts are to provide the best possible estimation,
-even if lower, of fatalities rather than entirely arbitrary ranges also
-built on assumptions.
+While ACLED acknowledges that this approach may underestimate fatalities, the consistent methodology provides confidence that, if not precisely accurate in all cases, the fatality estimates are conservative and therefore the expected direction of error is known. With less transparent fatality coding criteria, the error associated with a fatality estimate may be either high or low. 
 
-As mentioned across ACLED's methodology, we relay on media and local
-partners' reports to code fatalities. Because of that, if the reports do
-not make any mention of fatalities, these are not going to be coded. In
-some cases, however, sources may mention that fatalities occurred
-without including an actual number. When such cases occur - and
-researchers are unable to find any complementary information on the
-number of such fatalities - ACLED relies in a series of rules to provide
-an estimation of fatalities:
+<!-- While ACLED acknowledges that this approach may lead to an underestimation of fatalities, our efforts are to provide the best possible estimation, even if lower, of fatalities rather than entirely arbitrary ranges also built on assumptions. -->
 
--   Is this a significant attack, in an active war zone? If yes,
-    fatalities are estimated at 10.
+<!-- ACLED's researchers are tasked with seeking more information about the event to triangulate the numbers of a particular event reports, to avoid over-relying in one source, mostly relaying on media and local partners to gather information on fatalities of a given event.  -->
 
-    -   E.g. An airstrike is dropped on a building in Yemen, resulting
-        in an unspecified number of fatalities. [Yemen is a war zone and
-        an airstrike is likely to yield high casualties]
+<!-- Given the fact that in almost any case reports over fatalities are estimations, ACLED attempts to find the **most conservative available estimate**, the lowest possible estimation of fatalities.  -->
 
--   Is this an attack of more limited scope, in an active war zone? If
-    yes, fatalities are estimated at 3.
 
-    -   E.g. A bomb explodes at a checkpoint in Afghanistan, resulting
-        in deaths. [Afghanistan is a war zone, yet checkpoints are often
-        not manned by large numbers of people]
 
--   Is this an attack outside of a war zone? If yes, fatalities are
-    estimated at 3.
 
-    -   E.g. Inter communal violence in Guinea leads to a number of
-        deaths. [Guinea is not a warzone, and inter communal violence
-        tends to not result in mass fatalities]
 
--   Is this a significant attack outside of a war zone? If yes,
-    fatalities are estimated at 10.
+As mentioned across ACLED's methodology, we rely on media and local partners' reports to code fatalities. Because of this, if the reports do not make any mention of fatalities, these are not going to be coded. In some cases, however, sources may mention that fatalities occurred without including an actual number. When such cases occur - and researchers are unable to find any complementary information on the number of such fatalities - ACLED relies in a series of rules to provide an estimation of fatalities:
 
-    -   E.g. A large-scale attack by Al Shabaab results in an
-        unspecified number of fatalities in Kenya. [Kenya is not a war
-        zone, yet this is a large-scale attack involving an actor in a
-        neighboring war zone]
+-   Is this a significant attack, in an active war zone? If yes, fatalities are estimated at 10.
 
-For that purpose, ACLED defines a country as a war zone if a single
-group or coalition is attempting to violently challenge the legitimacy
-and authority of the central government, and that same actor is active
-in over 20% of the territory - an assessment done qualitatively.
-Conflict zones are countries where there is organized political
-violence, yet it has not reach the threshold of a war zone. Unrest
-refers to protests and riots occurring in countries where there may not
-be much conflict occurring, yet unrest is commonplace. Finally, disorder
-is something which affects every country in ACLED coverage, which refers
-to all political violence and demonstration events.
+-   E.g. An airstrike is dropped on a building in Yemen, resulting in an unspecified number of fatalities. [Yemen is a war zone and an airstrike is likely to yield high casualties]
+
+-   Is this an attack of more limited scope, in an active war zone? If yes, fatalities are estimated at 3.
+
+-   E.g. A bomb explodes at a checkpoint in Afghanistan, resulting in deaths. [Afghanistan is a war zone, yet checkpoints are often not manned by large numbers of people]
+
+-   Is this an attack outside of a war zone? If yes, fatalities are estimated at 3.
+
+-   E.g. Inter communal violence in Guinea leads to a number of deaths. [Guinea is not a warzone, and inter communal violence tends to not result in mass fatalities]
+
+-   Is this a significant attack outside of a war zone? If yes, fatalities are estimated at 10.
+
+-   E.g. A large-scale attack by Al Shabaab results in an unspecified number of fatalities in Kenya. [Kenya is not a war zone, yet this is a large-scale attack involving an actor in a neighboring war zone]
+
+For that purpose, ACLED defines a country as a war zone if a single group or coalition is attempting to violently challenge the legitimacy and authority of the central government, and that same actor is active in over 20% of the territory - an assessment done qualitatively. Conflict zones are countries where there is organized political violence, yet it has not reach the threshold of a war zone. Unrest refers to protests and riots occurring in countries where there may not be much conflict occurring, yet unrest is commonplace. Finally, disorder is something which affects every country in ACLED coverage, which refers to all political violence and demonstration events.
 
 ## Are these fatalities measures reliable?
 
-As mentioned before, when we are coding fatalities we are speaking of
-estimations. Thus, there is always some room for new information to
-appear and change such measure. In such cases, ACLED modifies the events
-in the data set to reflect such new information. At the same time,
-ACLED's efforts to provide the most conservative estimate gives an
-additional layer of reliability, as the measures are included only if
-they are backed by sources in the region.
+As mentioned before, when we are coding fatalities we are speaking of estimations. Thus, there is always some room for new information to appear and change such measure. In such cases, ACLED modifies the events in the data set to reflect such new information. At the same time, ACLED's efforts to provide the most conservative estimate gives an additional layer of reliability, as the measures are included only if they are backed by sources in the region.
 
 ## How does ACLED deal with uncertainty?
 
-The reason why refer to fatalities as **estimates**, is because there is
-always some degree of uncertainty. Tracking and reporting fatalities in
-an active conflict zone while the events are on-going is a multi-faceted
-complicated issue, where some actors may opt not to report on losses or
-on victims of their own attacks, or where civilians may not be readily
-available to report on these fatalities. Hence, it is not as simple as
-increasing the number of sources used to code these fatalities, because
-in some cases it may not be enough, and in others there may not be
-enough reliable sources given bias - bias either on **how** they report
-or on **what** do they report.
+The reason why refer to fatalities as **estimates**, is because there is always some degree of uncertainty. Tracking and reporting fatalities in an active conflict zone while the events are on-going is a multi-faceted complicated issue, where some actors may opt not to report on losses or on victims of their own attacks, or where civilians may not be readily available to report on these fatalities. Hence, it is not as simple as increasing the number of sources used to code these fatalities, because in some cases it may not be enough, and in others there may not be enough reliable sources given bias - bias either on **how** they report or on **what** do they report.
 
-In order to address these short comings, ACLED develops regionally
-tailor-made approaches on finding more information on a given region.
-Contrary to just increasing the number of sources (which may just add
-even more biases and worsen the quality of information - quantity
-doesn't ensure quality), ACLED aims to generate particular source
-combinations to reflect the reality of disorder and fatalities counts in
-each space. Generally, ACLED prioritizes local sources' reports, such as
-local partners and sub national media, as these tend to avoid the
-sensationalization of lethality that often occurs in English language
-media.
+In order to address these short comings, ACLED develops regionally tailor-made approaches on finding more information on a given region. Contrary to just increasing the number of sources (which may just add even more biases and worsen the quality of information - quantity doesn't ensure quality), ACLED aims to generate particular source combinations to reflect the reality of disorder and fatalities counts in each space. Generally, ACLED prioritizes local sources' reports, such as local partners and sub national media, as these tend to avoid the sensationalization of lethality that often occurs in English language media.
 
 ## acledR Example:
 
-In order to demonstrate the use of the fatalities columns, we will look
-at fatalities in violence against civilians across 2021 and 2022 (the
-first half until August).
+In order to demonstrate the use of the fatalities columns, we will look at fatalities in violence against civilians across 2021 and 2022 (the first half until August).
 
 ```{r, echo=FALSE}
+
 library(acledR)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
-library(plotly)
+library(ggplot2)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
 df_years <- acled_api(start_date = "2021-01-01",
-                        end_date = "2022-08-31",
-                        event_types = "Violence against civilians",
-                        monadic = F,
-                        acled_access = T,
-                        prompt = FALSE)
+                      end_date = "2022-08-31",
+                      event_types = "Violence against civilians",
+                      monadic = F,
+                      acled_access = T,
+                      prompt = FALSE)
 
 ```
 
@@ -166,10 +94,7 @@ summary(df_years$fatalities)
 
 ```
 
-As we can see, our fatalities are for the most part concentrated in
-between 0 and 1, with the average being of 1.21 fatalities per event.
-That in itself it is a noticeable aspect, but we would like to go beyond
-this. We will set these in categories of tenths.
+As we can see, our fatalities are for the most part concentrated in between 0 and 1, with the average being of 1.21 fatalities per event. That in itself it is a noticeable aspect, but we would like to go beyond this. We will set these in categories of tenths.
 
 ```{r}
 
@@ -188,31 +113,28 @@ df_fatalities %>%
 
 ```
 
-Now that we have a better understanding on how our fatalities data set
-is distributed, lets look at its evolution across 2021 and 2022.
+Now that we have a better understanding on how our fatalities data set is distributed, lets look at its evolution across 2021 and 2022.
 
-```{r}
+```{r, fig.height = 4, fig.width = 6}
 
 df_fatalities_monthly <- df_fatalities %>%
   group_by(Month = floor_date(ymd(event_date), "month")) %>%
-  summarise(fatalities_sum = sum(fatalities)) %>%
-  mutate(column = "fatalities") ## we create this column just to make a workaround in the tooltip in the plotly graph. 
+  summarise(fatalities_sum = sum(fatalities))
 
-g <- ggplot(df_fatalities_monthly, aes(x=Month,y=fatalities_sum)) +
-  geom_line(color = "navyblue", aes(group = column ,text=paste("Sum of fatalities: ", fatalities_sum)))+
-  labs(title = "Total of fatalities per month across 2021 and the first half of 2022",
+ggplot(df_fatalities_monthly, 
+            aes(x = Month, y = fatalities_sum)) +
+  
+  geom_line(color = "navy") +
+  labs(title = "Total of fatalities per month",
+       subtitle = "Jan 2021-Aug 2022",
        x = "Year-Month",
-       y = "Sum of fatalities")
-
-ggplotly(g, tooltip = c("x","text"))
+       y = "Sum of fatalities") +
+  theme_light()
 ```
 
-From our graph we can observe a peak in the number of fatalities in
-March 2022. Lets go slightly more in-depth to this date, lets begin by
-exploring which are the countries that saw the highest difference
-compared to the prior month.
+From this graph, we can observe a peak in the number of fatalities in March 2022. To go slightly more in-depth, let's explore the countries that saw the highest difference compared to the prior month.
 
-```{r}
+```{r, fig.height = 6, fig.width = 6}
 df_fatalities_monthly_country <- df_fatalities %>%
   group_by(Month = floor_date(ymd(event_date), "month"), country) %>%
   summarise(fatalities_sum = sum(fatalities)) %>%
@@ -223,21 +145,17 @@ df_fatalities_monthly_country <- df_fatalities %>%
   arrange(-difference) %>%
   filter(difference != 0) ## We are filtering out those countries which didn't change to make a more polished graph. 
 
-gp <- ggplot(df_fatalities_monthly_country, aes(y=reorder(country,difference),x=difference)) +
-  geom_col()+
-  labs(title = "Difference of total fatalities per country between \n February and March 2022\n",
-       x= "Total difference of fatalities",
-       y= "Countries")
+ggplot(df_fatalities_monthly_country, 
+       aes(y = reorder(country, difference), x = difference)) +
+  geom_col() +
+  labs(title = "Difference in total fatalities per country ",
+       subtitle = "February versus March 2022",
+       x = "Total difference in fatalities",
+       y = "Countries") +
+  theme_light() +
+  # theme(panel.grid = element_blank()) +
+  coord_cartesian(expand = F)
 
-ggplotly(gp)
 ```
 
-Interestingly, when we explore the fatalities, we see Mali and Ukraine
-as the top countries making contributions to the new peak in fatalities,
-as these two were the countries with the biggest uptick in fatalities in
-March 2022 compared to February. If a reader saw the peak from the
-previous line chart, one may have swiftly explained it by the outbreak
-of the Russian invasion into Ukraine in late February - however, this
-would have missed the uptick in violence in Mali by Malian and Wagner
-forces, see our
-[analysis](%22https://acleddata.com/10-conflicts-to-worry-about-in-2022/sahel/mid-year-update/%22)
+Interestingly, we see Mali and Ukraine as the top countries making contributions to the new peak in fatalities, as these two were the countries with the biggest uptick in fatalities in March 2022 compared to February. If a reader saw the peak from the previous line chart, one may have swiftly explained it by the outbreak of the Russian invasion into Ukraine in late February. However, this would have missed the uptick in violence in Mali by Malian and Wagner forces (see our [analysis](%22https://acleddata.com/10-conflicts-to-worry-about-in-2022/sahel/mid-year-update/%22) for more information).

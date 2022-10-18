@@ -20,14 +20,17 @@ knitr::opts_chunk$set(
 library(acledR)
 library(dplyr)
 library(kableExtra)
-
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(plotly)
 ```
 
 
 Dates are a necessary component of each ACLED event. ACLED events are atomic, as events are coded by day; if a military campaign in an area starts on March 1, 1999 and lasts until March 5, 1999 with violent activity reported on each day, this is coded as five different events in ACLED, with a different date for each entry. This episode would not be entered as a single campaign of violence. This allows ACLED to record the exact number of active days. Events where the source material notes that they occurred in the space of three months – like long-running protests – are only coded for the days in which reported activity took place (not as 90+ days). This avoids over-counting event occurrence.
-  
+
 There are three types of temporal information for each ACLED event:
-  
+
 1\. `event_date`: the date of each event in yyyy-mm-dd format;
 2\. `year`: the year of each event in yyyy format;
 3\. `time_precision`: the temporal precision of each event;
@@ -57,21 +60,20 @@ tibble(time_precision = c(1, 2, 3),
 
 # ACLED Week and acledR
 
-ACLED's week is not like "normal" weeks, as we follow the submission process of the project. This means that ACLED's week starts in Saturday, and finishes in Friday. For that matter, current and future functions of the project will utilize this range (Sat-Fri) to define what constitutes a week. The reason for this decision lies on the efforts from the team at ACLED to avoid pitfalls on how we analyse ACLED data. **If researchers would like to use a "normal" week (Monday-Sunday), they should be aware that data collection in ACLED occurs on Saturday, thus, they may be have incomplete data for the proceeding week.**
+ACLED's week is not like "normal" weeks, as we follow the submission process of the project. This means that ACLED's week starts in Saturday, and finishes on Friday. For that matter, current and future functions of the project will utilize this range (Sat-Fri) to define what constitutes a week. The reason for this decision lies on the efforts from the team at ACLED to avoid pitfalls on how we analyse ACLED data. **If researchers would like to use a "normal" week (Monday-Sunday), they should be aware that data collection in ACLED occurs on Saturday, thus, they may be have incomplete data for the proceeding week.**
 
 # `acledR` Example
 
-In order to explore the uses of time in ACLED's data, we can look at the following example analyzing France's events throughout 2021. 
+To explore the uses of time in ACLED's data, we can look at the following example analyzing France's events throughout 2021. 
 
 ```{r, echo = T}
-library(acledR)
-library(tidyverse)
+
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_france <- acled_api(countries = c("France"),
                        start_date = "2021-01-01",
                        end_date = "2021-12-31",
                        monadic = F,
-                       prompt=FALSE)
+                       prompt = FALSE)
 ```
 Now that we have gathered our data, we want to explore how precise are the event dates and which are our floor and celling date (min/max) in our data frame. 
 
@@ -80,19 +82,16 @@ df_france %>%
   janitor::tabyl(time_precision) %>% # Summarize data groupped by time_precision
   janitor::adorn_rounding(2)
 
-paste0("Earliest Date: ",as.character(min(df_france$event_date)))
-paste0("Latest Date: ", as.character(max(df_france$event_date)))
+paste0("Earliest Date: ", as.character(min(df_france$event_date)))
+paste0("Latest Date: ",  as.character(max(df_france$event_date)))
 ```
+
 As we can see, our data is very precise, with 99% being `time_precision` 1, followed by `time_precision` 2, and finally `time_precision` 3. This follows the efforts in ACLED to be precise when managing dates, and make our best effort to find the date of the event. It would be very rare to find a data set where `time_precision` 2 is the most present, let alone `time_precision` 3. 
 
 Next we move to do one of the best analysis we can do with ACLED's data, time-series. 
 
 
 ```{r, echo = T}
-library(dplyr)
-library(ggplot2)
-library(plotly)
-
 plot <- df_france %>% 
   group_by(event_date) %>% 
   tally() %>% 
@@ -118,7 +117,7 @@ However, we would like to go slightly more specific, by looking at the divergenc
 ```{r, echo=T}
 plot <- df_france %>% 
   group_by(month = lubridate::floor_date(event_date, "month",
-                                week_start = getOption('lubridate.week.start', 6))) %>% 
+                                         week_start = getOption('lubridate.week.start', 6))) %>% 
   tally() %>% 
   ggplot(aes(x = month, y = n)) +
   geom_line(size=1.2)+
@@ -138,19 +137,27 @@ Lets try to add more nuance to our analysis, and lets analyse the count of diffe
 
 ```{r,echo=T}
 
-french_counts <- generate_counts(df_france,unit_id="country",time_id="event_date",time_target = "month")%>%
+french_counts <- generate_counts(df_france,
+                                 unit_id = "country",
+                                 time_id = "event_date",
+                                 time_target = "month")%>%
   select(-country) %>%
-  pivot_longer(!event_month,names_to="event_type",values_to = "n_events") 
+  pivot_longer(!event_month,
+               names_to = "event_type",
+               values_to = "n_events") 
 
-pfc <- ggplot(french_counts, aes(x=event_month, y=n_events, fill=event_type, text=event_type))+
-  geom_bar(stat="identity",position = "dodge")+
+pfc <- ggplot(french_counts, 
+              aes(x = event_month, y = n_events, 
+                  fill = event_type, text = event_type))+
+  geom_bar(stat = "identity",
+           position = "dodge")+
   labs(title = "Monthly distribution of event types in France",
-       x= "Months",
-       y="Number of events")
+       x = "Months",
+       y ="Number of events")
 
 pfcly <- ggplotly(pfc)
 pfcly
 
 ```
 
-As we can see from the graph, France's 2021 was primarely riddled with protests. However, this is hardly enough to conclude anything about France. In another vignitte we go through this example and compare it with the regional averages. 
+As we can see from the graph, France's 2021 was primarily riddled with protests. However, this is hardly enough to conclude anything about France. In another vignette we go through this example and compare it with the regional averages. 

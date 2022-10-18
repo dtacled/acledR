@@ -179,17 +179,18 @@ As an example of the actors and interactions in ACLED, let's consider Yemen in J
   
 ```{r, echo = T}
 library(acledR)
+
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
 df_yemen <- acled_api(countries = c("Yemen"),
                       start_date = "2022-01-01",
                       end_date = "2022-01-31",
-
                       monadic = F,
-                      prompt= FALSE)
+                      prompt = FALSE)
 
 ```
 
-During this month, there were 894 ACLED events, 28 unique `actor1` entries, and 24 unique `actor2` entries. 
+During this month, there were `length(df_yemen$data_id)` ACLED events, `length(unique(df_yemen$actor1))` unique `actor1` entries, and `length(unique(df_yemen$actor2))` unique `actor2` entries. 
 
 ```{r, echo = T}
 # number of ACLED events

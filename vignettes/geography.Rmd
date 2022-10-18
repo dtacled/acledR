@@ -4,7 +4,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Geography}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}---
+  %\VignetteEncoding{UTF-8}
+---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -37,15 +38,7 @@ using multiple sources to triangulate better location information.
 
 # Administrative Levels
 
-As mentioned above, ACLED's data set includes up to six different types
-of spatial information. In it, administrative levels are included,
-stored in columns **Admin1**, **Admin2** and **Admin3**. These columns
-provide further information to our users on the location of the event,
-making it easier to triangulate and locate the particular event, as well
-as to allow analysis across regions, e.g. how events moved from one
-region to another throughout a range of time. Administrative levels are
-generally composed as followed (examples in parenthesis refer to
-Ethiopia / US):
+As mentioned above, ACLED's data set includes up to six different types of spatial information. In it, administrative levels are included, stored in columns **Admin1**, **Admin2** and **Admin3**. These columns provide further information to our users on the location of the event, making it easier to triangulate and locate the particular event, as well as to allow analysis across regions, e.g. how events moved from one region to another throughout a range of time. Administrative levels are generally composed as followed (examples in parenthesis refer to Ethiopia / US):
 
 -   Administrative Level 1 (Admin 1): Province or Equivalent (e.g. Afar
     / California))
@@ -56,52 +49,23 @@ Ethiopia / US):
 -   Administrative Level 3 (Admin 3): County or Equivalent. (e.g.
     Abaala)
 
-However, administrative levels are hardly an uniform topic across
-conflict studies. Administrative levels vary, and in some cases,
-information about these administrative levels becomes unreliable,
-especially in the Admin 3 level. For instance, when covering certain
-countries in Africa, their administrative levels may change, and in some
-cases, locations such as small cities are not always covered.
-Additionally, some sources may utilize different names, sometimes
-resulting of language or dialect variations, or the names of
-administrative levels may not be unique. Furthermore, not every country
-defines sub-national boundaries the same way, thus, while many countries
-in Africa include Admin 3s, countries in Europe often don't.
+However, administrative levels are hardly an uniform topic across conflict studies. Administrative levels vary, and in some cases, information about these administrative levels becomes unreliable, especially in the Admin 3 level. For instance, when covering certain countries in Africa, their administrative levels may change, and in some cases, locations such as small cities are not always covered. Additionally, some sources may utilize different names, sometimes resulting of language or dialect variations, or the names of administrative levels may not be unique. Furthermore, not every country defines sub-national boundaries the same way, thus, while many countries in Africa include Admin 3s, countries in Europe often don't.
 
-To account for some of these differences, ACLED researchers are
-instructed to :
+To account for some of these differences, ACLED researchers are instructed to :
 
 1.  Follow what sources report in terms of location.
 
-2.  If sources have incomplete information on the location, researchers
-    are to triangulate information through following landmarks or
-    relevant information mentioned by the source, and utilize the
-    precision code (see below) to denote that.
+2.  If sources have incomplete information on the location, researchers are to triangulate information through following landmarks or
+   relevant information mentioned by the source, and utilize the precision code (see below) to denote that.
 
-3.  If sources include administrative levels which are not part of the
-    standardized list of administrative levels of ACLED, then
-    researchers are allowed to include new entries to out master list by
-    checking OpenStreetMap, Google Maps and NGA GeoNames database.
+3.  If sources include administrative levels which are not part of the standardized list of administrative levels of ACLED, then researchers are allowed to include new entries to out master list by checking OpenStreetMap, Google Maps and NGA GeoNames database.
 
-Our approach allows a standardized way of coding events' locations,
-often an issue when covering events around the world. However, if users
-utilize a different names for some administrative levels, which
-sometimes occurs in other humanitarian-related data sets, then it is
-important to take differences into consideration. At the moment, our
-data set does not include P-Codes. However, we do include an ISO column
-to allow easier connection with other data sets.
+Our approach allows a standardized way of coding events' locations, often an issue when covering events around the world. However, if users utilize a different names for some administrative levels, which sometimes occurs in other humanitarian-related data sets, then it is important to take differences into consideration. At the moment, our data set does not include P-Codes. However, we do include an ISO column to allow easier connection with other data sets.
 
 # Precision Codes
 
-Very often sources have different degrees of certainty regarding an
-event occurring in a particular location. For instance, some sources may
-report an event as "near the 66 highway near City X", while others may
-report it at "the event occurred at the town hall of city X along the 66
-highway". In that example, we can see two different degrees of
-precision. To distinguish these different degrees of precision, as with
-the case of
-[time](https://billingtt.github.io/acledR/articles/time.html), ACLED
-utilizes different "Precision Codes". These are as follow:
+Very often sources have different degrees of certainty regarding an event occurring in a particular location. For instance, some sources may report an event as "near the 66 highway near City X", while others may report it at "the event occurred at the town hall of city X along the 66 highway". In that example, we can see two different degrees of
+precision. To distinguish these different degrees of precision, as with the case of [time](https://billingtt.github.io/acledR/articles/time.html), ACLED utilizes different "Precision Codes". These are as follow:
 
 ```{r}
 library(dplyr)
@@ -117,8 +81,7 @@ tibble(time_precision = c(1, 2, 3),
 
 # `acledR` Example
 
-On the example below we will explore events distribution during January
-2022 across Nigeria by utilizing ACLED's administrative level columns.
+On the example below we will explore events distribution during January 2022 across Nigeria by utilizing ACLED's administrative level columns.
 
 ```{r, echo = T}
 library(acledR)
@@ -132,9 +95,7 @@ df_nigeria <- acled_api(countries = c("Nigeria"),
 
 ```
 
-We start by pulling the data out of ACLED's API. First, we call
-`acled_acess()`, and then we make our API call with `acled_api()`. Lets
-explore which are the top 5 admin1s of Nigeria (also called states).
+We start by pulling the data out of ACLED's API. First, we call `acled_acess()`, and then we make our API call with `acled_api()`. Lets explore which are the top 5 admin1s of Nigeria (also called states).
 
 ```{r, echo = T}
 df_nigeria %>% 
@@ -145,10 +106,7 @@ df_nigeria %>%
 
 ```
 
-As observed by our table, Kaduna and Borno are the two most
-conflict-ridden admin1s in Nigeria, however, conflicts appears generally
-evenly distributed from there on. Lets plot the geographical
-distribution:
+As observed by our table, Kaduna and Borno are the two most conflict-ridden admin1s in Nigeria, however, conflicts appears generally evenly distributed from there on. Lets plot the geographical distribution:
 
 ```{r, echo = T}
 library(sf)
@@ -188,8 +146,4 @@ ggplot() +
 
 ```
 
-Given the fact that every event comes paired with a number of
-geographical variables, ACLED's data is particularly useful to map
-conflict in a given region, country, or administrative level. As we will
-see in the ... vignitte (I will put a link here), we can go even further
-to map conflict in a given administrative level thanks to this.
+Given the fact that every event comes paired with a number of geographical variables, ACLED's data is particularly useful to map conflict in a given region, country, or administrative level. As we will see in the ... vignitte (I will put a link here), we can go even further to map conflict in a given administrative level thanks to this.

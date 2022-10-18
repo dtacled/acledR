@@ -20,20 +20,20 @@ generate_counts(
 
 \item{event_type}{Event types to include. If more than one event type is included, event counts per type and the total number of events is returned. If NULL, all event types are returned.}
 
-\item{unit_id}{string. Unit variable (e.g., country, region, admin1, etc.)}
+\item{unit_id}{string. Unit variable (e.g., country, region, admin1, etc.).}
 
-\item{time_id}{string. Temporal variable, usually event_date}
+\item{time_id}{string. Temporal variable, usually event_date.}
 
-\item{time_target}{string. Target temporal unit (week, month, year)}
+\item{time_target}{string. Target temporal unit (e.g. week, month, year).}
 
-\item{start_date}{Earliest date to include (yyyy-mm-dd)}
+\item{start_date}{Earliest date to include (yyyy-mm-dd).}
 
-\item{end_date}{Latest date to include (yyyy-mm-dd)}
+\item{end_date}{Latest date to include (yyyy-mm-dd).}
 
-\item{add_unit_ids}{Option to add in units with no events in throughout the time period of interest}
+\item{add_unit_ids}{Option to add in units with no events throughout the time period of interest.}
 }
 \value{
-Returns a tibble grouped by unit_id
+Returns a tibble grouped by unit_id.
 }
 \description{
 Generate event counts from ACLED data
@@ -88,6 +88,8 @@ df_counts_riots <- generate_counts(data = df_riots,
 
 Other Data Manipulation: 
 \code{\link{calculate_actor_index}()},
+\code{\link{filter_actors}()},
+\code{\link{filter_event_types}()},
 \code{\link{generate_movers}()}
 }
 \concept{Data Manipulation}

@@ -9,8 +9,8 @@ acled_api(
   key = NULL,
   countries = NULL,
   regions = NULL,
-  start_date = NULL,
-  end_date = NULL,
+  start_date = "1997-01-01",
+  end_date = Sys.Date(),
   timestamp = NULL,
   event_types = NULL,
   monadic = FALSE,
@@ -28,9 +28,9 @@ acled_api(
 
 \item{regions}{vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions.}
 
-\item{start_date}{character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is NULL, which will return events from all available time periods. If 'start_date' is NULL, 'end_date' must also be NULL.}
+\item{start_date}{character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is \code{1997-01-01}, which is the earliest date available.}
 
-\item{end_date}{character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is NULL, which will return events from all available time periods. If 'end_date' is NULL, 'start_date' must also be NULL.}
+\item{end_date}{character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is Sys.Date(), which is the most present date.}
 
 \item{timestamp}{numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.}
 

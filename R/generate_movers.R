@@ -2,8 +2,8 @@
 #'
 #' @param data ACLED data.
 #' @param var Variable of interest.
-#' @param unit_id Unit variable.
-#' @param time_id Temporal variable.
+#' @param unit_id Spatial unit of analysis (e.g., country, ADMIN1, region).
+#' @param time_id Temporal variable (e.g., week, month, year).
 #' @param slide_funs Requested moving statistics. Character vector with options including mean, median, sd, min, and max.
 #' @param slide_periods How many periods in the past to summarize over. Vector of one or more integers. Inf includes all previous periods.
 #' @param na.rm  Whether to include NAs in the calculations.

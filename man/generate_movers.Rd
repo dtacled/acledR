@@ -20,9 +20,9 @@ generate_movers(
 
 \item{var}{Variable of interest.}
 
-\item{unit_id}{Unit variable.}
+\item{unit_id}{Spatial unit of analysis (e.g., country, ADMIN1, region).}
 
-\item{time_id}{Temporal variable.}
+\item{time_id}{Temporal variable (e.g., week, month, year).}
 
 \item{slide_funs}{Requested moving statistics. Character vector with options including mean, median, sd, min, and max.}
 
@@ -69,6 +69,8 @@ df_india_agg_movers <-
 \seealso{
 Other Data Manipulation: 
 \code{\link{calculate_actor_index}()},
+\code{\link{filter_actors}()},
+\code{\link{filter_event_types}()},
 \code{\link{generate_counts}()}
 }
 \concept{Data Manipulation}
