@@ -1,0 +1,36 @@
+---
+title: "Automatic Report of Country/Region through API call"
+output:
+    html_document:
+      toc: true
+    pdf_document:
+      toc: true
+params:
+  acled_email: email  
+  acled_key: key   
+  end_date: !r Sys.Date()
+  country: country          
+  printcode: TRUE 
+  start_date: "1997-01-01"
+  data: data
+---
+
+
+## 1. Event Counts by Event type
+
+
+```{r get counts of events by event_types, echo = FALSE, warning = FALSE}
+library(acledR)
+library(knitr)
+library(kableExtra)
+
+give_me_counts <- generate_counts(data = params$data, unit_id = "country", time_id = "event_date", time_target = "month", start_date = params$start_date, end_date = params$end_date)
+
+kable(give_me_counts) %>%
+  kable_styling(fixed_thead = T)
+
+```
+
+
+
+1 2 3 testing testing
