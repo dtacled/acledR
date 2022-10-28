@@ -29,10 +29,12 @@ acled_country_report_api <- function(country_report = NULL,
       output = "pdf_document"
     }
 
-    data_file <- acled_api(countries=country_report, start_date = start_date_report,
-                           end_date = end_date_report,
-                           email = email, key = key, acled_access=FALSE,
-                           prompt=prompt)
+    # data_file <- acled_api(countries=country_report, start_date = start_date_report,
+    #                        end_date = end_date_report,
+    #                        email = email, key = key, acled_access=FALSE,
+    #                        prompt=prompt)
+
+
 
 
     rmarkdown::render(input = "inst/rmarkdown/templates/template1.Rmd",
