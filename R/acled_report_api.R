@@ -1,4 +1,4 @@
-## Automatic RO script
+## Automatic RO script with API
 
 
 
@@ -29,10 +29,10 @@ acled_country_report_api <- function(country_report = NULL,
       output = "pdf_document"
     }
 
-    # data_file <- acled_api(countries=country_report, start_date = start_date_report,
-    #                        end_date = end_date_report,
-    #                        email = email, key = key, acled_access=FALSE,
-    #                        prompt=prompt)
+  data_file <- acled_api(countries=country_report, start_date = start_date_report,
+                       end_date = end_date_report,
+                       email = email, key = key, acled_access=FALSE,
+                       prompt=prompt)
 
 
 
@@ -51,4 +51,4 @@ acled_country_report_api <- function(country_report = NULL,
 
 library(acledR)
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your
-acled_country_report_api(country_report = "Argentina", start_date_report= "2019-01-01", acled_access = TRUE, prompt = FALSE)
+acled_country_report_api(country_report = "Georgia", start_date_report= "2019-01-01", acled_access = TRUE, prompt = FALSE)

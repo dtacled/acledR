@@ -39,6 +39,7 @@ library(plotly)
 library(viridis)
 library(mapview)
 library(stringr)
+library(sf)
 
 acled_transform <- function(data,type="full_actor"){ ## types: full_actors, main_actors,assoc_actors,source, all
 
@@ -209,6 +210,11 @@ ggplotly(ha, tooltip = "text")
 
 ```{r map of stuff,echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
 
+
+admin1_country <- raster::getData(name = "GADM", country = params$country, level = 1) %>%
+  # convert to sf object
+  st_as_sf()
+
 country_counts <-
   params$data %>% 
   # full_join(select(admin1_country, NAME_1, NAME_0), by = c("admin1" = "NAME_1", "country" = "NAME_0")) %>% 
@@ -270,21 +276,33 @@ df1 <- params$data %>%   ## change to params$data
   rbind(totals_event_counts)%>%
   arrange(opc_vtc_category)
 
+
 min_opv <- min(which(grepl("organized_political_violence", df1$opc_vtc_category)))
 max_opv <- max(which(grepl("organized_political_violence", df1$opc_vtc_category)))
 
 min_vtc <- min(which(grepl("violence_targeting_civilians", df1$opc_vtc_category)))
 max_vtc <- max(which(grepl("violence_targeting_civilians", df1$opc_vtc_category)))
 
+if(min_vtc == Inf | max_vtc == Inf){
+  include_vtc <- 0
+} else {include_vtc <- 1}
 
+if(min_opv == Inf | max_opv == Inf){
+  include_opv <- 0
+} else {include_opv <- 1}
+
+
+stuff <- params$data
 
 df1 %>%
   mutate(opc_vtc_category = "")%>%
   rename(" "= opc_vtc_category)%>%
-  kbl(caption = paste0("Table of event counts and fatalities by sub event type since ", params$start_date, " until ", max(params$data$event_date)),align = "c",col.names = c("","Sub Event Types", "Number of Events", "Number of Fatalities"))%>%
-   kable_styling(full_width =T)%>%
-  pack_rows("Violence Targeting Civilians",min_vtc,max_vtc)%>%
-  pack_rows("Organized Political Violence",min_opv,max_opv) 
+  kbl(caption = paste0("Table of event counts and fatalities by sub event type since ", min(stuff$event_date), " until ", max(stuff$event_date)),align = "c",col.names = c("","Sub Event Types", "Number of Events", "Number of Fatalities"))%>%
+  kable_styling(full_width =T)%>%
+  {if(include_vtc == 1 & include_opv == 1) pack_rows("Violence Targeting Civilians",min_vtc,max_vtc) %>% pack_rows("Organized Political Violence",min_opv,max_opv) else . } %>%
+  {if(include_vtc != 1) footnote(.,general = "There were no Violence Targenting Civilians events in the Dataset") else if (include_opv != 1) footnote(.,general = "There were no Organized Political Violence events in the dataset") else .}
+
+
 
 ```
 
