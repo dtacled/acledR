@@ -41,38 +41,6 @@ library(mapview)
 library(stringr)
 library(sf)
 
-acled_transform <- function(data,type="full_actor"){ ## types: full_actors, main_actors,assoc_actors,source, all
-
-  if(type == "full_actors") { ## full actor -> pivot + separate into rows all actor columns
-    separated_data <- data %>%
-      pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows(actor, sep = ";") %>%
-      filter(actor != "") %>%
-      relocate(c("type_of_actor","actor"),.after="sub_event_type")
-  }else if (type == "main_actors"){ ## main_actors -> only pivot actor columns
-    separated_data <- data %>%
-      pivot_longer(cols = c("actor1","actor2"),names_to = "type_of_actor",values_to = "actor") %>%
-      filter(actor != "") %>%
-      relocate(c("type_of_actor","actor"),.after="sub_event_type")
-  }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
-    separated_data <- data %>%
-      pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
-      separate_rows(assoc_actor, sep = ";") %>%
-      relocate(c("type_of_assoc_actor","assoc_actor"),.after="sub_event_type")
-  }else if(type == "source"){
-    separated_data <- data %>%
-      separate_rows(source, sep = ";") %>%
-      mutate(source = str_trim(source,side = "both")) %>%
-      relocate(source,.before="source_scale")
-  }else if(type == "all"){
-    separated_data <- data %>%
-      pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows(c("actor","source"), sep = ";") %>%
-      filter(actor != "") %>%
-      relocate(c("type_of_actor","actor"),.after="sub_event_type") %>%
-      relocate(source, .before = "source_scale")
-  }
-}
 
 defaultW <- getOption("warn") 
 
