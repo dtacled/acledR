@@ -1,8 +1,11 @@
 ---
-title: "Untitled"
+title: "transformations"
 output: html_document
 date: "2022-11-11"
 ---
+
+```{r loading packs, echo = F, message=FALSE}
+library(kableExtra)
 library(knitr)
 library(acledR)
 library(dplyr)
@@ -22,21 +25,21 @@ Because of that, `acledR` includes two particular functions made to easily filte
 
 The actor columns are a prime example of those extra steps users would have to make to actually filter their data to one or multiple actors. That is because actors could be found across four different columns, requires using either multiple filters, or multiple conditions, making it slightly tedious to write. 
 
-Thus, the package includes the ‘acled_filter_actor()’ function, which filters the data to the desired actors. 
+Thus, the package includes the `acled_filter_actor()` function, which filters the data to the desired actors. 
 
 The function is structured as follows:
 
- ```{r, eval = FALSE}
+```{r, eval = FALSE}
 
-acled_filter_action(df,
-		    	actors, 
-			filter_cols=‘all’)
+acled_filter_actors(df,
+		    	          actors, 
+			              filter_cols=‘all’)
 
 ```
 
-The function is relatively straight forward, taking three arguments: ‘df’ which is the dataset of interest, ‘actors’ which is a character vector of the actors which we are interested in filtering, and ‘filter_cols’ which is a character vector of the columns to be filtered. 
+The function is relatively straight forward, taking three arguments: `df` which is the dataset of interest, `actors` which is a character vector of the actors which we are interested in filtering, and `filter_cols` which is a character vector of the columns to be filtered. 
 
-For filter_cols we can utilize a vector with the names of the different actor columns, like ‘filter_cols = c(“actor1”,”actor2”)’, or we leave it blank which defaults in filtering in all columns. Please note that if we utilize the option ‘filter_cols = ‘all’,  the ‘df’ to be provided has to follow ACLED’s structure, and thus have an assoc_actor_1 or assoc_actor_2 column, 
+For `filter_cols` we can utilize a vector with the names of the different actor columns, like `filter_cols = c(“actor1”,”actor2”)`’, or we leave it blank which defaults in filtering in all columns. Please note that if we utilize the option `filter_cols = ‘all'`,  the `df` to be provided has to follow ACLED’s structure, and thus have an assoc_actor_1 or assoc_actor_2 column, 
 
 The function returns a dataset which look like the original dataset, but with the data filtered. 
 
@@ -44,24 +47,32 @@ The function returns a dataset which look like the original dataset, but with th
 
 As users may find in ACLED’s methodology, we have defined clusters of events types that tend to describe specific categories of political violence or disorder. These are:
 
-[chunck with table of categories and the event types that include them]
 
 ```{r table_of_categories}
 
-Table_of_categories <- data.frame(categories = c(“political violence”,”organized_political_violence”,”disorder”,”demostrations”),
-Conditions = c(“
-
+table_of_categories <- acledR::acled_event_categories %>%
+  select(-event_type) %>%
+  kbl() %>%
+  kable_styling() %>%
+  pack_rows(group_label = "Battles", start_row = 1,end_row = 3) %>%
+  pack_rows(group_label = "Explosions/Remote violence",start_row=4,end_row = 9) %>%
+  pack_rows(group_label = "Protests",start_row = 10, end_row = 12) %>%
+  pack_rows(group_label = "Riots", start_row = 13, end_row = 14) %>%
+  pack_rows(group_label = "Strategic developments", start_row = 15, end_row = 22) %>%
+  pack_rows(group_label = "Violence against civilians", start_row = 23, end_row = 25) %>%
+  column_spec(2, color = spec_color(acledR::acled_event_categories$political_violence))
 
 ```
 
-
-
 The table helps illustrates the conditional statements that lead to these categories, however, it also highlights how tedious it may be to actually filter these categories manually. For that reason, we have included in the package a function to be able to directly observe these categories. This is very useful when users want to recreate things like regional overviews, which actually make use of these categories. This is how the function looks :
 
-[chunck of code with the function]
+``` {r fet function, eval = FALSE}
+filter_event_types <- function(data,
+                               acled_categories,
+                               keep_all_events = FALSE)
+```
 
-
-‘acled_filter_categories()’ requires three arguments. First, is ‘data’ which corresponds to the ACLED’s data frame, like the result from ‘acled_api()’. Second, is ‘acled_categories’ which is a character vector of the categories of interests by which we will filter. Finally, it includes  ‘keep_all_events’ option, which is mean to be a logical statement. When we se indicate ‘keep_all_events = FALSE’ we are telling the function to return only the events within the requested categories. On the contrary, if it is ‘TRUE’, then the return data frame will include new columns to indicate if the given event was part of the specified category. 
+`acled_filter_categories()` requires three arguments. First, is `data` which corresponds to the ACLED’s data frame, like the result from `acled_api()`. Second, is `acled_categories` which is a character vector of the categories of interests by which we will filter. Finally, it includes  `keep_all_events` option, which is mean to be a logical statement. When we se indicate `keep_all_events = FALSE` we are telling the function to return only the events within the requested categories. On the contrary, if it is `TRUE`, then the return data frame will include new columns to indicate if the given event was part of the specified category. 
 
 
 ## 2. acled_transform()
