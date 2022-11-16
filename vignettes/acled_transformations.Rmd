@@ -3,14 +3,20 @@ title: "Untitled"
 output: html_document
 date: "2022-11-11"
 ---
+library(knitr)
+library(acledR)
+library(dplyr)
+```
+
+
 # Transformation of ACLED data
 
 
-## 1. FIlter functions
+## 1. Filter functions
 
 ACLED’s data utilizes a wide-format, which while it is an easier format for humans to read, it is not the same case for computer. For that matter, sometimes it can take a couple of lines of code to properly filter data in ACLED when we are trying to variables inside the wide-formatted columns such as actor 1 , actor 2, assoc actors, and sources.
 
-Because of that, ‘acledR’ includes two particular functions made to easily filter the data across all of these columns, while remaining the same structure. 
+Because of that, `acledR` includes two particular functions made to easily filter the data across all of these columns, while remaining the same structure. 
 
 ### 1.1. acled_filter_actor()
 
