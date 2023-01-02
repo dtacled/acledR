@@ -38,7 +38,3 @@ acled_country_report <- function(data, country_report = NULL,
                     output_format = output,
                     envir = new.env())
 }
-
-library(acledR)
-acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your
-acled_country_report_api(country_report = "Argentina", start_date_report= "2019-01-01", acled_access = TRUE, prompt = FALSE)

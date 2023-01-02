@@ -38,6 +38,7 @@ filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols 
 }
 \seealso{
 Other Data Manipulation: 
+\code{\link{acled_transform}()},
 \code{\link{calculate_actor_index}()},
 \code{\link{filter_event_types}()},
 \code{\link{generate_counts}()},
