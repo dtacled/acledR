@@ -1,4 +1,3 @@
-
 #' @title Transform ACLED data from wide to long
 #' @name acled_transform
 #' @description Function to convert your ACLED's API calls (if dyadic) into desired monadic forms.

@@ -1,10 +1,23 @@
-## Automatic RO script with API
-
-
-
-## Two options:
-# 1: Load the RO through a new dataset. (template2)
-# 2: Load the RO through an existing. (template1)
+#' @title Automatic country report with API
+#' @name acled_report_api
+#' @description Generate automatic exploratory reports of ACLED data by utilizing data directly from ACLED's API
+#' @param country_report character string. A country from which to base the report.
+#' @param start_date_report character string. The initial date (YYYY-MM-DD) from which to generate the report.
+#' @param end_date_report character string. Last date (YYYY-MM-DD) from which to finish the report.
+#' @param output_style character string. Desired format for the markdown file, recommended HTML or PDF. Defaults to HTML.
+#' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
+#' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
+#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
+#' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
+#' @return Returns a markdown file stored in the project's current working directory.
+#' @examples
+#' \dontrun{
+#'
+#' ## Generate report regarding Argentina's events throughout August-December 2022
+#' acled_country_report_api(country_report = "Argentina", start_date_report = "2022-07-31",end_date_report = "2023-01-01",
+#'                          output_style = "HTML", prompt=FALSE)
+#' }
+#' @md
 
 acled_country_report_api <- function(country_report = NULL,
                              start_date_report = "1997-01-01", end_date_report = Sys.Date(),
