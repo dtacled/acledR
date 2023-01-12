@@ -2,6 +2,8 @@
 #' @name acled_report_api
 #' @description Generate automatic exploratory reports of ACLED data by utilizing data directly from ACLED's API
 #' @param country_report character string. A country from which to base the report.
+#' @param regional_data boolean. True or False option to include (when TRUE) regional comparision in the report. Requires larger API calls.
+#' @param region character string. A region which from which to base the report. It still requires a country.
 #' @param start_date_report character string. The initial date (YYYY-MM-DD) from which to generate the report.
 #' @param end_date_report character string. Last date (YYYY-MM-DD) from which to finish the report.
 #' @param output_style character string. Desired format for the markdown file, recommended HTML or PDF. Defaults to HTML.
@@ -19,7 +21,7 @@
 #' }
 #' @md
 
-acled_country_report_api <- function(country_report = NULL,
+acled_country_report_api <- function(country_report = NULL,regional_data = TRUE, region = NULL,
                              start_date_report = "1997-01-01", end_date_report = Sys.Date(),
                              output_style = "HTML", email = NULL, key = NULL, acled_access = TRUE, prompt=TRUE){
 
@@ -29,11 +31,11 @@ acled_country_report_api <- function(country_report = NULL,
   }
 
   if(is.null(country_report)){
-    stop("No country provided, please provide a country to base the report on. ")
+    stop("No country provided, please provide a country to base the report on.")
   }
 
   if(is.null(start_date_report)){
-    warning("Because no start_date_report was provided, the report will used the minimum date in the dataset")
+    warning("Because no start_date_report was provided, the report will used the minimum date in the dataset.")
   }
 
   if(output_style == "HTML" | output_style == "html"){
@@ -42,14 +44,24 @@ acled_country_report_api <- function(country_report = NULL,
       output = "pdf_document"
     }
 
-  data_file <- acled_api(countries=country_report, start_date = start_date_report,
-                       end_date = end_date_report,
-                       email = email, key = key, acled_access=FALSE,
-                       prompt=prompt)
+  if(regional_data == TRUE){
+    call <- acled_api(regions=region, start_date = start_date_report,
+                           end_date = end_date_report,
+                           email = email, key = key, acled_access=FALSE,
+                           prompt=prompt)
+    data_file <- call %>%
+      filter(country == country_report)
 
 
+    }else{
+    data_file <- acled_api(countries=country_report, start_date = start_date_report,
+                         end_date = end_date_report,
+                         email = email, key = key, acled_access=FALSE,
+                         prompt=prompt)
+    }
 
 
+  if(regional_data != TRUE){
     rmarkdown::render(input = "inst/rmarkdown/templates/template1.Rmd",
                     params = list(
                       country = as.character(country_report),
@@ -60,4 +72,18 @@ acled_country_report_api <- function(country_report = NULL,
                       data = data_file),
                     output_format = output,
                     envir = new.env())
+  }else{
+    rmarkdown::render(input = "inst/rmarkdown/templates/template2.Rmd",
+                      params = list(
+                        country = as.character(country_report),
+                        start_date = lubridate::ymd(start_date_report),
+                        end_date = lubridate::ymd(end_date_report),
+                        acled_email = email,
+                        acled_key = key,
+                        data = data_file,
+                        region = region,
+                        regional_data = call),
+                      output_format = output,
+                      envir = new.env())
+    }
 }
