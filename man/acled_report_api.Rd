@@ -7,6 +7,8 @@
 \usage{
 acled_country_report_api(
   country_report = NULL,
+  regional_data = TRUE,
+  region = NULL,
   start_date_report = "1997-01-01",
   end_date_report = Sys.Date(),
   output_style = "HTML",
@@ -18,6 +20,10 @@ acled_country_report_api(
 }
 \arguments{
 \item{country_report}{character string. A country from which to base the report.}
+
+\item{regional_data}{boolean. True or False option to include (when TRUE) regional comparision in the report. Requires larger API calls.}
+
+\item{region}{character string. A region which from which to base the report. It still requires a country.}
 
 \item{start_date_report}{character string. The initial date (YYYY-MM-DD) from which to generate the report.}
 

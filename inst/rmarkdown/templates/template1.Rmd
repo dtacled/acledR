@@ -1,5 +1,5 @@
 ---
-title: "Automatic Report of Country through API call"
+title: "Automatic Report of `r params$country`"
 output:
     html_document:
       toc: true
@@ -77,41 +77,15 @@ table_data <- params$data %>%
 table_data$total_actors <- unique_number_of_actors
 table_data$total_sources <- unique_number_of_sources
 
+table_data <- table_data %>%
+  rename(Country=country, "Total Events" = total_events, "Reported Fatalities" = total_fatalities, "Eventful Days" = eventful_days, "Total Actors" = total_actors, "Total Sources" = total_sources)
+
 kbl(table_data) %>%
   kable_styling()
 
-
-
 ```
 
-### 1.1 Most Frequent Sources
-
-```{r sources brealdown, echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
-su <- ggplot(slice_max(.data = table_data_source,order_by = frequency, n=30),aes(frequency,reorder(source,frequency),fill=source,text=c(paste0("Source: ", source,"\n","Frequency: ", frequency)))) +
-  geom_bar(stat="identity",fill= "slateblue3")+
-  theme(legend.position = "none")+
-  labs(title = "Top 30 most frequent sources utilized in the dataset",
-       x= "Frequency",
-       y= "Source")
-ggplotly(su,tooltip = "text")
-```
-
-### 1.2 Most Frequent Actors
-
-```{r actor breakdown, echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
-fu <- ggplot(slice_max(table_data_actor,order_by = frequency,n=30),
-             aes(frequency,reorder(actor,frequency),text=c(paste0("Actor: ", actor,"\n","Frequency: ", frequency))))+
-  geom_bar(stat="identity", fill= "slateblue3")+
-  theme(legend.position="none")+
-  labs(title = "Top 30 most frequent actors in the dataset",
-       x="Frequency",
-       y="Actor")
-
-ggplotly(fu, tooltip = "text")
-```
-
-### 1.3 Sub-Event Types frequencies
-
+### 1.1 Sub-Event Types frequencies
 ```{r Sub-Event type,echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
 sub_event_table <- params$data %>%
   group_by(event_type,sub_event_type) %>%
@@ -133,6 +107,32 @@ zu <-ggplot(sub_event_table,aes(x=frequency,fill=event_type,
 ggplotly(zu, tooltip = "text")
 
 ```
+### 1.2 Most Frequent Actors
+
+```{r actor breakdown, echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
+fu <- ggplot(slice_max(table_data_actor,order_by = frequency,n=30),
+             aes(frequency,reorder(actor,frequency),text=c(paste0("Actor: ", actor,"\n","Frequency: ", frequency))))+
+  geom_bar(stat="identity", fill= "slateblue3")+
+  theme(legend.position="none")+
+  labs(title = "Top 30 most frequent actors in the dataset",
+       x="Frequency",
+       y="Actor")
+
+ggplotly(fu, tooltip = "text")
+```
+
+### 1.3 Most Frequent Sources
+
+```{r sources brealdown, echo = FALSE, fig.align='right',fig.width=10,fig.height=7}
+su <- ggplot(slice_max(.data = table_data_source,order_by = frequency, n=30),aes(frequency,reorder(source,frequency),fill=source,text=c(paste0("Source: ", source,"\n","Frequency: ", frequency)))) +
+  geom_bar(stat="identity",fill= "slateblue3")+
+  theme(legend.position = "none")+
+  labs(title = "Top 30 most frequent sources utilized in the dataset",
+       x= "Frequency",
+       y= "Source")
+ggplotly(su,tooltip = "text")
+```
+
 
 ## 2. Monthly average of events in `r params$country`
 
@@ -200,3 +200,35 @@ mapviewOptions(fgb = FALSE) # needed when creating web pages
 mapview(country_counts["n"], at = seq(1,2500,200))
 
 ```
+
+## 4. Strategic Developments
+
+Strategic developments are events coded by ACLED, not because of them being events of political violence, but because of these being events that may trigger future events of political violence. As such, it is important to know that these may not be sistematically coded the same way. However, Users may found it useful to know which are the latest strategic developments. 
+
+### 4.1 Number of Strategic Developments
+```{r strategic develop[ments counts}
+strategic_devs_counts <- params$data %>%
+  filter(event_type == "Strategic Development") %>%
+  group_by(sub_event_type) %>%
+  summarise("Number of Strategic Developments" = n())%>%
+  ggplot(aes(x+sub_event_type,y="Number of Strategic Developments"))+
+  geom_bar()+
+  labs(title = "Strategic Development counts",
+       x = "Type of Strategic Development",
+       y = "Number of Events")
+```
+
+### 4.2 Stream of latest Strategic Developments
+
+```{r Latest strategic developments}
+
+strategic_devs <- params$data %>%
+  filter(event_type == "Strategic Developments") %>%
+  select(event_id_cnty, event_date,Sub_event_type,actor1,assoc_actor_1,actor2,assoc_actor_2, region, country, admin1,admin2,admin3,
+         location,latitude,longitude,source,notes) %>%
+  arrange(-event_date) %>%
+  slice_head(n=10)
+```
+
+
+
