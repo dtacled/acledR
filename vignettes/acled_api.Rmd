@@ -107,7 +107,8 @@ df_br <- acled_api(countries = c("Brazil"),
                    start_date = "2022-01-01",
                    end_date = Sys.Date(),
                    monadic = F,
-                   acled_access = TRUE)
+                   acled_access = TRUE,
+                   prompt = F)
 ```
 
 The results return a tibble with each ACLED event in Brazil during this time period:
@@ -124,7 +125,8 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
                       end_date = Sys.Date(),
                       monadic = F,
-                      acled_access = TRUE)
+                      acled_access = TRUE,
+                      prompt = F)
 ```
 
 For an entire region, we omit the `countries` parameter and supply a `regions` argument. Additionally, for only gathering protests we provide an event_type argument:
@@ -135,7 +137,8 @@ df_sa <- acled_api(regions = c("South America"),
                    end_date = Sys.Date(),
                    event_type = "Protests",
                    monadic = F,
-                   acled_access = TRUE)
+                   acled_access = TRUE,
+                   prompt = F)
 ```
 
 To include time stamps from when to download the data, we add it as either a string ("yyyy-mm-dd") or as a numeric Unix time stamp:
@@ -147,7 +150,8 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       monadic = F,
                       # timestamp = "2022-01-24" -> in the case of string
                       timestamp = 1643056974, # -> in the case of a numeric Unix timestamp
-                      acled_access = TRUE)
+                      acled_access = TRUE,
+                      prompt = F)
 ```
 
 If we would like to include only one type of interaction, in this case "Rioters versus Civilians" = 57, we add the interaction code to the `extra` argument:
@@ -158,7 +162,8 @@ df_sa <- acled_api(countries = c("Brazil", "Colombia"),
                    end_date = "2022-04-30",
                    monadic = F,
                    ... = "&interaction=57",
-                   acled_access = TRUE)
+                   acled_access = TRUE,
+                   prompt = F)
 ```
 
 We could also request the monadic version of the data based on actor 1 and actor 2 by setting `monadic = TRUE`:
@@ -168,7 +173,8 @@ df_sa_monadic <- acled_api(regions = c("South America"),
                            start_date = "2022-01-01",
                            end_date = Sys.Date(),
                            monadic = T,
-                           acled_access = TRUE)
+                           acled_access = TRUE,
+                           prompt = F)
 ```
 
 In both the dyadic and monadic versions, the API returns `r length(unique(df_sa$event_id_cnty))` unique events. However, the number of unique entries for the dyadic version is also `r length(df_sa$event_id_cnty)`, while it's `r length(df_sa_monadic$event_id_cnty)` for the monadic version.

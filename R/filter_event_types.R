@@ -20,19 +20,20 @@
 #' # Filter to only ACLED demonstrations
 #' df_demonstrations <- filter_event_types(data = df_events, acled_categories = c("demonstrations"))
 #'
-#' # This returns a tibble with only peaceful protests, protests with intervention, violence demonstrations, and excessive force against protesters.
+#' # This returns a tibble with only peaceful protests, protests with intervention,
+#' # violence demonstrations, and excessive force against protesters.
 #' df_demonstrations
 #'
 #' # Users may also filter by multiple event categories
-#' df_demonstrations_disorder <- filter_event_types(data = df_events, acled_categories = c("demonstrations", "disorder"))
+#' df_demonstrations_disorder <- filter_event_types(df_events,
+#'                                                  c("demonstrations", "disorder"))
 #'
 #' # Which returns all rows that are either demonstrations and/or disorder events
 #' df_demonstrations_disorder
 #'
 #' }
 #' @md
-#'
-#'
+#' @importFrom rlang .data
 #' @export
 
 filter_event_types <- function(data,
@@ -55,14 +56,14 @@ filter_event_types <- function(data,
   if(isFALSE(keep_all_events)) {
     out_data <- data %>%
       left_join(acledR::acled_event_categories %>%
-                  select(event_type, sub_event_type, acled_categories)) %>%
+                  select(.data$event_type, .data$sub_event_type, .data$acled_categories)) %>%
       filter(if_any(acled_categories, ~.x > 0)) %>%
       ungroup()
   }
   else {
     out_data <- data %>%
       left_join(acledR::acled_event_categories %>%
-                  select(event_type, sub_event_type, acled_categories)) %>%
+                  select(.data$event_type, .data$sub_event_type, .data$acled_categories)) %>%
       ungroup()
 
   }

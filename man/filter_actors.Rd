@@ -30,7 +30,8 @@ df_events <- acled_api(countries = "Yemen",
                        acled_access = TRUE)
 
 # Create vector of actors of interest
-yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council', 'Military Forces of Yemen (2012-)')
+yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council',
+                  'Military Forces of Yemen (2012-)')
 
 # Filter to selected actors
 filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols = 'all')

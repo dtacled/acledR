@@ -52,7 +52,8 @@
 #'
 #' # Generate weekly riot counts
 #' # Use the add_unit_ids paramater so Canada is assigned 0 events each week
-#' # If add_unit_ids was not included, only weekly counts for the United States would be returned since Canada had no riots in the requested time period
+#' # If add_unit_ids was not included, only weekly counts for the United States
+#' # would be returned since Canada had no riots in the requested time period
 #' df_counts_riots <- generate_counts(data = df_riots,
 #'                                    unit_id = "country",
 #'                                    event_type = "Riots",
@@ -62,9 +63,12 @@
 #'
 #' }
 #' @md
-#'
-#'
+#' @importFrom rlang .data
+#' @importFrom tidyselect where
+#' @importFrom data.table :=
 #' @export
+#'
+#'
 generate_counts <-
   function(data, event_type = NULL,
            unit_id, time_id, time_target,
@@ -125,10 +129,10 @@ generate_counts <-
       data %>%
       filter(event_type %in% filter_types) %>%
       mutate(event_date = ymd(.data[[time_id]]),
-             event_time = floor_date(event_date, time_target, week_start = getOption('lubridate.week.start', 6))) %>%
-      filter(between(event_time, as.Date(start_date), as.Date(end_date))) %>%
+             event_time = floor_date(.data$event_date, time_target, week_start = getOption('lubridate.week.start', 6))) %>%
+      filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
 
-      group_by(.data[[unit_id]], event_time, event_type) %>%
+      group_by(.data[[unit_id]], .data$event_time, event_type) %>%
 
       summarise(count = n()) %>%
       ungroup() %>%
@@ -139,7 +143,7 @@ generate_counts <-
                                TRUE ~ as.numeric(count))) %>%
       rename(!!paste0("event_", time_target) := event_time) %>%
       pivot_wider(., values_from = count, names_from = event_type) %>%
-      mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+      mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .data))) %>%
       rowwise() %>%
       mutate(total_events = sum(c_across(where(is.numeric)))) %>%
       janitor::clean_names() %>%

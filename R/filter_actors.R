@@ -17,7 +17,8 @@
 #'                        acled_access = TRUE)
 #'
 #' # Create vector of actors of interest
-#' yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council', 'Military Forces of Yemen (2012-)')
+#' yemen_actors <- c('Military Forces of Yemen (2016-) Supreme Political Council',
+#'                   'Military Forces of Yemen (2012-)')
 #'
 #' # Filter to selected actors
 #' filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols = 'all')
@@ -25,7 +26,7 @@
 #' @md
 #' @import dplyr
 #' @import stringr
-#'
+#' @importFrom rlang .data
 #' @export
 
 filter_actors <- function(df, actors, filter_cols='all'){
@@ -39,11 +40,11 @@ filter_actors <- function(df, actors, filter_cols='all'){
     aa_regex <- paste0('((^|; )', paste0(aa_regex, collapse = '($|;)|(^|; )'), '($|;))')
 
     filtered_df <- df %>%
-      filter(actor1 %in% actors | actor2 %in% actors |
-               str_detect(assoc_actor_1, aa_regex) | str_detect(assoc_actor_2, aa_regex))
+      filter(.data$actor1 %in% actors | .data$actor2 %in% actors |
+               str_detect(.data$assoc_actor_1, aa_regex) | str_detect(.data$assoc_actor_2, aa_regex))
   } else if (filter_cols=='primary') {
     filtered_df <- df %>%
-      filter(actor1 %in% actors | actor2 %in% actors)
+      filter(.data$actor1 %in% actors | .data$actor2 %in% actors)
   } else {
     stop("filter_cols argument must be 'all' or 'primary'.")
   }

@@ -15,6 +15,7 @@
 #' }
 #' @md
 #' @export
+#' @importFrom utils vignette
 
 # Building the function
 

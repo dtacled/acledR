@@ -46,7 +46,7 @@
 #' @importFrom purrr map map2_dfc
 #' @importFrom rlang .data
 #' @importFrom stats sd median
-#'
+#' @importFrom rlang .data
 #' @export
 
 
@@ -61,7 +61,7 @@ generate_movers <-
 
     cross_tbl <- expand_grid(all_funs, slide_periods) %>%
       mutate(fun_name = attr(all_funs, "name")) %>%
-      filter(fun_name %in% slide_funs)
+      filter(.data$fun_name %in% slide_funs)
 
 
     data %>%
@@ -84,7 +84,7 @@ generate_movers <-
       )
       ) %>%
 
-      unnest(c(data, moving)) %>%
+      unnest(c(data, .data$moving)) %>%
       suppressMessages()
 
   }

@@ -2,6 +2,10 @@
 title: " Transformation of ACLED data"
 output: html_document
 date: "2022-11-11"
+vignette: >
+  %\VignetteIndexEntry{Transformation of ACLED data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r loading packs, echo = F, message=FALSE}

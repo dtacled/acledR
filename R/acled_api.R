@@ -22,15 +22,21 @@
 #' @examples
 #' \dontrun{
 #'
-#' ## Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022 in dyadic-wide form
-#' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key, countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01", acled_access = FALSE)
+#' # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
+#' # in dyadic-wide form
+#' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
+#'                         countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
+#'                         acled_access = FALSE)
 #'
-#' ## tibble with all the events from Argentina where each row is one event.
+#' # tibble with all the events from Argentina where each row is one event.
 #' argen_acled
 #'
-#' ## Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022 in monadic-long form using email and key saved in environment
+#' # Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022
+#' # in monadic-long form using email and key saved in environment
+#'
 #' acled_access(email = "jane.doe.email", key = "jane.doe.key")
-#' carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01", end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
+#' carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01",
+#'                          end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
 #'
 #' ## Tibble with all the events from the Caribbean where each row is one actor
 #' carib_acled
@@ -39,7 +45,7 @@
 #' @import httr
 #' @import stringr
 #' @import lubridate
-#'
+#' @importFrom rlang .data
 #' @export
 
 acled_api <- function(email = NULL,
@@ -77,15 +83,15 @@ acled_api <- function(email = NULL,
   # Setup base data to check how many country-days are being requested
   if(!is.null(countries) & is.null(regions)) {
     df <- acledR::acled_countries %>%
-      filter(country %in% countries)
+      filter(.data$country %in% countries)
   }
   else if(is.null(countries) & !is.null(regions)) {
     df <- acledR::acled_countries %>%
-      filter(region %in% regions)
+      filter(.data$region %in% regions)
   }
   else if(!is.null(countries) & !is.null(regions)){
     df <- acledR::acled_countries %>%
-      filter(country %in% countries & region %in% regions)
+      filter(.data$country %in% countries & .data$region %in% regions)
   }
   else {df <- acledR::acled_countries}
 
@@ -102,7 +108,6 @@ acled_api <- function(email = NULL,
   out <- df %>%
     mutate(t_start = lubridate::as_date(start_date_check),
            t_end = lubridate::as_date(end_date_check),
-
            t_start = case_when(as.numeric(lubridate::year(t_start)) < start_year ~ lubridate::as_date(paste0(start_year, "-01-01")),
                                TRUE ~ t_start),
            time = t_end - t_start)
@@ -151,8 +156,6 @@ acled_api <- function(email = NULL,
     countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
   }
 
-
-
   ## Regions
   if(is.character(regions) & sum(unique(regions) %in% acled_regions[["region_name"]]) < length(unique(regions))) {
     stop("One or more requested region names not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
@@ -164,8 +167,9 @@ acled_api <- function(email = NULL,
     regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
   }
   if(is.character(regions)) {
-    regions <- filter(acled_regions, region_name %in% regions) %>%
-      pull(region)
+    regions <- acled_regions %>%
+      filter(.data$region_name %in% regions) %>%
+      pull(.data$region)
     regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
   }
   if(is.null(regions)) {
