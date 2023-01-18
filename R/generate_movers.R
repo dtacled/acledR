@@ -46,7 +46,7 @@
 #' @importFrom purrr map map2_dfc
 #' @importFrom rlang .data
 #' @importFrom stats sd median
-#' @importFrom rlang .data
+#'
 #' @export
 
 
@@ -74,10 +74,10 @@ generate_movers <-
                             map2_dfc(.x = cross_tbl$all_funs,
                                      .y = cross_tbl$slide_periods,
                                      ~slide_dbl(.x = df[[var]],
-                                                        .f = .x, .before = .y,
-                                                        .after = -1,
-                                                        .complete = complete)) %>%
-                              rename_with(., ~paste(var, "moving",
+                                                .f = .x, .before = .y,
+                                                .after = -1,
+                                                .complete = complete)) %>%
+                              rename_with(~paste(var, "moving",
                                                     attr(cross_tbl$all_funs, "name"),
                                                     cross_tbl$slide_periods, sep = "_"))
                           }

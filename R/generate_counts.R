@@ -63,12 +63,13 @@
 #'
 #' }
 #' @md
+#'
 #' @importFrom rlang .data
-#' @importFrom tidyselect where
 #' @importFrom data.table :=
+#' @importFrom tidyselect where
 #' @export
 #'
-#'
+
 generate_counts <-
   function(data, event_type = NULL,
            unit_id, time_id, time_target,
@@ -122,7 +123,7 @@ generate_counts <-
       add_unit_ids <- unique(data[[unit_id]])
     } else {
       add_unit_ids <- unique(c(unique(data[[unit_id]]), add_unit_ids))
-      }
+    }
 
 
     data <-
@@ -138,12 +139,12 @@ generate_counts <-
       ungroup() %>%
       full_join(merge(add_unit_ids, all_dates) %>%
                   as_tibble() %>%
-                  rename({{unit_id}} := x, event_time = y)) %>%
+                  rename({{unit_id}} := .data$x, event_time =.data$y)) %>%
       mutate(count = case_when(is.na(count) ~ as.numeric(0),
                                TRUE ~ as.numeric(count))) %>%
-      rename(!!paste0("event_", time_target) := event_time) %>%
-      pivot_wider(., values_from = count, names_from = event_type) %>%
-      mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .data))) %>%
+      rename(!!paste0("event_", time_target) := .data$event_time) %>%
+      pivot_wider(values_from = count, names_from = event_type) %>%
+      mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
       rowwise() %>%
       mutate(total_events = sum(c_across(where(is.numeric)))) %>%
       janitor::clean_names() %>%
@@ -155,7 +156,7 @@ generate_counts <-
 
 
     if(length(filter_types) == 1)
-      data <- data %>% select(-total_events)
+      data <- data %>% select(-.data$total_events)
 
     return(data)
 

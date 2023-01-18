@@ -2,8 +2,12 @@ Package: acledR
 Type: Package
 Title: Manipulate 'ACLED' Data
 Version: 0.1.0
-Author: ACLED
-Maintainer: Trey Billing <t.billing@acleddata.com>
+Author: ACLED <data@acleddata.com>
+	  Trey Billing <t.billing@acleddata.com>
+	  Lucas Fagliano <l.fagliano@acleddata.com>
+	  Rachel Goodman <r.goodman@acleddata.com>
+        Katayoun Kishi <k.kishi@acleddata.com>
+Maintainer: ACLED <data@acleddata.com>
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
 License: What license is it under?
 Encoding: UTF-8
@@ -21,10 +25,12 @@ Imports:
     utils,
     janitor,
     rlang,
-    stats
+    stats,
+    data.table,
+    tidyselect
 RoxygenNote: 7.2.2
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)
 URL: https://github.com/billingtt/acledR,
     https://billingtt.github.io/acledR/
 BugReports: https://github.com/billingtt/acledR/issues

@@ -110,7 +110,7 @@ acled_api <- function(email = NULL,
            t_end = lubridate::as_date(end_date_check),
            t_start = case_when(as.numeric(lubridate::year(t_start)) < start_year ~ lubridate::as_date(paste0(start_year, "-01-01")),
                                TRUE ~ t_start),
-           time = t_end - t_start)
+           time = .data$t_end - .data$t_start)
 
   n_countries <- length(unique(out$country))
   country_days <- as.numeric(sum(out$time))
@@ -157,17 +157,17 @@ acled_api <- function(email = NULL,
   }
 
   ## Regions
-  if(is.character(regions) & sum(unique(regions) %in% acled_regions[["region_name"]]) < length(unique(regions))) {
+  if(is.character(regions) & sum(unique(regions) %in% acledR::acled_regions[["region_name"]]) < length(unique(regions))) {
     stop("One or more requested region names not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
   }
-  if(is.numeric(regions) & sum(unique(regions) %in% acled_regions[["region"]]) < length(unique(regions))) {
+  if(is.numeric(regions) & sum(unique(regions) %in% acledR::acled_regions[["region"]]) < length(unique(regions))) {
     stop("One or more requested region numbers not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
   }
   if(is.numeric(regions)) {
     regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
   }
   if(is.character(regions)) {
-    regions <- acled_regions %>%
+    regions <- acledR::acled_regions %>%
       filter(.data$region_name %in% regions) %>%
       pull(.data$region)
     regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
