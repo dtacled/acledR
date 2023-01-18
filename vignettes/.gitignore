@@ -1,6 +1,2 @@
-acled_codebook_cache
-actors_interactions_cache
-event_types_cache
-geography_cache
-time_cache
-gadm36_NGA_1_sp.rds
+*.html
+*.R

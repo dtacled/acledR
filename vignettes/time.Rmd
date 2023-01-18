@@ -92,7 +92,7 @@ Next we move to do one of the best analysis we can do with ACLED's data, time-se
 
 
 ```{r, echo = T}
-plot <- df_france %>% 
+df_france %>% 
   group_by(event_date) %>% 
   tally() %>% 
   ggplot(aes(x = event_date, y = n)) +
@@ -104,7 +104,7 @@ plot <- df_france %>%
        title = "ACLED Events in France",
        subtitle = "January through December 2021")
 
-ggplotly(plot)
+
 
 
 ```
@@ -115,7 +115,7 @@ One of the things that we are interested in looking first is the number of event
 However, we would like to go slightly more specific, by looking at the divergence across months. Basically, we want to explore, which is the most volatile month. 
 
 ```{r, echo=T}
-plot <- df_france %>% 
+df_france %>% 
   group_by(month = lubridate::floor_date(event_date, "month",
                                          week_start = getOption('lubridate.week.start', 6))) %>% 
   tally() %>% 
@@ -128,7 +128,7 @@ plot <- df_france %>%
        title = "ACLED Events in France",
        subtitle = "January through December 2021")
 
-ggplotly(plot)
+
 ```
 
 With this we can see that May 2021 was the month hosting the biggest number of events, with 1024. That should hardly be a surprise, considering that it was also on the 1st of May that we saw the highest number of daily events. However, what it is more interesting perhaps is that the next highest peak was March, and April being the 4th highest peak, which would perhaps clash with what the previous daily analysis showed. In the previous plot one could get the impression that it was the latter months which were the most volatile (they had more notable peaks than the days prior to May). 
@@ -146,7 +146,7 @@ french_counts <- generate_counts(df_france,
                names_to = "event_type",
                values_to = "n_events") 
 
-pfc <- ggplot(french_counts, 
+ggplot(french_counts, 
               aes(x = event_month, y = n_events, 
                   fill = event_type, text = event_type))+
   geom_bar(stat = "identity",
@@ -155,8 +155,6 @@ pfc <- ggplot(french_counts,
        x = "Months",
        y ="Number of events")
 
-pfcly <- ggplotly(pfc)
-pfcly
 
 ```
 

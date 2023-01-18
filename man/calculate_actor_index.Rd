@@ -18,6 +18,7 @@ Returns a data.frame of the index value (`eff_actors` or `concentration`, depend
 Calculate actor concentration indices from ACLED data
 }
 \examples{
+\dontrun{
 # These examples show the use of this function with simulated event counts from 5 actors
 library(acledR)
 
@@ -25,31 +26,33 @@ library(acledR)
 df1 <- data.frame(actor = 1:5,
               event_count = c(10, 10, 10, 10, 10))
 
-Using the "Effective actors" method, 5 actors, each responsible for 10 events, returns the value of 5 for `eff_actors`
+# Using the "Effective actors" method, 5 actors, each responsible for 10 events,
+# returns the value of 5 for `eff_actors`
 calculate_actor_index(df1$event_count, method = "Effective actors")
 
-Using the "Concentration" method, the same data returns a value of 0.2 for `concentration`
+#Using the "Concentration" method, the same data returns a value of 0.2 for `concentration`
 calculate_actor_index(df1$event_count, method = "Concentration")
 
-In the next case, 1 actor is responsible for 10 events, while the other 4 are responsible for only 1 event each
+# In the next case, 1 actor is responsible for 10 events, while the other 4
+# are responsible for only 1 event each
 df2 <- data.frame(actor = 1:5,
               event_count = c(10, 1, 1, 1, 1))
 
-The "Effective actors" method returns a value of 1.88 `eff_actors`
+#The "Effective actors" method returns a value of 1.88 `eff_actors`
 calculate_actor_index(df2$event_count, method = "Effective actors")
 
-And the "Concentration" method returns a value of 0.53 for `concentration`
+#And the "Concentration" method returns a value of 0.53 for `concentration`
 calculate_actor_index(df2$event_count, method = "Concentration")
 
-Finally, when 2 actors are responsible for 10 events each and the other 3 actors only 1 event
+#Finally, when 2 actors are responsible for 10 events each and the other 3 actors only 1 event
 df3 <- data.frame(actor = 1:5,
-              event_count = c(10, 10, 1, 1, 1))
-The "Effective actors" method returns a value of around 2.61 `eff_actors`
+              event_count = c(10, 10, 1, 1, 1)
+#The "Effective actors" method returns a value of around 2.61 `eff_actors`
 calculate_actor_index(df3$event_count, method = "Effective actors")
 
-And the "Concentration" method returns a value of 0.38 for `concentration`
+#And the "Concentration" method returns a value of 0.38 for `concentration`
 calculate_actor_index(df3$event_count, method = "Concentration")
-
+}
 }
 \seealso{
 Other Data Manipulation: 

@@ -169,7 +169,7 @@ In some cases, ACLED also records events which could be broadly categorized as "
 
 To see how event types and sub-event types look in practice, let's pull data from Haiti for the first few months of 2022 sing the `acled_api()` function:
 
-```{r, echo = T}
+```{r,echo = T,eval=F}
 library(acledR)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
@@ -184,7 +184,7 @@ df_haiti <- acled_api(countries = c("Haiti"),
 
 With some quick data wrangling with `dplyr` and plotting with `ggplot2`, we see that the most common `event_type` was violence against civilians.
 
-```{r, echo = T}
+```{r, echo = T,eval=F}
 library(dplyr)
 library(ggplot2)
 
@@ -209,7 +209,7 @@ df_haiti %>%
 
 Let's further investigate the variation in the most common `event_type`, violence against civilians, by breaking it down by `sub_event_type` and month.
 
-```{r, echo = T}
+```{r, echo = T,eval=F}
 df_haiti %>% 
   # filter to only violence against civilians
   filter(event_type %in% c("Violence against civilians")) %>% 

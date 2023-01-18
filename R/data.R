@@ -16,7 +16,7 @@
 #' @format A data frame:
 #' \describe{
 #' \item{country}{Country names}
-#' \item{region_name}{Region names}
+#' \item{region}{Region names}
 #' \item{start_year}{First year coded by ACLED}}
 "acled_countries"
 
@@ -119,4 +119,4 @@
 #' \item{notes}{A short description of the event}
 #' \item{fatalities}{The number of reported fatalities which occurred during the event}
 #' \item{timestamp}{Numeric code of time}}
-"acled_deletion_old_dummy_n2"
+"acled_deletion_old_dummy_n3"

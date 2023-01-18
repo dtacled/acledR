@@ -71,7 +71,8 @@ table(df_riots$country)
 
 # Generate weekly riot counts
 # Use the add_unit_ids paramater so Canada is assigned 0 events each week
-# If add_unit_ids was not included, only weekly counts for the United States would be returned since Canada had no riots in the requested time period
+# If add_unit_ids was not included, only weekly counts for the United States
+# would be returned since Canada had no riots in the requested time period
 df_counts_riots <- generate_counts(data = df_riots,
                                    unit_id = "country",
                                    event_type = "Riots",

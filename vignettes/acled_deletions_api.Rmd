@@ -12,7 +12,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# The Deletions API and how to keep your database updated.
 
 ACLED is a living dataset, which means changes happen often.
 
@@ -39,7 +38,7 @@ In this section we will show how to use the acled_deletions_api() to keep our da
 
 First lets load the first dataset.
 
-```{r, eval = F}
+```{r, eval = T}
 
 library(acledR)
 library(dplyr)
@@ -57,21 +56,23 @@ We can see then that our dataset consists of 326 rows or 326 events. A relativel
 
 Lets check if there are any deleted events since then.
 
-```{r, eval = F}
+```{r, eval = T, echo=F}
 
 acled_deleted_events <- acled_deletions_api(date_deleted = "2022/07/25")
+```
 
+```{r,eval=T,echo=T}
 glimpse(acled_deleted_events)
 ```
 
-Quite a lot of deleted events, 14326. Lets check if any of these are part of my dataset.
+Quite a lot of deleted events, `r nrow(acled_deleted_events)`. Lets check if any of these are part of my dataset.
 
-```{r, eval = F}
+```{r, eval = T, echo=F}
 
 my_deleted_events <- argen_dummy_acled_file %>%
   filter(event_id_cnty %in% acled_deleted_events$event_id_cnty)
 
-glimpse(my_deleted_events)
+nrow(my_deleted_events)
 
 ```
 
@@ -81,17 +82,17 @@ As shown by the number of rows (0), there are no deleted events! ... But it is a
 
 Now lets load our second dataset.
 
-```{r, eval = F}
+```{r, eval = T}
 
-dummy_acled_file <- acledR::acled_deletion_old_dummy_n2 # Here is our personal ACLED dataset
+dummy_acled_file <- acledR::acled_deletion_old_dummy_n3 # Here is our personal ACLED dataset
 
 nrow(dummy_acled_file)
 
 ```
 
-With this we have loaded the dataset, and we can see that there are 143956 rows in it. Now we proceed to retrieve the deleted events since the last time we gather data.
+With this we have loaded the dataset, and we can see that there are `r nrow(dummy_acled_file)` events in it. Now we proceed to retrieve the deleted events since the last time we gather data.
 
-```{r, eval = F}
+```{r, eval = T}
 
 deleted_events <- acled_deletions_api(date_deleted = max(dummy_acled_file$timestamp)) # We are using the largest Unix timestamp as that is the last time we gathered data. 
 
@@ -99,9 +100,9 @@ nrow(deleted_events)
 
 ```
 
-As we can see 191 events have been removed since the last time I uploaded my data (1st August 2022, around 1 month and a half at the time writing). Now that we know there are deleted events, lets check if any of these are in my dataset.
+As we can see `r nrow(deleted_events)` events have been removed since the last time I uploaded my data. Now that we know there are deleted events, lets check if any of these are in my dataset.
 
-```{r, eval = F}
+```{r, eval = T}
 
 updated_dataset <- dummy_acled_file %>%
   filter(!(event_id_cnty %in% deleted_events$event_id_cnty)) # We exclude every event_id_cnty that also appears in the deleted_events result
@@ -109,4 +110,4 @@ updated_dataset <- dummy_acled_file %>%
 nrow(updated_dataset)
 ```
 
-As you can see there were deleted events, and we have excluded them through the dplyr::filter() function. Now our dataset has only 143905 rows, thus 51 events were deleted.
+As you can see there were deleted events, and we have excluded them through the dplyr::filter() function. Now our dataset has only `r nrow(updated_dataset)` rows, thus `r nrow(dummy_acled_file) - nrow(updated_dataset)` events were deleted.

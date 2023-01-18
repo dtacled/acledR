@@ -2,10 +2,9 @@
 % Please edit documentation in R/acled_report_api.R
 \name{acled_report_api}
 \alias{acled_report_api}
-\alias{acled_country_report_api}
 \title{Automatic country report with API}
 \usage{
-acled_country_report_api(
+acled_report_api(
   country_report = NULL,
   regional_data = TRUE,
   region = NULL,
@@ -49,7 +48,8 @@ Generate automatic exploratory reports of ACLED data by utilizing data directly 
 \dontrun{
 
 ## Generate report regarding Argentina's events throughout August-December 2022
-acled_country_report_api(country_report = "Argentina", start_date_report = "2022-07-31",end_date_report = "2023-01-01",
+acled_country_report_api(country_report = "Argentina", start_date_report = "2022-07-31",
+                         end_date_report = "2023-01-01",
                          output_style = "HTML", prompt=FALSE)
 }
 }

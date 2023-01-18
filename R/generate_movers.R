@@ -61,7 +61,7 @@ generate_movers <-
 
     cross_tbl <- expand_grid(all_funs, slide_periods) %>%
       mutate(fun_name = attr(all_funs, "name")) %>%
-      filter(fun_name %in% slide_funs)
+      filter(.data$fun_name %in% slide_funs)
 
 
     data %>%
@@ -74,17 +74,17 @@ generate_movers <-
                             map2_dfc(.x = cross_tbl$all_funs,
                                      .y = cross_tbl$slide_periods,
                                      ~slide_dbl(.x = df[[var]],
-                                                        .f = .x, .before = .y,
-                                                        .after = -1,
-                                                        .complete = complete)) %>%
-                              rename_with(., ~paste(var, "moving",
+                                                .f = .x, .before = .y,
+                                                .after = -1,
+                                                .complete = complete)) %>%
+                              rename_with(~paste(var, "moving",
                                                     attr(cross_tbl$all_funs, "name"),
                                                     cross_tbl$slide_periods, sep = "_"))
                           }
       )
       ) %>%
 
-      unnest(c(data, moving)) %>%
+      unnest(c(data, .data$moving)) %>%
       suppressMessages()
 
   }

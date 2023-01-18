@@ -8,7 +8,7 @@
 A data frame:
 \describe{
 \item{country}{Country names}
-\item{region_name}{Region names}
+\item{region}{Region names}
 \item{start_year}{First year coded by ACLED}}
 }
 \usage{

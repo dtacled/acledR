@@ -16,12 +16,13 @@
 #' \dontrun{
 #'
 #' ## Generate report regarding Argentina's events throughout August-December 2022
-#' acled_country_report_api(country_report = "Argentina", start_date_report = "2022-07-31",end_date_report = "2023-01-01",
+#' acled_country_report_api(country_report = "Argentina", start_date_report = "2022-07-31",
+#'                          end_date_report = "2023-01-01",
 #'                          output_style = "HTML", prompt=FALSE)
 #' }
 #' @md
 
-acled_country_report_api <- function(country_report = NULL,regional_data = TRUE, region = NULL,
+acled_report_api <- function(country_report = NULL,regional_data = TRUE, region = NULL,
                              start_date_report = "1997-01-01", end_date_report = Sys.Date(),
                              output_style = "HTML", email = NULL, key = NULL, acled_access = TRUE, prompt=TRUE){
 
@@ -50,7 +51,7 @@ acled_country_report_api <- function(country_report = NULL,regional_data = TRUE,
                            email = email, key = key, acled_access=FALSE,
                            prompt=prompt)
     data_file <- call %>%
-      filter(country == country_report)
+      filter(.data$country == country_report)
 
 
     }else{
