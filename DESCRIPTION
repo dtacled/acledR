@@ -9,7 +9,7 @@ Author: ACLED <data@acleddata.com>
         Katayoun Kishi <k.kishi@acleddata.com>
 Maintainer: ACLED <data@acleddata.com>
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
-License: What license is it under?
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Imports: 

@@ -8,3 +8,5 @@
 ^\.github$
 ^codecov\.yml$
 ^vignettes/articles$
+^LICENSE\.md$
+^README.Rmd
