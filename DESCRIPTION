@@ -13,21 +13,21 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    dplyr,
-    lubridate,
-    magrittr,
     countrycode,
-    purrr,
-    slider,
+    dplyr,
+    httr,
+    janitor,
+    lubridate,
     stringr,
     tidyr,
-    httr,
-    utils,
-    janitor,
-    rlang,
-    stats,
     data.table,
-    tidyselect
+    magrittr,
+    purrr,
+    rlang,
+    slider,
+    stats,
+    tidyselect,
+    utils
 RoxygenNote: 7.2.2
 Depends: 
     R (>= 2.7.0)
