@@ -14,17 +14,17 @@
 #' @family Data Manipulation
 #' @examples
 #' \dontrun{
-#' argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
-#'                          end_date="2022-02-01", acled_access = T, prompt = F)
+#' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#' #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #'
-#' argen_acled_long_actors <- acled_transform(argen_acled,
-#'                                            type = "full_actor") # Transforming the data
+#' #argen_acled_long_actors <- acled_transform(argen_acled,
+#'#                                            type = "full_actor") # Transforming the data
 #'
-#' nrow(argen_acled_long_actors) # Number of rows in the dataset
-#' [1] 263 # Long form
+#' #nrow(argen_acled_long_actors) # Number of rows in the dataset
+#' #[1] 263 # Long form
 #'
-#' nrow(argen_acled) ) # Number of rows in the dataset
-#' [1] 145 # Wide form
+#' #nrow(argen_acled) ) # Number of rows in the dataset
+#' #[1] 145 # Wide form
 #' }
 #' @md
 #' @export
