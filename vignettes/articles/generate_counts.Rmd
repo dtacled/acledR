@@ -2,7 +2,7 @@
 title: "Generate Event Counts"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{generate_counts}
+  %\VignetteIndexEntry{Generate Event Counts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
