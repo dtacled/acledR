@@ -32,3 +32,21 @@ navbar:
       href: articles/time.html
     - text: Geography
       href: articles/geography.html
+  - text: ACLED API Guide
+  menu:
+    - text: Get Started
+      href:
+    - text: Building queries examples
+      menu:
+        - text: R Language
+        - text: Python
+        - text: Excel
+    - text: End-points
+      href:
+      menu:
+        - text: ACLED
+          href: articles/acled-end-point.html
+        - text: Deleted
+        - text: Actors
+        - text: Country
+        - text: Regions
