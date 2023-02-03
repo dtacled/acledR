@@ -1,6 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# acledR <a href='billingtt.github.io/acledR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+
+<!-- badges: start -->
+
+![R-CMD-check](https://https://github.com/billingtt/acledR/actions/workflows/lucas_flow.yaml/badge.svg)(<https://github.com/billingtt/acledR/actions/workflows/lucas_flow.yaml>)
+
+<!-- badges: end -->
+
 # Overview
 
 This package provides tools to extract and manipulate data from the
@@ -10,11 +18,11 @@ This package provides tools to extract and manipulate data from the
 To access ACLED data, please register an account at
 [developer.acleddata.com](developer.acleddata.com).
 
--   You can visit our
-    [guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf)
-    on how to easily set up your ACLED account.
--   We recommend you to save your ACLED API Key in an R object so you
-    can easily re-use your key.
+- You can visit our
+  [guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf)
+  on how to easily set up your ACLED account.
+- We recommend you to save your ACLED API Key in an R object so you can
+  easily re-use your key.
 
 ## Installation (for private repo)
 
