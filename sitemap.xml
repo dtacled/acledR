@@ -4,6 +4,9 @@
     <loc>https://billingtt.github.io/acledR/404.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/LICENSE.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/articles/acled_api.html</loc>
   </url>
   <url>
@@ -17,6 +20,9 @@
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/articles/acled_sources.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/articles/acled_transformations.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/articles/actors_interactions.html</loc>
@@ -61,6 +67,12 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_countries.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_deletion_old_dummy.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_deletion_old_dummy_n3.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/acled_deletions_api.html</loc>
   </url>
   <url>
@@ -76,7 +88,13 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_regions.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_report_api.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/acled_rounding.html</loc>
+  </url>
+  <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_transform.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/reference/calculate_actor_index.html</loc>

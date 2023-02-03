@@ -8,10 +8,10 @@
 <meta name="description" content="acledR">
 <title>Generate Moving Statistics • acledR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generate Moving Statistics">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generate Moving Statistics">
 <meta property="og:description" content="acledR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">acledR</a>
 
@@ -83,18 +83,24 @@
 
 
 
-<script src="generate_movers_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Generate Moving Statistics</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/billingtt/acledR/blob/HEAD/vignettes/generate_movers.Rmd" class="external-link"><code>vignettes/generate_movers.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/billingtt/acledR/blob/HEAD/vignettes/articles/generate_movers.Rmd" class="external-link"><code>vignettes/articles/generate_movers.Rmd</code></a></small>
       <div class="d-none name"><code>generate_movers.Rmd</code></div>
     </div>
 
     
     
-<p>The <code><a href="../reference/generate_movers.html">generate_movers()</a></code> function generates <strong>moving statistics</strong> of ACLED event counts. The moving statistics summarize the variation in event counts over a designated period of time. A common example would be a <strong>moving average</strong>, which would represent the average number of events over a specified period of time until the present observation.</p>
+<p>The <code><a href="../reference/generate_movers.html">generate_movers()</a></code> function generates <strong>moving
+statistics</strong> of ACLED event counts. The moving statistics
+summarize the variation in event counts over a designated period of
+time. A common example would be a <strong>moving average</strong>, which
+would represent the average number of events over a specified period of
+time until the present observation.</p>
 <p>The required parameters are as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_movers.html">generate_movers</a></span><span class="op">(</span></span>
@@ -105,8 +111,17 @@
 <span>  <span class="va">slide_funs</span>,</span>
 <span>  <span class="va">slide_periods</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>where <code>data</code> is event count data from ACLED, <code>unit_id</code> is the spatial unit of analysis (e.g., country, ADMIN1, region), <code>time_id</code> is the temporal unit (e.g., week, month, year), <code>slide_funs</code> are the requested moving statistics (e.g., mean, sd, median, min, max), and <code>slide_periods</code> are the number of temporal units over which to calculate the moving statistics. The <code>unit_id</code> and <code>time_id</code> must be existing columns in your event count dataframe.</p>
-<p>As an initial example, let’s first pull ACLED data for India since 2018 using the <code><a href="../reference/acled_api.html">acled_api()</a></code> function:</p>
+<p>where <code>data</code> is event count data from ACLED,
+<code>unit_id</code> is the spatial unit of analysis (e.g., country,
+ADMIN1, region), <code>time_id</code> is the temporal unit (e.g., week,
+month, year), <code>slide_funs</code> are the requested moving
+statistics (e.g., mean, sd, median, min, max), and
+<code>slide_periods</code> are the number of temporal units over which
+to calculate the moving statistics. The <code>unit_id</code> and
+<code>time_id</code> must be existing columns in your event count
+dataframe.</p>
+<p>As an initial example, let’s first pull ACLED data for India since
+2018 using the <code><a href="../reference/acled_api.html">acled_api()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
@@ -116,7 +131,8 @@
 <span>                   start_date <span class="op">=</span> <span class="st">"2018-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>Next, we can aggregate to event counts per month using the <code><a href="../reference/generate_counts.html">generate_counts()</a></code> function:</p>
+<p>Next, we can aggregate to event counts per month using the
+<code><a href="../reference/generate_counts.html">generate_counts()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_india_agg</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_india</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -124,7 +140,8 @@
 <span>                  unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
 <span>                  time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
 <span>                  time_target <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span></span></code></pre></div>
-<p>We now have a tibble of ACLED event counts by month for each event type, as well the sum across event types:</p>
+<p>We now have a tibble of ACLED event counts by month for each event
+type, as well the sum across event types:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_india_agg</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 52</span></span>
@@ -138,7 +155,10 @@
 <span><span class="co">#&gt; $ strategic_developments     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 20, 15, 9, 15, 25, 18, 27, 30, 26, 21, 20, …</span></span>
 <span><span class="co">#&gt; $ violence_against_civilians <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50, 54, 64, 64, 86, 66, 64, 116, 111, 106, …</span></span>
 <span><span class="co">#&gt; $ total_events               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1367, 1119, 1315, 1865, 1499, 1279, 1442, 1…</span></span></code></pre></div>
-<p>With these event counts, we can use <code><a href="../reference/generate_movers.html">generate_movers()</a></code> to calculate moving statistics from these variables. Let’s create a new variable for the moving average of <code>total_events</code> over the last 3 months:</p>
+<p>With these event counts, we can use <code><a href="../reference/generate_movers.html">generate_movers()</a></code> to
+calculate moving statistics from these variables. Let’s create a new
+variable for the moving average of <code>total_events</code> over the
+last 3 months:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_india_agg_movers</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/generate_movers.html">generate_movers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_india_agg</span>,</span>
@@ -147,7 +167,9 @@
 <span>                  time_id <span class="op">=</span> <span class="st">"event_month"</span>,</span>
 <span>                  slide_funs <span class="op">=</span> <span class="st">"mean"</span>,</span>
 <span>                  slide_periods <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>We now have a new column for the requested moving average: <code>total_events_moving_mean_3</code>. We can take a look at the first few rows of our variables of interest:</p>
+<p>We now have a new column for the requested moving average:
+<code>total_events_moving_mean_3</code>. We can take a look at the first
+few rows of our variables of interest:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_india_agg_movers</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, </span>
@@ -169,8 +191,14 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> India   2018-09-01          <span style="text-decoration: underline;">2</span>058                      <span style="text-decoration: underline;">1</span>503 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> India   2018-10-01          <span style="text-decoration: underline;">1</span>665                      <span style="text-decoration: underline;">1</span>763.</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 42 more rows</span></span></span></code></pre></div>
-<p>Note that the first 3 months for <code>total_events_moving_mean_3</code> are missing. This is because there has not been enough elapsed time in the sample to calculate a complete moving statistic of the requested temporal length. This default behavior can be turned off by setting <code>complete = F</code> in the <code><a href="../reference/generate_movers.html">generate_movers()</a></code> call.</p>
-<p>To see how this would change the returned values, consider the following:</p>
+<p>Note that the first 3 months for
+<code>total_events_moving_mean_3</code> are missing. This is because
+there has not been enough elapsed time in the sample to calculate a
+complete moving statistic of the requested temporal length. This default
+behavior can be turned off by setting <code>complete = F</code> in the
+<code><a href="../reference/generate_movers.html">generate_movers()</a></code> call.</p>
+<p>To see how this would change the returned values, consider the
+following:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_movers.html">generate_movers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_india_agg</span>,</span>
 <span>                  var <span class="op">=</span> <span class="st">"total_events"</span>,</span>
@@ -196,8 +224,14 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> India   2018-09-01          <span style="text-decoration: underline;">2</span>058                      <span style="text-decoration: underline;">1</span>503 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> India   2018-10-01          <span style="text-decoration: underline;">1</span>665                      <span style="text-decoration: underline;">1</span>763.</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 42 more rows</span></span></span></code></pre></div>
-<p>Here, the first period returns NaN values, while the second period simply fills the first observed value. By the fourth period, the moving averages for the default <code>complete = T</code> and <code>complete = F</code> versions are the same, as both are calculated moving statistics over a 3 month period.</p>
-<p>Sticking with the default <code>complete = T</code> version, we can quickly visualize the trend in event counts over time with <code>ggplot2</code>:</p>
+<p>Here, the first period returns NaN values, while the second period
+simply fills the first observed value. By the fourth period, the moving
+averages for the default <code>complete = T</code> and
+<code>complete = F</code> versions are the same, as both are calculated
+moving statistics over a 3 month period.</p>
+<p>Sticking with the default <code>complete = T</code> version, we can
+quickly visualize the trend in event counts over time with
+<code>ggplot2</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -222,12 +256,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Trey Billing.</p>
+<p>Developed by ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
