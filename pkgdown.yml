@@ -14,8 +14,9 @@ articles:
   event_types: event_types.html
   fatalities: fatalities.html
   geography: geography.html
+  get_started: get_started.html
   time: time.html
-last_built: 2023-02-03T15:55Z
+last_built: 2023-02-07T10:12Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
