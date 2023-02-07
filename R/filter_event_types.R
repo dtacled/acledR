@@ -55,15 +55,13 @@ filter_event_types <- function(data,
 
   if(isFALSE(keep_all_events)) {
     out_data <- data %>%
-      left_join(acledR::acled_event_categories %>%
-                  select(.data$event_type, .data$sub_event_type, .data$acled_categories)) %>%
+      left_join(select(acledR::acled_event_categories,event_type,sub_event_type,acled_categories), by=c("event_type", "sub_event_type")) %>%
       filter(if_any(acled_categories, ~.x > 0)) %>%
       ungroup()
   }
   else {
     out_data <- data %>%
-      left_join(acledR::acled_event_categories %>%
-                  select(.data$event_type, .data$sub_event_type, .data$acled_categories)) %>%
+      left_join(select(acledR::acled_event_categories,event_type,sub_event_type,acled_categories),by=c("event_type", "sub_event_type")) %>%
       ungroup()
 
   }

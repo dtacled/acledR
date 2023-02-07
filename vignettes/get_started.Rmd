@@ -1,0 +1,135 @@
+---
+title: "Get Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+``` {r loading pkg, echo=FALSE,include = FALSE}
+library(acledR)
+library(dplyr)
+```
+
+Welcome! In this vignette we are going to give you a brief tour on how the package works and how to get started with its core functions. Aside from this walkthrough, you are going to be able to find more detailed explanations and examples in rest of the articles in the website, available under the ACLED Codebook Tab (for methodology questions) and Articles tab. 
+
+Naturally, the first step is loading installing the package:
+
+```{r setup, eval=FALSE}
+
+# Installing the package
+install.packages("acledR") # To install the package from CRAN
+
+devtools::install_github("billingt/acledR") # To install the developer's branch from Github. 
+
+# Loading the package
+library(acledR)
+```
+
+
+Primarily, this package will allow users to more easily access ACLED data by providing a wrapper to submit GET requests to the ACLED's API. This means users can request data through a more acccesible approach rather than utilizing lengthy and often comboluted API calls. The general workflow for which this package was designed was as follows:
+
+1. Authenticate your API credentials. 
+2. Request data from ACLED API.
+3. Transform data received from the API.
+4. Generate initial analysis from the data.
+
+This vignette will follow the same general layout. 
+
+## Authenticating your credentials
+
+To be able to access the API, users require an API key. If you are not registered in ACLED's Access portal, you can visit it [here](https://billingtt.github.io/acledR/articles/developer.acleddata.com). If you would like a detail guide on how to create your account and get your API, you can utilize [ACLED's Access Guide](https://acleddata.com/download/35300/)
+ 
+Once you are registered, we encourage you to save your credentials and authenticate them through `acled_access()`. This function allows you to test that your credentials are working as intended, and save them into your enviorment, which in turn allows users to avoid having to input the credentials every time there is a request to the API. 
+
+```{r api authentication}
+
+acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
+```
+
+If the authentication was successfull, you will find a message in the console stating "Authorisation accepted". 
+
+## Requesting data from ACLED API
+
+Once the credentials are authenticated, users can easily start requesting data from the API. To do so, you can use the `acled_api()` function. The function requires the fields for which to gather the data from. Thus, in the example below we are going to request data from Argentina throughout 2022. 
+
+```{r requesting data}
+
+argentinian_data <- acled_api(countries = "Argentina", start_date="2022-01-01",end_date = "2022-12-31", prompt=F)
+
+```
+
+While in our example we utilized only three arguments (`countries`, `start_date` and `end_date`), `acled_api()` features a number of other arguments such as regions, timestamp, event_types, and more. You can find more in `vignette("acled_api")`.
+
+Additionally, due to the fact that we authenticated our credentials before, we are not required to input these into the function. Otherwise, if we didn't utilize `acled_access()` we would be required to input our email and key. 
+
+Finally, acled_api allows you to gather vast amounts of data from the API, however, to make these big calls of data, we need to segment these calls into multiple smaller ones. Thus, the function includes a `prompt` paramenter which is set to `TRUE` or `FALSE`. When `TRUE`, after utilizing the function, you will receive a message with the number of API calls that this will require (an important aspect to consider if you have a limited number of calls), and a confirmation if you want to request data. Alternatively, when it is marked as `FALSE`, you will not receive the prompt. 
+
+The data you will receive, will be a data frame of the events throughout the request dates and the requested region/country. We can inspect the Argentinian data we gather now. 
+
+```{r inspecting data, echo=F}
+glimpse(argentinian_data)
+```
+
+## Transforming the data from the API
+
+In some cases you may prefer to fit the data into a different format than the default wide-form output that its received from the API call. For these cases we offer users three functions: `acled_filter_actors()`, `acled_filter_event_types`, and `acled_transform`. 
+
+The first of this, `acled_filter_actors()`, attempts to help users to filter events by the actors involved, in any of the four columns which include actors. While that is a simple filter operation, which can easily be done through the tidyverse packages, in the case of ACLED data, actors maybe in any of four columns, and in some cases where associated actors are multiple, an actor maybe found inside one cell along with multiple others. Thus, `acled_filter_actors()` is particularly useful to work with acled_data. For instance, we are interested in all thje events where the Argentinian Police Forces were involved: 
+
+```{r acled_filter_actor()}
+
+arg_pf <- filter_actors(argentinian_data,  # data
+                        "Police Forces of Argentina (2019-)", # actors we are interested on
+                        filter_cols = "all") # where we want to filter 
+
+head(arg_pf)
+```
+
+
+Alternatively, we may be interested in only a particular category of event types, for that, we utilize `acled_filter_categories()`. ACLED categorises certain event types into clusters that better explain different types of political violence and disorder. However, to form these categories, users may require to create a number of conditional statements, which can be found on `vignettes("event type")`. Thus, to simplify this operation, users can utilize `acled_filter_event_types()`. Lets say we are interested only in organized political violence in our Argentinian dataset:
+
+```{r acled_categories()}
+arg_cats <- filter_event_types(argentinian_data, # data
+                               "organized_political_violence", # Categories of interest
+                               keep_all_events = T) # option to keep all events with an extra column, or to filter events
+
+glimpse(arg_cats)
+
+```
+
+As we can see, this includes a new column with the name of the event category we are interested on (organized political violence), which includes binary values on whether the event is part of the desired category. 
+
+Finally, considering that ACLED data is structured into wide-form, it may be of use for some users to have the data into long-form instead. If users are interested only in ACLED monadic data, they can opt to make the API call with the monadic option set to TRUE, however, that is an standalone call. If users are interested on getting data into dyadic form, that would entail another independent call. Thus, it may be useful for some users to request the data as normal, and make any transformation after making the API call, without utilizing more API calls of their limited quota. In such cases, users can utilize `acled_transform()`. In this example we are going to transform our data to be in long-form based on the actor column:
+
+```{r acled_transform}
+
+arg_long <- acled_transform(argentinian_data, # data
+                            type = "full_actors") # The type of operation we want to do to transform the data
+
+glimpse(arg_long)
+
+```
+In our new data frame, we no longer have four actor columns (actor1,actor2,assoc_actor1,assoc_actor2), but instead we only have 1 actor column, with one row per actor. 
+
+## Generate initial analysis from the data
+
+Finally, users may desire to generate some initial analysis of their data. In order to facilitate this last step on acledR workflow, acledR includes four functions: `generate_counts`, `generate_movers`, `calculate_actor_index`, `acled_report_api`.
+
+The first of these functions, `generate_counts` aims to generate events counts by event type, spacial (geography) and temporal units of analysis. That means, finding the event counts for a given region, country, admin levels, or counts by event types, or counts by months, weeks or day. 
+
+The second of these functions, `generate_movers`, focuses on generating moving statistics, across a given temporal and spacial unit of analysis. This functions allows users to find statistics such as standard deviation, mean, median, max and mins. 
+
+The third of these functions, `calculate_actor_index` allows users to find how are the actor interactions in the dataset, more specifically,  how dissipated or concentrated a given dataset is. This function utilizes two types of indexes to assess this, either the Inverse Simpson Index or the Herfindahl-Hirschman Index. 
+
+Finally, `acled_report_api` allows users to generate an exploratory analysis report of the data, which includes elements covered in the previous three functions, as well as analysis of the number of sources, event counts, and geographical distribution of events. 
