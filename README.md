@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-![R-CMD-check](https://https://github.com/billingtt/acledR/actions/workflows/lucas_flow.yaml/badge.svg)(<https://github.com/billingtt/acledR/actions/workflows/lucas_flow.yaml>)
+[![R-CMD-check](https://github.com/billingtt/acledR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/billingtt/acledR/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
