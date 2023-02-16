@@ -32,3 +32,22 @@ navbar:
       href: articles/time.html
     - text: Geography
       href: articles/geography.html
+
+
+reference:
+- title: Functions
+- subtitle: API & Acess
+  desc: Functions to aid gathering data
+- contents:
+  - has_concept("API and Access")
+- subtitle: Data Manipulation
+  desc: Manipulation of data provided by ACLED API.
+  contents:
+  - has_concept("Data Manipulation")
+- subtitle: Data Analysis
+  desc: Functions for basic data analysis. 
+  contents:
+  - has_concept("Data Analysis")
+- subtitle: Helpers
+  desc: Functions for general help on using acledR
+  - has_concept("Helpers")

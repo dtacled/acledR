@@ -3,6 +3,7 @@
 #' @description This function addresses some of the conflicts of rounding in R, especially when trying to round up.
 #' @param num int. This is the number we are trying to round.
 #' @param digits int. Where do we want to round up. It accepts 0 (whole number), 1 (tenth place), 2 (hundredths), etc.
+#' @family Helpers
 #' @details
 #' This function is meant to address the problem of rounding in R where the approach is always round to even. The function is meant to round things following the simple rule. If the decimal is 5+ then round up, if not round down. With the 'digits' argument, one can set up the specificity of the rounding, 0= whole number, 1 = tenth place, 2=hundreds place, and so on.
 #' @examples

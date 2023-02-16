@@ -14,7 +14,7 @@
 #' @import janitor
 #' @importFrom rlang .data
 #' @return Returns a tibble grouped by unit_id.
-#' @family Data Manipulation
+#' @family Data Analysis
 #' @seealso
 #' \itemize{
 #' \item ACLED API guide. <https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf>

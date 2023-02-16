@@ -11,7 +11,7 @@
 #'
 #' @return Returns a tibble grouped by unit_id.
 #'
-#' @family Data Manipulation
+#' @family Data Analysis
 #'
 #' @examples
 #' \dontrun{

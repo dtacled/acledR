@@ -67,11 +67,9 @@ df_india_agg_movers <-
 
 }
 \seealso{
-Other Data Manipulation: 
-\code{\link{acled_transform}()},
-\code{\link{calculate_actor_index}()},
-\code{\link{filter_actors}()},
-\code{\link{filter_event_types}()},
+Other Data Analysis: 
+\code{\link{acled_actor_concentration}()},
+\code{\link{acled_report_api}()},
 \code{\link{generate_counts}()}
 }
-\concept{Data Manipulation}
+\concept{Data Analysis}

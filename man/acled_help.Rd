@@ -26,4 +26,8 @@ acled_help("fatalities")
 \itemize{
 \item ACLED resources and methodology guides \url{https://acleddata.com/resources/}
 }
+
+Other Helpers: 
+\code{\link{acled_rounding}()}
 }
+\concept{Helpers}

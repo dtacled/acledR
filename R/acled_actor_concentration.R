@@ -5,7 +5,7 @@
 #' @param method Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.
 #' @return Returns a data.frame of the index value (`eff_actors` or `concentration`, depending on the method specified), number of unique actors, and average number of events per actor.
 #'
-#' @family Data Manipulation
+#' @family Data Analysis
 #'
 #' @examples
 #' \dontrun{

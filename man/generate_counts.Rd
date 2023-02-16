@@ -87,11 +87,9 @@ df_counts_riots <- generate_counts(data = df_riots,
 \item ACLED API guide. \url{https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf}
 }
 
-Other Data Manipulation: 
-\code{\link{acled_transform}()},
-\code{\link{calculate_actor_index}()},
-\code{\link{filter_actors}()},
-\code{\link{filter_event_types}()},
+Other Data Analysis: 
+\code{\link{acled_actor_concentration}()},
+\code{\link{acled_report_api}()},
 \code{\link{generate_movers}()}
 }
-\concept{Data Manipulation}
+\concept{Data Analysis}

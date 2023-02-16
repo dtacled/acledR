@@ -53,3 +53,10 @@ acled_country_report_api(country_report = "Argentina", start_date_report = "2022
                          output_style = "HTML", prompt=FALSE)
 }
 }
+\seealso{
+Other Data Analysis: 
+\code{\link{acled_actor_concentration}()},
+\code{\link{generate_counts}()},
+\code{\link{generate_movers}()}
+}
+\concept{Data Analysis}
