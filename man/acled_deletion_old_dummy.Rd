@@ -45,4 +45,13 @@ acled_deletion_old_dummy
 \description{
 Small dataset of events in Argentina, purposefully including events which are currently deleted/modified.
 }
+\seealso{
+Other Data: 
+\code{\link{acled_codebook}},
+\code{\link{acled_countries}},
+\code{\link{acled_deletion_old_dummy_n3}},
+\code{\link{acled_event_categories}},
+\code{\link{acled_regions}}
+}
+\concept{Data}
 \keyword{datasets}

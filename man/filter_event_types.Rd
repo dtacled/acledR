@@ -47,6 +47,7 @@ df_demonstrations_disorder
 }
 \seealso{
 Other Data Manipulation: 
+\code{\link{acled_regen}()},
 \code{\link{acled_transform}()},
 \code{\link{filter_actors}()}
 }

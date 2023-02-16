@@ -24,3 +24,10 @@ Please note that as of today, the one columns available to be regenerated are
 \item iso3
 }
 }
+\seealso{
+Other Data Manipulation: 
+\code{\link{acled_transform}()},
+\code{\link{filter_actors}()},
+\code{\link{filter_event_types}()}
+}
+\concept{Data Manipulation}
