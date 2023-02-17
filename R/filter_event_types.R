@@ -1,4 +1,5 @@
 #' Filter ACLED data by event type categories
+#' @title acled_filter_event_types
 #'
 #' @param data ACLED event data
 #' @param acled_categories character vector of ACLED event type categories. Options include: political_violence, organized_political_violence, disorder, and demonstrations. More than one category may be requested at one time (e.g., acled_categories = c("organized_political_violence", "disorder")).
@@ -36,7 +37,7 @@
 #' @importFrom rlang .data
 #' @export
 
-filter_event_types <- function(data,
+acled_filter_event_types <- function(data,
                                acled_categories,
                                keep_all_events = FALSE) {
 

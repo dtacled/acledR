@@ -100,7 +100,7 @@ head(arg_pf)
 Alternatively, we may be interested in only a particular category of event types, for that, we utilize `acled_filter_categories()`. ACLED categorises certain event types into clusters that better explain different types of political violence and disorder. However, to form these categories, users may require to create a number of conditional statements, which can be found on `vignettes("event type")`. Thus, to simplify this operation, users can utilize `acled_filter_event_types()`. Lets say we are interested only in organized political violence in our Argentinian dataset:
 
 ```{r}
-arg_cats <- filter_event_types(argentinian_data, # data
+arg_cats <- acled_filter_event_types(argentinian_data, # data
                                "organized_political_violence", # Categories of interest
                                keep_all_events = T) # option to keep all events with an extra column, or to filter events
 
