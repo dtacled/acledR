@@ -2,6 +2,7 @@
 #'
 #' Codebook for ACLED data
 #'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{Variable}{Variable names}
@@ -13,6 +14,7 @@
 #'
 #' ACLED country names, regions, and coding start year
 #'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{country}{Country names}
@@ -24,6 +26,7 @@
 #'
 #' ACLED region names, region numbers, and coding start dates
 #'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{region}{Region number}
@@ -35,6 +38,7 @@
 #'
 #' ACLED event and sub-event types, grouped by category
 #'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{event_type}{ACLED event type}
@@ -48,7 +52,7 @@
 #' A dummy data frame of ACLED events emulating an old format, used in acled_deletion_api Vignette
 #'
 #' Small dataset of events in Argentina, purposefully including events which are currently deleted/modified.
-#'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{data_id}{Numeric code of event ID}
@@ -88,6 +92,7 @@
 #'
 #' Large dataset of multiple regions and countries, purposefully including deleted/modified events.
 #'
+#' @family Data
 #' @format A data frame:
 #' \describe{
 #' \item{iso}{A numeric code for each individual country}

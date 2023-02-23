@@ -12,6 +12,7 @@
 #' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
 #' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @return Returns a markdown file stored in the project's current working directory.
+#' @family Data Analysis
 #' @examples
 #' \dontrun{
 #'

@@ -3,6 +3,7 @@
 #' @description The function allows users to consult methodological vignettes for the different columns in ACLED's dataset
 #' @param column string. A string with the name of the column for which to consult methodology.
 #' @returns An acledR vignette
+#' @family Helpers
 #' @seealso
 #' \itemize{
 #' \item ACLED resources and methodology guides <https://acleddata.com/resources/>

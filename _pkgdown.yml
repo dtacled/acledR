@@ -1,7 +1,7 @@
 url: https://billingtt.github.io/acledR/
 template:
   bootstrap: 5
-  bootswatch: flatly
+  bootswatch: cosmo
 
 navbar:
   title: acledR
@@ -21,6 +21,8 @@ navbar:
       href: articles/generate_counts.html
     - text: Generate Moving Statistics
       href: articles/generate_movers.html
+    - text: Calculate Actor Indexes
+      href: articles/actor_index.html
   - text: ACLED Codebook
     href: articles/acled_codebook.html
     menu:
@@ -34,3 +36,26 @@ navbar:
       href: articles/time.html
     - text: Geography
       href: articles/geography.html
+
+
+reference:
+- title: Functions
+- subtitle: API & Acess
+  desc: Functions to aid gathering data
+- contents:
+  - has_concept("API and Access")
+- subtitle: Data Manipulation
+  desc: Manipulation of data provided by ACLED API.
+  contents:
+  - has_concept("Data Manipulation")
+- subtitle: Data Analysis
+  desc: Functions for basic data analysis.
+  contents:
+  - has_concept("Data Analysis")
+- subtitle: Helpers
+  desc: Functions for general help on using acledR
+  contents:
+  - has_concept("Helpers")
+- subtitle: Data
+  contents:
+  - has_concept("Data")

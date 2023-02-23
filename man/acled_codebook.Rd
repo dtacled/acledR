@@ -17,4 +17,13 @@ acled_codebook
 \description{
 Codebook for ACLED data
 }
+\seealso{
+Other Data: 
+\code{\link{acled_countries}},
+\code{\link{acled_deletion_old_dummy_n3}},
+\code{\link{acled_deletion_old_dummy}},
+\code{\link{acled_event_categories}},
+\code{\link{acled_regions}}
+}
+\concept{Data}
 \keyword{datasets}

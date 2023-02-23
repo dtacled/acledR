@@ -43,4 +43,13 @@ acled_deletion_old_dummy_n3
 \description{
 Large dataset of multiple regions and countries, purposefully including deleted/modified events.
 }
+\seealso{
+Other Data: 
+\code{\link{acled_codebook}},
+\code{\link{acled_countries}},
+\code{\link{acled_deletion_old_dummy}},
+\code{\link{acled_event_categories}},
+\code{\link{acled_regions}}
+}
+\concept{Data}
 \keyword{datasets}

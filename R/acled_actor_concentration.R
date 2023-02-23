@@ -1,11 +1,11 @@
 #' @title Calculate actor concentration indices from ACLED data
-#' @name calculate_actor_index
+#' @name acled_actor_concentration
 #'
 #' @param events Vector of outcomes per actor (i.e., event counts or fatalities).
 #' @param method Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.
 #' @return Returns a data.frame of the index value (`eff_actors` or `concentration`, depending on the method specified), number of unique actors, and average number of events per actor.
 #'
-#' @family Data Manipulation
+#' @family Data Analysis
 #'
 #' @examples
 #' \dontrun{
@@ -18,10 +18,10 @@
 #'
 #' # Using the "Effective actors" method, 5 actors, each responsible for 10 events,
 #' # returns the value of 5 for `eff_actors`
-#' #calculate_actor_index(df1$event_count, method = "Effective actors")
+#' #acled_actor_concentration(df1$event_count, method = "Effective actors")
 #'
 #' #Using the "Concentration" method, the same data returns a value of 0.2 for `concentration`
-#' #calculate_actor_index(df1$event_count, method = "Concentration")
+#' #acled_actor_concentration(df1$event_count, method = "Concentration")
 #'
 #' # In the next case, 1 actor is responsible for 10 events, while the other 4
 #' # are responsible for only 1 event each
@@ -29,22 +29,22 @@
 #'               event_count = c(10, 1, 1, 1, 1))
 #'
 #' #The "Effective actors" method returns a value of 1.88 `eff_actors`
-#' #calculate_actor_index(df2$event_count, method = "Effective actors")
+#' #acled_actor_concentration(df2$event_count, method = "Effective actors")
 #'
 #' #And the "Concentration" method returns a value of 0.53 for `concentration`
-#' #calculate_actor_index(df2$event_count, method = "Concentration")
+#' #acled_actor_concentration(df2$event_count, method = "Concentration")
 #'
 #' #Finally, when 2 actors are responsible for 10 events each and the other 3 actors only 1 event
 #' #df3 <- data.frame(actor = 1:5,
 #'               event_count = c(10, 10, 1, 1, 1)
 #' #The "Effective actors" method returns a value of around 2.61 `eff_actors`
-#' #calculate_actor_index(df3$event_count, method = "Effective actors")
+#' #acled_actor_concentration(df3$event_count, method = "Effective actors")
 #'
 #' #And the "Concentration" method returns a value of 0.38 for `concentration`
-#' #calculate_actor_index(df3$event_count, method = "Concentration")
+#' #acled_actor_concentration(df3$event_count, method = "Concentration")
 #' }
 #' @export
-calculate_actor_index <-
+acled_actor_concentration <-
   function(events, method = "Effective actors") {
 
     actors <- length(events)

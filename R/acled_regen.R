@@ -7,6 +7,7 @@
 #' - event_id_no_cnty
 #' - iso3
 #' @returns Tibble with the regenerated column addedd at the end.
+#' @family Data Manipulation
 #' @md
 #' @import stringr
 #' @import dplyr

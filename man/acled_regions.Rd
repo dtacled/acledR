@@ -17,4 +17,13 @@ acled_regions
 \description{
 ACLED region names, region numbers, and coding start dates
 }
+\seealso{
+Other Data: 
+\code{\link{acled_codebook}},
+\code{\link{acled_countries}},
+\code{\link{acled_deletion_old_dummy_n3}},
+\code{\link{acled_deletion_old_dummy}},
+\code{\link{acled_event_categories}}
+}
+\concept{Data}
 \keyword{datasets}
