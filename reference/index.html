@@ -36,6 +36,7 @@
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
+    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
   </div>
 </li>
 <li class="nav-item dropdown">
@@ -68,9 +69,15 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
       
       
+
+      
+    </div><div class="section level2">
+      
+      <h3 id="api-acess">API &amp; Acess<a class="anchor" aria-label="anchor" href="#api-acess"></a></h3>
+      <p class="section-desc"></p><p>Functions to aid gathering data</p>
 
       
     </div><div id="" class="section level2">
@@ -89,6 +96,105 @@
         </dt>
         <dd>Request data from ACLED API</dd>
       </dl><dl><dt>
+          
+          <code><a href="acled_deletions_api.html">acled_deletions_api()</a></code> 
+        </dt>
+        <dd>Request data from the ACLED Deletions API</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="data-manipulation">Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"></a></h3>
+      <p class="section-desc"></p><p>Manipulation of data provided by ACLED API.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="acled_filter_event_types.html">acled_filter_event_types()</a></code> 
+        </dt>
+        <dd>acled_filter_event_types</dd>
+      </dl><dl><dt>
+          
+          <code><a href="acled_regen.html">acled_regen()</a></code> 
+        </dt>
+        <dd>Regenerating ACLED's deleted columns</dd>
+      </dl><dl><dt>
+          
+          <code><a href="acled_transform.html">acled_transform()</a></code> 
+        </dt>
+        <dd>Transform ACLED data from wide to long</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_actors.html">filter_actors()</a></code> 
+        </dt>
+        <dd>Filter ACLED Data by Actor</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="data-analysis">Data Analysis<a class="anchor" aria-label="anchor" href="#data-analysis"></a></h3>
+      <p class="section-desc"></p><p>Functions for basic data analysis.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="acled_actor_concentration.html">acled_actor_concentration()</a></code> 
+        </dt>
+        <dd>Calculate actor concentration indices from ACLED data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="acled_report_api.html">acled_report_api()</a></code> 
+        </dt>
+        <dd>Automatic country report with API</dd>
+      </dl><dl><dt>
+          
+          <code><a href="generate_counts.html">generate_counts()</a></code> 
+        </dt>
+        <dd>Generate event counts from ACLED data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="generate_movers.html">generate_movers()</a></code> 
+        </dt>
+        <dd>Generate moving statistics</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="helpers">Helpers<a class="anchor" aria-label="anchor" href="#helpers"></a></h3>
+      <p class="section-desc"></p><p>Functions for general help on using acledR</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="acled_help.html">acled_help()</a></code> 
+        </dt>
+        <dd>ACLED's dataset help</dd>
+      </dl><dl><dt>
+          
+          <code><a href="acled_rounding.html">acled_rounding()</a></code> 
+        </dt>
+        <dd>Rounding function</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="acled_codebook.html">acled_codebook</a></code> 
         </dt>
@@ -110,71 +216,17 @@
         <dd>Second dummy data frame of ACLED events emulating an old format, used in acled_deletion_api Vignette</dd>
       </dl><dl><dt>
           
-          <code><a href="acled_deletions_api.html">acled_deletions_api()</a></code> 
-        </dt>
-        <dd>Request data from the ACLED Deletions API</dd>
-      </dl><dl><dt>
-          
           <code><a href="acled_event_categories.html">acled_event_categories</a></code> 
         </dt>
         <dd>ACLED Event Categories</dd>
       </dl><dl><dt>
           
-          <code><a href="acled_help.html">acled_help()</a></code> 
-        </dt>
-        <dd>ACLED's dataset help</dd>
-      </dl><dl><dt>
-          
-          <code><a href="acled_regen.html">acled_regen()</a></code> 
-        </dt>
-        <dd>Regenerating ACLED's deleted columns</dd>
-      </dl><dl><dt>
-          
           <code><a href="acled_regions.html">acled_regions</a></code> 
         </dt>
         <dd>ACLED Regions</dd>
-      </dl><dl><dt>
-          
-          <code><a href="acled_report_api.html">acled_report_api()</a></code> 
-        </dt>
-        <dd>Automatic country report with API</dd>
-      </dl><dl><dt>
-          
-          <code><a href="acled_rounding.html">acled_rounding()</a></code> 
-        </dt>
-        <dd>Rounding function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="acled_transform.html">acled_transform()</a></code> 
-        </dt>
-        <dd>Transform ACLED data from wide to long</dd>
-      </dl><dl><dt>
-          
-          <code><a href="calculate_actor_index.html">calculate_actor_index()</a></code> 
-        </dt>
-        <dd>Calculate actor concentration indices from ACLED data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="filter_actors.html">filter_actors()</a></code> 
-        </dt>
-        <dd>Filter ACLED Data by Actor</dd>
-      </dl><dl><dt>
-          
-          <code><a href="filter_event_types.html">filter_event_types()</a></code> 
-        </dt>
-        <dd>Filter ACLED data by event type categories</dd>
-      </dl><dl><dt>
-          
-          <code><a href="generate_counts.html">generate_counts()</a></code> 
-        </dt>
-        <dd>Generate event counts from ACLED data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="generate_movers.html">generate_movers()</a></code> 
-        </dt>
-        <dd>Generate moving statistics</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

@@ -60,6 +60,7 @@
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
+    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
   </div>
 </li>
 <li class="nav-item dropdown">
@@ -261,38 +262,38 @@ this time period:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 14,728</span></span>
+<span><span class="co">#&gt; Rows: 15,119</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
-<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9818076, 9818077, 9818078, 9818079, 9818080, 9818081,…</span></span>
+<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9848302, 9848313, 9848315, 9848322, 9848325, 9848334,…</span></span>
 <span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 7…</span></span>
-<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA67476", "BRA67477", "BRA67478", "BRA67479", "BRA6…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 67476, 67477, 67478, 67479, 67480, 67481, 67482, 6748…</span></span>
-<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-02-03, 2023-02-03, 2023-02-03, 2023-02-03, 2023…</span></span>
+<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA67806", "BRA67817", "BRA67819", "BRA67826", "BRA6…</span></span>
+<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 67806, 67817, 67819, 67826, 67829, 67838, 67843, 6784…</span></span>
+<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-02-17, 2023-02-17, 2023-02-17, 2023-02-17, 2023…</span></span>
 <span><span class="co">#&gt; $ year             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023,…</span></span>
-<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Battles", "Battles", "Protests", "Violence against c…</span></span>
-<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Armed clash", "Armed clash", "Peaceful protest", "At…</span></span>
-<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "CV: Red Command", "Unidentified Armed Group (Brazil)…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, "Farmers (Brazil)", NA, "Warao Indigenous Gro…</span></span>
-<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 6, 3, 6, 3, 3, 3, 3, 5, 6, 3, 6, 1, 6, 5, 1, 3,…</span></span>
-<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BDM: Bonde do Maluco", "Unidentified Armed Group (Br…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, "Former Unidentified Gang (Brazil)", NA, …</span></span>
-<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 0, 7, 0, 1, 3, 1, 3, 0, 0, 7, 0, 3, 0, 7, 3, 7,…</span></span>
-<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33, 33, 60, 37, 60, 13, 33, 13, 33, 50, 60, 37, 60, 1…</span></span>
+<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Battles", "Violence against civilians", "Battles", "…</span></span>
+<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Armed clash", "Attack", "Armed clash", "Attack", "Ar…</span></span>
+<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Gang (Brazil)", "Unidentified Gang (Bra…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "Vigilante Group …</span></span>
+<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 1, 3, 1, 3, 1, 3, 3, 5, 3, 1, 3, 3, 3, 3, 1, 3,…</span></span>
+<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Gang (Brazil)", "Civilians (Brazil)", "…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "Labour Group…</span></span>
+<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 7, 3, 7, 3, 0, 3, 3, 7, 7, 7, 3, 3, 3, 1, 3, 3, 1,…</span></span>
+<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33, 37, 13, 37, 13, 30, 13, 33, 37, 57, 37, 13, 33, 3…</span></span>
 <span><span class="co">#&gt; $ region           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", "S…</span></span>
 <span><span class="co">#&gt; $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Brazil", "Brazil", "Brazil", "Brazil", "Brazil", "Br…</span></span>
-<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Bahia", "Bahia", "Espirito Santo", "Mato Grosso do S…</span></span>
-<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Salvador", "Salvador", "Sao Mateus", "Ponta Pora", "…</span></span>
+<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Ceara", "Alagoas", "Alagoas", "Amazonas", "Goias", "…</span></span>
+<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Baturite", "Delmiro Gouveia", "Piranhas", "Manacapur…</span></span>
 <span><span class="co">#&gt; $ admin3           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Salvador", "Salvador", "Sao Mateus", "Ponta Pora", "…</span></span>
-<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -12.9711, -12.9711, -18.7194, -22.5361, -19.9208, -22…</span></span>
-<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -38.5108, -38.5108, -39.8578, -55.7256, -43.9378, -43…</span></span>
-<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Bahia 190; G1", "G1", "G1", "Midiamax", "G1", "G1; O…</span></span>
-<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Subnational-National", "National", "National", "Subn…</span></span>
-<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 3 February 2023, in Salvador (Bahia), more than 1…</span></span>
-<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1, 0, 1,…</span></span>
-<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1675714001, 1675714001, 1675714001, 1675714001, 16757…</span></span>
+<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Baturite", "Delmiro Gouveia", "Piranhas", "Manacapur…</span></span>
+<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -4.3286, -9.3851, -9.6115, -3.2997, -16.7572, -7.1475…</span></span>
+<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -38.8847, -37.9989, -37.7616, -60.6206, -49.4412, -35…</span></span>
+<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "G1", "Alagoas 24 Horas", "Alagoas 24 Horas", "Portal…</span></span>
+<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "Subnational", "Subnational", "Subnationa…</span></span>
+<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 17 February 2023, in the rural area of Baturite m…</span></span>
+<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 1, 1, 1, 3, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 3,…</span></span>
+<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1676922677, 1676922677, 1676922677, 1676922677, 16769…</span></span>
 <span><span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA…</span></span></code></pre></div>
 <p>If instead we wanted multiple countries, we could execute:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -346,7 +347,7 @@ case “Rioters versus Civilians” = 57, we add the interaction code to the
 <span>                           prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In both the dyadic and monadic versions, the API returns 138 unique
 events. However, the number of unique entries for the dyadic version is
-also 138, while it’s 51341 for the monadic version.</p>
+also 138, while it’s 53364 for the monadic version.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -60,6 +60,7 @@
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
+    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
   </div>
 </li>
 <li class="nav-item dropdown">
@@ -182,10 +183,10 @@ in the package a function to aid in filtering these categories. This is
 very useful when users want to recreate outputs like regional overviews,
 which make use of these categories. This is how the function looks:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_event_types.html">filter_event_types</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<code class="sourceCode R"><span><span class="fu">filter_event_types</span><span class="op">(</span><span class="va">data</span>,</span>
 <span>                  <span class="va">acled_categories</span>,</span>
 <span>                  keep_all_events <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><code>acled_filter_event_types()</code> requires three arguments:
+<p><code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code> requires three arguments:
 <em><code>data</code>: ACLED data frame, like the result from
 <code><a href="../reference/acled_api.html">acled_api()</a></code>. </em><code>acled_categories</code>: a
 character vector of the categories by which we will filter.

@@ -25,6 +25,9 @@
     <loc>https://billingtt.github.io/acledR/articles/acled_transformations.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/articles/actor_index.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/articles/actors_interactions.html</loc>
   </url>
   <url>
@@ -61,6 +64,9 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_access.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_actor_concentration.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/acled_api.html</loc>
   </url>
   <url>
@@ -82,6 +88,9 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_event_categories.html</loc>
   </url>
   <url>
+    <loc>https://billingtt.github.io/acledR/reference/acled_filter_event_types.html</loc>
+  </url>
+  <url>
     <loc>https://billingtt.github.io/acledR/reference/acled_help.html</loc>
   </url>
   <url>
@@ -100,13 +109,7 @@
     <loc>https://billingtt.github.io/acledR/reference/acled_transform.html</loc>
   </url>
   <url>
-    <loc>https://billingtt.github.io/acledR/reference/calculate_actor_index.html</loc>
-  </url>
-  <url>
     <loc>https://billingtt.github.io/acledR/reference/filter_actors.html</loc>
-  </url>
-  <url>
-    <loc>https://billingtt.github.io/acledR/reference/filter_event_types.html</loc>
   </url>
   <url>
     <loc>https://billingtt.github.io/acledR/reference/generate_counts.html</loc>

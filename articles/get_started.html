@@ -60,6 +60,7 @@
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
+    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
   </div>
 </li>
 <li class="nav-item dropdown">
@@ -275,11 +276,11 @@ types into clusters that better explain different types of political
 violence and disorder. However, to form these categories, users may
 require to create a number of conditional statements, which can be found
 on <code>vignettes("event type")</code>. Thus, to simplify this
-operation, users can utilize <code>acled_filter_event_types()</code>.
+operation, users can utilize <code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code>.
 Lets say we are interested only in organized political violence in our
 Argentinian dataset:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arg_cats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_event_types.html">filter_event_types</a></span><span class="op">(</span><span class="va">argentinian_data</span>, <span class="co"># data</span></span>
+<code class="sourceCode R"><span><span class="va">arg_cats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_event_types.html">acled_filter_event_types</a></span><span class="op">(</span><span class="va">argentinian_data</span>, <span class="co"># data</span></span>
 <span>                               <span class="st">"organized_political_violence"</span>, <span class="co"># Categories of interest</span></span>
 <span>                               keep_all_events <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># option to keep all events with an extra column, or to filter events</span></span>
 <span></span>
@@ -339,7 +340,7 @@ transform our data to be in long-form based on the actor column:</p>
 <span>                            type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> <span class="co"># The type of operation we want to do to transform the data</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 7,650</span></span>
+<span><span class="co">#&gt; Rows: 7,655</span></span>
 <span><span class="co">#&gt; Columns: 29</span></span>
 <span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715562, 9715458, 9715458, 9715459, 9715558,…</span></span>
 <span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
@@ -379,24 +380,25 @@ actor column, with one row per actor.</p>
 </h2>
 <p>Finally, users may desire to generate some initial analysis of their
 data. In order to facilitate this last step on acledR workflow, acledR
-includes four functions: <code>generate_counts</code>,
-<code>generate_movers</code>, <code>calculate_actor_index</code>,
-<code>acled_report_api</code>.</p>
-<p>The first of these functions, <code>generate_counts</code> aims to
+includes four functions: <code><a href="../reference/generate_counts.html">generate_counts()</a></code>,
+<code><a href="../reference/generate_movers.html">generate_movers()</a></code>, <code>calculate_actor_index()</code>,
+<code><a href="../reference/acled_report_api.html">acled_report_api()</a></code>.</p>
+<p>The first of these functions, <code><a href="../reference/generate_counts.html">generate_counts()</a></code> aims to
 generate events counts by event type, spacial (geography) and temporal
 units of analysis. That means, finding the event counts for a given
 region, country, admin levels, or counts by event types, or counts by
 months, weeks or day.</p>
-<p>The second of these functions, <code>generate_movers</code>, focuses
-on generating moving statistics, across a given temporal and spacial
-unit of analysis. This functions allows users to find statistics such as
-standard deviation, mean, median, max and mins.</p>
-<p>The third of these functions, <code>calculate_actor_index</code>
-allows users to find how are the actor interactions in the dataset, more
-specifically, how dissipated or concentrated a given dataset is. This
-function utilizes two types of indexes to assess this, either the
-Inverse Simpson Index or the Herfindahl-Hirschman Index.</p>
-<p>Finally, <code>acled_report_api</code> allows users to generate an
+<p>The second of these functions, <code><a href="../reference/generate_movers.html">generate_movers()</a></code>,
+focuses on generating moving statistics, across a given temporal and
+spacial unit of analysis. This functions allows users to find statistics
+such as standard deviation, mean, median, max and mins.</p>
+<p>The third of these functions,
+<code>acled_Actor_concentration()</code> allows users to find how are
+the actor interactions in the dataset, more specifically, how dissipated
+or concentrated a given dataset is. This function utilizes two types of
+indexes to assess this, either the Inverse Simpson Index or the
+Herfindahl-Hirschman Index.</p>
+<p>Finally, <code><a href="../reference/acled_report_api.html">acled_report_api()</a></code> allows users to generate an
 exploratory analysis report of the data, which includes elements covered
 in the previous three functions, as well as analysis of the number of
 sources, event counts, and geographical distribution of events.</p>
