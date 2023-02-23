@@ -39,8 +39,8 @@ filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols 
 }
 \seealso{
 Other Data Manipulation: 
+\code{\link{acled_filter_event_types}()},
 \code{\link{acled_regen}()},
-\code{\link{acled_transform}()},
-\code{\link{filter_event_types}()}
+\code{\link{acled_transform}()}
 }
 \concept{Data Manipulation}
