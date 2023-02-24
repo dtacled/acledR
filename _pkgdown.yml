@@ -1,7 +1,7 @@
 url: https://billingtt.github.io/acledR/
 template:
   bootstrap: 5
-  bootswatch: flatly
+  bootswatch: superhero
 
 navbar: 
   title: acledR
