@@ -1,9 +1,9 @@
 url: https://billingtt.github.io/acledR/
 template:
   bootstrap: 5
-  bootswatch: cosmo
+  bootswatch: flatly
 
-navbar:
+navbar: 
   title: acledR
   left:
   - icon: fa-home
@@ -12,17 +12,21 @@ navbar:
     href: reference/index.html
   - text: Get Started
     href: articles/get_started.html
-  - text: Articles
+  - text: Utilizing acledR
     href: articles/index.html
     menu:
     - text: ACLED API
       href: articles/acled_api.html
+    - text: Keeping your dataset updated
+      href: articles/acled_deletions_api.html
     - text: Generate Event Counts
       href: articles/generate_counts.html
     - text: Generate Moving Statistics
       href: articles/generate_movers.html
     - text: Calculate Actor Indexes
       href: articles/actor_index.html
+    - text: acledR Data Manipulation
+      href: articles/acled_transformations.html
   - text: ACLED Codebook
     href: articles/acled_codebook.html
     menu:
@@ -36,6 +40,11 @@ navbar:
       href: articles/time.html
     - text: Geography
       href: articles/geography.html
+    - text: Sources
+      href: articles/acled_sources.html
+    - text: Fatalities
+      href: articles/fatalities.html
+
 
 
 reference:
