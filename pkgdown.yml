@@ -3,13 +3,13 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   acled_codebook: acled_codebook.html
-  acled_deletions_api: acled_deletions_api.html
   acled_sources: acled_sources.html
-  actor_index: actor_index.html
   actors_interactions: actors_interactions.html
   acled_api: acled_api.html
+  acled_deletions_api: acled_deletions_api.html
   acled_rounding: acled_rounding.html
   acled_transformations: acled_transformations.html
+  actor_index: actor_index.html
   generate_counts: generate_counts.html
   generate_movers: generate_movers.html
   event_types: event_types.html
@@ -17,7 +17,7 @@ articles:
   geography: geography.html
   get_started: get_started.html
   time: time.html
-last_built: 2023-02-23T16:13Z
+last_built: 2023-02-24T08:42Z
 urls:
   reference: https://billingtt.github.io/acledR/reference
   article: https://billingtt.github.io/acledR/articles
