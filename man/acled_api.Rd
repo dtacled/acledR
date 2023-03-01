@@ -16,7 +16,8 @@ acled_api(
   monadic = FALSE,
   ...,
   acled_access = TRUE,
-  prompt = TRUE
+  prompt = TRUE,
+  log = F
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ acled_api(
 \item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.}
 
 \item{prompt}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
+
+\item{log}{logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.}
 }
 \value{
 Returns a tibble of of ACLED events.

@@ -1,5 +1,5 @@
 #' @title Filter ACLED Data by Actor
-#' @name filter_actors
+#' @name acled_filter_actors
 #' @description This function allows users to filter ACLED data by actor.
 #' @param df dataframe. ACLED data to filter.
 #' @param actors character vector or vector of character strings. Actor name or list of actor names to use for filtering.
@@ -29,7 +29,7 @@
 #' @importFrom rlang .data
 #' @export
 
-filter_actors <- function(df, actors, filter_cols='all'){
+acled_filter_actors <- function(df, actors, filter_cols='all'){
   if(filter_cols=='all'){
     if(!'assoc_actor_1' %in% names(df) | !'assoc_actor_2' %in% names(df)){
       stop("Dataframe is missing 'assoc_actor_1' or 'assoc_actor_2' column.")
