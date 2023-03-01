@@ -9,6 +9,7 @@ Authors@R: c(
     person("Katayoun", "Kishi", "k.kishi@acleddata.com", role = "aut"),
     person("Michael", "Start", "m.start@acleddata.com", role = "aut"),
     person("ACLED", "m.start@acleddata.com", role = "cph")
+  )
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
 License: GPL (>= 3)
 Encoding: UTF-8
