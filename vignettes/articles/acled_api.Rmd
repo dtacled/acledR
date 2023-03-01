@@ -60,7 +60,8 @@ acled_api(email = NULL,
           monadic = FALSE,
           ...,
           acled_access = TRUE,#acled_access=TRUE only works when acled_access() was run beforehand, eliminating the need of email-key in acled_api()
-          prompt = TRUE)
+          prompt = TRUE,
+          log = F)
 
 ```
 
@@ -80,7 +81,9 @@ The `...` parameter stands for other arguments that one would like to include fo
 
 The `acled_access` parameter is used to let the function know that you have used `acled_access` during the current session, thus, avoiding the need to include email and key on the function. If `acled_access` is set to `FALSE`, then the email and key arguments are necessary.
 
-Finally, the `prompt` argument corresponds to how the function handles big calls, and whether the user is interested on receiving the interactive prompt which includes, among other information, if their API call will be split in more than 1 call, and if the user wants to do so. In cases where the users may not want to have this interactive prompt, such as users utilizing this function as part of a routine script, users can set `prompt = FALSE` to run the function without the need of the interactive prompt. 
+The `prompt` argument corresponds to how the function handles big calls, and whether the user is interested on receiving the interactive prompt which includes, among other information, if their API call will be split in more than 1 call, and if the user wants to do so. In cases where the users may not want to have this interactive prompt, such as users utilizing this function as part of a routine script, users can set `prompt = FALSE` to run the function without the need of the interactive prompt.
+
+Finally, the `log` argument provides an alternative from executing the normal API call, and it provides you instead with a data frame including the countries being requested, the time period requested, and finally the country-days unit. We recommend this argument only if it is intended for testing, otherwise it provides little to none analytical value. 
 
 ## Handling big API calls
 
