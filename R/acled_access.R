@@ -26,7 +26,7 @@ acled_access <- function(email,key) {
   if (out$status != 200) {
     if ((out$error$message) == "Access key and email address are not authorized") {
       stop(paste0("Error: ",out$error$message, ". Error code: ", out$status,". \n"
-                  ,rlang::format_error_bullets(c("Please verify your API credentials (key and email) and try again",
+                  ,rlang::format_error_bullets(c("Key and email not authorized. Please verify your API credentials (key and email) and try again",
                                                  "If the error persists please contact access@acleddata.com."))))
     } else {
       stop(paste0("Error: ",out$error$message, ". Error code: ", out$status))
@@ -35,6 +35,13 @@ acled_access <- function(email,key) {
       Sys.setenv(acled_email = email)
       Sys.setenv(acled_key = key)
 
-      return(out$messages)
+
+      if(out$status == 200) {
+        message("Success! Credentials authorized")
+        return("Success! Credentials authorized")
+      }
+
+      return(out$message)
     }
+
 }

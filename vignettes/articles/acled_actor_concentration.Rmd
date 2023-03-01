@@ -24,10 +24,16 @@ The `acled_actor_concentration()` functions allows users to extract the degree o
 
 ```{r, eval=F}
 acled_actor_concentration(events, 
-                          method = "Effective actors")
+                          method = "Effective actors", 
+                          acled_dataframe = T)
 ```
 
-The function thus requires only two arguments `events` and `method`. `events` is a vector of event/fatalities counts per actor (see `acled_generate_counts()` for an easy way to generate such counts.). `method` is the desired methodological approach to calculate concentration indices, either Inverse Simpson Index or Hertindahl-Hirscham Index. These are described below:
+The function thus requires only three arguments `events`, `method` and `acled_dataframe`. 
+
+`events` is an ACLED dyadic dataframe (i.e. the result from an `acled_api()` call) or a vector of event/fatalities counts per actor (see `acled_generate_counts()` for an easy way to generate such counts.). The required object type of events depends on `acled_dataframe`. If `acled_dataframe = T` then the function expects an ACLED dataframe (default behaviour), otherwise if `acled_dataframe = F` it expects a vector of event/fatalities counts per actor
+
+
+`method` is the desired methodological approach to calculate concentration indices, either Inverse Simpson Index or Hertindahl-Hirscham Index. These are described below:
 
 -   `method="Effective actors"`: Utilizes the Inverse Simpson Index (also known as the Reciprocal Simpson Index) to calculate the number of effective actors by measuring how evenly events/fatalities are distributed across actors. Take a vector where the total number of events across all actors is $N$, and the total counts of each actor is $z_1$, then the number of effective actors ($D$) is $$
     D=1-(∑z_i​(z_i​−1))​/N(N-1)
