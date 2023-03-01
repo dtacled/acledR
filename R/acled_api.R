@@ -12,6 +12,7 @@
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
 #' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
+#' @param log logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.
 #' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
@@ -43,7 +44,9 @@
 #' }
 #' @md
 #' @import httr
+#' @import dplyr
 #' @import stringr
+#' @import purrr
 #' @import lubridate
 #' @importFrom rlang .data
 #' @export
@@ -59,7 +62,8 @@ acled_api <- function(email = NULL,
                        monadic = FALSE,
                        ...,
                        acled_access = TRUE,
-                       prompt = TRUE) {
+                       prompt = TRUE,
+                       log = F) {
 
   if(acled_access == TRUE){
     email <- Sys.getenv("acled_email")
@@ -78,6 +82,23 @@ acled_api <- function(email = NULL,
     stop("Key required for ACLED API access. 'key' must be a character string (e.g., 'xyz123!etc') or a call to where your ACLED API key is located if stored as an environment variable (e.g., Sys.getenv('acled_key'). Request and locate your ACLED API key at https://developer.acleddata.com.")
   }
   key_internal <- paste0("&key=", key)
+
+  # Checking if countries are input incorrectly
+  if(!is.null(countries) & !is.character(countries)){
+    stop("Countries are not strings, please state them as string/character")
+  }
+
+  if(!is.null(countries) & sum(unique(countries) %in% acledR::acled_countries[["country"]]) < length(unique(countries))) {
+    stop("One or more of the requested countries are not in ACLED's Country list. The full list of countries is available at 'acledR::acled_countries")
+  }
+
+  # Checking if regions are input incorrectly
+  if(is.character(regions) & sum(unique(regions) %in% acledR::acled_regions[["region_name"]]) < length(unique(regions))) {
+    stop("One or more requested region names not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
+  }
+  if(is.numeric(regions) & sum(unique(regions) %in% acledR::acled_regions[["region"]]) < length(unique(regions))) {
+    stop("One or more requested region numbers not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
+  }
 
 
   # Setup base data to check how many country-days are being requested
@@ -115,6 +136,8 @@ acled_api <- function(email = NULL,
   n_countries <- length(unique(out$country))
   country_days <- as.numeric(sum(out$time))
 
+
+
   # Note for how much data is being requested
   size_note <- paste("Requesting data for",
                      n_countries,
@@ -131,6 +154,22 @@ acled_api <- function(email = NULL,
   # Split call into roughly equally sized groups depending on how many country-days are in each country
   # This randomly assigns countries into bins
   out_groups <- split(out, sample(1:time_units, nrow(out), replace = T))
+
+  if(log == T){
+
+
+    if (length(out_groups) > 1) {
+      log_rep <- map_dfr(out_groups, bind_rows, .id= "id")%>%
+        mutate(calls = time_units)
+    } else {
+      log_rep <- out_groups[[1]]
+      log_rep$id <- "1"
+      log_rep$calls <- time_units
+    }
+
+    return(log_rep)
+
+  }
 
   # Dates
   if(!is.null(start_date) & !is.null(end_date)) {
@@ -150,6 +189,7 @@ acled_api <- function(email = NULL,
 
   # Where
   ## Countries
+
   countries_internal <- vector("list", length = length(out_groups))
   for(i in 1:length(out_groups)){
     countries_internal[[i]] <- paste0("&country=", paste( gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:country="))
@@ -157,12 +197,6 @@ acled_api <- function(email = NULL,
   }
 
   ## Regions
-  if(is.character(regions) & sum(unique(regions) %in% acledR::acled_regions[["region_name"]]) < length(unique(regions))) {
-    stop("One or more requested region names not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
-  }
-  if(is.numeric(regions) & sum(unique(regions) %in% acledR::acled_regions[["region"]]) < length(unique(regions))) {
-    stop("One or more requested region numbers not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
-  }
   if(is.numeric(regions)) {
     regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
   }
