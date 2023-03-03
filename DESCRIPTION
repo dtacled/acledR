@@ -4,13 +4,13 @@ Title: Manipulate 'ACLED' Data
 Version: 0.1.0
 Authors@R: c(
     person(given = "Trey", 
-	     family = "Billing",
-	     role = "aut", 
+	       family = "Billing",
+	       role = "aut", 
            email = "t.billing@acleddata.com")
     person(given = "Lucas", 
-	     family = "Fagliano",
-	     role = "aut", 
-	     email = "l.fagliano@acleddata.com")
+	       family = "Fagliano",
+	       role = "aut", 
+	       email = "l.fagliano@acleddata.com")
     person(given = "Rachel", 
            family = "Goodman", 
            role = "aut", 
@@ -26,7 +26,7 @@ Authors@R: c(
     person(given = "",
            family = "ACLED", 
            role = c("cph", "cre"), 
-           email ="data@acleddata.com")
+           email ="data@acleddata.com"))
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
 License: GPL (>= 3)
 Encoding: UTF-8
