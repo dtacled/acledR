@@ -61,7 +61,7 @@
     <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -650,8 +650,7 @@ pull data from Haiti for the first few months of 2022 sing the
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
-<span><span class="co">#&gt; $Success</span></span>
-<span><span class="co">#&gt; [1] "Authorisation accepted"</span></span>
+<span><span class="co">#&gt; [1] "Success! Credentials authorized"</span></span>
 <span></span>
 <span><span class="va">df_haiti</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Haiti"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -715,7 +714,7 @@ by <code>sub_event_type</code> and month.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by ACLED.</p>
+<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">

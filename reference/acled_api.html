@@ -37,7 +37,7 @@
     <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -92,7 +92,8 @@
 <span>  monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  prompt <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  prompt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">F</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -145,6 +146,10 @@
 <dt>prompt</dt>
 <dd><p>logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.</p></dd>
 
+
+<dt>log</dt>
+<dd><p>logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -191,7 +196,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by ACLED.</p>
+  <p></p><p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">

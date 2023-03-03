@@ -61,7 +61,7 @@
     <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -187,7 +187,7 @@ in the package a function to aid in filtering these categories. This is
 very useful when users want to recreate outputs like regional overviews,
 which make use of these categories. This is how the function looks:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">filter_event_types</span><span class="op">(</span><span class="va">data</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_filter_event_types.html">acled_filter_event_types</a></span><span class="op">(</span><span class="va">data</span>,</span>
 <span>                  <span class="va">acled_categories</span>,</span>
 <span>                  keep_all_events <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code> requires three arguments:
@@ -273,9 +273,9 @@ from doing steps 2 to 6 and let the function do it for us.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
-<pre><code><span><span class="co">## $Success</span></span>
-<span><span class="co">## [1] "Authorisation accepted"</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Success! Credentials authorized"</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argen_acled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span>
 <span>                         start_date <span class="op">=</span> <span class="st">"2022-06-01"</span>,</span>
 <span>                         end_date<span class="op">=</span><span class="st">"2022-06-30"</span>, </span>
@@ -285,7 +285,7 @@ from doing steps 2 to 6 and let the function do it for us.</p>
 <pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">argen_acled</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
 <span><span class="co">##   data_id   iso event_…¹ event…² event_date  year time_…³ event…⁴ sub_e…⁵ actor1</span></span>
@@ -307,7 +307,7 @@ from doing steps 2 to 6 and let the function do it for us.</p>
 during June 2022.</p>
 <p>After this we need to transform our dataset to long form, where each
 actor is a new row. For that we use <code><a href="../reference/acled_transform.html">acled_transform()</a></code>:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argen_acled_long_actors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">argen_acled</span>,type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">argen_acled</span><span class="op">)</span></span></code></pre></div>
@@ -335,7 +335,7 @@ actor is a new row. For that we use <code><a href="../reference/acled_transform.
 meaning that now we only have to look for uniques in the new dataset’s
 actor column. For this, we will utilize
 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">dplyr::distinct()</a></code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argen_acled_nodes</span> <span class="op">&lt;-</span> <span class="va">argen_acled_long_actors</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span> <span class="co">## When utilizing the option "full_actors", the actors will be stored in the column named "actor"</span></span>
 <span></span>
@@ -367,7 +367,7 @@ lines of code.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by ACLED.</p>
+<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">

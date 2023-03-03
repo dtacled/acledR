@@ -61,7 +61,7 @@
     <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -155,8 +155,8 @@ API.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
-<span><span class="co">#&gt; $Success</span></span>
-<span><span class="co">#&gt; [1] "Authorisation accepted"</span></span></code></pre></div>
+<span><span class="co">#&gt; Success! Credentials authorized</span></span>
+<span><span class="co">#&gt; [1] "Success! Credentials authorized"</span></span></code></pre></div>
 <p>If the authentication was successfull, you will find a message in the
 console stating “Authorisation accepted”.</p>
 </div>
@@ -197,7 +197,7 @@ receive the prompt.</p>
 <p>The data you will receive, will be a data frame of the events
 throughout the request dates and the requested region/country. We can
 inspect the Argentinian data we gather now.</p>
-<pre><code><span><span class="co">#&gt; Rows: 2,675</span></span>
+<pre><code><span><span class="co">#&gt; Rows: 2,676</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
 <span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715458, 9715459, 9715558, 9715572, 9715573,…</span></span>
 <span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
@@ -237,22 +237,22 @@ inspect the Argentinian data we gather now.</p>
 <p>In some cases you may prefer to fit the data into a different format
 than the default wide-form output that its received from the API call.
 For these cases we offer users three functions:
-<code>acled_filter_actors()</code>,
+<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code>,
 <code>acled_filter_event_types</code>, and
 <code>acled_transform</code>.</p>
-<p>The first of this, <code>acled_filter_actors()</code>, attempts to
+<p>The first of this, <code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code>, attempts to
 help users to filter events by the actors involved, in any of the four
 columns which include actors. While that is a simple filter operation,
 which can easily be done through the tidyverse packages, in the case of
 ACLED data, actors maybe in any of four columns, and in some cases where
 associated actors are multiple, an actor maybe found inside one cell
-along with multiple others. Thus, <code>acled_filter_actors()</code> is
+along with multiple others. Thus, <code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> is
 particularly useful to work with acled_data. For instance, we are
 interested in all thje events where the Argentinian Police Forces were
 involved:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">arg_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_actors.html">filter_actors</a></span><span class="op">(</span><span class="va">argentinian_data</span>,  <span class="co"># data</span></span>
+<span><span class="va">arg_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">argentinian_data</span>,  <span class="co"># data</span></span>
 <span>                        <span class="st">"Police Forces of Argentina (2019-)"</span>, <span class="co"># actors we are interested on</span></span>
 <span>                        filter_cols <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="co"># where we want to filter </span></span>
 <span></span>
@@ -289,7 +289,7 @@ Argentinian dataset:</p>
 <span>                               keep_all_events <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># option to keep all events with an extra column, or to filter events</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_cats</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 2,675</span></span>
+<span><span class="co">#&gt; Rows: 2,676</span></span>
 <span><span class="co">#&gt; Columns: 32</span></span>
 <span><span class="co">#&gt; $ data_id                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715458, 9715459, 9715558, 97155…</span></span>
 <span><span class="co">#&gt; $ iso                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
@@ -344,7 +344,7 @@ transform our data to be in long-form based on the actor column:</p>
 <span>                            type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> <span class="co"># The type of operation we want to do to transform the data</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 7,655</span></span>
+<span><span class="co">#&gt; Rows: 7,656</span></span>
 <span><span class="co">#&gt; Columns: 29</span></span>
 <span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715562, 9715458, 9715458, 9715459, 9715558,…</span></span>
 <span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
@@ -415,7 +415,7 @@ sources, event counts, and geographical distribution of events.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by ACLED.</p>
+<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">

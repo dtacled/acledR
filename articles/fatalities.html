@@ -61,7 +61,7 @@
     <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
     <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
     <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/actor_index.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -223,8 +223,7 @@ media.</p>
 <p>In order to demonstrate the use of the fatalities columns, we will
 look at fatalities in violence against civilians across 2021 and 2022
 (the first half until August).</p>
-<pre><code><span><span class="co">## $Success</span></span>
-<span><span class="co">## [1] "Authorisation accepted"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Success! Credentials authorized"</span></span></code></pre>
 <p>Lets now explore fatalities within the data set.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_years</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -233,8 +232,8 @@ look at fatalities in violence against civilians across 2021 and 2022
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">##  fatalities     n percent</span></span>
-<span><span class="co">##           1 24214    0.46</span></span>
-<span><span class="co">##           0 19267    0.37</span></span>
+<span><span class="co">##           1 24219    0.46</span></span>
+<span><span class="co">##           0 19271    0.37</span></span>
 <span><span class="co">##           2  4429    0.08</span></span>
 <span><span class="co">##           3  1840    0.04</span></span>
 <span><span class="co">##           4   746    0.01</span></span></code></pre>
@@ -260,8 +259,8 @@ this. We will set these in categories of tenths.</p>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  fatalities_bins     n percent</span></span>
-<span><span class="co">##          1 to 10 32461    0.62</span></span>
-<span><span class="co">##                0 19267    0.37</span></span>
+<span><span class="co">##          1 to 10 32466    0.62</span></span>
+<span><span class="co">##                0 19271    0.37</span></span>
 <span><span class="co">##        11 to 100   500    0.01</span></span>
 <span><span class="co">##      101 to 1000    14    0.00</span></span></code></pre>
 <p>Now that we have a better understanding on how our fatalities data
@@ -323,7 +322,7 @@ for more information).</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by ACLED.</p>
+<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">
