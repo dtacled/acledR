@@ -44,11 +44,31 @@
 #' #acled_actor_concentration(df3$event_count, method = "Concentration")
 #' }
 #' @export
-acled_actor_concentration <-
-  function(events, method = "Effective actors") {
+acled_actor_concentration <- function(events, method = "Effective actors", acled_dataframe = T){
 
-    actors <- length(events)
-    avg_events <- mean(events)
+  if(acled_dataframe == T){
+
+      if(!is.data.frame(events)){
+        stop("Events is not a dataframe. If you are using a vector, please utilize 'acled_dataframe = F'.")
+        }
+
+      actors_dataset <- events %>%
+        acled_transform() %>%
+        group_by(actor) %>%
+        summarise(n_events = n())
+
+      actors <- nrow(actors_dataset)
+      avg_events <- mean(actors_dataset$n_events)
+
+      events <- actors_dataset$n_events
+
+      }else{
+        if(!is.numeric(events)){
+          stop("Events is not a vector of outcomes per actor. If it is an acled dataframe please select 'acled_dataframe = T'.")
+          }
+        actors <- length(events)
+        avg_events <- mean(events)
+        }
 
     if(method == "Effective actors") {
       eff_actors <- 1 / sum((events / sum(events)) ^ 2)
@@ -61,7 +81,5 @@ acled_actor_concentration <-
     }
     else {
       stop("Method not 'Effective actors' or 'Concentration'.")
-    }
+    }}
 
-
-  }

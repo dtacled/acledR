@@ -3,13 +3,30 @@ Type: Package
 Title: Manipulate 'ACLED' Data
 Version: 0.1.0
 Authors@R: c(
-    person("Trey", "Billing", "t.billing@acleddata.com", role = "aut"),
-    person("Lucas", "Fagliano", "l.fagliano@acleddata.com", role = "aut"),
-    person("Rachel", "Goodman", "r.goodman@acleddata.com", role = "aut"),
-    person("Katayoun", "Kishi", "k.kishi@acleddata.com", role = "aut"),
-    person("Michael", "Start", "m.start@acleddata.com", role = "aut"),
-    person("ACLED", "data@acleddata.com", role = c("cph", "cre"))
-  )
+    person(given = "Trey", 
+	       family = "Billing",
+	       role = "aut", 
+           email = "t.billing@acleddata.com")
+    person(given = "Lucas", 
+	       family = "Fagliano",
+	       role = "aut", 
+	       email = "l.fagliano@acleddata.com")
+    person(given = "Rachel", 
+           family = "Goodman", 
+           role = "aut", 
+           email = "r.goodman@acleddata.com")
+    person(given = "Katayoun", 
+           family = "Kishi", 
+           role = "aut", 
+           email = "k.kishi@acleddata.com")
+    person(given = "Michael", 
+           family = "Start", 
+           role = "aut", 
+           email = "m.start@acleddata.com")
+    person(given = "",
+           family = "ACLED", 
+           role = c("cph", "cre"), 
+           email ="data@acleddata.com"))
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
 License: GPL (>= 3)
 Encoding: UTF-8

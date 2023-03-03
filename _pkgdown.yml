@@ -24,7 +24,7 @@ navbar:
     - text: Generate Moving Statistics
       href: articles/generate_movers.html
     - text: Calculate Actor Indexes
-      href: articles/actor_index.html
+      href: articles/acled_actor_concentration.html
     - text: acledR Data Manipulation
       href: articles/acled_transformations.html
   - text: ACLED Codebook

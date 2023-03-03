@@ -4,7 +4,11 @@
 \alias{acled_actor_concentration}
 \title{Calculate actor concentration indices from ACLED data}
 \usage{
-acled_actor_concentration(events, method = "Effective actors")
+acled_actor_concentration(
+  events,
+  method = "Effective actors",
+  acled_dataframe = T
+)
 }
 \arguments{
 \item{events}{Vector of outcomes per actor (i.e., event counts or fatalities).}
