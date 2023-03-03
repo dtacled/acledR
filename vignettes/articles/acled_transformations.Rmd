@@ -72,7 +72,7 @@ table_of_categories <- acledR::acled_event_categories %>%
 The table helps illustrates the conditional statements that lead to these categories, however, it also hints at how time-consuming it may be to filter these categories manually. For that reason, we have included in the package a function to aid in filtering these categories. This is very useful when users want to recreate outputs like regional overviews, which make use of these categories. This is how the function looks:
 
 ``` {r fet function, eval = FALSE}
-filter_event_types(data,
+acled_filter_event_types(data,
                   acled_categories,
                   keep_all_events = FALSE)
 ```

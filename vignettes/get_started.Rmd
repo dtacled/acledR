@@ -89,7 +89,7 @@ The first of this, `acled_filter_actors()`, attempts to help users to filter eve
 
 ```{r}
 
-arg_pf <- filter_actors(argentinian_data,  # data
+arg_pf <- acled_filter_actors(argentinian_data,  # data
                         "Police Forces of Argentina (2019-)", # actors we are interested on
                         filter_cols = "all") # where we want to filter 
 
