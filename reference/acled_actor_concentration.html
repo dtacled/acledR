@@ -90,11 +90,15 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>events</dt>
-<dd><p>Vector of outcomes per actor (i.e., event counts or fatalities).</p></dd>
+<dd><p>Vector of outcomes per actor (i.e., event counts or fatalities), or ACLED data frame.</p></dd>
 
 
 <dt>method</dt>
 <dd><p>Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.</p></dd>
+
+
+<dt>acled_dataframe</dt>
+<dd><p>Boolean. True or False statement on whether events is a dataframe. Defaults to True</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -113,42 +117,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># These examples show the use of this function with simulated event counts from 5 actors</span></span></span>
-<span class="r-in"><span><span class="co">#library(acledR)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># In the first case, each actor is attributed the same event count (10 events)</span></span></span>
-<span class="r-in"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>actor <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span></span>
-<span class="r-in"><span><span class="co">#               event_count = c(10, 10, 10, 10, 10))</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Using the "Effective actors" method, 5 actors, each responsible for 10 events,</span></span></span>
-<span class="r-in"><span><span class="co"># returns the value of 5 for `eff_actors`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df1$event_count, method = "Effective actors")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#Using the "Concentration" method, the same data returns a value of 0.2 for `concentration`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df1$event_count, method = "Concentration")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># In the next case, 1 actor is responsible for 10 events, while the other 4</span></span></span>
-<span class="r-in"><span><span class="co"># are responsible for only 1 event each</span></span></span>
-<span class="r-in"><span><span class="co">#df2 &lt;- data.frame(actor = 1:5,</span></span></span>
-<span class="r-in"><span>              event_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#The "Effective actors" method returns a value of 1.88 `eff_actors`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df2$event_count, method = "Effective actors")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#And the "Concentration" method returns a value of 0.53 for `concentration`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df2$event_count, method = "Concentration")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#Finally, when 2 actors are responsible for 10 events each and the other 3 actors only 1 event</span></span></span>
-<span class="r-in"><span><span class="co">#df3 &lt;- data.frame(actor = 1:5,</span></span></span>
-<span class="r-in"><span>              <span class="va">event_count</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#The "Effective actors" method returns a value of around 2.61 `eff_actors`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df3$event_count, method = "Effective actors")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#And the "Concentration" method returns a value of 0.38 for `concentration`</span></span></span>
-<span class="r-in"><span><span class="co">#acled_actor_concentration(df3$event_count, method = "Concentration")</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-</code></pre></div>
+    
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
