@@ -1,7 +1,8 @@
 #' @title Calculate actor concentration indices from ACLED data
 #' @name acled_actor_concentration
 #'
-#' @param events Vector of outcomes per actor (i.e., event counts or fatalities).
+#' @param events Vector of outcomes per actor (i.e., event counts or fatalities), or ACLED data frame.
+#' @param acled_dataframe Boolean. True or False statement on whether events is a dataframe. Defaults to True
 #' @param method Index method. Default is "Effective actors", which is an Inverse Simpson Index. "Concentration" calculates a Herfindahl–Hirschman Index.
 #' @return Returns a data.frame of the index value (`eff_actors` or `concentration`, depending on the method specified), number of unique actors, and average number of events per actor.
 #'
@@ -13,7 +14,7 @@
 #' #library(acledR)
 #'
 #' # In the first case, each actor is attributed the same event count (10 events)
-#' df1 <- data.frame(actor = 1:5,
+#' #df1 <- data.frame(actor = 1:5,
 #' #               event_count = c(10, 10, 10, 10, 10))
 #'
 #' # Using the "Effective actors" method, 5 actors, each responsible for 10 events,
@@ -54,7 +55,7 @@ acled_actor_concentration <- function(events, method = "Effective actors", acled
 
       actors_dataset <- events %>%
         acled_transform() %>%
-        group_by(actor) %>%
+        group_by(.data$actor) %>%
         summarise(n_events = n())
 
       actors <- nrow(actors_dataset)
