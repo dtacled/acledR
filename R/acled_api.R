@@ -101,16 +101,30 @@ acled_api <- function(email = NULL,
   }
 
 
+
+
+
   # Setup base data to check how many country-days are being requested
   if(!is.null(countries) & is.null(regions)) {
     df <- acledR::acled_countries %>%
       filter(.data$country %in% countries)
   }
   else if(is.null(countries) & !is.null(regions)) {
+    if(is.numeric(regions)){
+      regions <- acledR::acled_regions %>%
+        filter(.data$region %in% regions) %>%
+        pull(.data$region_name)}
+
     df <- acledR::acled_countries %>%
       filter(.data$region %in% regions)
   }
   else if(!is.null(countries) & !is.null(regions)){
+
+    if(is.numeric(regions)){
+      regions <- acledR::acled_regions %>%
+        filter(.data$region %in% regions) %>%
+        pull(.data$region_name)}
+
     df <- acledR::acled_countries %>%
       filter(.data$country %in% countries & .data$region %in% regions)
   }
