@@ -58,7 +58,7 @@ Lets check if there are any deleted events since then.
 
 ```{r, eval = T, echo=F}
 
-acled_deleted_events <- acled_deletions_api(date_deleted = "2022/07/25")
+acled_deleted_events <- acled_deletions_api(date_deleted = "2022/07/25", acled_access = T)
 ```
 
 ```{r,eval=T,echo=T}
