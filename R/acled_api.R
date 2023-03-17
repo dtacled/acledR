@@ -65,6 +65,7 @@ acled_api <- function(email = NULL,
                        prompt = TRUE,
                        log = F) {
 
+  # Acled Acess and credentials
 
   if((acled_access %in% c(TRUE,T))&(is.null(email)|is.null(key))){  # Access is true, and credentials are null
     email <- Sys.getenv("acled_email")
@@ -75,6 +76,39 @@ acled_api <- function(email = NULL,
 
   } else if ((acled_access == TRUE)&(!is.null(email)|!is.null(key))){
     message("acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
+  }
+
+
+  # Stoppers for typos
+
+  if(hasArg(country) | hasArg(Country)){
+    stop("Country is not a valid option. Please utilize \"countries\"")
+
+  }
+
+  if(hasArg(Countries)){
+    stop("Countries is not a valid option. Please utilize \"countries\", without capitalizing")
+
+  }
+
+  if(hasArg(region)|hasArg(Region)){
+    stop("Region is not a valid option. Please utilize \"regions\"")
+
+  }
+
+  if(hasArg(Regions)){
+    stop("Regions is not a valid option. Please utilize \"regions\", without capitalizing")
+
+  }
+
+  if(hasArg(event_type)){
+    stop("event type is not a valid option. Please utilize \"event_types\"")
+
+  }
+
+  if(hasArg(Event_type)){
+    stop("Event type is not a valid option. Please utilize \"event_types\", without capitalizing")
+
   }
 
   # Required components
