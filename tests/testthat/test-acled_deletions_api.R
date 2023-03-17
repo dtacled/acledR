@@ -10,11 +10,11 @@ test_that("number of columns is correct - unix", {
 })
 
 test_that("names of columns are correct - date", {
-  expect_equal(names(received_deleted_data_date),columns)
+  expect_equal(names(received_deleted_data_date),columns_deleted)
 })
 
 test_that("names of columns are correct - unix", {
-  expect_equal(names(received_deleted_data_unix),columns)
+  expect_equal(names(received_deleted_data_unix),columns_deleted)
 })
 
 # Date and unix are the same
