@@ -1,5 +1,5 @@
 ---
-title: " Transformation of ACLED data"
+title: "Transformation of ACLED data"
 output: html_document
 date: "2022-11-11"
 vignette: >
