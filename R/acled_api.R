@@ -66,10 +66,10 @@ acled_api <- function(email = NULL,
                        log = F) {
 
 
-  if((acled_access == TRUE)&(is.null(email)|is.null(key))){  # Access is true, and credentials are null
+  if((acled_access %in% c(TRUE,T))&(is.null(email)|is.null(key))){  # Access is true, and credentials are null
     email <- Sys.getenv("acled_email")
     key <- Sys.getenv("acled_key")
-    if(length(email) == 1 | length(key == 1)){
+    if(nchar(email) <= 1 | nchar(key) <= 1){
       stop("Error in credentials: \n  acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
     }
 
