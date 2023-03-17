@@ -25,4 +25,10 @@ test_that("Regions in numeric work",{
   expect_true(all.equal(data.frame(region="Western Africa",rows=1:nrow(received_data_numeric_region))$region,received_data_numeric_region$region))})
 
 
-# Test what happends when someone requests a region and a country of another region
+# Test what happens when someone requests a region and a country of another region
+
+
+# Test what happens when someone inputs acled_access as TRUE but it includes email and key.
+test_that("Acled_access is ignored",{
+  expect_true(grepl("acledexamples", log_received_data_check_credential$email[1]))
+})

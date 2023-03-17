@@ -19,9 +19,11 @@ knitr::opts_chunk$set(
 
 ## Access to the API
 
-In order to use the ACLED API, you must first register an account at [ACLED's Access Portal](developer.acleddata.com). You can then pass your account information to `R` to use the `acled_api()` function. This information includes the email and access key associated with your ACLED account. 
+To use ACLED's API, you must first register an account at [ACLED's Access Portal](developer.acleddata.com). Once you acquire your credentials (email and key), you can either: 
 
-Once you have acquired your credentials (email and key), you can either use `acled_access()` to verify that the credentials are correct (note that this counts as one download against your quota) and store these in the environment for a given session, or manually store them in the environment file to use them permanently across every session.
+-   Use `acled_access()` to verify the credentials (counts one download in your quota) and store these in the environment for a given session.
+
+-   Manually store them in the environment file to use them permanently across sessions.
 
 To use `acled_access()` (recommended), run the following:
 
@@ -44,7 +46,7 @@ Sys.setenv(acled_key = "your_key")
 
 and save the file. If you run `Sys.getenv("email_address")`, your associated email will print; if you run `Sys.getenv("acled_key")`, your ACLED key will print to the console.
 
-## Acled API
+## ACLED API
 
 `acled_api()` is a wrapper to request and process ACLED API calls. The function takes the following parameters:
 
@@ -67,38 +69,37 @@ acled_api(email = NULL,
 
 ## Parameters for the API
 
-The `countries` and `regions` parameters specify where in the world to pull data from. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available. If you specify both countries and regions, the call will return only cases that fit both arguments. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, only Nigeria will be returned since Mexico is not in Western Africa.
+The `countries` and `regions` parameters specify where to pull data. If both are NULL (the default), the API will return data for all countries available. Specific countries may be requested via a vector of country names. Similarly, entire regions may be requested via a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` shows the full lists of countries and regions available; otherwise, you can visit `vignette("Geography")`. If you specify both countries and regions, the call will return only cases that fit both arguments. For example: if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, you will receive only data from Nigeria since Mexico is not in Western Africa.
 
-The `start_date` and `end_date` parameters specify the time period requested in "yyyy-mm-dd" format. 
+The `start_date` and `end_date` parameters specify the date range in "yyyy-mm-dd" format. 
 
-With `timestamp` users can keep their data sets updated, as it allows them to indicate a time stamp from when to collect events. `timestamp` is not the same `event_date`, as time stamp indicates when the event was added/modified in ACLED's data set. To learn more about how to keep your data sets up to date, please visit this [guide](https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf).
+With `timestamp`, you can keep their datasets updated, as it allows them to indicate a *timestamp* from when to collect events. `timestamp` is not the same as `event_date`, as *timestamp* indicates when the event was added/modified in ACLED's dataset. To learn more about how to keep your datasets up to date, please visit this [guide](https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf).
 
-Users can also use `event_types` to specify an event type that they would be interested on. For this, users are required to enter the event type of interest as a string. For example `event_types = "battles"`.
+You can also use `event_types` to filter by *event types*. For this, you must enter the *event type* of interest as a string. For example `event_types = "battles"`.
 
-`monadic` is a logical parameter, which is `FALSE` by default and returns the dyadic version of the data . If set to `TRUE`, the monadic version based on actor 1 and actor 2 will be returned.
+`monadic` is a logical parameter, which is `FALSE` by default and returns the dyadic version of the data. When `monadic=TRUE`, a monadic (long-form) data frame with only one actor (based on *actor1* and *actor2*) will be returned. For a non-API-based option to transform the dataset from wide to long, visit `vignette("Transformation of ACLED data")`. 
 
-The `...` parameter stands for other arguments that one would like to include for the final query, such as ISO or interaction. To utilize other arguments not included in the function parameters, write them as "&paramenter=value", so for example: "&iso=4" (NOTE: there is no space in between characters). To learn more about other valid parameters please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf).
+The `...` parameter stands for other arguments one would like to include for the final query, such as *ISO* or *interaction*. To utilize different opinions not included in the function parameters, write them as `&paramenter=value`, such as `&iso=4` (**NOTE**: there is no space between characters). To learn more about other valid parameters, please visit our [API guide](https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf).
 
-The `acled_access` parameter is used to let the function know that you have used `acled_access` during the current session, thus, avoiding the need to include email and key on the function. If `acled_access` is set to `FALSE`, then the email and key arguments are necessary.
+The `acled_access` parameter allows excluding email and key on the function when `acled_access()` has been used beforehand or credentials are stored as environment variables. If `acled_access` is set to `FALSE`, then the email and key arguments are necessary.
 
-The `prompt` argument corresponds to how the function handles big calls, and whether the user is interested on receiving the interactive prompt which includes, among other information, if their API call will be split in more than 1 call, and if the user wants to do so. In cases where the users may not want to have this interactive prompt, such as users utilizing this function as part of a routine script, users can set `prompt = FALSE` to run the function without the need of the interactive prompt.
+The `prompt` argument corresponds to how the function handles big calls. This option refers to whether you are interested in receiving an interactive prompt regarding how many API calls are necessary for your request and confirming you want to spend the stated number of calls. In cases where you may not want to have this interactive prompt, such as when utilizing `acled_api()` as part of a routine script, users can set `prompt = FALSE` to run the function without the prompt.
 
-Finally, the `log` argument provides an alternative from executing the normal API call, and it provides you instead with a data frame including the countries being requested, the time period requested, and finally the country-days unit. We recommend this argument only if it is intended for testing, otherwise it provides little to none analytical value. 
+Finally, the `log` option provides an alternative to executing the normal API call. Instead, it provides a data frame with the countries requested, the date range requested, and the country-days unit. We recommend this option only for testing; otherwise, it provides little to no analytical value. 
 
 ## Handling big API calls
 
-As it is common across APIs, handling big data requires particular tweaks. In our case, the base API offers the possibility of utilizing pagination to address some of these issues, a process that can be confusing for newer users working with APIs, and making very big pulls of data is often unreliable - which is why we recommend to do smaller calls. However, in this package we provide a solution to both of these issues.
+As common across APIs, handling big chunks of data requires tweaks. In our case, the base API utilizes pagination to address some of these issues. Making big requests is still unreliable, so we recommend doing smaller calls. This can be confusing for newer users working with APIs. In this package, we provide a solution to both of these issues.
 
 First, in terms of pagination, our wrapper does this for the user automatically, so there is no need to include pagination in their calls. 
 
-Second, in terms of big calls, the `acled_api()` function will first evaluate approximately how much data is the user requesting, and after this, the user will be prompted with a message which includes: number of countries requested, number of country-days, number of API calls needed, and a question whether the user would like to proceed. Currently, `acled_api()` works with a threshold of 300,000 country-days to determine whether to split the function. This way users can be rest assured that the call will not hit any issues because of it being too large (a problem some users encountered before), but also, users now have more control over the calls they make in relation to the API quota. 
+Second, regarding big calls, the `acled_api()` function will first estimate how much data you are requesting. Based on this, you will be prompted with a message which includes: the number of countries requested, the number of country-days, the number of API calls needed, and a question about whether you would like to proceed. Currently, `acled_api()` works with a threshold of 300,000 country-days to determine whether to split the function. This way, you can rest assured that the call will not hit any issues because it is too large (a problem some users encountered before), but also, you can now have more control over your API quota. 
 
-If users prefer to skip the interactive prompt, they can do so by using the argument `prompt = FALSE`. While this ignores the interactive prompt, the call will still be split if it reaches the threshold.
-
+If you prefer to skip the interactive prompt, set the argument to `prompt = FALSE`. While this ignores the interactive prompt, the call will still be split if it reaches the threshold.
 
 ## Example
 
-To see how this works in practice, we will show an example gathering events from Brazil from January 2022 to the present.
+To see how this works in practice, let's do an example of gathering events from Brazil from January 2022 to December 2022.
 
 ```{r}
 library(acledR)
@@ -108,48 +109,48 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 
 df_br <- acled_api(countries = c("Brazil"),
                    start_date = "2022-01-01",
-                   end_date = Sys.Date(),
+                   end_date = "2022-12-01",
                    monadic = F,
                    acled_access = TRUE,
                    prompt = F)
 ```
 
-The results return a tibble with each ACLED event in Brazil during this time period:
+This returns a tibble with each ACLED event in Brazil during this period:
 
 ```{r}
 df_br %>% 
   glimpse()
 ```
 
-If instead we wanted multiple countries, we could execute:
+If we wanted multiple countries, we could execute the following:
 
 ```{r}
 df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
-                      end_date = Sys.Date(),
+                      end_date = "2022-12-01",
                       monadic = F,
                       acled_access = TRUE,
                       prompt = F)
 ```
 
-For an entire region, we omit the `countries` parameter and supply a `regions` argument. Additionally, for only gathering protests we provide an event_type argument:
+For an entire region, we omit the `countries` parameter and supply a `regions` argument. Additionally, for only gathering protests, we provide an `event_type` argument:
 
 ```{r}
 df_sa <- acled_api(regions = c("South America"),
                    start_date = "2022-01-01",
-                   end_date = Sys.Date(),
+                   end_date = "2022-12-01",
                    event_type = "Protests",
                    monadic = F,
                    acled_access = TRUE,
                    prompt = F)
 ```
 
-To include time stamps from when to download the data, we add it as either a string ("yyyy-mm-dd") or as a numeric Unix time stamp:
+To utilize a *timestamp* to download the data, we add it as either a string ("yyyy-mm-dd") or as a numeric Unix timestamp:
 
 ```{r}
 df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
-                      end_date = Sys.Date(),
+                      end_date = "2022-12-01",
                       monadic = F,
                       # timestamp = "2022-01-24" -> in the case of string
                       timestamp = 1643056974, # -> in the case of a numeric Unix timestamp
@@ -157,24 +158,24 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       prompt = F)
 ```
 
-If we would like to include only one type of interaction, in this case "Rioters versus Civilians" = 57, we add the interaction code to the `extra` argument:
+If we would like to include only one type of *interaction*, in this case, "Rioters versus Civilians (57)", we add the *interaction* code to the `...` argument:
 
 ```{r}
 df_sa <- acled_api(countries = c("Brazil", "Colombia"),
                    start_date = "2022-01-01",
-                   end_date = "2022-04-30",
+                   end_date = "2022-12-01",
                    monadic = F,
                    ... = "&interaction=57",
                    acled_access = TRUE,
                    prompt = F)
 ```
 
-We could also request the monadic version of the data based on actor 1 and actor 2 by setting `monadic = TRUE`:
+We could also request the monadic version of the data by setting `monadic = TRUE`:
 
 ```{r}
 df_sa_monadic <- acled_api(regions = c("South America"),
                            start_date = "2022-01-01",
-                           end_date = Sys.Date(),
+                           end_date = "2022-12-01",
                            monadic = T,
                            acled_access = TRUE,
                            prompt = F)
