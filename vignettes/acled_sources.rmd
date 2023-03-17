@@ -11,6 +11,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, echo = FALSE}
+library(acledR)
+library(dplyr)
+
+```
 
 The Armed Conflict Location and Event Data database is a real time events dataset. ACLED does not report what occurs on the ground through eyewitnesses or reporters, as some other actors in the area do, but instead it collects reports from partners and media outlets across international, national and sub-national levels. ACLED currently has researchers across 56 countries collecting data from the entire world, through reading and analysing numerous media outlets and local partners. 
 
@@ -46,8 +51,6 @@ In the following example we will be exploring the use of sources and source scal
 
 
 ```{r}
-library(acledR)
-library(dplyr)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
@@ -56,7 +59,7 @@ df_geo <- acled_api(countries = c("Georgia"),
                    start_date = "2021-01-01",
                    end_date = "2022-01-01",
                    monadic = F,
-                   acled_access = TRUE,
+                   acled_access = T,
                    prompt = F)
 ```
 
