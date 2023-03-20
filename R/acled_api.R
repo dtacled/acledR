@@ -111,6 +111,16 @@ acled_api <- function(email = NULL,
 
   }
 
+  if(hasArg(Start_date)){
+    stop("Start_date is not a valid option. Please utilize \"start_date\", without capitalizing")
+
+  }
+
+  if(hasArg(End_date)){
+    stop("End_date is not a valid option. Please utilize \"end_date\", without capitalizing")
+
+  }
+
   # Required components
   base_url <- "https://api.acleddata.com/acled/read.csv?"
 
