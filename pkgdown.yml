@@ -17,8 +17,8 @@ articles:
   geography: geography.html
   get_started: get_started.html
   time: time.html
-last_built: 2023-03-09T07:13Z
+last_built: 2023-03-20T12:42Z
 urls:
-  reference: https://billingtt.github.io/acledR/reference
-  article: https://billingtt.github.io/acledR/articles
+  reference: https://acled.github.io/acledR/reference
+  article: https://acled.github.io/acledR/articles
 
