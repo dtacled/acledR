@@ -4,8 +4,9 @@
 ## Test that the function returns a tibble when given a valid input. ----
 test_that("function returns a tibble", {
   # create sample input data
-  df <- tibble(actor1 = c("A", "B"), actor2 = c("C", "D"),
+  df <- data.frame(actor1 = c("A", "B"), actor2 = c("C", "D"),
                assoc_actor_1 = c("X", "Y"), assoc_actor_2 = c("Z", "W"))
+  df <- as_tibble(df)
   actors <- c("A", "B")
 
   # call the function
@@ -19,11 +20,11 @@ test_that("function returns a tibble", {
 ## Test if the function returns the expected output when filtering by all actor columns ----
 test_that("Filter by all actors returns the expected output", {
   # Create a mock dataframe
-  df <- tibble::tribble(
-    ~actor1,                       ~actor2,                                   ~assoc_actor_1,                                   ~assoc_actor_2,
-    'Military Forces of Yemen',    'Yemeni Houthi rebels (Ansar Allah)',      'Al-Qaida in the Arabian Peninsula (AQAP)',      '',
-    'Yemeni Houthi rebels (Ansar Allah)', 'Military Forces of Yemen',          '',                                             '',
-    'Al-Qaida in the Arabian Peninsula (AQAP)', '',                           '',                                             ''
+  df <- data.frame(
+    actor1 = c('Military Forces of Yemen', 'Yemeni Houthi rebels (Ansar Allah)', 'Al-Qaida in the Arabian Peninsula (AQAP)'),
+    actor2 = c('Yemeni Houthi rebels (Ansar Allah)', 'Military Forces of Yemen', ''),
+    assoc_actor_1 = c('Al-Qaida in the Arabian Peninsula (AQAP)', '', ''),
+    assoc_actor_2 = c('', '', '')
   )
   actors <- c('Military Forces of Yemen', 'Yemeni Houthi rebels (Ansar Allah)')
   expected_df <- df[1:2, ]

@@ -49,6 +49,7 @@
 #' @import purrr
 #' @import lubridate
 #' @importFrom rlang .data
+#' @importFrom methods hasArg
 #' @export
 
 acled_api <- function(email = NULL,
