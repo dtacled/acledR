@@ -197,39 +197,39 @@ receive the prompt.</p>
 <p>The data you will receive, will be a data frame of the events
 throughout the request dates and the requested region/country. We can
 inspect the Argentinian data we gather now.</p>
-<pre><code><span><span class="co">#&gt; Rows: 2,676</span></span>
+<pre><code><span><span class="co">#&gt; Rows: 2,677</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
-<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715458, 9715459, 9715558, 9715572, 9715573,…</span></span>
-<span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
-<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG12064", "ARG1…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 12068, 11964, 11965, 12064, 12078, 12079, 11956, 1195…</span></span>
-<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-30, 2022-12-30, 2022-12-30, 2022…</span></span>
-<span><span class="co">#&gt; $ year             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022,…</span></span>
-<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,…</span></span>
-<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests", "Protests",…</span></span>
-<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful protest", "Pe…</span></span>
-<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Protesters (Ar…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "Health Workers (Argentina)", NA, "Labour Group (…</span></span>
-<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, 6,…</span></span>
-<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "…</span></span>
-<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 3…</span></span>
-<span><span class="co">#&gt; $ region           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", "S…</span></span>
-<span><span class="co">#&gt; $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina", "…</span></span>
-<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Chubut", "Santa Fe", "San Juan", "Ci…</span></span>
-<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Rawson", "Caseros", "Capital", NA, NA, "Me…</span></span>
-<span><span class="co">#&gt; $ admin3           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "Rawson", "Casilda", "San Juan", "Buenos A…</span></span>
-<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -43.2993, -33.0441, -31.5347, -34.6141, -34…</span></span>
-<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -65.0935, -61.1642, -68.5303, -58.4579, -58…</span></span>
-<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "Diario Cronica (Argentina)"…</span></span>
-<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "Subnational", "Subnational",…</span></span>
-<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a po…</span></span>
-<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 16732…</span></span>
-<span><span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG", "ARG", "ARG", "ARG", "ARG", "ARG", "ARG", "ARG…</span></span></code></pre>
+<span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG12064", "AR…</span></span>
+<span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-30, 2022-12-30, 2022-12-30, 20…</span></span>
+<span><span class="co">#&gt; $ year               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 202…</span></span>
+<span><span class="co">#&gt; $ time_precision     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Demonstrations", "Demonstrat…</span></span>
+<span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests", "Protests…</span></span>
+<span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful protest", "…</span></span>
+<span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Protesters (…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "Health Workers (Argentina)", NA, "Labor Group …</span></span>
+<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, …</span></span>
+<span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,…</span></span>
+<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
+<span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
+<span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina",…</span></span>
+<span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Chubut", "Santa Fe", "San Juan", "…</span></span>
+<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Rawson", "Caseros", "Capital", NA, NA, "…</span></span>
+<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "Rawson", "Casilda", "San Juan", "Buenos…</span></span>
+<span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -43.2993, -33.0441, -31.5347, -34.6141, -…</span></span>
+<span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -65.0935, -61.1642, -68.5303, -58.4579, -…</span></span>
+<span><span class="co">#&gt; $ geo_precision      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ source             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "Diario Cronica (Argentina…</span></span>
+<span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "Subnational", "Subnational…</span></span>
+<span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
+<span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "crowd size=no report", "crowd size=no report",…</span></span>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="transforming-the-data-from-the-api">Transforming the data from the API<a class="anchor" aria-label="anchor" href="#transforming-the-data-from-the-api"></a>
@@ -258,21 +258,21 @@ involved:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">arg_pf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">#&gt;   data_id   iso event_…¹ event…² event_date  year time_…³ event…⁴ sub_e…⁵ actor1</span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 9<span style="text-decoration: underline;">715</span>562    32 ARG12068   <span style="text-decoration: underline;">12</span>068 2022-12-31  <span style="text-decoration: underline;">2</span>022       1 Violen… Attack  Polic…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 9<span style="text-decoration: underline;">715</span>479    32 ARG11985   <span style="text-decoration: underline;">11</span>985 2022-12-22  <span style="text-decoration: underline;">2</span>022       1 Protes… Protes… Prote…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 9<span style="text-decoration: underline;">715</span>465    32 ARG11971   <span style="text-decoration: underline;">11</span>971 2022-12-20  <span style="text-decoration: underline;">2</span>022       1 Riots   Mob vi… Riote…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 9<span style="text-decoration: underline;">715</span>525    32 ARG12031   <span style="text-decoration: underline;">12</span>031 2022-12-13  <span style="text-decoration: underline;">2</span>022       1 Riots   Mob vi… Riote…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 9<span style="text-decoration: underline;">715</span>499    32 ARG12005   <span style="text-decoration: underline;">12</span>005 2022-12-11  <span style="text-decoration: underline;">2</span>022       1 Riots   Mob vi… Riote…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 9<span style="text-decoration: underline;">684</span>358    32 ARG11872   <span style="text-decoration: underline;">11</span>872 2022-12-02  <span style="text-decoration: underline;">2</span>022       1 Protes… Protes… Prote…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 21 more variables: assoc_actor_1 &lt;chr&gt;, inter1 &lt;dbl&gt;, actor2 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;, interaction &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt;   event…¹ event_date  year time_…² disor…³ event…⁴ sub_e…⁵ actor1 assoc…⁶ inter1</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG120… 2022-12-31  <span style="text-decoration: underline;">2</span>022       1 Politi… Violen… Attack  Polic… <span style="color: #BB0000;">NA</span>           1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG119… 2022-12-22  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Protes… Prote… <span style="color: #BB0000;">NA</span>           6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG119… 2022-12-20  <span style="text-decoration: underline;">2</span>022       1 Politi… Riots   Mob vi… Riote… <span style="color: #BB0000;">NA</span>           5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG120… 2022-12-13  <span style="text-decoration: underline;">2</span>022       1 Politi… Riots   Mob vi… Riote… <span style="color: #BB0000;">NA</span>           5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG120… 2022-12-11  <span style="text-decoration: underline;">2</span>022       1 Politi… Riots   Mob vi… Riote… <span style="color: #BB0000;">NA</span>           5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG118… 2022-12-02  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Protes… Prote… UTEP: …      6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 21 more variables: actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;, admin3 &lt;lgl&gt;, location &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, timestamp &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   iso3 &lt;chr&gt;, and abbreviated variable names ¹​event_id_cnty,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​event_id_no_cnty, ³​time_precision, ⁴​event_type, ⁵​sub_event_type</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   timestamp &lt;dbl&gt;, and abbreviated variable names ¹​event_id_cnty,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​time_precision, ³​disorder_type, ⁴​event_type, ⁵​sub_event_type, …</span></span></span></code></pre></div>
 <p>Alternatively, we may be interested in only a particular category of
 event types, for that, we utilize
 <code>acled_filter_categories()</code>. ACLED categorises certain event
@@ -289,15 +289,13 @@ Argentinian dataset:</p>
 <span>                               keep_all_events <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># option to keep all events with an extra column, or to filter events</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_cats</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 2,676</span></span>
+<span><span class="co">#&gt; Rows: 2,677</span></span>
 <span><span class="co">#&gt; Columns: 32</span></span>
-<span><span class="co">#&gt; $ data_id                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715458, 9715459, 9715558, 97155…</span></span>
-<span><span class="co">#&gt; $ iso                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
 <span><span class="co">#&gt; $ event_id_cnty                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG1…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 12068, 11964, 11965, 12064, 12078, 12079,…</span></span>
 <span><span class="co">#&gt; $ event_date                   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-30, 2022-12-30, 2022…</span></span>
 <span><span class="co">#&gt; $ year                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022,…</span></span>
 <span><span class="co">#&gt; $ time_precision               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span><span class="co">#&gt; $ disorder_type                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Demonstrations", "…</span></span>
 <span><span class="co">#&gt; $ event_type                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests",…</span></span>
 <span><span class="co">#&gt; $ sub_event_type               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful p…</span></span>
 <span><span class="co">#&gt; $ actor1                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Pr…</span></span>
@@ -307,6 +305,8 @@ Argentinian dataset:</p>
 <span><span class="co">#&gt; $ assoc_actor_2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ inter2                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7,…</span></span>
 <span><span class="co">#&gt; $ interaction                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 6…</span></span>
+<span><span class="co">#&gt; $ civilian_targeting           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ iso                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
 <span><span class="co">#&gt; $ region                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South …</span></span>
 <span><span class="co">#&gt; $ country                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "A…</span></span>
 <span><span class="co">#&gt; $ admin1                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Chubut", "Santa Fe", "Sa…</span></span>
@@ -320,8 +320,8 @@ Argentinian dataset:</p>
 <span><span class="co">#&gt; $ source_scale                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "Subnational", "S…</span></span>
 <span><span class="co">#&gt; $ notes                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos …</span></span>
 <span><span class="co">#&gt; $ fatalities                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span></span>
+<span><span class="co">#&gt; $ tags                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "crowd size=no report", "crowd size=n…</span></span>
 <span><span class="co">#&gt; $ timestamp                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 16732…</span></span>
-<span><span class="co">#&gt; $ iso3                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG", "ARG", "ARG", "ARG", "ARG", "ARG",…</span></span>
 <span><span class="co">#&gt; $ organized_political_violence <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,…</span></span></code></pre></div>
 <p>As we can see, this includes a new column with the name of the event
 category we are interested on (organized political violence), which
@@ -344,37 +344,37 @@ transform our data to be in long-form based on the actor column:</p>
 <span>                            type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> <span class="co"># The type of operation we want to do to transform the data</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 7,656</span></span>
+<span><span class="co">#&gt; Rows: 7,657</span></span>
 <span><span class="co">#&gt; Columns: 29</span></span>
-<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9715562, 9715562, 9715458, 9715458, 9715459, 9715558,…</span></span>
-<span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 3…</span></span>
-<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG12068", "ARG11964", "ARG11964", "ARG1…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 12068, 12068, 11964, 11964, 11965, 12064, 12064, 1207…</span></span>
-<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-31, 2022-12-30, 2022-12-30, 2022…</span></span>
-<span><span class="co">#&gt; $ year             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022,…</span></span>
-<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Violence against civil…</span></span>
-<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Attack", "Peaceful protest", "Peaceful pro…</span></span>
-<span><span class="co">#&gt; $ type_of_actor    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "actor1", "actor2", "actor1", "assoc_actor_1", "actor…</span></span>
-<span><span class="co">#&gt; $ actor            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Civilians (Arg…</span></span>
-<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,…</span></span>
-<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 6…</span></span>
-<span><span class="co">#&gt; $ region           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", "S…</span></span>
-<span><span class="co">#&gt; $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina", "…</span></span>
-<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Buenos Aires", "Chubut", "Chubut", "…</span></span>
-<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Moreno", "Rawson", "Rawson", "Caseros", "C…</span></span>
-<span><span class="co">#&gt; $ admin3           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "La Reja", "Rawson", "Rawson", "Casilda", …</span></span>
-<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -34.6397, -43.2993, -43.2993, -33.0441, -31…</span></span>
-<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -58.8294, -65.0935, -65.0935, -61.1642, -68…</span></span>
-<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "La Nacion (Argentina)", "Di…</span></span>
-<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "National", "National", "Subn…</span></span>
-<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a po…</span></span>
-<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 16732…</span></span>
-<span><span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG", "ARG", "ARG", "ARG", "ARG", "ARG", "ARG", "ARG…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG12068", "ARG11964", "ARG11964", "AR…</span></span>
+<span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-31, 2022-12-30, 2022-12-30, 20…</span></span>
+<span><span class="co">#&gt; $ year               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 202…</span></span>
+<span><span class="co">#&gt; $ time_precision     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Political violence", "Demons…</span></span>
+<span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Violence against civ…</span></span>
+<span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Attack", "Peaceful protest", "Peaceful p…</span></span>
+<span><span class="co">#&gt; $ type_of_actor      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "actor1", "actor2", "actor1", "assoc_actor_1", "act…</span></span>
+<span><span class="co">#&gt; $ actor              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Civilians (A…</span></span>
+<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, …</span></span>
+<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,…</span></span>
+<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", "Civilian targeting", NA, NA,…</span></span>
+<span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
+<span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
+<span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina",…</span></span>
+<span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Buenos Aires", "Chubut", "Chubut",…</span></span>
+<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Moreno", "Rawson", "Rawson", "Caseros", …</span></span>
+<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "La Reja", "Rawson", "Rawson", "Casilda"…</span></span>
+<span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -34.6397, -43.2993, -43.2993, -33.0441, -…</span></span>
+<span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -58.8294, -65.0935, -65.0935, -61.1642, -…</span></span>
+<span><span class="co">#&gt; $ geo_precision      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ source             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "La Nacion (Argentina)", "…</span></span>
+<span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "National", "National", "Su…</span></span>
+<span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
+<span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, "crowd size=no report", "crowd size=no repo…</span></span>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre></div>
 <p>In our new data frame, we no longer have four actor columns
 (actor1,actor2,assoc_actor1,assoc_actor2), but instead we only have 1
 actor column, with one row per actor.</p>

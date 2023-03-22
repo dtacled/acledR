@@ -186,7 +186,7 @@ assumptions:</p>
 A relatively smaller dataset and its data was gathered on the 25th of
 July 2022.</p>
 <p>Lets check if there are any deleted events since then.</p>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">137318</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">137337</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
 <span><span class="co">## <span style="color: #BB0000;">chr</span> (1): event_id_cnty</span></span>
@@ -196,11 +196,11 @@ July 2022.</p>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">acled_deleted_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rows: 137,318</span></span>
+<pre><code><span><span class="co">## Rows: 137,337</span></span>
 <span><span class="co">## Columns: 2</span></span>
-<span><span class="co">## $ event_id_cnty     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "MMR45944", "MZM3257", "MMR45635", "COL19388", "BRA6…</span></span>
-<span><span class="co">## $ deleted_timestamp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1678806852, 1678730779, 1678817298, 1678753295, 1678…</span></span></code></pre>
-<p>Quite a lot of deleted events, 137318. Lets check if any of these are
+<span><span class="co">## $ event_id_cnty     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "IRQ45035", "JAM1793", "IND127896", "MMR45944", "MMR…</span></span>
+<span><span class="co">## $ deleted_timestamp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1679351475, 1679343524, 1679412000, 1678806852, 1679…</span></span></code></pre>
+<p>Quite a lot of deleted events, 137337. Lets check if any of these are
 part of my dataset.</p>
 <pre><code><span><span class="co">## [1] 0</span></span></code></pre>
 <p>As shown by the number of rows (0), there are no deleted events! …
@@ -221,7 +221,7 @@ may not be that lucky.</p>
 the last time we gather data.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deleted_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_deletions_api.html">acled_deletions_api</a></span><span class="op">(</span>date_deleted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dummy_acled_file</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span><span class="op">)</span> <span class="co"># We are using the largest Unix timestamp as that is the last time we gathered data. </span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">1575</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">1594</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
 <span><span class="co">## <span style="color: #BB0000;">chr</span> (1): event_id_cnty</span></span>
@@ -231,8 +231,8 @@ the last time we gather data.</p>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deleted_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 1575</span></span></code></pre>
-<p>As we can see 1575 events have been removed since the last time I
+<pre><code><span><span class="co">## [1] 1594</span></span></code></pre>
+<p>As we can see 1594 events have been removed since the last time I
 uploaded my data. Now that we know there are deleted events, lets check
 if any of these are in my dataset.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">

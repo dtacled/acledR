@@ -232,15 +232,15 @@ look at fatalities in violence against civilians across 2021 and 2022
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">##  fatalities     n percent</span></span>
-<span><span class="co">##           1 24255    0.46</span></span>
-<span><span class="co">##           0 19296    0.37</span></span>
-<span><span class="co">##           2  4436    0.08</span></span>
+<span><span class="co">##           1 24263    0.46</span></span>
+<span><span class="co">##           0 19307    0.37</span></span>
+<span><span class="co">##           2  4438    0.08</span></span>
 <span><span class="co">##           3  1843    0.04</span></span>
 <span><span class="co">##           4   748    0.01</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">df_years</span><span class="op">$</span><span class="va">fatalities</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##   0.000   0.000   1.000   1.212   1.000 400.000</span></span></code></pre>
+<span><span class="co">##   0.000   0.000   1.000   1.213   1.000 400.000</span></span></code></pre>
 <p>As we can see, our fatalities are for the most part concentrated in
 between 0 and 1, with the average being of 1.21 fatalities per event.
 That in itself it is a noticeable aspect, but we would like to go beyond
@@ -259,9 +259,9 @@ this. We will set these in categories of tenths.</p>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  fatalities_bins     n percent</span></span>
-<span><span class="co">##          1 to 10 32515    0.62</span></span>
-<span><span class="co">##                0 19296    0.37</span></span>
-<span><span class="co">##        11 to 100   500    0.01</span></span>
+<span><span class="co">##          1 to 10 32525    0.62</span></span>
+<span><span class="co">##                0 19307    0.37</span></span>
+<span><span class="co">##        11 to 100   502    0.01</span></span>
 <span><span class="co">##      101 to 1000    14    0.00</span></span></code></pre>
 <p>Now that we have a better understanding on how our fatalities data
 set is distributed, lets look at its evolution across 2021 and 2022.</p>

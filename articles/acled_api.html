@@ -269,39 +269,39 @@ period:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 12,909</span></span>
+<span><span class="co">#&gt; Rows: 12,911</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
-<span><span class="co">#&gt; $ data_id          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9684434, 9684440, 9684442, 9684449, 9684459, 9684461,…</span></span>
-<span><span class="co">#&gt; $ iso              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 7…</span></span>
-<span><span class="co">#&gt; $ event_id_cnty    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA61584", "BRA61590", "BRA61592", "BRA61599", "BRA6…</span></span>
-<span><span class="co">#&gt; $ event_id_no_cnty <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 61584, 61590, 61592, 61599, 61609, 61611, 61621, 6162…</span></span>
-<span><span class="co">#&gt; $ event_date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-01, 2022-12-01, 2022-12-01, 2022-12-01, 2022…</span></span>
-<span><span class="co">#&gt; $ year             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022,…</span></span>
-<span><span class="co">#&gt; $ time_precision   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ event_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Battles", "Battles", "Battles", "Battles", "Battles"…</span></span>
-<span><span class="co">#&gt; $ sub_event_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Armed clash", "Armed clash", "Armed clash", "Armed c…</span></span>
-<span><span class="co">#&gt; $ actor1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Armed Group (Brazil)", "Unidentified Ar…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ inter1           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6, 6,…</span></span>
-<span><span class="co">#&gt; $ actor2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Armed Group (Brazil)", "Unidentified Ar…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "Former Unidentif…</span></span>
-<span><span class="co">#&gt; $ inter2           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ interaction      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33, 33, 33, 33, 33, 33, 37, 37, 37, 37, 37, 37, 37, 3…</span></span>
-<span><span class="co">#&gt; $ region           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", "S…</span></span>
-<span><span class="co">#&gt; $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Brazil", "Brazil", "Brazil", "Brazil", "Brazil", "Br…</span></span>
-<span><span class="co">#&gt; $ admin1           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Rio de Janeiro", "Amazonas", "Bahi…</span></span>
-<span><span class="co">#&gt; $ admin2           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Rio de Janeiro", "Manaus", "Salvad…</span></span>
-<span><span class="co">#&gt; $ admin3           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ location         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro - North Zone", "Rio de Janeiro - West…</span></span>
-<span><span class="co">#&gt; $ latitude         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -22.8569, -22.9147, -3.1019, -12.9711, -7.1150, -12.5…</span></span>
-<span><span class="co">#&gt; $ longitude        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -43.3008, -43.4879, -60.0250, -38.5108, -34.8631, -55…</span></span>
-<span><span class="co">#&gt; $ geo_precision    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ source           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "OTT-RJ", "OTT-RJ", "A Critica", "G1", "G1; Portal T5…</span></span>
-<span><span class="co">#&gt; $ source_scale     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "New media", "New media", "Subnational", "National", …</span></span>
-<span><span class="co">#&gt; $ notes            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 1 December 2022, in Rio de Janeiro - North Zone (…</span></span>
-<span><span class="co">#&gt; $ fatalities       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 1, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,…</span></span>
-<span><span class="co">#&gt; $ timestamp        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1670269342, 1670269342, 1670269342, 1670269342, 16702…</span></span>
-<span><span class="co">#&gt; $ iso3             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA", "BRA…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA61584", "BRA61590", "BRA61592", "BRA61599", "BR…</span></span>
+<span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-01, 2022-12-01, 2022-12-01, 2022-12-01, 20…</span></span>
+<span><span class="co">#&gt; $ year               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 202…</span></span>
+<span><span class="co">#&gt; $ time_precision     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Political violence", "Politi…</span></span>
+<span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Battles", "Battles", "Battles", "Battles", "Battle…</span></span>
+<span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Armed clash", "Armed clash", "Armed clash", "Armed…</span></span>
+<span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Armed Group (Brazil)", "Unidentified …</span></span>
+<span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6, …</span></span>
+<span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unidentified Armed Group (Brazil)", "Unidentified …</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "Former Unident…</span></span>
+<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 3, 3, 3, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33, 33, 33, 33, 33, 33, 37, 37, 37, 37, 37, 37, 37,…</span></span>
+<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "Civilian targeting", "Civi…</span></span>
+<span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76,…</span></span>
+<span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
+<span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Brazil", "Brazil", "Brazil", "Brazil", "Brazil", "…</span></span>
+<span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Rio de Janeiro", "Amazonas", "Ba…</span></span>
+<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro", "Rio de Janeiro", "Manaus", "Salv…</span></span>
+<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rio de Janeiro - North Zone", "Rio de Janeiro - We…</span></span>
+<span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -22.8569, -22.9147, -3.1019, -12.9711, -7.1150, -12…</span></span>
+<span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -43.3008, -43.4879, -60.0250, -38.5108, -34.8631, -…</span></span>
+<span><span class="co">#&gt; $ geo_precision      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ source             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "OTT-RJ", "OTT-RJ", "A Critica", "G1", "G1; Portal …</span></span>
+<span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "New media", "New media", "Subnational", "National"…</span></span>
+<span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 1 December 2022, in Rio de Janeiro - North Zone…</span></span>
+<span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 1, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1670269342, 1670269342, 1670269342, 1670269342, 167…</span></span></code></pre></div>
 <p>If we wanted multiple countries, we could execute the following:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
@@ -354,7 +354,7 @@ this case, “Rioters versus Civilians (57)”, we add the
 <span>                           prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In both the dyadic and monadic versions, the API returns 364 unique
 events. However, the number of unique entries for the dyadic version is
-also 364, while it’s 43749 for the monadic version.</p>
+also 364, while it’s 43764 for the monadic version.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
