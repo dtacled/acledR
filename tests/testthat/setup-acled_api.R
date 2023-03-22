@@ -9,9 +9,9 @@ received_data_numeric_region <- acled_api(email = "acledexamples@gmail.com", key
 log_received_data_check_credential <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",regions = c("Western Africa", "Eastern Africa", "Europe"),end_date = "2022-12-31",prompt = F, acled_access = T, log = T)
 
 
-columns <- c("data_id","iso","event_id_cnty","event_id_no_cnty","event_date","year","time_precision",
+columns <- c("event_id_cnty","event_date","year","time_precision","disorder_type",
              "event_type","sub_event_type","actor1","assoc_actor_1","inter1","actor2","assoc_actor_2",
-             "inter2","interaction","region","country","admin1","admin2","admin3","location","latitude",
-             "longitude","geo_precision","source","source_scale","notes","fatalities","timestamp","iso3")
+             "inter2","interaction","civilian_targeting","iso","region","country","admin1","admin2","admin3","location","latitude",
+             "longitude","geo_precision","source","source_scale","notes","fatalities","tags","timestamp")
 
 

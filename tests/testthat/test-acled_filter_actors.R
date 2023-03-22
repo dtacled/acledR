@@ -75,3 +75,18 @@ test_that("function throws error if filter_cols argument is not 'all' or 'primar
   df <- data.frame(actor1 = c("A", "B"), actor2 = c("C", "D"))
   expect_error(acled_filter_actors(df, actors = c("A"), filter_cols = 'All'),"filter_cols argument must be 'all' or 'primary'.")
 })
+
+
+
+# Regex related ----
+## Test with multiple actor names and parentheses
+test_that("Test that regex can handle multiple actor names and parentheses",{
+  df <- data.frame(
+    actor1 = c("Actor A", "Actor B"),
+    actor2 = c("Actor C", "Actor D"),
+    assoc_actor_1 = c("Actor A (Group 1); Actor E", "Actor F; Actor B (Group 2)"),
+    assoc_actor_2 = c("Actor G", "Actor H; Actor C (Group 3)"))
+  actors <- c("Actor A (Group 1)", "Actor C (Group 3)")
+  filtered_df <- acled_filter_actors(df, actors)
+  expect_equal(nrow(filtered_df), 2)
+})
