@@ -32,16 +32,13 @@ acled_access <- function(email,key) {
       stop(paste0("Error: ",out$error$message, ". Error code: ", out$status))
     }} else {
 
+      if(out$status == 200) {
+        message("Success! Credentials authorized")
+      }
+
       Sys.setenv(acled_email = email)
       Sys.setenv(acled_key = key)
 
-
-      if(out$status == 200) {
-        message("Success! Credentials authorized")
-        return("Success! Credentials authorized")
-      }
-
-      return(out$message)
     }
 
 }

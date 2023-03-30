@@ -75,14 +75,14 @@ acled_api <- function(email = NULL,
       stop("Error in credentials: \n  acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
     }
 
-  } else if ((acled_access == TRUE)&(!is.null(email)|!is.null(key))){
+  } else if ((acled_access %in% c(TRUE,T))&(!is.null(email)|!is.null(key))){
     message("acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
   }
 
 
   # Stoppers for typos
 
-  if(hasArg(country) | hasArg(Country)){
+  if(hasArg("country") | hasArg("Country")){
     stop("Country is not a valid option. Please utilize \"countries\"")
 
   }

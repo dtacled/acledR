@@ -113,7 +113,6 @@ As we can see, this includes a new column with the name of the event category we
 Finally, considering that ACLED data is structured into wide-form, it may be of use for some users to have the data into long-form instead. If users are interested only in ACLED monadic data, they can opt to make the API call with the monadic option set to TRUE, however, that is an standalone call. If users are interested on getting data into dyadic form, that would entail another independent call. Thus, it may be useful for some users to request the data as normal, and make any transformation after making the API call, without utilizing more API calls of their limited quota. In such cases, users can utilize `acled_transform()`. In this example we are going to transform our data to be in long-form based on the actor column:
 
 ```{r}
-
 arg_long <- acled_transform(argentinian_data, # data
                             type = "full_actors") # The type of operation we want to do to transform the data
 

@@ -22,17 +22,21 @@ acled_regen <- function(df,column) {
     stop("Please indicate a dataframe where to add the column")
   }
 
-  if(column == "event_id_no_cnty"){
-    if("event_id_cnty" %in% colnames(df)){
+  if(is.null(column)){
+    stop("Please indicate a column in the column argument, make sure it is a string and without any typos")}
 
+  if(column == "event_id_no_cnty"){
+
+    if("event_id_cnty" %in% colnames(df)){
     df <- df %>%
       dplyr::mutate(event_id_no_cnty = stringr::str_extract(.data$event_id_cnty, '\\d+'))}
     else {"To regenerate the event_id_no_cnty column, the referenced data frame must include the event_id_cnty column."}
-  } else if(is.null(column)){
-    stop("Please indicate a column in the column argument, make sure it is as string and without any typos")}
-  else if(column == "ISO3" | column == "iso3"){
+
+  } else if(column %in% c("ISO3","iso3")){
     df <- df %>%
       dplyr::mutate(iso3 = countrycode(sourcevar=.data$iso,origin="iso3n",destination="iso3c"))
+  } else {
+    stop("Column not found, please make sure that column is an available option. See acled_regen.")
   }
 }
 

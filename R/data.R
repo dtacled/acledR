@@ -125,3 +125,14 @@
 #' \item{fatalities}{The number of reported fatalities which occurred during the event}
 #' \item{timestamp}{Numeric code of time}}
 "acled_deletion_old_dummy_n3"
+
+#' ACLED interaction codes
+#'
+#' ACLED interaction and actor types
+#'
+#' @family Data
+#' @format A data frame:
+#' \describe{
+#' \item{Inter1/Inter2}{Actor type}
+#' \item{Numeric code}{Numeric equivalent found in the inter1 and inter2 column. }}
+"acled_interaction_codes"

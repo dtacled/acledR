@@ -1,5 +1,5 @@
 test_that("It shows that it works", {
-  expect_equal(acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5"), "Success! Credentials authorized")
+  expect_message(acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5"), "Success! Credentials authorized")
 })
 
 test_that("It shows that is doesn't work", {

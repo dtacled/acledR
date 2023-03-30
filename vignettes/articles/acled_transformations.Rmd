@@ -4,8 +4,8 @@ output: html_document
 date: "2022-11-11"
 vignette: >
   %\VignetteIndexEntry{Transformation of ACLED data}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r loading packs, echo = F, message=FALSE}
@@ -15,20 +15,19 @@ library(acledR)
 library(dplyr)
 ```
 
-
 ## 1. Filter functions
 
-ACLED’s data utilizes a wide-format. While this is an easier format for humans to read, it is not the same case for computer. The computer is not aware at first that we are trying to look for values that could be in multiple columns, unless it is told so and it is told how to behave when finding similar values in multiple columns. For that matter, sometimes it can take a couple of lines of code to properly filter data in ACLED's dataset when we are trying to get variables inside wide-formatted columns such as actor 1 , actor 2, assoc actors, and sources.
+ACLED's data utilizes a wide format. While this is an easier format for humans to read, it is not the same case for computers.
 
-Because of that, `acledR` includes two particular functions made to easily filter the data across all of these columns, while retaining the same structure. 
+For that matter, sometimes it can take a couple of lines of code to properly filter data in ACLED's dataset when we are trying to get variables inside wide-formatted columns such as *actor1*, *actor 2*, *assoc_actor_1*,*assoc_actor_2*, and *source*.
 
-### 1.1. acled_filter_actor. 
+Because of that, `acledR` includes two particular functions to easily filter the data across all of these columns while retaining the same structure.
 
-The actor columns are a prime example of those extra steps users would have to make to actually filter their data to one or multiple actors. That is because actors could be found across four different columns, requires using either multiple filters, or multiple conditions, making it slightly tedious to write. 
+### 1.1. `acled_filter_actor()`.
 
-Thus, the package includes the `acled_filter_actor()` function, which filters the data to the desired actors. 
+Operating across actor columns is a prime example of the extra steps users must do to circumvent the column's wide format. Actors are found across four columns, requiring multiple filters or conditions, making filtering slightly tedious.
 
-The function is structured as follows:
+Thus, the package includes the `acled_filter_actor()` function, which filters the data to the desired actors. The function is structured as follows:
 
 ```{r, eval = FALSE}
 
@@ -38,62 +37,57 @@ acled_filter_actors(df,
 
 ```
 
-The function is relatively straight forward, taking three arguments: 
+The function is relatively straightforward, taking three arguments:
 
-* `df`: the dataset of interest, 
-* `actors`: a character vector of the actors which we are interested in filtering by,
-* `filter_cols`: a character vector of the columns where to check for the actor(s) to filter. 
+-   `df`: the dataset of interest,
+-   `actors`: a character vector of the actors that you are interested in filtering by,
+-   `filter_cols`: a character vector of the columns where to check for the actor(s) to filter.
 
-For `filter_cols` we can utilize a vector with the names of the different actor columns, like `filter_cols = c(“actor1”,”actor2”)`’, or we leave it blank which defaults in filtering in all columns. Please note that if we utilize the option `filter_cols = ‘all'`,  the `df` to be provided has to follow ACLED’s structure, and thus it must have an assoc_actor_1 or assoc_actor_2 column.
+For `filter_cols`, you can utilize a vector with the names of the different actor columns, like `filter_cols = c(“actor1”,”actor2”)`', or we can leave it blank, which defaults in filtering in all columns.
 
-The function returns a dataset which look like the original dataset, but with the data filtered. 
+**Note:** that if we utilize the option `filter_cols = ‘all'`, the `df` you provide must follow ACLED's structure, and thus it must have an *assoc_actor_1* or *assoc_actor_2* column.
 
-### 1.2 acled_filter_event_types.
+### 1.2 `acled_filter_event_types()`.
 
-As users may find in ACLED’s [methodology guides](https://acleddata.com/download/2827/), we have defined clusters of events types that tend to describe specific categories of political violence or disorder. These are:
+As users may find in ACLED's [methodology guides](https://acleddata.com/download/2827/), we have defined clusters of event types that tend to describe specific categories of political violence or disorder. These are:
 
-
-```{r table_of_categories}
-
-table_of_categories <- acledR::acled_event_categories %>%
+```{r table_of_categories, echo=FALSE}
+acledR::acled_event_categories %>%
+  mutate(political_violence = cell_spec(political_violence, "html", background = ifelse(as.numeric(political_violence) > 0, "blue", "white"), color = ifelse(as.numeric(political_violence) > 0, "blue", "white")),
+         organized_political_violence = cell_spec(organized_political_violence, "html", color = ifelse(as.numeric(organized_political_violence) > 0, "blue", "white"), background = ifelse(as.numeric(organized_political_violence) > 0, "blue", "white")),
+         disorder = cell_spec(disorder, "html", background = ifelse(as.numeric(disorder) > 0, "blue", "white"), color = ifelse(as.numeric(disorder) > 0, "blue", "white")),
+         demonstrations = cell_spec(demonstrations, "html", background = ifelse(as.numeric(demonstrations) > 0, "blue", "white"), color = ifelse(as.numeric(demonstrations) > 0, "blue", "white")))%>%
   select(-event_type) %>%
-  kbl() %>%
-  kable_styling() %>%
+  kable(format = "html", escape = F) %>%
+  kable_styling(fixed_thead = T) %>%
+  column_spec(2:5,color="white")%>%
   pack_rows(group_label = "Battles", start_row = 1,end_row = 3) %>%
   pack_rows(group_label = "Explosions/Remote violence",start_row=4,end_row = 9) %>%
   pack_rows(group_label = "Protests",start_row = 10, end_row = 12) %>%
   pack_rows(group_label = "Riots", start_row = 13, end_row = 14) %>%
   pack_rows(group_label = "Strategic developments", start_row = 15, end_row = 22) %>%
-  pack_rows(group_label = "Violence against civilians", start_row = 23, end_row = 25) %>%
-  column_spec(2, color = spec_color(acledR::acled_event_categories$political_violence))
-
+  pack_rows(group_label = "Violence against civilians", start_row = 23, end_row = 25)
 ```
 
-The table helps illustrates the conditional statements that lead to these categories, however, it also hints at how time-consuming it may be to filter these categories manually. For that reason, we have included in the package a function to aid in filtering these categories. This is very useful when users want to recreate outputs like regional overviews, which make use of these categories. This is how the function looks:
+The table helps to illustrate the conditional statements that lead to these categories; while also hinting at how time-consuming it may be to filter these categories manually. For that, the package includes the `acled_filter_event_types()` function:
 
-``` {r fet function, eval = FALSE}
+```{r fet function, eval = FALSE}
 acled_filter_event_types(data,
                   acled_categories,
                   keep_all_events = FALSE)
 ```
 
 `acled_filter_event_types()` requires three arguments:
-*`data`: ACLED data frame, like the result from `acled_api()`.
-*`acled_categories`: a character vector of the categories by which we will filter.
-*`keep_all_events` : a logical statement to specify if we want to filter out events. When we se indicate `keep_all_events = FALSE` we are telling the function to return only the events within the requested categories. On the contrary, if it is `TRUE`, then the return data frame will include new columns to indicate if the given event was part of the specified category. 
 
+-   `data`: ACLED data frame, like `acled_api()`'s output.
 
-## 2. acled_transform()
+-   `acled_categories`: a character vector of the categories by which we will filter.
 
-As introduced above, ACLED's data is stored in a wide-form which makes it easier for humans to read, but slightly harder for computers to operate with. An example for this is in network analysis, where we often find the need to operate with long-form tables, to accurately extract the information we require. For example, if one would like to construct a node list of ACLED's data, it would often struggle with the multiplicity of columns which imply actors, and the fact that these contain 0 or more actors in some of their cells. 
+-   `keep_all_events`: a logical statement to specify if we want to filter out events. When indicating `keep_all_events = FALSE`, the function returns only the events within the requested categories. On the contrary, if it is `TRUE`, the returned data frame will include new binary columns to indicate if the given event was part of the specified category.
 
-To make these type of operations, we require to transform our dataset, from wide to long. That is, we need to transpose our data from having columns with mutiple values per cell, to one value per cell and the least number of columns possible. Thus, when we speak about transposing a column, we are making it have one value per cell, and we are making it into rows instead of columns, hence making the table longer but not wider. 
+## 2. `acled_transform()`
 
-To make matters simplier, users of this package will be able to utilize the `acled_transform()` function of the package to transform their datasets from wide to long. While the ACLED API includes an option to provide a monadic file, this function provides some extra benefits relative to the API's approach:
-  + Users can "save" API calls by providing already-gathered dyadic dataset, whereas the API monadic options requires two distict calls for a monadic and a dyadic dataset. 
-  + Users are able to fully pivot the dataset to their desired option. ACLED's dataset includes several columns that users may be interested on transposing, namely: **actor 1 & 2, associated_actor 1 & 2, source**. The API only transforms data by actor 1 & actor 2. (**RECHECK**)
-
-`acled_transform()` is composed as follows:
+The last function in our family of data manipulation functions is `acled_transform()`. `acled_transform()` was created to aid you in switching from a wide format to a long form, if required, without the need to make a new API call with the monadic option.
 
 ```{r setup, eval = FALSE}
 
@@ -102,71 +96,97 @@ acled_transform(data,
 
 ```
 
-`acled_transform()` requires two arguments:
-*`data`: The dataset to transform (has to follow ACLED's structure)
-*`type`: A character vector indicating which columns to transpose. See below the available categories. 
+`acled_transform()` requires two arguments: \* `data`: The dataset to transform (has to follow ACLED's structure) \* `type`: A character vector indicating which columns to transpose. See below the available categories.
 
 These are the available options to transpose the ACLED data, which we indicate through the `type` argument:
-  + full_actor: Transposes all the actor columns in the dataset (actor 1, actor 2, associated_actor_1, associated_actor_2)
-  + main_actors: Transposes only actor 1 and actor 2. 
-  + assoc_actors: Transposes only associated actor columns. 
-  + source: Transposes only the source column. 
-  + all: transposes all of the aforementioned columns (actor 1, actor 2, associated_actor_1, associated_actor_2, source)
 
+1.  `full_actor`: Transposes all the actor columns in the dataset (*actor1*, *actor2*, *assoc_actor_1*, *assoc_actor_2*).
+
+2.  `main_actors`: Transposes only *actor1* and *actor2*.
+
+3.  `assoc_actors`: Transposes only *assoc_actor_1* and *assoc_actor_2* columns.
+
+4.  `source`: Transposes only the *source* column.
+
+5.  `all`: Transposes all of the aforementioned columns (*actor1*, *actor2*, *assoc_actor_1*, *assoc_actor_2*, *source*).
+
+While the ACLED API includes an option to provide a monadic file, this function offers some extra benefits relative to the API's approach:
+
+-   Users can "save" API calls by providing an already-gathered dyadic dataset, whereas the API monadic options require two distinct calls for a monadic and a dyadic dataset.
+
+-   Users can pivot the dataset to their desired option. ACLED's dataset includes several columns that users may be interested in transposing: *actor1 & actor2*, *assoc_actor_1*, *assoc_actor_2*, and *source*. The API only pivots the *actor1* & *actor2* columns into one *actor1* column, and the *assoc_actor_1* & *assoc_actor_2* columns into one *assoc_actor_1* column.
 
 ## acledR Example
 
-Assume that we are trying to do a network analysis of ACLED data, more specifically of events in Argentina during June 2022. A crucial step for every network analysis is creating an edges and nodes lists/data frames. For the purpose of the example we will be looking to create the nodes list, an unique list of actors present in the dataset. Given the structure of the ACLED's dyadic dataset, there are four columns to consider: actor 1, actor 2, associated_actor_1, and associated_actor_2. 
+Assume that you are trying to do a network analysis of actor interactions in events of Argentina across 2022; more specifically, you want to start analyzing the interactions of the "Mapuche Indigenous Militia (Argentina)".
 
-To create the list one could:
- 1. Gather ACLED data
- 2. Find every unique actor in actor_1
- 3. Find every unique actor in actor_2
- 4. Find every unique actor in associated_actor_1
- 5. Find every unique actor in associated_actor_2
- 6. Join these lists
- 7.  Find the unique actors in the joined lists. 
-
-However, with `acled_transform()` we can save ourselves from doing steps 2 to 6 and let the function do it for us. 
-
-First, we grab ACLED data. 
+First, you should collect ACLED data and filter it to events featuring the "Mapuche Indigenous Militia (Argentina)", `acled_filter_actors()` can help you with that.
 
 ```{r, eval=TRUE}
 library(acledR)
+library(dplyr)
+library(igraph)
 
+# Provide your credentials
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
+# Request the Argentinian dataset for 2022
 argen_acled <- acled_api(countries = "Argentina",
-                         start_date = "2022-06-01",
-                         end_date="2022-06-30", 
+                         year = 2022, 
                          acled_access = TRUE,
-                         prompt = FALSE)
+                         prompt = FALSE, 
+                         log = F)
 
-head(argen_acled)
-
+# Filter to include only the interactions of your desired actor
+mapu_argen <- acled_filter_actors(argen_acled, "Mapuche Indigenous Militia (Argentina)")
 ```
 
-The code above provides us with the dataset of events in Argentina during June 2022. 
+A crucial step for every network analysis is creating edges and node lists. Given the structure of ACLED's dyadic dataset, there are two columns to consider: *actor1* and *actor2*.
 
-After this we need to transform our dataset to long form, where each actor is a new row. For that we use `acled_transform()`:
+You need to transform the dataset towards a long form, where each *actor1* and *actor2* are in a new row in a single column. For that, you can use `acled_transform()`:
 
 ```{r, eval=TRUE}
-
-argen_acled_long_actors <- acled_transform(argen_acled,type = "full_actors")
+mapu_actors <- acled_transform(mapu_argen,type = "main_actors")
   
-print(argen_acled)
+head(mapu_actors)
 ```
 
-Now we have a dataset where every row contains only one actor, meaning that now we only have to look for uniques in the new dataset's actor column. For this, we will utilize `dplyr::distinct()`. 
+Now you can start creating the node list by collecting all the unique actors in the dataset.
 
 ```{r, eval=TRUE}
+mapu_node_list <- mapu_actors %>%
+  distinct(actor)
 
-argen_acled_nodes <- argen_acled_long_actors %>%
-  dplyr::distinct(actor) ## When utilizing the option "full_actors", the actors will be stored in the column named "actor"
+print(mapu_node_list)
+```
 
-argen_acled_nodes 
+Building the edge list (who interacted with whom) is easy with ACLED data. Our data includes *actor1* and *actor2* columns to identify the main actors in an event, so you need to subset our data frame to have these two columns. You can keep some other data as it adds context to the interactions.
+
+```{r}
+mapu_edges <- mapu_argen %>%
+  select(actor1,actor2,event_id_cnty,fatalities,event_type,sub_event_type)
+```
+
+Now that you have your nodes and edges lists, create a simple network graph of actor interactions. The one thing that is key to remember is that ACLED stores actors in *actor1* and *actor2* regardless of who initiated the event. Thus, interactions in ACLED data are always undirected.
+
+```{r}
+# Create the igraph object
+mapu_undirected <- igraph::graph_from_data_frame(
+  mapu_edges, 
+  vertices = mapu_node_list, 
+  directed = FALSE
+)
+
+# Separate the ego network of the Mapuche Militia
+mapu_ego <- make_ego_graph(mapu_undirected, order=1, c("Mapuche Indigenous Militia (Argentina)"))
+
+set.seed(69)
+plot(mapu_ego[[1]], layout=layout.fruchterman.reingold, 
+     main="Ego network of the Mapuche Indigenous Militia (Argentina)",
+     vertex.label.dist=-3)
 
 ```
 
-From this point onwards, if our research requires so, we can add descriptions or attributes to our node list, but the code above provided us with a unique dataframe of actors in our dataset - in just a few lines of code. 
+As you can see, through 2022, the "Mapuche Indigenous Militia (Argentina)" interacted mostly with the "Civilians (Argentina)" and also with the police forces of the country of both the Mauricio Macri 2015-2019 government and Alberto Fernandez (current) governments.
 
+This is a basic example of how to start exploring actor interactions with the ACLED dataset and how to use the transformation functions to shape the dataset structure to fit your methodological requirements.

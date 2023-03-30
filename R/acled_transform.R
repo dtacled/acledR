@@ -30,44 +30,100 @@
 #' @export
 #' @importFrom rlang .data
 
+acled_transform <- function(data,type="full_actors") {
 
 
+  ## types: full_actors, main_actors,assoc_actors,source, all
 
-acled_transform <- function(data,type="full_actors"){ ## types: full_actors, main_actors,assoc_actors,source, all
+  columns_present <- function(df, cols) {
+    all(sapply(cols, function(x) !is.na(match(x, names(df)))))
+  }
+
+  if(!(columns_present(data,c("actor1","actor2","assoc_actor_1","assoc_actor_2","sub_event_type","source_scale","source")))){
+    stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
+  }
+
 
   if(type == "full_actors") { ## full actor -> pivot + separate into rows all actor columns
+    if(any(grepl("[;]",data$actor1))){
+      stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    } else if(any(grepl("[;]",data$actor2))){
+      stop("Your actor2 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    }
     separated_data <- data %>%
       pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows(.data$actor, sep = ";") %>%
-      filter(.data$actor != "") %>%
+      separate_rows(actor, sep = ";") %>%
+      # filter(actor != "") %>%
       relocate(c("type_of_actor","actor"),.after="sub_event_type")%>%
-      mutate(actor = str_trim(.data$actor))
+      mutate(actor = str_trim(actor)) %>%
+      pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
+      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
+      relocate(c("inter_type","inter"),.after="actor")
+
+    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
+
+    if(0 %in% nchar(separated_data$actor)){
+      warning("There are empty rows in the actor column.")
+    }
   }else if (type == "main_actors"){ ## main_actors -> only pivot actor columns
+    if(any(grepl("[;]",data$actor1))){
+      stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    } else if(any(grepl("[;]",data$actor2))){
+      stop("Your actor2 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    }
     separated_data <- data %>%
       pivot_longer(cols = c("actor1","actor2"),names_to = "type_of_actor",values_to = "actor") %>%
-      filter(.data$actor != "") %>%
+      filter(actor != "") %>%
       relocate(c("type_of_actor","actor"),.after="sub_event_type")%>%
-      mutate(actor = str_trim(.data$actor))
+      mutate(actor = str_trim(actor)) %>%
+      pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
+      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
+      relocate(c("inter_type","inter"),.after="actor")
   }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
     separated_data <- data %>%
       pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
-      separate_rows(.data$assoc_actor, sep = ";") %>%
+      separate_rows(assoc_actor, sep = ";") %>%
       relocate(c("type_of_assoc_actor","assoc_actor"),.after="sub_event_type")%>%
-      mutate(assoc_actor = str_trim(.data$assoc_actor))
+      mutate(assoc_actor = str_trim(assoc_actor))
+
+    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
+
+
+    if(0 %in% nchar(separated_data$assoc_actor)){
+      warning("There are empty rows in the assoc_actor column.")
+    }
   }else if(type == "source"){  ## source -> pivot + separate source column
     separated_data <- data %>%
-      separate_rows(.data$source, sep = ";") %>%
-      mutate(source = str_trim(.data$source,side = "both")) %>%
+      separate_rows(source, sep = ";") %>%
+      mutate(source = str_trim(source,side = "both")) %>%
       relocate(source,.before="source_scale")%>%
-      mutate(source = str_trim(.data$source))
+      mutate(source = str_trim(source))
   }else if(type == "all"){ ## all -> pivot + separate all actor, assoc actor and source columns
+    if(any(grepl("[;]",data$actor1))){
+      stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    } else if(any(grepl("[;]",data$actor2))){
+      stop("Your actor2 column seems to include more than one result per row. That is inconsistent with our column structure.")
+    }
     separated_data <- data %>%
       pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows(c("actor","source"), sep = ";") %>%
-      filter(.data$actor != "") %>%
+      separate_rows("actor", sep = ";") %>%
+      separate_rows("source", sep = ";") %>%
+      # filter(actor != "") %>%
       relocate(c("type_of_actor","actor"),.after="sub_event_type") %>%
-      relocate(.data$source, .before = "source_scale")%>%
-      mutate(actor = str_trim(.data$actor))%>%
-      mutate(assoc_actor = str_trim(.data$assoc_actor))
+      relocate(source, .before = "source_scale")%>%
+      mutate(actor = str_trim(actor),
+             source = str_trim(source)) %>%
+    pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
+      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
+      relocate(c("inter_type","inter"),.after="actor")
+
+    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
+
+
+    if(0 %in% nchar(separated_data$actor)){
+      warning("There are empty rows in the actor column.")
+    }
   }
+
+  return(separated_data)
 }
