@@ -98,7 +98,7 @@
 
 
 
-
+<script src="acled_transformations_files/kePrint-0.0.1/kePrint.js"></script><link href="acled_transformations_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Transformation of ACLED data</h1>
@@ -114,250 +114,722 @@
 <div class="section level2">
 <h2 id="filter-functions">1. Filter functions<a class="anchor" aria-label="anchor" href="#filter-functions"></a>
 </h2>
-<p>ACLED’s data utilizes a wide-format. While this is an easier format
-for humans to read, it is not the same case for computer. The computer
-is not aware at first that we are trying to look for values that could
-be in multiple columns, unless it is told so and it is told how to
-behave when finding similar values in multiple columns. For that matter,
-sometimes it can take a couple of lines of code to properly filter data
-in ACLED’s dataset when we are trying to get variables inside
-wide-formatted columns such as actor 1 , actor 2, assoc actors, and
-sources.</p>
+<p>ACLED’s data utilizes a wide format. While this is an easier format
+for humans to read, it is not the same case for computers.</p>
+<p>For that matter, sometimes it can take a couple of lines of code to
+properly filter data in ACLED’s dataset when we are trying to get
+variables inside wide-formatted columns such as <em>actor1</em>,
+<em>actor 2</em>, <em>assoc_actor_1</em>,<em>assoc_actor_2</em>, and
+<em>source</em>.</p>
 <p>Because of that, <code>acledR</code> includes two particular
-functions made to easily filter the data across all of these columns,
-while retaining the same structure.</p>
+functions to easily filter the data across all of these columns while
+retaining the same structure.</p>
 <div class="section level3">
-<h3 id="acled_filter_actor-">1.1. acled_filter_actor.<a class="anchor" aria-label="anchor" href="#acled_filter_actor-"></a>
+<h3 id="acled_filter_actor-">1.1. <code>acled_filter_actor()</code>.<a class="anchor" aria-label="anchor" href="#acled_filter_actor-"></a>
 </h3>
-<p>The actor columns are a prime example of those extra steps users
-would have to make to actually filter their data to one or multiple
-actors. That is because actors could be found across four different
-columns, requires using either multiple filters, or multiple conditions,
-making it slightly tedious to write.</p>
+<p>Operating across actor columns is a prime example of the extra steps
+users must do to circumvent the column’s wide format. Actors are found
+across four columns, requiring multiple filters or conditions, making
+filtering slightly tedious.</p>
 <p>Thus, the package includes the <code>acled_filter_actor()</code>
-function, which filters the data to the desired actors.</p>
-<p>The function is structured as follows:</p>
+function, which filters the data to the desired actors. The function is
+structured as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acled_filter_actors</span>(df,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                          actors, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">filter_cols=</span>‘all’)</span></code></pre></div>
-<p>The function is relatively straight forward, taking three
+<p>The function is relatively straightforward, taking three
 arguments:</p>
 <ul>
 <li>
 <code>df</code>: the dataset of interest,</li>
 <li>
-<code>actors</code>: a character vector of the actors which we are
+<code>actors</code>: a character vector of the actors that you are
 interested in filtering by,</li>
 <li>
 <code>filter_cols</code>: a character vector of the columns where to
 check for the actor(s) to filter.</li>
 </ul>
-<p>For <code>filter_cols</code> we can utilize a vector with the names
+<p>For <code>filter_cols</code>, you can utilize a vector with the names
 of the different actor columns, like
-<code>filter_cols = c(“actor1”,”actor2”)</code>’, or we leave it blank
-which defaults in filtering in all columns. Please note that if we
-utilize the option <code>filter_cols = ‘all'</code>, the <code>df</code>
-to be provided has to follow ACLED’s structure, and thus it must have an
-assoc_actor_1 or assoc_actor_2 column.</p>
-<p>The function returns a dataset which look like the original dataset,
-but with the data filtered.</p>
+<code>filter_cols = c(“actor1”,”actor2”)</code>’, or we can leave it
+blank, which defaults in filtering in all columns.</p>
+<p><strong>Note:</strong> that if we utilize the option
+<code>filter_cols = ‘all'</code>, the <code>df</code> you provide must
+follow ACLED’s structure, and thus it must have an
+<em>assoc_actor_1</em> or <em>assoc_actor_2</em> column.</p>
 </div>
 <div class="section level3">
-<h3 id="acled_filter_event_types-">1.2 acled_filter_event_types.<a class="anchor" aria-label="anchor" href="#acled_filter_event_types-"></a>
+<h3 id="acled_filter_event_types-">1.2 <code>acled_filter_event_types()</code>.<a class="anchor" aria-label="anchor" href="#acled_filter_event_types-"></a>
 </h3>
 <p>As users may find in ACLED’s <a href="https://acleddata.com/download/2827/" class="external-link">methodology guides</a>, we
-have defined clusters of events types that tend to describe specific
+have defined clusters of event types that tend to describe specific
 categories of political violence or disorder. These are:</p>
+<table class="table table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+sub_event_type
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+political_violence
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+organized_political_violence
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+disorder
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+demonstrations
+</th>
+</tr></thead>
+<tbody>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Battles</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Armed clash
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Government regains territory
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Non-state actor overtakes territory
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Explosions/Remote violence</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Chemical weapon
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Air/drone strike
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Suicide bomb
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Shelling/artillery/missile attack
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Remote explosive/landmine/IED
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Grenade
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Protests</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Peaceful protest
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Protest with intervention
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Excessive force against protesters
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Riots</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Violent demonstration
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mob violence
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr grouplength="8">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Strategic developments</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Agreement
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Arrests
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Change to group/activity
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Disrupted weapons use
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Headquarters or base established
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Looting/property destruction
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Non-violent transfer of territory
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Other
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Violence against civilians</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Sexual violence
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Attack
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Abduction/forced disappearance
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: blue !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;">1</span>
+</td>
+<td style="text-align:left;color: white !important;">
+<span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The table helps to illustrate the conditional statements that lead to
+these categories; while also hinting at how time-consuming it may be to
+filter these categories manually. For that, the package includes the
+<code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">table_of_categories</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_event_categories.html">acled_event_categories</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">event_type</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">kbl</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Battles"</span>, start_row <span class="op">=</span> <span class="fl">1</span>,end_row <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Explosions/Remote violence"</span>,start_row<span class="op">=</span><span class="fl">4</span>,end_row <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Protests"</span>,start_row <span class="op">=</span> <span class="fl">10</span>, end_row <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Riots"</span>, start_row <span class="op">=</span> <span class="fl">13</span>, end_row <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Strategic developments"</span>, start_row <span class="op">=</span> <span class="fl">15</span>, end_row <span class="op">=</span> <span class="fl">22</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pack_rows</span><span class="op">(</span>group_label <span class="op">=</span> <span class="st">"Violence against civilians"</span>, start_row <span class="op">=</span> <span class="fl">23</span>, end_row <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">column_spec</span><span class="op">(</span><span class="fl">2</span>, color <span class="op">=</span> <span class="fu">spec_color</span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_event_categories.html">acled_event_categories</a></span><span class="op">$</span><span class="va">political_violence</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The table helps illustrates the conditional statements that lead to
-these categories, however, it also hints at how time-consuming it may be
-to filter these categories manually. For that reason, we have included
-in the package a function to aid in filtering these categories. This is
-very useful when users want to recreate outputs like regional overviews,
-which make use of these categories. This is how the function looks:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_filter_event_types.html">acled_filter_event_types</a></span><span class="op">(</span><span class="va">data</span>,</span>
 <span>                  <span class="va">acled_categories</span>,</span>
 <span>                  keep_all_events <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code> requires three arguments:
-<em><code>data</code>: ACLED data frame, like the result from
-<code><a href="../reference/acled_api.html">acled_api()</a></code>. </em><code>acled_categories</code>: a
-character vector of the categories by which we will filter.
-*<code>keep_all_events</code> : a logical statement to specify if we
-want to filter out events. When we se indicate
-<code>keep_all_events = FALSE</code> we are telling the function to
-return only the events within the requested categories. On the contrary,
-if it is <code>TRUE</code>, then the return data frame will include new
+<p><code><a href="../reference/acled_filter_event_types.html">acled_filter_event_types()</a></code> requires three arguments:</p>
+<ul>
+<li><p><code>data</code>: ACLED data frame, like
+<code><a href="../reference/acled_api.html">acled_api()</a></code>’s output.</p></li>
+<li><p><code>acled_categories</code>: a character vector of the
+categories by which we will filter.</p></li>
+<li><p><code>keep_all_events</code>: a logical statement to specify if
+we want to filter out events. When indicating
+<code>keep_all_events = FALSE</code>, the function returns only the
+events within the requested categories. On the contrary, if it is
+<code>TRUE</code>, the returned data frame will include new binary
 columns to indicate if the given event was part of the specified
-category.</p>
+category.</p></li>
+</ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="acled_transform">2. acled_transform()<a class="anchor" aria-label="anchor" href="#acled_transform"></a>
+<h2 id="acled_transform">2. <code>acled_transform()</code><a class="anchor" aria-label="anchor" href="#acled_transform"></a>
 </h2>
-<p>As introduced above, ACLED’s data is stored in a wide-form which
-makes it easier for humans to read, but slightly harder for computers to
-operate with. An example for this is in network analysis, where we often
-find the need to operate with long-form tables, to accurately extract
-the information we require. For example, if one would like to construct
-a node list of ACLED’s data, it would often struggle with the
-multiplicity of columns which imply actors, and the fact that these
-contain 0 or more actors in some of their cells.</p>
-<p>To make these type of operations, we require to transform our
-dataset, from wide to long. That is, we need to transpose our data from
-having columns with mutiple values per cell, to one value per cell and
-the least number of columns possible. Thus, when we speak about
-transposing a column, we are making it have one value per cell, and we
-are making it into rows instead of columns, hence making the table
-longer but not wider.</p>
-<p>To make matters simplier, users of this package will be able to
-utilize the <code><a href="../reference/acled_transform.html">acled_transform()</a></code> function of the package to
-transform their datasets from wide to long. While the ACLED API includes
-an option to provide a monadic file, this function provides some extra
-benefits relative to the API’s approach: + Users can “save” API calls by
-providing already-gathered dyadic dataset, whereas the API monadic
-options requires two distict calls for a monadic and a dyadic dataset. +
-Users are able to fully pivot the dataset to their desired option.
-ACLED’s dataset includes several columns that users may be interested on
-transposing, namely: <strong>actor 1 &amp; 2, associated_actor 1 &amp;
-2, source</strong>. The API only transforms data by actor 1 &amp; actor
-2. (<strong>RECHECK</strong>)</p>
-<p><code><a href="../reference/acled_transform.html">acled_transform()</a></code> is composed as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The last function in our family of data manipulation functions is
+<code><a href="../reference/acled_transform.html">acled_transform()</a></code>. <code><a href="../reference/acled_transform.html">acled_transform()</a></code> was
+created to aid you in switching from a wide format to a long form, if
+required, without the need to make a new API call with the monadic
+option.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">data</span>, </span>
 <span>                type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> </span></code></pre></div>
-<p><code><a href="../reference/acled_transform.html">acled_transform()</a></code> requires two arguments:
-<em><code>data</code>: The dataset to transform (has to follow ACLED’s
-structure) </em><code>type</code>: A character vector indicating which
+<p><code><a href="../reference/acled_transform.html">acled_transform()</a></code> requires two arguments: *
+<code>data</code>: The dataset to transform (has to follow ACLED’s
+structure) * <code>type</code>: A character vector indicating which
 columns to transpose. See below the available categories.</p>
 <p>These are the available options to transpose the ACLED data, which we
-indicate through the <code>type</code> argument: + full_actor:
-Transposes all the actor columns in the dataset (actor 1, actor 2,
-associated_actor_1, associated_actor_2) + main_actors: Transposes only
-actor 1 and actor 2. + assoc_actors: Transposes only associated actor
-columns. + source: Transposes only the source column. + all: transposes
-all of the aforementioned columns (actor 1, actor 2, associated_actor_1,
-associated_actor_2, source)</p>
+indicate through the <code>type</code> argument:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>full_actor</code>: Transposes all the actor columns in the
+dataset (<em>actor1</em>, <em>actor2</em>, <em>assoc_actor_1</em>,
+<em>assoc_actor_2</em>).</p></li>
+<li><p><code>main_actors</code>: Transposes only <em>actor1</em> and
+<em>actor2</em>.</p></li>
+<li><p><code>assoc_actors</code>: Transposes only <em>assoc_actor_1</em>
+and <em>assoc_actor_2</em> columns.</p></li>
+<li><p><code>source</code>: Transposes only the <em>source</em>
+column.</p></li>
+<li><p><code>all</code>: Transposes all of the aforementioned columns
+(<em>actor1</em>, <em>actor2</em>, <em>assoc_actor_1</em>,
+<em>assoc_actor_2</em>, <em>source</em>).</p></li>
+</ol>
+<p>While the ACLED API includes an option to provide a monadic file,
+this function offers some extra benefits relative to the API’s
+approach:</p>
+<ul>
+<li><p>Users can “save” API calls by providing an already-gathered
+dyadic dataset, whereas the API monadic options require two distinct
+calls for a monadic and a dyadic dataset.</p></li>
+<li><p>Users can pivot the dataset to their desired option. ACLED’s
+dataset includes several columns that users may be interested in
+transposing: <em>actor1 &amp; actor2</em>, <em>assoc_actor_1</em>,
+<em>assoc_actor_2</em>, and <em>source</em>. The API only pivots the
+<em>actor1</em> &amp; <em>actor2</em> columns into one <em>actor1</em>
+column, and the <em>assoc_actor_1</em> &amp; <em>assoc_actor_2</em>
+columns into one <em>assoc_actor_1</em> column.</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="acledr-example">acledR Example<a class="anchor" aria-label="anchor" href="#acledr-example"></a>
 </h2>
-<p>Assume that we are trying to do a network analysis of ACLED data,
-more specifically of events in Argentina during June 2022. A crucial
-step for every network analysis is creating an edges and nodes
-lists/data frames. For the purpose of the example we will be looking to
-create the nodes list, an unique list of actors present in the dataset.
-Given the structure of the ACLED’s dyadic dataset, there are four
-columns to consider: actor 1, actor 2, associated_actor_1, and
-associated_actor_2.</p>
-<p>To create the list one could: 1. Gather ACLED data 2. Find every
-unique actor in actor_1 3. Find every unique actor in actor_2 4. Find
-every unique actor in associated_actor_1 5. Find every unique actor in
-associated_actor_2 6. Join these lists 7. Find the unique actors in the
-joined lists.</p>
-<p>However, with <code><a href="../reference/acled_transform.html">acled_transform()</a></code> we can save ourselves
-from doing steps 2 to 6 and let the function do it for us.</p>
-<p>First, we grab ACLED data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Assume that you are trying to do a network analysis of actor
+interactions in events of Argentina across 2022; more specifically, you
+want to start analyzing the interactions of the “Mapuche Indigenous
+Militia (Argentina)”.</p>
+<p>First, you should collect ACLED data and filter it to events
+featuring the “Mapuche Indigenous Militia (Argentina)”,
+<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> can help you with that.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'igraph'</span></span></code></pre>
+<pre><code><span><span class="co">## The following objects are masked from 'package:dplyr':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     as_data_frame, groups, union</span></span></code></pre>
+<pre><code><span><span class="co">## The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     decompose, spectrum</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:base':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     union</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Provide your credentials</span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
-<pre><code><span><span class="co">## [1] "Success! Credentials authorized"</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">argen_acled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span>
-<span>                         start_date <span class="op">=</span> <span class="st">"2022-06-01"</span>,</span>
-<span>                         end_date<span class="op">=</span><span class="st">"2022-06-30"</span>, </span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Request the Argentinian dataset for 2022</span></span>
+<span><span class="va">argen_acled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span>
+<span>                         year <span class="op">=</span> <span class="fl">2022</span>, </span>
 <span>                         acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                         prompt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 29 country-days.</span></span></code></pre>
+<span>                         prompt <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                         log <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 1,914 country-days.</span></span></code></pre>
 <pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">argen_acled</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Filter to include only the interactions of your desired actor</span></span>
+<span><span class="va">mapu_argen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">argen_acled</span>, <span class="st">"Mapuche Indigenous Militia (Argentina)"</span><span class="op">)</span></span></code></pre></div>
+<p>A crucial step for every network analysis is creating edges and node
+lists. Given the structure of ACLED’s dyadic dataset, there are two
+columns to consider: <em>actor1</em> and <em>actor2</em>.</p>
+<p>You need to transform the dataset towards a long form, where each
+<em>actor1</em> and <em>actor2</em> are in a new row in a single column.
+For that, you can use <code><a href="../reference/acled_transform.html">acled_transform()</a></code>:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mapu_actors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">mapu_argen</span>,type <span class="op">=</span> <span class="st">"main_actors"</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mapu_actors</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">##   event…¹ event_date  year time_…² disor…³ event…⁴ sub_e…⁵ actor1 assoc…⁶ inter1</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… SISAP:…      6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… <span style="color: #BB0000;">NA</span>           6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… Health…      6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…      6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…      6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> ARG106… 2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…      6</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 21 more variables: actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">##   event_id_cnty event_date  year time_precision disorder_type         event_type</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG11427      2022-09-25  <span style="text-decoration: underline;">2</span>022              1 Political violence    Battles   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG11427      2022-09-25  <span style="text-decoration: underline;">2</span>022              1 Political violence    Battles   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> ARG11426      2022-08-15  <span style="text-decoration: underline;">2</span>022              3 Strategic developmen… Strategic…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> ARG11426      2022-08-15  <span style="text-decoration: underline;">2</span>022              3 Strategic developmen… Strategic…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> ARG11425      2022-07-31  <span style="text-decoration: underline;">2</span>022              1 Strategic developmen… Strategic…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> ARG11425      2022-07-31  <span style="text-decoration: underline;">2</span>022              1 Strategic developmen… Strategic…</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, type_of_actor &lt;chr&gt;, actor &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   inter_type &lt;chr&gt;, inter &lt;dbl&gt;, assoc_actor_1 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;, admin3 &lt;lgl&gt;, location &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   timestamp &lt;dbl&gt;, and abbreviated variable names ¹​event_id_cnty,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ²​time_precision, ³​disorder_type, ⁴​event_type, ⁵​sub_event_type, …</span></span></span></code></pre>
-<p>The code above provides us with the dataset of events in Argentina
-during June 2022.</p>
-<p>After this we need to transform our dataset to long form, where each
-actor is a new row. For that we use <code><a href="../reference/acled_transform.html">acled_transform()</a></code>:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">argen_acled_long_actors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">argen_acled</span>,type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
-<span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">argen_acled</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 327 × 31</span></span></span>
-<span><span class="co">##    event_id_cnty event_date  year time_…¹ disor…² event…³ sub_e…⁴ actor1 assoc…⁵</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… SISAP:…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> ARG10626      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> ARG10618      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… Health…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> ARG10615      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> ARG10627      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> ARG10625      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> ARG10621      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> ARG10613      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> ARG10614      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> ARG10617      2022-06-30  <span style="text-decoration: underline;">2</span>022       1 Demons… Protes… Peacef… Prote… MLS: F…</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 317 more rows, 22 more variables: inter1 &lt;dbl&gt;, actor2 &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;, interaction &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;, country &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   admin1 &lt;chr&gt;, admin2 &lt;chr&gt;, admin3 &lt;lgl&gt;, location &lt;chr&gt;, latitude &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;, source_scale &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;, timestamp &lt;dbl&gt;, and abbreviated</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   variable names ¹​time_precision, ²​disorder_type, ³​event_type, …</span></span></span></code></pre>
-<p>Now we have a dataset where every row contains only one actor,
-meaning that now we only have to look for uniques in the new dataset’s
-actor column. For this, we will utilize
-<code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">dplyr::distinct()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">argen_acled_nodes</span> <span class="op">&lt;-</span> <span class="va">argen_acled_long_actors</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span> <span class="co">## When utilizing the option "full_actors", the actors will be stored in the column named "actor"</span></span>
+<span><span class="co">## <span style="color: #949494;">#   timestamp &lt;dbl&gt;</span></span></span></code></pre>
+<p>Now you can start creating the node list by collecting all the unique
+actors in the dataset.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mapu_node_list</span> <span class="op">&lt;-</span> <span class="va">mapu_actors</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">argen_acled_nodes</span> </span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 61 × 1</span></span></span>
-<span><span class="co">##    actor                                           </span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Protesters (Argentina)                          </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> SISAP: Public Health Union                      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Health Workers (Argentina)                      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> ATE: Association of State Workers               </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Labor Group (Argentina)                         </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> MLS: Freemen of the South Movement              </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Teachers (Argentina)                            </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> SIPRUS: Union of University Health Professionals</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Students (Argentina)                            </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> ADEMYS: Teacher's Association                   </span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 51 more rows</span></span></span></code></pre>
-<p>From this point onwards, if our research requires so, we can add
-descriptions or attributes to our node list, but the code above provided
-us with a unique dataframe of actors in our dataset - in just a few
-lines of code.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mapu_node_list</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 1</span></span></span>
+<span><span class="co">##   actor                                 </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Mapuche Indigenous Militia (Argentina)</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Police Forces of Argentina (2019-)    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Civilians (Argentina)                 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Police Forces of Argentina (2015-2019)</span></span></code></pre>
+<p>Building the edge list (who interacted with whom) is easy with ACLED
+data. Our data includes <em>actor1</em> and <em>actor2</em> columns to
+identify the main actors in an event, so you need to subset our data
+frame to have these two columns. You can keep some other data as it adds
+context to the interactions.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mapu_edges</span> <span class="op">&lt;-</span> <span class="va">mapu_argen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">actor1</span>,<span class="va">actor2</span>,<span class="va">event_id_cnty</span>,<span class="va">fatalities</span>,<span class="va">event_type</span>,<span class="va">sub_event_type</span><span class="op">)</span></span></code></pre></div>
+<p>Now that you have your nodes and edges lists, create a simple network
+graph of actor interactions. The one thing that is key to remember is
+that ACLED stores actors in <em>actor1</em> and <em>actor2</em>
+regardless of who initiated the event. Thus, interactions in ACLED data
+are always undirected.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create the igraph object</span></span>
+<span><span class="va">mapu_undirected</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span></span>
+<span>  <span class="va">mapu_edges</span>, </span>
+<span>  vertices <span class="op">=</span> <span class="va">mapu_node_list</span>, </span>
+<span>  directed <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Separate the ego network of the Mapuche Militia</span></span>
+<span><span class="va">mapu_ego</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/ego.html" class="external-link">make_ego_graph</a></span><span class="op">(</span><span class="va">mapu_undirected</span>, order<span class="op">=</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mapuche Indigenous Militia (Argentina)"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">69</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mapu_ego</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, layout<span class="op">=</span><span class="va">layout.fruchterman.reingold</span>, </span>
+<span>     main<span class="op">=</span><span class="st">"Ego network of the Mapuche Indigenous Militia (Argentina)"</span>,</span>
+<span>     vertex.label.dist<span class="op">=</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="acled_transformations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>As you can see, through 2022, the “Mapuche Indigenous Militia
+(Argentina)” interacted mostly with the “Civilians (Argentina)” and also
+with the police forces of the country of both the Mauricio Macri
+2015-2019 government and Alberto Fernandez (current) governments.</p>
+<p>This is a basic example of how to start exploring actor interactions
+with the ACLED dataset and how to use the transformation functions to
+shape the dataset structure to fit your methodological requirements.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

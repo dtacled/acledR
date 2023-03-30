@@ -190,8 +190,7 @@ sources in the dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
-<pre><code><span><span class="co">## [1] "Success! Credentials authorized"</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_geo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Georgia"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2021-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -212,7 +211,7 @@ meaningful statistics of this, we have to separate values and pivot
 them.</p>
 <p>Let’s do this for the sources column, which has sources delimited by
 <code>;</code></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sources_df_geo</span> <span class="op">&lt;-</span> <span class="va">df_geo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>      <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">source</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>      <span class="fu">mutate</span><span class="op">(</span>source <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">source</span>,side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -236,7 +235,7 @@ them.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Civil Georgia                    39</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Black Sea Press: News Georgia    35</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> Netgazeti.ge                     25</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 12 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 12 more rows</span></span></span></code></pre>
 <p>As we can see, the three main sources in the Georgian dataset for
 2021 are Rustavi 2, interpressnews, and RFE/RL also known as Radio Free
 Europe/Radio Liberty. From here we can already gather some information
@@ -248,7 +247,7 @@ allows us to avoid some of the pitfalls of english and international
 coverage of political violence outside traditionally western countries.
 See (<strong>need to add clionah &amp; roudabeh article</strong>)</p>
 <p>Now that we know our sources, let’s explore the scale of these.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_geo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">source_scale</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu">mutate</span><span class="op">(</span>source_scale <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">source_scale</span>,side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>

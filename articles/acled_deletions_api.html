@@ -176,8 +176,7 @@ assumptions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
-<pre><code><span><span class="co">## [1] "Success! Credentials authorized"</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argen_dummy_acled_file</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_deletion_old_dummy.html">acled_deletion_old_dummy</a></span> <span class="co"># Here is our old personal ACLED dataset</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span><span class="op">)</span></span></code></pre></div>
@@ -186,7 +185,7 @@ assumptions:</p>
 A relatively smaller dataset and its data was gathered on the 25th of
 July 2022.</p>
 <p>Lets check if there are any deleted events since then.</p>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">137337</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">137414</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
 <span><span class="co">## <span style="color: #BB0000;">chr</span> (1): event_id_cnty</span></span>
@@ -194,13 +193,13 @@ July 2022.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">acled_deleted_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rows: 137,337</span></span>
+<pre><code><span><span class="co">## Rows: 137,414</span></span>
 <span><span class="co">## Columns: 2</span></span>
-<span><span class="co">## $ event_id_cnty     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "IRQ45035", "JAM1793", "IND127896", "MMR45944", "MMR…</span></span>
-<span><span class="co">## $ deleted_timestamp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1679351475, 1679343524, 1679412000, 1678806852, 1679…</span></span></code></pre>
-<p>Quite a lot of deleted events, 137337. Lets check if any of these are
+<span><span class="co">## $ event_id_cnty     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "IRQ45196", "IRQ45199", "IRQ45192", "IRQ45035", "BRA…</span></span>
+<span><span class="co">## $ deleted_timestamp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1679947892, 1679947892, 1679947892, 1679351475, 1679…</span></span></code></pre>
+<p>Quite a lot of deleted events, 137414. Lets check if any of these are
 part of my dataset.</p>
 <pre><code><span><span class="co">## [1] 0</span></span></code></pre>
 <p>As shown by the number of rows (0), there are no deleted events! …
@@ -211,7 +210,7 @@ may not be that lucky.</p>
 <h3 id="dataset-n2">Dataset n°2<a class="anchor" aria-label="anchor" href="#dataset-n2"></a>
 </h3>
 <p>Now lets load our second dataset.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dummy_acled_file</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_deletion_old_dummy_n3.html">acled_deletion_old_dummy_n3</a></span> <span class="co"># Here is our personal ACLED dataset</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dummy_acled_file</span><span class="op">)</span></span></code></pre></div>
@@ -219,9 +218,9 @@ may not be that lucky.</p>
 <p>With this we have loaded the dataset, and we can see that there are
 9000 events in it. Now we proceed to retrieve the deleted events since
 the last time we gather data.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deleted_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_deletions_api.html">acled_deletions_api</a></span><span class="op">(</span>date_deleted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dummy_acled_file</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span><span class="op">)</span> <span class="co"># We are using the largest Unix timestamp as that is the last time we gathered data. </span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">1594</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">1671</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
 <span><span class="co">## <span style="color: #BB0000;">chr</span> (1): event_id_cnty</span></span>
@@ -229,21 +228,21 @@ the last time we gather data.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deleted_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 1594</span></span></code></pre>
-<p>As we can see 1594 events have been removed since the last time I
+<pre><code><span><span class="co">## [1] 1671</span></span></code></pre>
+<p>As we can see 1671 events have been removed since the last time I
 uploaded my data. Now that we know there are deleted events, lets check
 if any of these are in my dataset.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">updated_dataset</span> <span class="op">&lt;-</span> <span class="va">dummy_acled_file</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">event_id_cnty</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">deleted_events</span><span class="op">$</span><span class="va">event_id_cnty</span><span class="op">)</span><span class="op">)</span> <span class="co"># We exclude every event_id_cnty that also appears in the deleted_events result</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">updated_dataset</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 8975</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 8970</span></span></code></pre>
 <p>As you can see there were deleted events, and we have excluded them
-through the dplyr::filter() function. Now our dataset has only 8975
-rows, thus 25 events were deleted.</p>
+through the dplyr::filter() function. Now our dataset has only 8970
+rows, thus 30 events were deleted.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

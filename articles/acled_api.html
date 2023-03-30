@@ -256,7 +256,6 @@ events from Brazil from January 2022 to December 2022.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
-<span><span class="co">#&gt; [1] "Success! Credentials authorized"</span></span>
 <span></span>
 <span><span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -269,7 +268,7 @@ period:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 12,911</span></span>
+<span><span class="co">#&gt; Rows: 12,912</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
 <span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRA61584", "BRA61590", "BRA61592", "BRA61599", "BR…</span></span>
 <span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-01, 2022-12-01, 2022-12-01, 2022-12-01, 20…</span></span>
@@ -354,7 +353,7 @@ this case, “Rioters versus Civilians (57)”, we add the
 <span>                           prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In both the dyadic and monadic versions, the API returns 364 unique
 events. However, the number of unique entries for the dyadic version is
-also 364, while it’s 43764 for the monadic version.</p>
+also 364, while it’s 43848 for the monadic version.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
