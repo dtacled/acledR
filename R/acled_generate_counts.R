@@ -7,6 +7,7 @@
 #' @param time_target string. Target temporal unit (e.g. week, month, year).
 #' @param start_date date. Earliest date to include (yyyy-mm-dd).
 #' @param end_date  date. Latest date to include (yyyy-mm-dd).
+#' @param fatalities_count logical. If TRUE, it will return fatalities counts INSTEAD of event counts.
 #' @param add_unit_ids string. Option to add in units with no events throughout the time period of interest. To include hierarchical unique_id (e.g., country and admin1) add them separated by ";".
 #' @import dplyr
 #' @import tidyr
@@ -77,7 +78,8 @@ acled_generate_counts <-
   function(data, event_type = NULL,
            unit_id, time_id, time_target,
            start_date = NULL, end_date = NULL,
-           add_unit_ids = NULL) {
+           add_unit_ids = NULL,
+           fatalities_count = FALSE) {
 
     if(!is.null(event_type))
       if(sum(event_type %in% unique(data[["event_type"]])) < length(event_type))
@@ -167,6 +169,8 @@ acled_generate_counts <-
         stop("You requested counts by location, but the `add_unit_ids` argument contains admins beyond location.")
       }
     }
+
+    # Generating unit_ids
       if(str_to_lower(unit_id) %in% c("country","region")){
         add_unit_ids <- data %>%
           select(.data[[unit_id]])%>%
@@ -221,6 +225,158 @@ acled_generate_counts <-
 
       start_date <- floor_date(ymd(start_date), unit = time_target,week_start = getOption('lubridate.week.start', 6))
       end_date <- floor_date(ymd(end_date), unit = time_target,week_start = getOption('lubridate.week.start', 6))
+
+    if(fatalities_count == T){
+      if(str_to_lower(unit_id) %in% c("country","region")){
+        data <-
+          data %>%
+          filter(event_type %in% filter_types) %>%
+          mutate(event_date = ymd(.data[[time_id]]),
+                 event_time = floor_date(.data$event_date, time_target,week_start = getOption('lubridate.week.start', 6))) %>%
+          filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
+
+          group_by(.data[[unit_id]], .data$event_time, event_type) %>%
+
+          summarise(fatalities = sum(.data$fatalities)) %>%
+          ungroup() %>%
+          full_join(merge(add_unit_ids, all_dates) %>%
+                      as_tibble() %>%
+                      rename({{unit_id}} := .data$x, event_time =.data$y)) %>%
+          mutate(fatalities = case_when(is.na(fatalities) ~ as.numeric(0),
+                                        TRUE ~ as.numeric(fatalities))) %>%
+          rename(!!paste0("event_", time_target) := .data$event_time) %>%
+          pivot_wider(values_from = fatalities, names_from = event_type) %>%
+          mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+          rowwise() %>%
+          mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+          janitor::clean_names() %>%
+          ungroup() %>%
+          select(-one_of("na")) %>%
+          arrange(.data[[unit_id]], !!paste0("event_", time_target)) %>%
+          suppressMessages() %>%
+          suppressWarnings()
+      }
+      if(str_to_lower(unit_id) == "admin1"){
+        data <-
+          data %>%
+          filter(event_type %in% filter_types) %>%
+          mutate(event_date = ymd(.data[[time_id]]),
+                 event_time = floor_date(.data$event_date, time_target,week_start = getOption('lubridate.week.start', 6))) %>%
+          filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
+
+          group_by(.data$country,.data$admin1, .data$event_time, event_type) %>%
+
+          summarise(fatalities = sum(.data$fatalities)) %>%
+          ungroup() %>%
+          full_join(merge(add_unit_ids, all_dates) %>%
+                      as_tibble() %>%
+                      separate(x,c("country","admin1"),sep=";") %>%
+                      rename(event_time =.data$y))%>%
+          mutate(fatalities = case_when(is.na(fatalities) ~ as.numeric(0),
+                                      TRUE ~ as.numeric(fatalities))) %>%
+          rename(!!paste0("event_", time_target) := .data$event_time) %>%
+          pivot_wider(values_from = fatalities, names_from = event_type) %>%
+          mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+          rowwise() %>%
+          mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+          janitor::clean_names() %>%
+          ungroup() %>%
+          select(-one_of("na")) %>%
+          arrange(!!paste0("event_", time_target)) %>%
+          suppressMessages() %>%
+          suppressWarnings()
+      }
+      if(str_to_lower(unit_id) == "admin2"){
+        data <-
+          data %>%
+          filter(event_type %in% filter_types) %>%
+          mutate(event_date = ymd(.data[[time_id]]),
+                 event_time = floor_date(.data$event_date, time_target,week_start = getOption('lubridate.week.start', 6))) %>%
+          filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
+
+          group_by(.data$country,.data$admin1, .data$admin2, .data$event_time, event_type) %>%
+
+          summarise(fatalities = sum(.data$fatalities)) %>%
+          ungroup() %>%
+          full_join(merge(add_unit_ids, all_dates) %>%
+                      as_tibble() %>%
+                      separate(x,c("country","admin1","admin2"),sep=";") %>%
+                      rename(event_time =.data$y))%>%
+          mutate(fatalities = case_when(is.na(fatalities) ~ as.numeric(0),
+                                      TRUE ~ as.numeric(fatalities))) %>%
+          rename(!!paste0("event_", time_target) := .data$event_time) %>%
+          pivot_wider(values_from = fatalities, names_from = event_type) %>%
+          mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+          rowwise() %>%
+          mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+          janitor::clean_names() %>%
+          ungroup() %>%
+          select(-one_of("na")) %>%
+          arrange(!!paste0("event_", time_target)) %>%
+          suppressMessages() %>%
+          suppressWarnings()
+      }
+      if(str_to_lower(unit_id) == "admin3"){
+        data <-
+          data %>%
+          filter(event_type %in% filter_types) %>%
+          mutate(event_date = ymd(.data[[time_id]]),
+                 event_time = floor_date(.data$event_date, time_target,week_start = getOption('lubridate.week.start', 6))) %>%
+          filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
+
+          group_by(.data$country,.data$admin1, .data$admin2,.data$admin3, .data$event_time, event_type) %>%
+
+          summarise(fatalities = sum(.data$fatalities)) %>%
+          ungroup() %>%
+          full_join(merge(add_unit_ids, all_dates) %>%
+                      as_tibble() %>%
+                      separate(x,c("country","admin1","admin2","admin3"),sep=";") %>%
+                      rename(event_time =.data$y))%>%
+          mutate(fatalities = case_when(is.na(fatalities) ~ as.numeric(0),
+                                        TRUE ~ as.numeric(fatalities))) %>%
+          rename(!!paste0("event_", time_target) := .data$event_time) %>%
+          pivot_wider(values_from = fatalities, names_from = event_type) %>%
+          mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+          rowwise() %>%
+          mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+          janitor::clean_names() %>%
+          ungroup() %>%
+          select(-one_of("na")) %>%
+          arrange(!!paste0("event_", time_target)) %>%
+          suppressMessages() %>%
+          suppressWarnings()
+      }
+      if(str_to_lower(unit_id) == "location"){
+        data <-
+          data %>%
+          filter(event_type %in% filter_types) %>%
+          mutate(event_date = ymd(.data[[time_id]]),
+                 event_time = floor_date(.data$event_date, time_target,week_start = getOption('lubridate.week.start', 6))) %>%
+          filter(between(.data$event_time, as.Date(start_date), as.Date(end_date))) %>%
+
+          group_by(.data$country,.data$admin1, .data$admin2,.data$admin3,.data$location, .data$event_time, event_type) %>%
+
+          summarise(fatalities = sum(.data$fatalities)) %>%
+          ungroup() %>%
+          full_join(merge(add_unit_ids, all_dates) %>%
+                      as_tibble() %>%
+                      separate(x,c("country","admin1","admin2","admin3","location"),sep=";") %>%
+                      rename(event_time =.data$y))%>%
+          mutate(fatalities = case_when(is.na(fatalities) ~ as.numeric(0),
+                                        TRUE ~ as.numeric(fatalities))) %>%
+          rename(!!paste0("event_", time_target) := .data$event_time) %>%
+          pivot_wider(values_from = fatalities, names_from = event_type) %>%
+          mutate(across(.cols = where(is.numeric), ~case_when(is.na(.) ~ 0, TRUE ~ .))) %>%
+          rowwise() %>%
+          mutate(total_events = sum(c_across(where(is.numeric)))) %>%
+          janitor::clean_names() %>%
+          ungroup() %>%
+          select(-one_of("na")) %>%
+          arrange(!!paste0("event_", time_target)) %>%
+          suppressMessages() %>%
+          suppressWarnings()
+      }
+    } else {
 
     # Separating into options to avoid duplication of admins
     if(str_to_lower(unit_id) %in% c("country","region")){
@@ -372,15 +528,13 @@ acled_generate_counts <-
         suppressMessages() %>%
         suppressWarnings()
     }
-
+    }
 
     if(length(filter_types) == 1)
       data <- data %>% select(-.data$total_events) %>%
         suppressWarnings()
 
     return(data)
-
-
 
   }
 
