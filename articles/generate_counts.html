@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="acledR">
-<title>Generate Event Counts • acledR</title>
+<title>Data Analysis Functions • acledR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generate Event Counts">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data Analysis Functions">
 <meta property="og:description" content="acledR">
 <meta property="og:image" content="https://acled.github.io/acledR/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -101,7 +101,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Generate Event Counts</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Data Analysis Functions</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/billingtt/acledR/blob/HEAD/vignettes/articles/generate_counts.Rmd" class="external-link"><code>vignettes/articles/generate_counts.Rmd</code></a></small>
@@ -113,43 +113,48 @@
 <div class="section level2">
 <h2 id="generating-counts-of-acled-events">Generating counts of ACLED events<a class="anchor" aria-label="anchor" href="#generating-counts-of-acled-events"></a>
 </h2>
-<p>The <code><a href="../reference/generate_counts.html">generate_counts()</a></code> function creates event counts by
-event type and spacial and temporal units of analysis.</p>
+<div class="section level3">
+<h3 id="acled_generate_counts">
+<code>acled_generate_counts()</code><a class="anchor" aria-label="anchor" href="#acled_generate_counts"></a>
+</h3>
+<p>The <code><a href="../reference/acled_generate_counts.html">acled_generate_counts()</a></code> function creates event
+counts by event type and spacial and temporal units of analysis.</p>
 <p>The required arguments are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_generate_counts.html">acled_generate_counts</a></span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">unit_id</span>,</span>
 <span>  <span class="va">time_id</span>,</span>
 <span>  <span class="va">time_target</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>where <code>data</code> is ACLED event-level data,
-<code>unit_id</code> is the spatial unit of analysis (e.g., country,
-ADMIN1, region), <code>time_id</code> is the temporal unit (i.e.,
-<code>event_date</code> normally), and <code>time_target</code> is the
-temporal unit of aggregation (e.g., week, month, year). If
+<p>where <code>data</code> is ACLED event-level data(e.g, ACLED’s dyadic
+dataframe), <code>unit_id</code> is the spatial unit of analysis (e.g.,
+<em>country</em>, <em>admin1</em>, <em>region</em>),
+<code>time_id</code> is the temporal unit (i.e.,
+<code>event_date</code>), and <code>time_target</code> is the temporal
+unit of aggregation (e.g., week, month, year).</p>
+<p><strong>Note</strong>: ACLED’s data collection does not follow the
+normal Monday-Sunday week, but instead a Saturday-Friday week. This
+function follows the same approach, thus if
 <code>time_target = week</code>, the ACLED week (starting on Saturday)
-is used - see (time)[<strong>here would go the time vignette
-link</strong>]</p>
-<p>As an example, we can take the data for South America.</p>
+is used.</p>
+<div class="section level4">
+<h4 id="time-in-acled_generate_counts">Time in <code>acled_generate_counts</code><a class="anchor" aria-label="anchor" href="#time-in-acled_generate_counts"></a>
+</h4>
+<p><code>acled_generate_counts</code> was created so that users could
+get event counts across different spatial and temporal units in a simple
+manner. When it comes to temporal units, you can utilize three options:
+- year / <code>time_id="year"</code> - month /
+<code>time_id = "month"</code> - week / <code>time_id = "day"</code></p>
+<p>You can generate event counts at the country-week level:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
-<span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
-<span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
-<span>                   end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
-<span>                   monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>We can then generate event counts at the country-week level:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df_sa_agg_weekly</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span><span class="va">.</span>, </span>
-<span>                  unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
-<span>                  time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
-<span>                  time_target <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df_sa_agg_weekly</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/acled_generate_counts.html">acled_generate_counts</a></span><span class="op">(</span><span class="va">df_sa</span>,</span>
+<span>                                   unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
+<span>                                   time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
+<span>                                   time_target <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span></span></code></pre></div>
 <p>This returns a tibble with columns for each event type in the data,
 as well as a column for the total events:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_weekly</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -362,10 +367,10 @@ Argentina
 </table>
 <p>We can also limit the request to certain event types. For example, we
 might only want political violence events:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_weekly_pv</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
+<span>  <span class="fu"><a href="../reference/acled_generate_counts.html">acled_generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
 <span>                  time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
 <span>                  time_target <span class="op">=</span> <span class="st">"week"</span>,</span>
 <span>                  event_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Battles"</span>, </span>
@@ -374,7 +379,7 @@ might only want political violence events:</p>
 <span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span>  <span class="co">## This needs to be changed, it is only mob violence</span></span></code></pre></div>
 <p>Now we only retain the requested event types and the total
 corresponds to these types only:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_weekly</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -588,10 +593,10 @@ Argentina
 <p>If instead we wanted violent event counts by month rather than week,
 we would simply swap <code>time_target = week</code> to
 <code>time_target = month</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_agg_monthly_pv</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
+<span>  <span class="fu"><a href="../reference/acled_generate_counts.html">acled_generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"country"</span>, </span>
 <span>                  time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
 <span>                  time_target <span class="op">=</span> <span class="st">"month"</span>,</span>
 <span>                  event_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Battles"</span>, </span>
@@ -599,11 +604,9 @@ we would simply swap <code>time_target = week</code> to
 <span>                                 <span class="st">"Explosions/Remote violence"</span>, </span>
 <span>                                 <span class="st">"Riots"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
-</h2>
+</div>
 <div class="section level3">
-<h3 id="how-have-event-types-in-africa-changed-over-time">How have event types in Africa changed over time?<a class="anchor" aria-label="anchor" href="#how-have-event-types-in-africa-changed-over-time"></a>
+<h3 id="example---how-have-event-types-in-africa-changed-over-time">Example - How have event types in Africa changed over time?<a class="anchor" aria-label="anchor" href="#example---how-have-event-types-in-africa-changed-over-time"></a>
 </h3>
 <p>An analyst may be interested in how conflict event types have changed
 over time within a continent. In this example, consider Africa since
@@ -613,28 +616,28 @@ ACLED regions by calling the <code><a href="../reference/acled_regions.html">acl
 data.</p>
 <p>Here, we see 5 regions in Africa, as well as the first date for which
 events were coded in each region.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_regions.html">acled_regions</a></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 × 3</span></span></span>
-<span><span class="co">#&gt;    region region_name               first_event_date</span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      1 Western Africa            1997-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      2 Middle Africa             1997-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      3 Eastern Africa            1997-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      4 Southern Africa           1997-01-05      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      5 Northern Africa           1997-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      7 South Asia                2010-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      9 Southeast Asia            2010-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     11 Middle East               2015-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     12 Europe                    2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     13 Caucasus and Central Asia 2017-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     14 Central America           2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     15 South America             2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     16 Caribbean                 2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     17 East Asia                 2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     18 North America             2018-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>     19 Oceania                   2021-01-01      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span>     20 Antarctica                2021-03-19</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_regions.html">acled_regions</a></span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 17 × 3</span></span></span>
+<span><span class="co">##    region region_name               first_event_date</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>      1 Western Africa            1997-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>      2 Middle Africa             1997-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>      3 Eastern Africa            1997-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>      4 Southern Africa           1997-01-05      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>      5 Northern Africa           1997-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>      7 South Asia                2010-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>      9 Southeast Asia            2010-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>     11 Middle East               2015-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>     12 Europe                    2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>     13 Caucasus and Central Asia 2017-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span>     14 Central America           2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span>     15 South America             2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span>     16 Caribbean                 2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span>     17 East Asia                 2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">15</span>     18 North America             2018-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">16</span>     19 Oceania                   2021-01-01      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">17</span>     20 Antarctica                2021-03-19</span></span></code></pre>
 <p>We can store these region names in a vector called
 <code>africa_regions</code> and request data for each country within
 these regions since 2018.</p>
@@ -648,13 +651,17 @@ these regions since 2018.</p>
 <span><span class="va">df_africa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="va">africa_regions</span>,</span>
 <span>                       start_date <span class="op">=</span> <span class="st">"2018-01-01"</span>,</span>
 <span>                       end_date <span class="op">=</span> <span class="st">"2022-04-30"</span>,</span>
-<span>                       monadic <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span>                       monadic <span class="op">=</span> <span class="cn">F</span>, prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Requesting data for 58 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 85,800 country-days.</span></span></code></pre>
+<pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
+<pre><code><span><span class="co">## Processing API request</span></span></code></pre>
+<pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <p>We can then generate event counts for each month by each region in
 Africa:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_africa_monthly</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_africa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/generate_counts.html">generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"region"</span>, </span>
+<span>  <span class="fu"><a href="../reference/acled_generate_counts.html">acled_generate_counts</a></span><span class="op">(</span><span class="va">.</span>, unit_id <span class="op">=</span> <span class="st">"region"</span>, </span>
 <span>                  time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
 <span>                  time_target <span class="op">=</span> <span class="st">"month"</span>,</span>
 <span>                  event_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Battles"</span>, </span>
@@ -665,7 +672,7 @@ Africa:</p>
 with <code>ggplot2</code> by pivoting the data such that each
 region-event type combination is one row and filtering out the
 <code>total_events</code> event type:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df_africa_monthly</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -687,7 +694,98 @@ region-event type combination is one row and filtering out the
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.15</span><span class="op">)</span>,</span>
 <span>        legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray90"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="generate_counts_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
+<p><img src="generate_counts_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="finding-actor-concentration">Finding actor concentration<a class="anchor" aria-label="anchor" href="#finding-actor-concentration"></a>
+</h2>
+<div class="section level3">
+<h3 id="acled_actor_concentration">
+<code>acled_actor_concentration()</code><a class="anchor" aria-label="anchor" href="#acled_actor_concentration"></a>
+</h3>
+<div class="section level4">
+<h4 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h4>
+<p>When utilizing ACLED data, users are more likely than not to
+experience having a wide variaty of actors in a given data set, in any
+of the four actor-related columns. That is because ACLED codes events
+not only based of their location or type, but also through the actors
+participating in a given event, either as main actors (actor1 and actor2
+columns) or as associated actors (associated actors 1 and associated
+actor 2 columns). Such information provides important value for users
+looking to do analyse over actors in a given dataset.</p>
+<p>The <code><a href="../reference/acled_actor_concentration.html">acled_actor_concentration()</a></code> functions allows users
+to extract the degree of actor concentration in a given data set.
+Analzsing actor concentration is of particular use to determine the
+weight of particular actors in an entire dataset. To calculate actor
+concentration, <code><a href="../reference/acled_actor_concentration.html">acled_actor_concentration()</a></code> utilizes two
+approaches: <em>Inverse Simpson Index</em> or <em>Herfindahl-Hirschman
+Index</em>. Both approaches take different routes to calculate and
+express these concentration, but these are equally valuable for
+analysis.</p>
+<p><code><a href="../reference/acled_actor_concentration.html">acled_actor_concentration()</a></code> is set-up as follows:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_actor_concentration.html">acled_actor_concentration</a></span><span class="op">(</span><span class="va">events</span>, </span>
+<span>                          method <span class="op">=</span> <span class="st">"Effective actors"</span>, </span>
+<span>                          acled_dataframe <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>The function thus requires only three arguments <code>events</code>,
+<code>method</code> and <code>acled_dataframe</code>.</p>
+<p><code>events</code> is an ACLED dyadic dataframe (i.e. the result
+from an <code><a href="../reference/acled_api.html">acled_api()</a></code> call) or a vector of event/fatalities
+counts per actor (see <code><a href="../reference/acled_generate_counts.html">acled_generate_counts()</a></code> for an easy
+way to generate such counts.). The required object type of events
+depends on <code>acled_dataframe</code>. If
+<code>acled_dataframe = T</code> then the function expects an ACLED
+dataframe (default behaviour), otherwise if
+<code>acled_dataframe = F</code> it expects a vector of event/fatalities
+counts per actor</p>
+<p><code>method</code> is the desired methodological approach to
+calculate concentration indices, either Inverse Simpson Index or
+Hertindahl-Hirscham Index. These are described below:</p>
+<ul>
+<li>
+<code>method="Effective actors"</code>: Utilizes the Inverse Simpson
+Index (also known as the Reciprocal Simpson Index) to calculate the
+number of effective actors by measuring how evenly events/fatalities are
+distributed across actors. Take a vector where the total number of
+events across all actors is <span class="math inline">\(N\)</span>, and
+the total counts of each actor is <span class="math inline">\(z_1\)</span>, then the number of effective actors
+(<span class="math inline">\(D\)</span>) is <span class="math display">\[
+D=1-(∑z_i​(z_i​−1))​/N(N-1)
+\]</span> The minimum is 1 (least diverse), and the maximum is the total
+number of actors (perfectly diverse).</li>
+<li>
+<code>method="Concentration"</code>: Utilizes the
+Herfindahl-Hirschman Index to estimate the concentration of actors in a
+given data set. In a data set where the share of the presence of a given
+actor is understood as <span class="math inline">\(MS\)</span>, and the
+actor is understood as <span class="math inline">\(i\)</span>. The
+concentration is the sum of the presence (MS) of each given actor (i)
+elevated by 2, or <span class="math display">\[HHI=MS^2_1+MS^2_2+MS^2_3+MS^2_4+...+MS^2_i\]</span>.
+Because we utilize the share of the presence of a given actors
+represente in decimals rather than whole numbers (cf. <a href="https://www.justice.gov/atr/horizontal-merger-guidelines-08192010" class="external-link">US
+DOJ’s Horizontal Merger Guidelines (08/19/2019)</a>) Results range from
+0 to 1, where 1 represents a monopoly of a given actor in the
+environment, and 0.1 represents as a very competitively diverse
+environment.</li>
+</ul>
+<p>Users can utilize these metrics to better understand the distribution
+and dominance of actors within a data set. In greater terms, the two
+metrics provide the same information, however, how the output is
+represented is different. In the Inverse Simpson Index we get the
+results in a scale from 1 to the nominal maximum number of actors,
+hence, it directly tells us how many effective actors we have in the
+dataset. The Herfindahl-Hirschmanns Index, shows us the level of
+concentration in the dataset in a scale from 0 to 1, where the closer we
+get to 1, the less diverse the dataset becomes, and the closer to 0, the
+more diverse it becomes. They both provide measures of diversity and
+concentration, expressed in different terms.</p>
+</div>
+<div class="section level4">
+<h4 id="acledr-example">acledR Example<a class="anchor" aria-label="anchor" href="#acledr-example"></a>
+</h4>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

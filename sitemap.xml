@@ -94,6 +94,9 @@
     <loc>https://acled.github.io/acledR/reference/acled_filter_event_types.html</loc>
   </url>
   <url>
+    <loc>https://acled.github.io/acledR/reference/acled_generate_counts.html</loc>
+  </url>
+  <url>
     <loc>https://acled.github.io/acledR/reference/acled_help.html</loc>
   </url>
   <url>
@@ -113,9 +116,6 @@
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_transform.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/generate_counts.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/generate_movers.html</loc>
