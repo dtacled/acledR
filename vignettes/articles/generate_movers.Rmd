@@ -44,11 +44,11 @@ df_india <- acled_api(countries = "India",
                    monadic = F)
 ```
 
-Next, we can aggregate to event counts per month using the `generate_counts()` function:
+Next, we can aggregate to event counts per month using the `acled_generate_counts()` function:
 ```{r}
 df_india_agg <-
   df_india %>% 
-  generate_counts(., 
+  acled_generate_counts(., 
                   unit_id = "country", 
                   time_id = "event_date",
                   time_target = "month")
