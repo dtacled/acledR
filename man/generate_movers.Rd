@@ -69,7 +69,7 @@ df_india_agg_movers <-
 \seealso{
 Other Data Analysis: 
 \code{\link{acled_actor_concentration}()},
-\code{\link{acled_report_api}()},
-\code{\link{generate_counts}()}
+\code{\link{acled_generate_counts}()},
+\code{\link{acled_report_api}()}
 }
 \concept{Data Analysis}

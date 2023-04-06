@@ -134,7 +134,7 @@ Lets try to add more nuance to our analysis, and lets analyse the count of diffe
 
 ```{r,echo=T}
 
-french_counts <- generate_counts(df_france,
+french_counts <- acled_generate_counts(df_france,
                                  unit_id = "country",
                                  time_id = "event_date",
                                  time_target = "month")%>%

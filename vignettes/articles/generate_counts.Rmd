@@ -1,5 +1,5 @@
 ---
-title: "Generate Event Counts"
+title: "Data Analysis Functions"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Generate Event Counts}
@@ -7,35 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  warning=F, message=F,
-  cache = F
-)
-```
-
 # Generating counts of ACLED events
 
-The `generate_counts()` function creates event counts by event type and spacial and temporal units of analysis. 
-
-The required arguments are:
-
-```{r, eval = F}
-generate_counts(
-  data,
-  unit_id,
-  time_id,
-  time_target
-)
-```
-
-where `data` is ACLED event-level data, `unit_id` is the spatial unit of analysis (e.g., country, ADMIN1, region), `time_id` is the temporal unit (i.e., `event_date` normally), and `time_target` is the temporal unit of aggregation (e.g., week, month, year). If `time_target = week`, the ACLED week (starting on Saturday) is used - see (time)[__here would go the time vignette link__]
-
-As an example, we can take the data for South America.
-
-```{r}
+```{r, echo=FALSE, message= FALSE}
 library(acledR)
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 df_sa <- acled_api(regions = c("South America"),
@@ -44,15 +18,40 @@ df_sa <- acled_api(regions = c("South America"),
                    monadic = F)
 ```
 
-We can then generate event counts at the country-week level:
 
-```{r}
-df_sa_agg_weekly <-
-  df_sa %>% 
-  generate_counts(., 
-                  unit_id = "country", 
-                  time_id = "event_date",
-                  time_target = "week")
+## `acled_generate_counts()`
+
+The `acled_generate_counts()` function creates event counts by event type and spacial and temporal units of analysis. 
+
+The required arguments are:
+
+```{r function_description, eval = FALSE}
+acled_generate_counts(
+  data,
+  unit_id,
+  time_id,
+  time_target
+)
+```
+
+where `data` is ACLED event-level data(e.g, ACLED's dyadic dataframe), `unit_id` is the spatial unit of analysis (e.g., *country*, *admin1*, *region*), `time_id` is the temporal unit (i.e., `event_date`), and `time_target` is the temporal unit of aggregation (e.g., week, month, year). 
+
+**Note**: ACLED's data collection does not follow the normal Monday-Sunday week, but instead a Saturday-Friday week. This function follows the same approach, thus if `time_target = week`, the ACLED week (starting on Saturday) is used.
+
+### Time in `acled_generate_counts`
+
+`acled_generate_counts` was created so that users could get event counts across different spatial and temporal units in a simple manner. When it comes to temporal units, you can utilize three options:
+-   year / `time_id="year"`
+-   month / `time_id = "month"`
+-   week / `time_id = "day"`
+
+You can generate event counts at the country-week level:
+
+```{r, eval=FALSE}
+df_sa_agg_weekly <-generate_counts(df_sa,
+                                   unit_id = "country", 
+                                   time_id = "event_date",
+                                   time_target = "week")
 ```
 
 This returns a tibble with columns for each event type in the data, as well as a column for the total events:
@@ -98,10 +97,7 @@ df_sa_agg_monthly_pv <-
                                  "Explosions/Remote violence", 
                                  "Riots"))
 ```
-
-# Examples
-
-## How have event types in Africa changed over time?
+## Example - How have event types in Africa changed over time?
 
 An analyst may be interested in how conflict event types have changed over time within a continent. In this example, consider Africa since 2018. Since ACLED can code multiple regions within each continent, we need to identify all regions that fall within Africa. We can see all ACLED regions by calling the `acledR::acled_regions` data.
 
@@ -167,4 +163,48 @@ df_africa_monthly %>%
 
 
 
+```
+
+
+
+# Finding actor concentration
+## `acled_actor_concentration()`
+
+### Description
+When utilizing ACLED data, users are more likely than not to experience having a wide variaty of actors in a given data set, in any of the four actor-related columns. That is because ACLED codes events not only based of their location or type, but also through the actors participating in a given event, either as main actors (actor1 and actor2 columns) or as associated actors (associated actors 1 and associated actor 2 columns). Such information provides important value for users looking to do analyse over actors in a given dataset.
+
+The `acled_actor_concentration()` functions allows users to extract the degree of actor concentration in a given data set. Analzsing actor concentration is of particular use to determine the weight of particular actors in an entire dataset. To calculate actor concentration, `acled_actor_concentration()` utilizes two approaches: *Inverse Simpson Index* or *Herfindahl-Hirschman Index*. Both approaches take different routes to calculate and express these concentration, but these are equally valuable for analysis.
+
+`acled_actor_concentration()` is set-up as follows:
+
+```{r, eval=F}
+acled_actor_concentration(events, 
+                          method = "Effective actors", 
+                          acled_dataframe = T)
+```
+
+The function thus requires only three arguments `events`, `method` and `acled_dataframe`. 
+
+`events` is an ACLED dyadic dataframe (i.e. the result from an `acled_api()` call) or a vector of event/fatalities counts per actor (see `acled_generate_counts()` for an easy way to generate such counts.). The required object type of events depends on `acled_dataframe`. If `acled_dataframe = T` then the function expects an ACLED dataframe (default behaviour), otherwise if `acled_dataframe = F` it expects a vector of event/fatalities counts per actor
+
+
+`method` is the desired methodological approach to calculate concentration indices, either Inverse Simpson Index or Hertindahl-Hirscham Index. These are described below:
+
+-   `method="Effective actors"`: Utilizes the Inverse Simpson Index (also known as the Reciprocal Simpson Index) to calculate the number of effective actors by measuring how evenly events/fatalities are distributed across actors. Take a vector where the total number of events across all actors is $N$, and the total counts of each actor is $z_1$, then the number of effective actors ($D$) is $$
+    D=1-(∑z_i​(z_i​−1))​/N(N-1)
+    $$ The minimum is 1 (least diverse), and the maximum is the total number of actors (perfectly diverse).
+-   `method="Concentration"`: Utilizes the Herfindahl-Hirschman Index to estimate the concentration of actors in a given data set. In a data set where the share of the presence of a given actor is understood as $MS$, and the actor is understood as $i$. The concentration is the sum of the presence (MS) of each given actor (i) elevated by 2, or $$HHI=MS^2_1+MS^2_2+MS^2_3+MS^2_4+...+MS^2_i$$. Because we utilize the share of the presence of a given actors represente in decimals rather than whole numbers (cf. [US DOJ's Horizontal Merger Guidelines (08/19/2019)](https://www.justice.gov/atr/horizontal-merger-guidelines-08192010)) Results range from 0 to 1, where 1 represents a monopoly of a given actor in the environment, and 0.1 represents as a very competitively diverse environment.
+
+Users can utilize these metrics to better understand the distribution and dominance of actors within a data set. In greater terms, the two metrics provide the same information, however, how the output is represented is different. In the Inverse Simpson Index we get the results in a scale from 1 to the nominal maximum number of actors, hence, it directly tells us how many effective actors we have in the dataset. The Herfindahl-Hirschmanns Index, shows us the level of concentration in the dataset in a scale from 0 to 1, where the closer we get to 1, the less diverse the dataset becomes, and the closer to 0, the more diverse it becomes. They both provide measures of diversity and concentration, expressed in different terms.
+
+### acledR Example
+
+
+```{r gec_css, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE, message = FALSE,
+  cache = FALSE
+)
 ```

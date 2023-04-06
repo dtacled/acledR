@@ -62,8 +62,8 @@ Calculate actor concentration indices from ACLED data
 }
 \seealso{
 Other Data Analysis: 
+\code{\link{acled_generate_counts}()},
 \code{\link{acled_report_api}()},
-\code{\link{generate_counts}()},
 \code{\link{generate_movers}()}
 }
 \concept{Data Analysis}

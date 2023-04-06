@@ -134,5 +134,5 @@
 #' @format A data frame:
 #' \describe{
 #' \item{Inter1/Inter2}{Actor type}
-#' \item{Numeric code}{Numeric equivalent found in the inter1 and inter2 column. }}
+#' \item{Numeric Code}{Numeric equivalent found in the inter1 and inter2 column. }}
 "acled_interaction_codes"
