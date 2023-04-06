@@ -167,13 +167,13 @@ acled_generate_counts <-
         stop("You requested counts by location, but the `add_unit_ids` argument contains admins beyond location.")
       }
     }
-      if(str_to_lower(unit_id) == "country"){
+      if(str_to_lower(unit_id) %in% c("country","region")){
         add_unit_ids <- data %>%
-          select(.data$country)%>%
+          select(.data[[unit_id]])%>%
           suppressWarnings() %>%
           distinct() %>%
           as.list()%>%
-          .$country
+          .[[unit_id]]
       }
       if(str_to_lower(unit_id) == "admin1"){
         add_unit_ids <- data %>%
@@ -223,7 +223,7 @@ acled_generate_counts <-
       end_date <- floor_date(ymd(end_date), unit = time_target,week_start = getOption('lubridate.week.start', 6))
 
     # Separating into options to avoid duplication of admins
-    if(str_to_lower(unit_id) == "country"){
+    if(str_to_lower(unit_id) %in% c("country","region")){
       data <-
         data %>%
         filter(event_type %in% filter_types) %>%
