@@ -108,7 +108,7 @@ df_nigeria %>%
 
 As observed by our table, Kaduna and Borno are the two most conflict-ridden admin1s in Nigeria, however, conflicts appears generally evenly distributed from there on. Lets plot the geographical distribution:
 
-```{r, echo = T}
+```{r, echo = T, eval = F}
 library(sf)
 library(ggplot2)
 

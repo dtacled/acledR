@@ -123,9 +123,9 @@ In our new data frame, we no longer have four actor columns (actor1,actor2,assoc
 
 ## Generate initial analysis from the data
 
-Finally, users may desire to generate some initial analysis of their data. In order to facilitate this last step on acledR workflow, acledR includes four functions: `generate_counts()`, `generate_movers()`, `calculate_actor_index()`, `acled_report_api()`.
+Finally, users may desire to generate some initial analysis of their data. In order to facilitate this last step on acledR workflow, acledR includes four functions: `acled_generate_counts()`, `generate_movers()`, `calculate_actor_index()`, `acled_report_api()`.
 
-The first of these functions, `generate_counts()` aims to generate events counts by event type, spacial (geography) and temporal units of analysis. That means, finding the event counts for a given region, country, admin levels, or counts by event types, or counts by months, weeks or day. 
+The first of these functions, `acled_generate_counts()` aims to generate events counts by event type, spacial (geography) and temporal units of analysis. That means, finding the event counts for a given region, country, admin levels, or counts by event types, or counts by months, weeks or day. 
 
 The second of these functions, `generate_movers()`, focuses on generating moving statistics, across a given temporal and spacial unit of analysis. This functions allows users to find statistics such as standard deviation, mean, median, max and mins. 
 
