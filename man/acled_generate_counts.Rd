@@ -12,7 +12,8 @@ acled_generate_counts(
   time_target,
   start_date = NULL,
   end_date = NULL,
-  add_unit_ids = NULL
+  add_unit_ids = NULL,
+  fatalities_count = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ acled_generate_counts(
 \item{end_date}{date. Latest date to include (yyyy-mm-dd).}
 
 \item{add_unit_ids}{string. Option to add in units with no events throughout the time period of interest. To include hierarchical unique_id (e.g., country and admin1) add them separated by ";".}
+
+\item{fatalities_count}{logical. If TRUE, it will return fatalities counts INSTEAD of event counts.}
 }
 \value{
 Returns a tibble grouped by unit_id.
@@ -81,6 +84,7 @@ df_counts_riots <- acled_generate_counts(data = df_riots,
                                    event_type = "Riots",
                                    time_id = "event_date",
                                    time_target = "week",
+                                   fatalities_count = FALSE,
                                    add_unit_ids = "Canada")
 
 }

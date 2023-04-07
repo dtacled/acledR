@@ -63,6 +63,7 @@
 #'                                    event_type = "Riots",
 #'                                    time_id = "event_date",
 #'                                    time_target = "week",
+#'                                    fatalities_count = FALSE,
 #'                                    add_unit_ids = "Canada")
 #'
 #' }
