@@ -113,17 +113,19 @@
 <div class="section level2">
 <h2 id="access-to-the-api">Access to the API<a class="anchor" aria-label="anchor" href="#access-to-the-api"></a>
 </h2>
-<p>To use ACLED’s API, you must first register an account at <a href="developer.acleddata.com">ACLED’s Access Portal</a>. Once you
-acquire your credentials (email and key), you can either:</p>
+<p>To use ACLED’s <a href="https://acled.github.io/ACLED-api-guide/" class="external-link">API</a>, you must first
+register an account at <a href="developer.acleddata.com">ACLED’s Access
+Portal</a>, visit our <a href="https://acleddata.com/download/35300/" class="external-link">access guide</a> for more
+information. Once you acquire your credentials (email and key), you can
+either:</p>
 <ul>
-<li><p>Use <code><a href="../reference/acled_access.html">acled_access()</a></code> to verify the credentials (counts
-one download in your quota) and store these in the environment for a
-given session.</p></li>
+<li><p>(recommended) Use <code><a href="../reference/acled_access.html">acled_access()</a></code> to verify the
+credentials (counts one download in your quota) and store these in the
+environment for a given session.</p></li>
 <li><p>Manually store them in the environment file to use them
 permanently across sessions.</p></li>
 </ul>
-<p>To use <code><a href="../reference/acled_access.html">acled_access()</a></code> (recommended), run the
-following:</p>
+<p>To use <code><a href="../reference/acled_access.html">acled_access()</a></code>, run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span><span class="st">"your_email"</span>, <span class="st">"your_key"</span><span class="op">)</span> <span class="co"># to be run every session before doing an API call. </span></span></code></pre></div>
 <p>Alternatively, to manually store them as an environmental variable,
@@ -135,10 +137,12 @@ set:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>email_address <span class="op">=</span> <span class="st">"your_email"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>acled_key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span></span></code></pre></div>
-<p>and save the file. If you run
-<code>Sys.getenv("email_address")</code>, your associated email will
-print; if you run <code>Sys.getenv("acled_key")</code>, your ACLED key
-will print to the console.</p>
+<p>and save the file.</p>
+<p>Either way, to verify that you have stored your credentials properly,
+you can run <code>Sys.getenv("email_address")</code>, and the email you
+registered with should print; if you run
+<code>Sys.getenv("acled_key")</code>, your ACLED key will print to the
+console.</p>
 </div>
 <div class="section level2">
 <h2 id="acled-api">ACLED API<a class="anchor" aria-label="anchor" href="#acled-api"></a>
@@ -156,64 +160,78 @@ API calls. The function takes the following parameters:</p>
 <span>          event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>          monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>          <span class="va">...</span>,</span>
-<span>          acled_access <span class="op">=</span> <span class="cn">TRUE</span>,<span class="co">#acled_access=TRUE only works when acled_access() was run beforehand, eliminating the need of email-key in acled_api()</span></span>
+<span>          acled_access <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>          prompt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>          log <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="parameters-for-the-api">Parameters for the API<a class="anchor" aria-label="anchor" href="#parameters-for-the-api"></a>
 </h2>
+<div class="section level3">
+<h3 id="geographical-filters">Geographical filters<a class="anchor" aria-label="anchor" href="#geographical-filters"></a>
+</h3>
 <p>The <code>countries</code> and <code>regions</code> parameters
-specify where to pull data. If both are NULL (the default), the API will
-return data for all countries available. Specific countries may be
-requested via a vector of country names. Similarly, entire regions may
-be requested via a vector of region names or numeric codes.
-<code><a href="../reference/acled_countries.html">acledR::acled_countries</a></code> and
-<code><a href="../reference/acled_regions.html">acledR::acled_regions</a></code> shows the full lists of countries and
-regions available; otherwise, you can visit
-<code>vignette("Geography")</code>. If you specify both countries and
-regions, the call will return only cases that fit both arguments. For
-example: if you request <code>countries = c("Nigeria", "Mexico")</code>
-and <code>regions = c("Western Africa")</code>, you will receive only
-data from Nigeria since Mexico is not in Western Africa.</p>
+specify where to pull data. If both are <code>NULL</code>, or are not
+included, the API will return data for all countries available. Specific
+countries may be requested via a vector of country names (e.g.,
+<code>c("Argentina","Spain","Bolivia")</code>).</p>
+<p>Similarly, entire regions may be requested via a vector of region
+names or numeric codes. <code><a href="../reference/acled_countries.html">acledR::acled_countries</a></code> and
+<code><a href="../reference/acled_regions.html">acledR::acled_regions</a></code> show the full lists of countries and
+regions available; otherwise, you can visit the <a href="">Geography
+vignette</a>.</p>
+<p>If you specify both countries and regions, the call will return only
+cases where both are compatible. For example: If you request
+<code>countries = c("Nigeria", "Mexico")</code> and
+<code>regions = c("Western Africa")</code>, you will receive only data
+from Nigeria since Mexico is not in Western Africa.</p>
+</div>
+<div class="section level3">
+<h3 id="temporal-filters">Temporal filters<a class="anchor" aria-label="anchor" href="#temporal-filters"></a>
+</h3>
 <p>The <code>start_date</code> and <code>end_date</code> parameters
-specify the date range in “yyyy-mm-dd” format.</p>
-<p>With <code>timestamp</code>, you can keep their datasets updated, as
-it allows them to indicate a <em>timestamp</em> from when to collect
-events. <code>timestamp</code> is not the same as
-<code>event_date</code>, as <em>timestamp</em> indicates when the event
-was added/modified in ACLED’s dataset. To learn more about how to keep
-your datasets up to date, please visit this <a href="https://acleddata.com/acleddatanew/wp-content/uploads/dlm_uploads/2019/07/ACLED_Timestamp-Memo_Methodology-Note_6.2019.pdf" class="external-link">guide</a>.</p>
-<p>You can also use <code>event_types</code> to filter by <em>event
-types</em>. For this, you must enter the <em>event type</em> of interest
-as a string. For example <code>event_types = "battles"</code>.</p>
+specify the date range in the “yyyy-mm-dd” format.</p>
+<p>With <code>timestamp</code> you can keep your datasets updated,
+indicating a Unix timestamp from when to collect events.
+<code>timestamp</code> is not the same as <code>event_date</code>, as
+<code>timestamp</code> stands for when the event was added/modified in
+ACLED’s dataset. To learn more about how to keep your datasets up to
+date, please visit this <a href="https://acleddata.com/download/35179/" class="external-link">guide</a>.</p>
+<p>You can also use <code>event_types</code> to filter by
+<em>event_types</em>. For this, you must enter the <em>event_type</em>
+of interest as a string (e.g., <code>event_types = "Battles"</code> or
+<code>event_types = c("Battles", "Protests")</code>).</p>
+</div>
+<div class="section level3">
+<h3 id="additional-filters">Additional filters<a class="anchor" aria-label="anchor" href="#additional-filters"></a>
+</h3>
 <p><code>monadic</code> is a logical parameter, which is
 <code>FALSE</code> by default and returns the dyadic version of the
-data. When <code>monadic=TRUE</code>, a monadic (long-form) data frame
+data. When <code>monadic=TRUE</code>, a monadic (“long-form”) data frame
 with only one actor (based on <em>actor1</em> and <em>actor2</em>) will
-be returned. For a non-API-based option to transform the dataset from
-wide to long, visit
-<code>vignette("Transformation of ACLED data")</code>.</p>
-<p>The <code>...</code> parameter stands for other arguments one would
-like to include for the final query, such as <em>ISO</em> or
-<em>interaction</em>. To utilize different opinions not included in the
-function parameters, write them as <code>&amp;paramenter=value</code>,
-such as <code>&amp;iso=4</code> (<strong>NOTE</strong>: there is no
-space between characters). To learn more about other valid parameters,
-please visit our <a href="https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf" class="external-link">API
+be returned. For transforming your dataset from wide to long without
+utilizing the API, visit .</p>
+<p>The <code>...</code> parameter stands for any other arguments one
+would like to include for the final query, such as <em>ISO</em> or
+<em>Interaction</em>. To utilize different filters not included in the
+parameters above, write them as <code>&amp;paramenter=value</code>, such
+as <code>&amp;iso=4</code>. To learn more about other valid parameters,
+please visit our <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html" class="external-link">API
 guide</a>.</p>
-<p>The <code>acled_access</code> parameter allows excluding email and
-key on the function when <code><a href="../reference/acled_access.html">acled_access()</a></code> has been used
-beforehand or credentials are stored as environment variables. If
+</div>
+<div class="section level3">
+<h3 id="function-options">Function options<a class="anchor" aria-label="anchor" href="#function-options"></a>
+</h3>
+<p>The <code>acled_access</code> parameter allows you to exclude email
+and key on the function when <code><a href="../reference/acled_access.html">acled_access()</a></code> has been used
+beforehand or the credentials are stored as environment variables. If
 <code>acled_access</code> is set to <code>FALSE</code>, then the email
 and key arguments are necessary.</p>
 <p>The <code>prompt</code> argument corresponds to how the function
 handles big calls. This option refers to whether you are interested in
-receiving an interactive prompt regarding how many API calls are
-necessary for your request and confirming you want to spend the stated
-number of calls. In cases where you may not want to have this
-interactive prompt, such as when utilizing <code><a href="../reference/acled_api.html">acled_api()</a></code> as
-part of a routine script, users can set <code>prompt = FALSE</code> to
+receiving an interactive prompt about the required API calls. If you do
+not want this interactive prompt (e.g, because <code><a href="../reference/acled_api.html">acled_api()</a></code>
+is part of a routine script), you can set <code>prompt = FALSE</code> to
 run the function without the prompt.</p>
 <p>Finally, the <code>log</code> option provides an alternative to
 executing the normal API call. Instead, it provides a data frame with
@@ -221,27 +239,30 @@ the countries requested, the date range requested, and the country-days
 unit. We recommend this option only for testing; otherwise, it provides
 little to no analytical value.</p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="handling-big-api-calls">Handling big API calls<a class="anchor" aria-label="anchor" href="#handling-big-api-calls"></a>
 </h2>
 <p>As common across APIs, handling big chunks of data requires tweaks.
 In our case, the base API utilizes pagination to address some of these
-issues. Making big requests is still unreliable, so we recommend doing
-smaller calls. This can be confusing for newer users working with APIs.
-In this package, we provide a solution to both of these issues.</p>
-<p>First, in terms of pagination, our wrapper does this for the user
-automatically, so there is no need to include pagination in their
-calls.</p>
-<p>Second, regarding big calls, the <code><a href="../reference/acled_api.html">acled_api()</a></code> function
-will first estimate how much data you are requesting. Based on this, you
-will be prompted with a message which includes: the number of countries
-requested, the number of country-days, the number of API calls needed,
-and a question about whether you would like to proceed. Currently,
-<code><a href="../reference/acled_api.html">acled_api()</a></code> works with a threshold of 300,000 country-days
-to determine whether to split the function. This way, you can rest
-assured that the call will not hit any issues because it is too large (a
-problem some users encountered before), but also, you can now have more
-control over your API quota.</p>
+issues. This can be confusing for newer users working with APIs. Luckily
+for you, this package allows you to bypass these issues.</p>
+<p>Instead of pagination, our wrapper splits the call automatically, so
+there is no need to include pagination in your calls.</p>
+<p>Additionally, the <code><a href="../reference/acled_api.html">acled_api()</a></code> function will first
+estimate how much data you are requesting. Based on this, you will be
+prompted with a message which includes the following:</p>
+<ul>
+<li><p>The number of countries requested,</p></li>
+<li><p>The number of <code>country-days</code> requested,</p></li>
+<li><p>The number of API calls needed,</p></li>
+<li><p>A question about whether you would like to proceed.</p></li>
+</ul>
+<p>Currently, <code><a href="../reference/acled_api.html">acled_api()</a></code> works with a threshold of 300,000
+<code>country-days</code> to determine whether to split the function.
+Thus, under most circumstances, you will avoid running into issues
+related to the size of the call. Additionally, you can have more control
+over your API quota as you can see the number of calls required.</p>
 <p>If you prefer to skip the interactive prompt, set the argument to
 <code>prompt = FALSE</code>. While this ignores the interactive prompt,
 the call will still be split if it reaches the threshold.</p>
@@ -249,13 +270,15 @@ the call will still be split if it reaches the threshold.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>To see how this works in practice, let’s do an example of gathering
-events from Brazil from January 2022 to December 2022.</p>
+<p>Let’s review an example to see how this works in practice.</p>
+<p>Imagine you are gathering events from Brazil from January 2022 to
+December 2022.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
+<span><span class="co"># This is an example, you will need to input your credentials.</span></span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -301,7 +324,7 @@ period:</p>
 <span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 1, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
 <span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1670269342, 1670269342, 1670269342, 1670269342, 167…</span></span></code></pre></div>
-<p>If we wanted multiple countries, we could execute the following:</p>
+<p>If you want multiple countries, you could execute the following:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -309,9 +332,10 @@ period:</p>
 <span>                      monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                      acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                      prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>For an entire region, we omit the <code>countries</code> parameter
-and supply a <code>regions</code> argument. Additionally, for only
-gathering protests, we provide an <code>event_type</code> argument:</p>
+<p>For an entire region, you can omit the <code>countries</code>
+parameter and supply a <code>regions</code> argument instead.
+Additionally, for only getting “Protests”, you can provide an
+<code>event_type</code> argument:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -320,8 +344,9 @@ gathering protests, we provide an <code>event_type</code> argument:</p>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>To utilize a <em>timestamp</em> to download the data, we add it as
-either a string (“yyyy-mm-dd”) or as a numeric Unix timestamp:</p>
+<p>To utilize the <em>timestamp</em> column/filter to download the data,
+you can add it as either a string (“yyyy-mm-dd”) or as a numeric Unix
+timestamp:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -331,9 +356,9 @@ either a string (“yyyy-mm-dd”) or as a numeric Unix timestamp:</p>
 <span>                      timestamp <span class="op">=</span> <span class="fl">1643056974</span>, <span class="co"># -&gt; in the case of a numeric Unix timestamp</span></span>
 <span>                      acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                      prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>If we would like to include only one type of <em>interaction</em>, in
-this case, “Rioters versus Civilians (57)”, we add the
-<em>interaction</em> code to the <code>...</code> argument:</p>
+<p>If you would like to include only one type of <em>Interaction</em>,
+in this case, “Rioters versus Civilians (57)”, You should add the
+<em>Interaction</em> code to the <code>...</code> argument:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
@@ -342,7 +367,7 @@ this case, “Rioters versus Civilians (57)”, we add the
 <span>                   ... <span class="op">=</span> <span class="st">"&amp;interaction=57"</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>We could also request the monadic version of the data by setting
+<p>You could also request the monadic version of the data by setting
 <code>monadic = TRUE</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_monadic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South America"</span><span class="op">)</span>,</span>
