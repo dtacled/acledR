@@ -88,7 +88,8 @@
 <span>  <span class="va">time_target</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  end_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_unit_ids <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  add_unit_ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fatalities_count <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -124,6 +125,10 @@
 
 <dt>add_unit_ids</dt>
 <dd><p>string. Option to add in units with no events throughout the time period of interest. To include hierarchical unique_id (e.g., country and admin1) add them separated by ";".</p></dd>
+
+
+<dt>fatalities_count</dt>
+<dd><p>logical. If TRUE, it will return fatalities counts INSTEAD of event counts.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -186,6 +191,7 @@
 <span class="r-in"><span>                                   event_type <span class="op">=</span> <span class="st">"Riots"</span>,</span></span>
 <span class="r-in"><span>                                   time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span></span>
 <span class="r-in"><span>                                   time_target <span class="op">=</span> <span class="st">"week"</span>,</span></span>
+<span class="r-in"><span>                                   fatalities_count <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>                                   add_unit_ids <span class="op">=</span> <span class="st">"Canada"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
