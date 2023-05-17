@@ -49,19 +49,17 @@
 #' \item{demonstrations}{Dummy indicator for whether sub-event type falls within demonstrations}}
 "acled_event_categories"
 
-#' A dummy data frame of ACLED events emulating an old format, used in acled_deletion_api Vignette
+#' A dummy data frame of ACLED events emulating an old format, used in "Keeping your dataset updated" Vignette
 #'
 #' Small dataset of events in Argentina, purposefully including events which are currently deleted/modified.
 #' @family Data
 #' @format A data frame:
 #' \describe{
-#' \item{data_id}{Numeric code of event ID}
-#' \item{iso}{A numeric code for each individual country}
 #' \item{event_id_cnty}{An unique individual identifier by number and country acronym (updated annually)}
-#' \item{event_id_no_cnty}{A non-unique individual numeric identifier (updated annually)}
 #' \item{event_date}{The day, month and year on which an event took place}
 #' \item{year}{The year in which an event took place}
 #' \item{time_precision}{A numeric code indicating the level of certainty of the date coded for the event}
+#' \item{disorder_type}{Type of disorder associated with the event and sub event type}
 #' \item{event_type}{The type of event}
 #' \item{sub_event_type}{The type of sub-event}
 #' \item{actor1}{The named actor involved in the event. Note: Actor 1 and Actor 2 do not imply directionality (e.g. attacker or defender)}
@@ -71,6 +69,8 @@
 #' \item{assoc_actor_2}{The named actor associated with or identifying actor1}
 #' \item{inter2}{A numeric code indicating the type of actor1}
 #' \item{interaction}{A numeric code indicating the interaction between types of actor1 and actor2}
+#' \item{civilian_targeting}{Column referencing the presence of civilian targeting}
+#' \item{iso}{A numeric code for each individual country}
 #' \item{region}{The region of the world where the event took place}
 #' \item{country}{The country in which the event took place}
 #' \item{admin1}{The largest sub-national administrative region in which the event took place}
@@ -84,9 +84,9 @@
 #' \item{source_scale}{The scale (local, regional, national, international) of the source}
 #' \item{notes}{A short description of the event}
 #' \item{fatalities}{The number of reported fatalities which occurred during the event}
-#' \item{timestamp}{Numeric code of time}
-#' \item{iso3}{A character code for each individual country}}
-"acled_deletion_old_dummy"
+#' \item{tags}{Tags associated with the event.}
+#' \item{timestamp}{Numeric code of time}}
+"acled_old_dummy"
 
 #' Second dummy data frame of ACLED events emulating an old format, used in acled_deletion_api Vignette
 #'
@@ -95,12 +95,11 @@
 #' @family Data
 #' @format A data frame:
 #' \describe{
-#' \item{iso}{A numeric code for each individual country}
 #' \item{event_id_cnty}{An unique individual identifier by number and country acronym (updated annually)}
-#' \item{event_id_no_cnty}{A non-unique individual numeric identifier (updated annually)}
 #' \item{event_date}{The day, month and year on which an event took place}
 #' \item{year}{The year in which an event took place}
 #' \item{time_precision}{A numeric code indicating the level of certainty of the date coded for the event}
+#' \item{disorder_type}{Type of disorder associated with the event and sub event type}
 #' \item{event_type}{The type of event}
 #' \item{sub_event_type}{The type of sub-event}
 #' \item{actor1}{The named actor involved in the event. Note: Actor 1 and Actor 2 do not imply directionality (e.g. attacker or defender)}
@@ -110,6 +109,8 @@
 #' \item{assoc_actor_2}{The named actor associated with or identifying actor1}
 #' \item{inter2}{A numeric code indicating the type of actor1}
 #' \item{interaction}{A numeric code indicating the interaction between types of actor1 and actor2}
+#' \item{civilian_targeting}{Column referencing the presence of civilian targeting}
+#' \item{iso}{A numeric code for each individual country}
 #' \item{region}{The region of the world where the event took place}
 #' \item{country}{The country in which the event took place}
 #' \item{admin1}{The largest sub-national administrative region in which the event took place}
@@ -123,8 +124,9 @@
 #' \item{source_scale}{The scale (local, regional, national, international) of the source}
 #' \item{notes}{A short description of the event}
 #' \item{fatalities}{The number of reported fatalities which occurred during the event}
+#' \item{tags}{Tags associated with the event.}
 #' \item{timestamp}{Numeric code of time}}
-"acled_deletion_old_dummy_n3"
+"acled_old_deletion_dummy"
 
 #' ACLED interaction codes
 #'
