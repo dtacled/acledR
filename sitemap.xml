@@ -76,12 +76,6 @@
     <loc>https://acled.github.io/acledR/reference/acled_countries.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_deletion_old_dummy.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_deletion_old_dummy_n3.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/reference/acled_deletions_api.html</loc>
   </url>
   <url>
@@ -101,6 +95,12 @@
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_interaction_codes.html</loc>
+  </url>
+  <url>
+    <loc>https://acled.github.io/acledR/reference/acled_old_deletion_dummy.html</loc>
+  </url>
+  <url>
+    <loc>https://acled.github.io/acledR/reference/acled_old_dummy.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_regen.html</loc>
