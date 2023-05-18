@@ -42,7 +42,6 @@ Function to convert your ACLED's API calls (if dyadic) into desired monadic form
 \seealso{
 Other Data Manipulation: 
 \code{\link{acled_filter_actors}()},
-\code{\link{acled_filter_event_types}()},
 \code{\link{acled_regen}()}
 }
 \concept{Data Manipulation}

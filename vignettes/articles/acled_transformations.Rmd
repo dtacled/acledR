@@ -15,15 +15,13 @@ library(acledR)
 library(dplyr)
 ```
 
-## 1. Filter functions
+## 1. Filter functions - `acled_filter_actor()`
 
-ACLED's data utilizes a wide format. While this is an easier format for humans to read, it is not the same case for computers.
+ACLED's data utilizes a wide format, which prioritizes having more columns over rows. That often means that it is more complicated to filter values, as they can be spread across columns.
 
 For that matter, sometimes it can take a couple of lines of code to properly filter data in ACLED's dataset when we are trying to get variables inside wide-formatted columns such as *actor1*, *actor 2*, *assoc_actor_1*,*assoc_actor_2*, and *source*.
 
-Because of that, `acledR` includes two particular functions to easily filter the data across all of these columns while retaining the same structure.
-
-### 1.1. `acled_filter_actor()`.
+Because of that, `acledR` includes `acled_filter_actor()` to easily filter the data across all of these columns while retaining the same structure.
 
 Operating across actor columns is a prime example of the extra steps users must do to circumvent the column's wide format. Actors are found across four columns, requiring multiple filters or conditions, making filtering slightly tedious.
 
@@ -47,45 +45,7 @@ For `filter_cols`, you can utilize a vector with the names of the different acto
 
 **Note:** that if we utilize the option `filter_cols = ‘all'`, the `df` you provide must follow ACLED's structure, and thus it must have an *assoc_actor_1* or *assoc_actor_2* column.
 
-### 1.2 `acled_filter_event_types()`.
-
-As users may find in ACLED's [methodology guides](https://acleddata.com/download/2827/), we have defined clusters of event types that tend to describe specific categories of political violence or disorder. These are:
-
-```{r table_of_categories, echo=FALSE}
-acledR::acled_event_categories %>%
-  mutate(political_violence = cell_spec(political_violence, "html", background = ifelse(as.numeric(political_violence) > 0, "blue", "white"), color = ifelse(as.numeric(political_violence) > 0, "blue", "white")),
-         organized_political_violence = cell_spec(organized_political_violence, "html", color = ifelse(as.numeric(organized_political_violence) > 0, "blue", "white"), background = ifelse(as.numeric(organized_political_violence) > 0, "blue", "white")),
-         disorder = cell_spec(disorder, "html", background = ifelse(as.numeric(disorder) > 0, "blue", "white"), color = ifelse(as.numeric(disorder) > 0, "blue", "white")),
-         demonstrations = cell_spec(demonstrations, "html", background = ifelse(as.numeric(demonstrations) > 0, "blue", "white"), color = ifelse(as.numeric(demonstrations) > 0, "blue", "white")))%>%
-  select(-event_type) %>%
-  kable(format = "html", escape = F) %>%
-  kable_styling(fixed_thead = T) %>%
-  column_spec(2:5,color="white")%>%
-  pack_rows(group_label = "Battles", start_row = 1,end_row = 3) %>%
-  pack_rows(group_label = "Explosions/Remote violence",start_row=4,end_row = 9) %>%
-  pack_rows(group_label = "Protests",start_row = 10, end_row = 12) %>%
-  pack_rows(group_label = "Riots", start_row = 13, end_row = 14) %>%
-  pack_rows(group_label = "Strategic developments", start_row = 15, end_row = 22) %>%
-  pack_rows(group_label = "Violence against civilians", start_row = 23, end_row = 25)
-```
-
-The table helps to illustrate the conditional statements that lead to these categories; while also hinting at how time-consuming it may be to filter these categories manually. For that, the package includes the `acled_filter_event_types()` function:
-
-```{r fet function, eval = FALSE}
-acled_filter_event_types(data,
-                  acled_categories,
-                  keep_all_events = FALSE)
-```
-
-`acled_filter_event_types()` requires three arguments:
-
--   `data`: ACLED data frame, like `acled_api()`'s output.
-
--   `acled_categories`: a character vector of the categories by which we will filter.
-
--   `keep_all_events`: a logical statement to specify if we want to filter out events. When indicating `keep_all_events = FALSE`, the function returns only the events within the requested categories. On the contrary, if it is `TRUE`, the returned data frame will include new binary columns to indicate if the given event was part of the specified category.
-
-## 2. `acled_transform()`
+## 2. From wide to long - `acled_transform()`
 
 The last function in our family of data manipulation functions is `acled_transform()`. `acled_transform()` was created to aid you in switching from a wide format to a long form, if required, without the need to make a new API call with the monadic option.
 
@@ -96,7 +56,11 @@ acled_transform(data,
 
 ```
 
-`acled_transform()` requires two arguments: \* `data`: The dataset to transform (has to follow ACLED's structure) \* `type`: A character vector indicating which columns to transpose. See below the available categories.
+`acled_transform()` requires two arguments: 
+
+*   `data`: The dataset to transform (has to follow ACLED's structure) 
+
+*   `type`: A character vector indicating which columns to transpose. See below the available categories.
 
 These are the available options to transpose the ACLED data, which we indicate through the `type` argument:
 
@@ -132,7 +96,8 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 
 # Request the Argentinian dataset for 2022
 argen_acled <- acled_api(countries = "Argentina",
-                         year = 2022, 
+                         start_date = "2022-01-01", 
+                         end_date = "2022-12-30", 
                          acled_access = TRUE,
                          prompt = FALSE, 
                          log = F)
@@ -187,6 +152,6 @@ plot(mapu_ego[[1]], layout=layout.fruchterman.reingold,
 
 ```
 
-As you can see, through 2022, the "Mapuche Indigenous Militia (Argentina)" interacted mostly with the "Civilians (Argentina)" and also with the police forces of the country of both the Mauricio Macri 2015-2019 government and Alberto Fernandez (current) governments.
+As you can see, through 2022, the "Mapuche Indigenous Militia (Argentina)" interacted mostly with the "Civilians (Argentina)" and also with the police forces of the country of both the Mauricio Macri's 2015-2019 government and Alberto Fernandez's (current) governments.
 
 This is a basic example of how to start exploring actor interactions with the ACLED dataset and how to use the transformation functions to shape the dataset structure to fit your methodological requirements.

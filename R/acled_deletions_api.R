@@ -1,6 +1,6 @@
 #' @title Request data from the ACLED Deletions API
 #' @name acled_deletions_api
-#' @description This function allows users to pull deleted ACLED event IDs from the Deletions API. 
+#' @description This function allows users to pull deleted ACLED event IDs from the Deletions API.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param date_deleted character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.
@@ -75,8 +75,8 @@ acled_deletions_api <- function(email = NULL,
     stop(paste0("API request unsuccessful with status code ", response[["status_code"]], ". \n","Our server may be under maintenance or it may momentarily be unavailable; please try again in a couple of minutes."))
   }
 
-  out <- content(response)
-
+  out <- suppressMessages(
+    content(response))
   return(out)
 
 }
