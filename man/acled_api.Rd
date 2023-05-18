@@ -9,7 +9,7 @@ acled_api(
   key = NULL,
   countries = NULL,
   regions = NULL,
-  start_date = floor_date(Sys.Date(), "year") - year(1),
+  start_date = floor_date(Sys.Date(), "year") - years(1),
   end_date = Sys.Date(),
   timestamp = NULL,
   event_types = NULL,

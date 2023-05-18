@@ -29,7 +29,7 @@ Naturally, the first step is loading installing the package:
 # Installing the package
 install.packages("acledR") # To install the package from CRAN
 
-devtools::install_github("billingt/acledR") # To install the developer's branch from Github. 
+devtools::install_github("ACLED/acledR") # To install the developer's branch from Github. 
 
 # Loading the package
 library(acledR)
@@ -83,7 +83,7 @@ glimpse(argentinian_data)
 
 ## Transforming the data from the API
 
-In some cases you may prefer to fit the data into a different format than the default wide-form output that its received from the API call. For these cases we offer users three functions: `acled_filter_actors()`, `acled_filter_event_types`, and `acled_transform`. 
+In some cases you may prefer to fit the data into a different format than the default wide-form output that its received from the API call. For these cases we offer users two functions: `acled_filter_actors()` and `acled_transform`. 
 
 The first of this, `acled_filter_actors()`, attempts to help users to filter events by the actors involved, in any of the four columns which include actors. While that is a simple filter operation, which can easily be done through the tidyverse packages, in the case of ACLED data, actors maybe in any of four columns, and in some cases where associated actors are multiple, an actor maybe found inside one cell along with multiple others. Thus, `acled_filter_actors()` is particularly useful to work with acled_data. For instance, we are interested in all thje events where the Argentinian Police Forces were involved: 
 
@@ -95,20 +95,6 @@ arg_pf <- acled_filter_actors(argentinian_data,  # data
 
 head(arg_pf)
 ```
-
-
-Alternatively, we may be interested in only a particular category of event types, for that, we utilize `acled_filter_categories()`. ACLED categorises certain event types into clusters that better explain different types of political violence and disorder. However, to form these categories, users may require to create a number of conditional statements, which can be found on `vignettes("event type")`. Thus, to simplify this operation, users can utilize `acled_filter_event_types()`. Lets say we are interested only in organized political violence in our Argentinian dataset:
-
-```{r}
-arg_cats <- acled_filter_event_types(argentinian_data, # data
-                               "organized_political_violence", # Categories of interest
-                               keep_all_events = T) # option to keep all events with an extra column, or to filter events
-
-glimpse(arg_cats)
-
-```
-
-As we can see, this includes a new column with the name of the event category we are interested on (organized political violence), which includes binary values on whether the event is part of the desired category. 
 
 Finally, considering that ACLED data is structured into wide-form, it may be of use for some users to have the data into long-form instead. If users are interested only in ACLED monadic data, they can opt to make the API call with the monadic option set to TRUE, however, that is an standalone call. If users are interested on getting data into dyadic form, that would entail another independent call. Thus, it may be useful for some users to request the data as normal, and make any transformation after making the API call, without utilizing more API calls of their limited quota. In such cases, users can utilize `acled_transform()`. In this example we are going to transform our data to be in long-form based on the actor column:
 
