@@ -17,27 +17,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Access to the API
+## Accessing the API
 
-To use ACLED's [API](https://acled.github.io/ACLED-api-guide/), you must first register an account at [ACLED's Access Portal](developer.acleddata.com), visit our [access guide](https://acleddata.com/download/35300/) for more information. Once you acquire your credentials (email and key), you can either:
+To use ACLED's [API](https://acled.github.io/ACLED-api-guide/), you must first register an account in [ACLED's Access Portal](developer.acleddata.com). You can get more information about registering your account by visiting ACLED’s [access guide](https://acleddata.com/download/35300/). Your account will provide credentials (your email and a unique key). You can use these credentials in R by either:
 
--   (recommended) Use `acled_access()` to verify the credentials (counts one download in your quota) and store these in the environment for a given session.
+-   (recommended) Using `acled_access()` to verify the credentials (this counts as one download in your quota), then by storing your credentials in your local environment for a given session 
 
--   Manually store them in the environment file to use them permanently across sessions.
+-   Manually storing them in the environment file to use them permanently across all sessions.
 
-To use `acled_access()`, run the following:
+To use `acled_access()`, you can run the following:
 
 ```{r, eval = F}
 acled_access("your_email", "your_key") # to be run every session before doing an API call. 
 ```
 
-Alternatively, to manually store them as an environmental variable, run:
+Alternatively, to manually store your credentials as an environmental variable you can run:
 
 ```{r, eval = F}
 file.edit(file.path("~", ".Renviron"))
 ```
 
-which will open your `.Renviron` file. Once there, set:
+which will open your `.Renviron` file. Once there you can set:
 
 ```{r, eval = F}
 Sys.setenv(email_address = "your_email")
@@ -46,7 +46,7 @@ Sys.setenv(acled_key = "your_key")
 
 and save the file.
 
-Either way, to verify that you have stored your credentials properly, you can run `Sys.getenv("email_address")`, and the email you registered with should print; if you run `Sys.getenv("acled_key")`, your ACLED key will print to the console.
+After inputting your credentials, you can confirm that they have been properly stored by running `Sys.getenv("email_address")` to return the stored email address, and `Sys.getenv("acled_key")` to return the stored ACLED key in the console.
 
 ## ACLED API
 
@@ -64,8 +64,7 @@ acled_api(email = NULL,
           monadic = FALSE,
           ...,
           acled_access = TRUE, 
-          prompt = TRUE,
-          log = F)
+          prompt = TRUE)
 
 ```
 
@@ -99,7 +98,7 @@ The `acled_access` parameter allows you to exclude email and key on the function
 
 The `prompt` argument corresponds to how the function handles big calls. This option refers to whether you are interested in receiving an interactive prompt about the required API calls. If you do not want this interactive prompt (e.g, because `acled_api()` is part of a routine script), you can set `prompt = FALSE` to run the function without the prompt.
 
-Finally, the `log` option provides an alternative to executing the normal API call. Instead, it provides a data frame with the countries requested, the date range requested, and the country-days unit. We recommend this option only for testing; otherwise, it provides little to no analytical value.
+
 
 ## Handling big API calls
 
@@ -115,9 +114,12 @@ Additionally, the `acled_api()` function will first estimate how much data you a
 
 -   The number of API calls needed,
 
--   A question about whether you would like to proceed.
+-   A question about whether you would like to proceed.[a][b]
 
-Currently, `acled_api()` works with a threshold of 300,000 `country-days` to determine whether to split the function. Thus, under most circumstances, you will avoid running into issues related to the size of the call. Additionally, you can have more control over your API quota as you can see the number of calls required.
+Currently, `acled_api()` works with a threshold of 300,000 `country-days` to determine whether to split the function. `country-days` are a measure utilized by `acledR` to estimate the amount of data requested by the user. To be more specific, `country-days` is an estimation based on an approximation of how many country-days are in the full dataset. To be more precise, `N country-day = N countries * N days`. We use the results of the formula to break down the API call to avoid any timeout issues. In brief, it approximates the amount of data per country requested, based on how many days of data are requested per country. 
+
+**Note:** `country-data` is only used for the internal workings of the function, so as to optimize the API call - it is not an analytical measurement, or a representation of how many data is available per country**. 
+Thanks to this, under most circumstances, you will avoid running into issues related to the size of the call. Additionally, you can have more control over your API quota as you can see the number of calls required.
 
 If you prefer to skip the interactive prompt, set the argument to `prompt = FALSE`. While this ignores the interactive prompt, the call will still be split if it reaches the threshold.
 
@@ -149,7 +151,7 @@ df_br %>%
   glimpse()
 ```
 
-If you want multiple countries, you could execute the following:
+If you want multiple countries, you would execute the following:
 
 ```{r}
 df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
@@ -209,3 +211,10 @@ df_sa_monadic <- acled_api(regions = c("South America"),
 ```
 
 In both the dyadic and monadic versions, the API returns `r length(unique(df_sa$event_id_cnty))` unique events. However, the number of unique entries for the dyadic version is also `r length(df_sa$event_id_cnty)`, while it's `r length(df_sa_monadic$event_id_cnty)` for the monadic version.
+
+Best of luck!
+
+[a]This section is a bit redundant with the `prompt` bit a couple paragraphs up. Mayb work the prompt section into here?
+[b]Mm i think i disagree here. The paragraphs above explain the option to enable the prompt, without providing much info about the prompt itself. (That is intentionally because first I introduce the components of the function) 
+
+Whereas here we go more in depth into what the prompt is. Although I do agree, I need to nail the country-days definition.
