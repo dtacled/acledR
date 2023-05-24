@@ -96,7 +96,7 @@ df_counts_riots <- acled_generate_counts(data = df_riots,
 
 Other Data Analysis: 
 \code{\link{acled_actor_concentration}()},
-\code{\link{acled_report_api}()},
-\code{\link{generate_movers}()}
+\code{\link{acled_generate_movers}()},
+\code{\link{acled_report_api}()}
 }
 \concept{Data Analysis}
