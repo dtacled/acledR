@@ -24,7 +24,7 @@ acled_access <- function(email,key) {
   out <- httr::content(response)
 
   if (out$status != 200) {
-    if ((out$error$message) == "Access key and email address are not authorized") {
+    if ((out$error$message) == "Incorrect email or access key entered. Please try again.") {
       stop(paste0("Error: ",out$error$message, ". Error code: ", out$status,". \n"
                   ,rlang::format_error_bullets(c("Key and email not authorized. Please verify your API credentials (key and email) and try again",
                                                  "If the error persists please contact access@acleddata.com."))))
