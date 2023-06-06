@@ -23,9 +23,9 @@ library(tidyr)
 ```
 
 
-The data analysis family of functions can assist you in carrying exploratory data analysis of ACLED data. We developed these functions taking into consideration the use cases of our data, and some of the analysis that we often require internally. 
+The data analysis family of functions can assist you in carrying exploratory data analysis of ACLED data. Our team has engineered this suite of functions, not only to meet the specific user cases, but also to encapsulate and streamline the initial data analyses crucial for performing larger, more complex analytic tasks.
 
-These functions attempt to speed-up your exploratory data analysis, however, you are highly encouraged to get familiar with our documentation to properly interpret the results from these functions. 
+These functions attempt to speed-up your exploratory data analysis, however, you are highly encouraged to get familiar with our [documentation](https://acleddata.com/resources/) to properly interpret the results from these functions. 
 
 At this time, `acledR` offers three functions aimed at exploratory data analysis:
 
@@ -65,11 +65,11 @@ acled_generate_counts(
 Arguments:
 -   `data` is ACLED event-level data (e.g, ACLED's dyadic dataframe), 
 -   `unit_id` is the spatial unit of analysis (e.g., *country*, *admin1*, *region*), 
--   `time_id` is the temporal unit (i.e., *event_date*), and 
--   `time_target` is the temporal unit of aggregation (e.g., week, month, year). 
--   `event_type` - Use in case of wanting to filter events for *event_types*
+-   `time_id` is the temporal unit (i.e., *event_date*),  
+-   `time_target` is the temporal unit of aggregation (e.g., week, month, year), and
+-   `event_type` - Used in case of wanting to filter events for *event_types*
 
-**Note**: ACLED's data collection does not follow a Monday-Sunday week, but instead a Saturday-Friday week. This function follows the same approach - if `time_target = week`, ACLED's week (starting on Saturday) is used.
+**Note**: ACLED's data collection does not follow a Monday-Sunday week, but instead a Saturday-Friday week. This function follows the same approach. Thus, if `time_target = week`, ACLED's week (starting on Saturday) is utilized. 
 
 ### Time in `acled_generate_counts`
 
