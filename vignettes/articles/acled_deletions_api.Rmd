@@ -35,7 +35,7 @@ For users with a personal ACLED file, it is advised to check regularly which eve
 
 As we covered in the more detailed guide about [updating your dataset](https://acleddata.com/download/35179/), in some cases events are updated. When they are updated, their *event_id_cnty* remains the same but all the rest of the information gets updated and overwritten. 
 
-Different from [deleted events](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html), there is no separate API endpoint to check for updated events. Thus, to keep a track of updated events you should take advantage of the *timestamp* column. When events are updated, their timestamp changes to the timestamp of when it got updated. This means, that you can find the modified events by utilizing `acledR::acled_api()` and providing your latest timestamp (i.e. `max({your ACLED dataset}$timestamp))`) in the `timestamp` argument of the function. In that case, if you have duplicated events, these are likely to be updated events, which you should keep only the one with a higher timestamp. 
+Different from [deleted events](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html), there is no separate API endpoint to check for updated events. When events are updated, their timestamp changes to the timestamp of the update. This means, that you can find the modified events by utilizing `acledR::acled_api()` and providing your latest timestamp (i.e. `max({your ACLED dataset}$timestamp))`) in the `timestamp` argument of the function. If you get duplicated events, these are likely to be updated events, which you should keep only the one with a higher timestamp. 
 
 To simplify this process, `acledR` includes a function which makes the update for you by following the steps previously explained: `acled_update`. 
 
@@ -54,6 +54,8 @@ acled_update(
 
 The function is composed of the following arguments: 
 -   `df`: The dataframe to update, it has to have the same structure as ACLED's dyadic dataframes (i.e. the result of `acled_api()`)
+-   `start_date`: Along with `end_date` these determine the temporal range for your update. They default to the date range of `df`. 
+-   `end_date`: Along with `start_date` these determine the temporal range for your update. They default to the date range of `df`. 
 -   `countries`: In case of your dataset to include particular countries, you can add them here so that the function filter new events to those countries. 
 -   `regions`: In case of your dataset to include particular regions, you can add them here so that the function filter new events to those regions. 
 -   `event_types`: In case of your dataset to include particular event_types, you can add them here so that the function filter new events to those event_types.
@@ -63,11 +65,11 @@ The function is composed of the following arguments:
 -   `deleted`: If TRUE, this function will also deal with deleted events, utilizing [ACLED API's deleted endpoint](https://acled.github.io/acledR/articles/acled_deletions_api.html). 
 -   `prompts`: Use this option to supress or allow prompts regarding your call. See `acled_api()`. 
 
-`acled_update()` will utilize the dataset you provide to gather new events based on the timestamp, and add them to the original dataset, as well as deleted events (if  `deleted = TRUE`). 
+`acled_update()` will utilize the dataset you provide to gather new events based on the timestamp, and add them to the original dataset, as well as remove any deleted events (if  `deleted = TRUE`). 
 
 ## Keeping track of deleted events - `acled_deletion_api()`
 
-When events are deleted, however, their *event_id_cnty* also gets deleted. If users use the method explained above to keep track of modified events, they will not be able to identify events that have deleted. Instead, users can use the `acled_deletion_api()` function to gather the *event_id_cnty* of deleted events, which you can use to filter out these events. While users can find an example below, we kindly suggest you to visit our [guide](https://acleddata.com/download/35179/) and a more specific guide about the `deletions` [endpoint](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html) in our API.
+When events are deleted, however, their *event_id_cnty* also gets deleted. For that, users can employ `acled_deletion_api()` to gather the *event_id_cnty* of deleted events, which you can use to filter out these events from your dataset. While users can find an example below, we kindly suggest you to visit our [guide](https://acleddata.com/download/35179/) and a more specific guide about the `deletions` [endpoint](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html) in our API.
 
 ```{r, eval=F}
 acled_deletions_api(
@@ -84,11 +86,7 @@ When executing the function, it will make an API call to the `deleted` endpoint 
 
 ## Examples
 
-In this section we will show how to use the `acled_deletions_api()` to keep our data sets updated. For the examples we will make the following assumptions:
-
-1\. Your datasets are saved as a `.rda` file.
-
-2\. You don't know if the datasets contains deleted data or not, or which have been modified.
+In this section we will show how to use the `acled_deletions_api()` and `acled_update` to keep your datasets updated. 
 
 ### Dataset n°1 - Keeping track of modified events
 
@@ -106,49 +104,28 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
 ```
 
-Next, determine the latest timestamp in the dataset, and convert that into a date so you can get a reference from which to check if there has been any deleted events since then. 
-
+When was the last time you gathered your dataset? The snippet below checks that. 
 ```{r}
 latest_timestamp_unix <- max(argen_dummy_acled_file$timestamp)
 
 latest_timestamp <- as_datetime(latest_timestamp_unix) 
-
-print(latest_timestamp)
-
-# new_argen_dataset <- acled_update(argen_dummy_acled_file, countries = "Argentina", acled_access = T, prompts = FALSE) 
-
 ```
 
-Now that we know the latest timestamp, you can use that as a reference for gathering events with `acled_api()`. 
+The dataset has not been updated since `r print(latest_timestamp)`, so you need to update it. To do so, you just have to utilize `acled_update()`. In order to keep the update within the dates of our dataset, you can ignore the `start_date` and `end_date` arguments. Similarly, we going to keep `deleted=TRUE` to also remove deleted events.  
 
-```{r, eval = T, echo=T, message=FALSE}
-updated_events <- acled_api(start_date = min(argen_dummy_acled_file$event_date), # we use the min on the event date column to find the first date 
-                            end_date = max(argen_dummy_acled_file$event_date), # we use the max on the event date column to find the last date
-                            countries = "Argentina",
-                            timestamp = latest_timestamp_unix,
-                            prompt = F) # Finally we use the latest timestamp to find if there were any chances since then. 
+```{r}
+
+new_argen_dataset <- acled_update(argen_dummy_acled_file, 
+                                  countries = "Argentina", 
+                                  acled_access = T, 
+                                  prompts = FALSE) 
 ```
 
-There are `nrow(updated_events)` of modified events relevant to your dataset. 
-
-```{r,eval=T,echo=T}
-head(updated_events)
-```
-
-When comparing this to the original dataset, there are duplicates which come from the original dataset. There are multiple ways to address them in R, but in this example you will remove them by using `dplyr::anti_join()` and then binding the new updated events. 
-
-```{r, eval = T, echo=F}
-
-updated_dataset <- argen_dummy_acled_file %>% 
-  anti_join(updated_events, by = "event_id_cnty") %>%
-  rbind(updated_events)
-```
-
-Now your dataset captures modified and newly created events, having updated `nrow(updated_events)` and added `nrow(argen_dummy_acled_file) - nrow(updated_dataset)`. 
+Now your dataset captures modified and newly created events. 
 
 ### Dataset n°2 - Keeping track of deleted events
 
-First, load our dataset.
+First, load the dataset.
 
 ```{r, eval = T}
 
