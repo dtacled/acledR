@@ -40,8 +40,8 @@ file.edit(file.path("~", ".Renviron"))
 which will open your `.Renviron` file. Once there you can set:
 
 ```{r, eval = F}
-Sys.setenv(email_address = "your_email")
-Sys.setenv(acled_key = "your_key")
+email_address = "your_email"
+acled_key = "your_key"
 ```
 
 and save the file.
