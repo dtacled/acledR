@@ -14,6 +14,7 @@
 #' @family API and Access
 #' @importFrom dplyr filter
 #' @importFrom dplyr anti_join
+#' @importFrom methods hasArg
 #' @export
 #' @md
 
@@ -30,7 +31,92 @@ acled_update <- function(df,
                          deleted = TRUE,
                          prompts = T) {
 
+  if(!setequal(colnames(df), colnames(acledR::acled_old_deletion_dummy))){
+    stop("The data frame provided does not have ACLED's structure. Please make sure the data frame provided follows the same structure.")
+  }
 
+  if(hasArg("country") | hasArg("Country")){
+    stop("Country is not a valid option. Please utilize \"countries\"")
+
+  }
+
+  if(hasArg("Countries")){
+    stop("Countries is not a valid option. Please utilize \"countries\", without capitalizing")
+
+  }
+
+  if(hasArg("region")|hasArg("Region")){
+    stop("Region is not a valid option. Please utilize \"regions\"")
+
+  }
+
+  if(hasArg("Regions")){
+    stop("Regions is not a valid option. Please utilize \"regions\", without capitalizing")
+
+  }
+
+  if(hasArg("event_type")){
+    stop("event type is not a valid option. Please utilize \"event_types\"")
+
+  }
+
+  if(hasArg("Event_type")){
+    stop("Event type is not a valid option. Please utilize \"event_types\", without capitalizing")
+
+  }
+
+  if(hasArg("Start_date")){
+    stop("Start_date is not a valid option. Please utilize \"start_date\", without capitalizing")
+
+  }
+
+  if(hasArg("End_date")){
+    stop("End_date is not a valid option. Please utilize \"end_date\", without capitalizing")
+
+  }
+
+  if (start_date < min(df$event_date)) {
+    warning("Warning: Start date is earlier than the earliest event date in your dataframe.")
+  }
+
+  if (start_date > min(df$event_date)) {
+    warning("Warning: Start date is later than the earliest event date in your dataframe.")
+  }
+
+  if (end_date > max(df$event_date)) {
+    warning("Warning: End date is later than the latest event date in your dataframe.")
+  }
+
+  if (end_date < max(df$event_date)) {
+    warning("Warning: End date is earlier than the latest event date in your dataframe.")
+  }
+
+  # Check acled_access
+  if (!acled_access && (is.null(email) || is.null(key))) {
+    stop("Error: If acled_access is FALSE, you must provide an email and key.")
+  }
+
+  # Check event_types
+  if (!is.null(event_types)) {
+    valid_event_types <- acledR::event_categories$event_type
+    if (!all(event_types %in% valid_event_types)) {
+      stop("Error: Invalid event_type provided. Please use an event type present in ACLED's methodology.")
+    }
+  }
+
+  # Error check for countries
+  if(!all(countries %in% acledR::acled_countries$country)) {
+    missing_countries <- countries[!(countries %in% acledR::acled_countries$country)]
+    stop(paste("Error: The following countries are not present in acledR::acled_countries:",
+               paste(missing_countries, collapse = ", ")))
+  }
+
+  # Error check for regions
+  if(!all(regions %in% acledR::acled_regions$region_name)) {
+    missing_regions <- regions[!(regions %in% acledR::acled_regions$region_name)]
+    stop(paste("Error: The following regions are not present in acledR::acled_regions:",
+               paste(missing_regions, collapse = ", ")))
+  }
 
 
   max_timestamp <- max(df$timestamp)
