@@ -8,7 +8,6 @@
 #' \item main_actors: Actor 1 and Actor 2 columns
 #' \item assoc_actors: All associated actor columns
 #' \item source: The source column becomes monadic
-#' \item all: All actor, associated actor and source columns become monadic
 #' }
 #' @return A tibble with the data transformed into long form.
 #' @family Data Manipulation
@@ -33,7 +32,7 @@
 acled_transform <- function(data,type="full_actors") {
 
 
-  ## types: full_actors, main_actors,assoc_actors,source, all
+  ## types: full_actors, main_actors,assoc_actors,source, all (deprecated)
 
   columns_present <- function(df, cols) {
     all(sapply(cols, function(x) !is.na(match(x, names(df)))))

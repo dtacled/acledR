@@ -91,3 +91,9 @@ test_that("Test that regex can handle multiple actor names and parentheses",{
   filtered_df <- acled_filter_actors(df, actors)
   expect_equal(nrow(filtered_df), 2)
 })
+
+
+
+
+
+# What happends if not all actor columns are present in the dataset and it is not with filter_cols = all
