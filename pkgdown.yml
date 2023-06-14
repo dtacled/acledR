@@ -5,19 +5,17 @@ articles:
   acled_codebook: acled_codebook.html
   acled_sources: acled_sources.html
   actors_interactions: actors_interactions.html
-  acled_actor_concentration: acled_actor_concentration.html
+  acled_analysis: acled_analysis.html
   acled_api: acled_api.html
   acled_deletions_api: acled_deletions_api.html
   acled_rounding: acled_rounding.html
   acled_transformations: acled_transformations.html
-  generate_counts: generate_counts.html
-  generate_movers: generate_movers.html
   event_types: event_types.html
   fatalities: fatalities.html
   geography: geography.html
   get_started: get_started.html
   time: time.html
-last_built: 2023-05-17T13:08Z
+last_built: 2023-06-14T07:04Z
 urls:
   reference: https://acled.github.io/acledR/reference
   article: https://acled.github.io/acledR/articles
