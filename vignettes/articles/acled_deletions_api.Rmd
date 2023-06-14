@@ -67,30 +67,11 @@ The function is composed of the following arguments:
 
 `acled_update()` will utilize the dataset you provide to gather new events based on the timestamp, and add them to the original dataset, as well as remove any deleted events (if  `deleted = TRUE`). 
 
-## Keeping track of deleted events - `acled_deletion_api()`
-
-When events are deleted, however, their *event_id_cnty* also gets deleted. For that, users can employ `acled_deletion_api()` to gather the *event_id_cnty* of deleted events, which you can use to filter out these events from your dataset. While users can find an example below, we kindly suggest you to visit our [guide](https://acleddata.com/download/35179/) and a more specific guide about the `deletions` [endpoint](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html) in our API.
-
-```{r, eval=F}
-acled_deletions_api(
-  email=NULL,
-  key=NULL,
-  date_deleted=NULL,
-  acled_access=TRUE # If acledR::acled_access() has been used before, leave as TRUE. 
-)
-```
-
-The function is rather simple to use, requiring only 2 (4 if `acledR::acled_access()` is not used beforehand). It requires a date or `unix` timestamp from which to start gathering deleted events (`date_deleted`), and whether `acledR::acled_access()` has been utilized before. 
-
-When executing the function, it will make an API call to the `deleted` endpoint of ACLED's API, and return a dataframe with two columns, one for the *event_id_cnty*, and another for the *timestamp*. Every event in this dataframe is a deleted event. 
-
 ## Examples
 
-In this section we will show how to use the `acled_deletions_api()` and `acled_update` to keep your datasets updated. 
+In this section we will show how to use `acled_update` to keep your datasets updated. 
 
-### Dataset n°1 - Keeping track of modified events
-
-Load the first dataset:
+Load the older dataset:
 
 ```{r, eval = T, message=FALSE}
 library(acledR)
@@ -122,37 +103,6 @@ new_argen_dataset <- acled_update(argen_dummy_acled_file,
 ```
 
 Now your dataset captures modified and newly created events. 
-
-### Dataset n°2 - Keeping track of deleted events
-
-First, load the dataset.
-
-```{r, eval = T}
-
-dummy_acled_file <- acledR::acled_old_deletion_dummy # Here is our personal ACLED dataset
-```
-
-For future reference, you should remember the number of events in your dataset, so that you can have a quick glance on how many events were deleted. In this dataset there are  `r nrow(dummy_acled_file)` events. Now proceed to retrieve the deleted events using the highest timestamp.
-
-```{r, eval = T}
-
-deleted_events <- acled_deletions_api(date_deleted = max(dummy_acled_file$timestamp)) # We are using the largest Unix timestamp as that is the last time we gathered data. 
-
-nrow(deleted_events)
-```
-
-As we can see `r nrow(deleted_events)` events have been removed since the last time this data was downloaded. That doesnt mean, however, that every event here is part of the old dataset. Just in case, you can use `dplyr::filter()` to exclude every event that is part of the deleted events dataset. 
-
-```{r, eval = T}
-updated_dataset <- dummy_acled_file %>%
-  filter(!(event_id_cnty %in% deleted_events$event_id_cnty)) # We exclude every event_id_cnty that also appears in the deleted_events result
-
-nrow(updated_dataset)
-```
-
-Now your dataset has only `r nrow(updated_dataset)` rows, thus `r nrow(dummy_acled_file) - nrow(updated_dataset)` events were deleted.
-
-In these examples we have shown how you can keep your dataset updated with the help of `acledR`. While in both of our examples we tackled the modifications and deletions separately, normally, you should apply these simultaneously. 
 
 Best of luck!
 

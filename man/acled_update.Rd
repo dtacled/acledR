@@ -19,6 +19,12 @@ acled_update(
 )
 }
 \arguments{
+\item{df}{ACLED dataset that needs to be updated (i.e. a result from acledR::acled_api())}
+
+\item{start_date}{Start date from which to check updates in the dataset (i.e. the minimum date in your dataset)}
+
+\item{end_date}{End date from which to check updates in the dataset (i.e., the latest date in your dataset)}
+
 \item{countries}{string. The countries by which to filter.}
 
 \item{regions}{string. The regions by which to filter.}
@@ -33,13 +39,31 @@ acled_update(
 
 \item{deleted}{logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().}
 
-\item{prompt}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
+\item{prompts}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
+}
+\value{
+Tibble with updated ACLED data and a newer timestamp.
 }
 \description{
 This function is meant to help you keep your dataset updated, by automatically checking for new and modified events, as well as deleted events (if deleted = TRUE).
 Note: The function makes new api calls to gather new and modified events. See its vignettes in: \url{https://acled.github.io/acledR/articles/acled_deletions_api.html}
 }
+\examples{
+# Updating dataset to include newer data from Argentina
+
+acledR::acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
+
+new_argen_dataset <- acled_update(acledR::acled_old_dummy,
+                                  countries = "Argentina",
+                                  acled_access = TRUE,
+                                  prompts = FALSE)
+
+}
 \seealso{
+\itemize{
+\item ACLED Keeping your dataset updated guide. \url{https://acleddata.com/download/35179/}
+}
+
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},

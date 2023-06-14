@@ -8,3 +8,8 @@ dupes_checks <- acled_update(acledR::acled_old_dummy,
                              key = "M3PWwg3DIdhHMuDiilp5",
                              acled_access = F, prompts = F)
 
+test_more_than_one <- acled_update(acledR::acled_old_deletion_dummy,
+                                   countries = unlist(acledR::acled_old_deletion_dummy$country, use.names = F),
+                                   email = "acledexamples@gmail.com",
+                                   key = "M3PWwg3DIdhHMuDiilp5",
+                                   acled_access = F, prompts = F)
