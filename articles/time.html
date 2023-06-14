@@ -58,10 +58,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-utilizing-acledr">
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
-    <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
-    <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
-    <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_update.html">Keeping your Dataset Updated</a>
+    <a class="dropdown-item" href="../articles/acled_analysis.html">acledR Exploratory Analysis</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -296,7 +294,7 @@ count of different event_types across months.</p>
 <span>                                 time_id <span class="op">=</span> <span class="st">"event_date"</span>,</span>
 <span>                                 time_target <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">country</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">!</span><span class="va">event_month</span>,</span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">!</span><span class="va">event_month</span>,</span>
 <span>               names_to <span class="op">=</span> <span class="st">"event_type"</span>,</span>
 <span>               values_to <span class="op">=</span> <span class="st">"n_events"</span><span class="op">)</span> </span>
 <span></span>

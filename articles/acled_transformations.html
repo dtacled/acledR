@@ -58,10 +58,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-utilizing-acledr">
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
-    <a class="dropdown-item" href="../articles/acled_deletions_api.html">Keeping your dataset updated</a>
-    <a class="dropdown-item" href="../articles/generate_counts.html">Generate Event Counts</a>
-    <a class="dropdown-item" href="../articles/generate_movers.html">Generate Moving Statistics</a>
-    <a class="dropdown-item" href="../articles/acled_actor_concentration.html">Calculate Actor Indexes</a>
+    <a class="dropdown-item" href="../articles/acled_update.html">Keeping your Dataset Updated</a>
+    <a class="dropdown-item" href="../articles/acled_analysis.html">acledR Exploratory Analysis</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
@@ -111,219 +109,180 @@
 
     
     
+<p>The ACLED dataset is designed with user readability in mind. At
+times, this focus might conflict with standard clean data principles,
+such as having only a single value per column and row. To facilitate a
+more programmatic handling of our dataset, we’ve introduced the data
+manipulation suite of functions in the <code>acledR</code> package. This
+suite of functions enable you to reformat the data structure to adhere
+more closely to tidy data conventions.</p>
 <div class="section level2">
 <h2 id="filter-functions---acled_filter_actor">1. Filter functions - <code>acled_filter_actor()</code><a class="anchor" aria-label="anchor" href="#filter-functions---acled_filter_actor"></a>
 </h2>
-<p>ACLED’s data utilizes a wide format, which prioritizes having more
-columns over rows. That often means that it is more complicated to
-filter values programatically, as they can be spread across columns.</p>
-<p>For that matter, sometimes it can take a couple of lines of code to
-properly filter data in ACLED’s dataset when we are trying to get
-variables inside wide-formatted columns such as <em>actor1</em>,
-<em>actor 2</em>, <em>assoc_actor_1</em>,<em>assoc_actor_2</em>, and
-<em>source</em>.</p>
-<p>Because of that, <code>acledR</code> includes
-<code>acled_filter_actor()</code> to easily filter the data across all
-of these columns while retaining the same structure..</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">df</span>,</span>
-<span>                          <span class="va">actors</span>, </span>
-<span>                          filter_cols<span class="op">=</span><span class="st">'all'</span><span class="op">)</span></span></code></pre></div>
-<p>The function is relatively straightforward, taking three
+<p>ACLED data is typically in a wide format, meaning that it can be
+somewhat more difficult to filter to specific values because those
+values may be spread across multiple columns. For instance, it may take
+multiple lines of code to filter to all events involving a particular
+actor, because that actor could be included in several different columns
+(i.e. <em>actor1</em>, <em>actor 2</em>, <em>assoc_actor_1</em> and
+<em>assoc_actor_2</em>).</p>
+<p>To make filtering across multiple columns easier, <code>acledR</code>
+includes the function <code>acled_filter_actor()</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acled_filter_actors</span>(df,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                                      actors, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">filter_cols=</span>‘all’)</span></code></pre></div>
+<p>The function is relatively straightforward and includes only three
 arguments:</p>
 <ul>
 <li>
-<code>df</code>: the dataset of interest, following ACLED’s column
+<code>df</code>: a dataset that corresponds to ACLED’s column
 structure,</li>
 <li>
-<code>actors</code>: a character vector of the actors that you are
-interested in filtering by,</li>
+<code>actors</code>: a character vector of the actors to which you
+are interested in filtering,</li>
 <li>
-<code>filter_cols</code>: a character vector of the columns where to
-check for the actor(s) to filter.</li>
+<code>filter_cols</code>: a character vector of the columns used for
+filtering.</li>
 </ul>
 <p>For <code>filter_cols</code>, you can utilize a vector with the names
 of the different actor columns, such as
-<code>filter_cols = c(“actor1”,”actor2”)</code>’, or leave it blank
-defaulting in filtering across all columns.</p>
-<p><strong>Note:</strong> that if we utilize the option
+<code>filter_cols = c(“actor1”,”actor2”)</code>’. If you leave this
+argument blank, the default is to filter by all actor columns in the
+dataframe.</p>
+<p><strong>Note:</strong> that if you use the option
 <code>filter_cols = ‘all'</code>, the <code>df</code> you provide must
-follow ACLED’s structure, and thus it must have an
-<em>assoc_actor_1</em> or <em>assoc_actor_2</em> column.</p>
+follow the structure of ACLED’s data and thus include
+<em>assoc_actor_1</em> or <em>assoc_actor_2</em> columns.</p>
 </div>
 <div class="section level2">
 <h2 id="from-wide-to-long---acled_transform">2. From wide to long - <code>acled_transform()</code><a class="anchor" aria-label="anchor" href="#from-wide-to-long---acled_transform"></a>
 </h2>
-<p>The other function in the family of data manipulation functions is
-<code><a href="../reference/acled_transform.html">acled_transform()</a></code>. <code><a href="../reference/acled_transform.html">acled_transform()</a></code> was
-created to aid you in switching from a wide format to a long form, if
-required, without the need to make a new API call with the monadic
-option.</p>
+<p>The other data manipulation function is
+<code><a href="../reference/acled_transform.html">acled_transform()</a></code> which will allow you to switch between
+wide and long formats without the need to make a new API call. Typical
+ACLED data is in a wide format, with multiple actors represented in each
+row, and those actors interacting during an event (see our <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">API
+interactive guide</a> for a more detailed explanation). However, you may
+wish to conduct actor-based analyses that are better suited to a long
+data format where each actor has a separate row, and a single event may
+therefore be represented in multiple rows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">data</span>, </span>
 <span>                type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> </span></code></pre></div>
 <p><code><a href="../reference/acled_transform.html">acled_transform()</a></code> requires two arguments:</p>
 <ul>
-<li><p><code>data</code>: The dataset to transform (has to follow
-ACLED’s structure)</p></li>
+<li><p><code>data</code>: The dataset to transform (must follow ACLED’s
+structure[a])</p></li>
 <li><p><code>type</code>: A character vector indicating which columns to
-transpose.</p></li>
+transpose (the columns that go from wide to long format).</p></li>
 </ul>
-<p>These are the available options to transpose the ACLED data, which we
-indicate through the <code>type</code> argumen aret:</p>
+<p>The available column options upon which ACLED data can be transposed,
+as indicated in the <code>type</code> argument are:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>full_actor</code>: Transposes all the actor columns in the
 dataset (<em>actor1</em>, <em>actor2</em>, <em>assoc_actor_1</em>,
-<em>assoc_actor_2</em>).</p></li>
+<em>assoc_actor_2</em>). There will be a separate row for each actor or
+associate actor involved in each event.</p></li>
 <li><p><code>main_actors</code>: Transposes only <em>actor1</em> and
-<em>actor2</em>.</p></li>
+<em>actor2</em>. There will be separate rows for main actors
+only.</p></li>
 <li><p><code>assoc_actors</code>: Transposes only <em>assoc_actor_1</em>
-and <em>assoc_actor_2</em> columns.</p></li>
-<li><p><code>source</code>: Transposes only the <em>source</em>
+and <em>assoc_actor_2</em> columns. There will be separate rows for
+associate actors only.</p></li>
+<li><p><code>source</code>: Transposes only the <em>source</em> column.
+There will be a separate row for each source in the source
 column.</p></li>
-<li><p><code>all</code>: Transposes all of the aforementioned columns
-(<em>actor1</em>, <em>actor2</em>, <em>assoc_actor_1</em>,
-<em>assoc_actor_2</em>, <em>source</em>).</p></li>
 </ol>
-<p>While the ACLED API includes an option to provide a monadic file,
-this function offers some extra benefits relative to the API’s
-approach:</p>
+<p>Keep in mind that you can receive some of these data formats directly
+from ACLED’s API, but that using this function can provide some added
+benefits:</p>
 <ul>
-<li><p>Users can “save” API calls by providing an already-gathered
-dyadic dataset, whereas the API monadic options require two distinct
-calls for a monadic and a dyadic dataset.</p></li>
-<li><p>Users can pivot the dataset to their desired option. ACLED’s
-dataset includes several columns that users may be interested in
-transposing: <em>actor1 &amp; actor2</em>, <em>assoc_actor_1</em>,
-<em>assoc_actor_2</em>, and <em>source</em>. The API only pivots the
-<em>actor1</em> &amp; <em>actor2</em> columns into one <em>actor1</em>
-column, and the <em>assoc_actor_1</em> &amp; <em>assoc_actor_2</em>
-columns into one <em>assoc_actor_1</em> column.</p></li>
+<li><p>You can use this function to transform a dyadic dataset to a
+monadic dataset, thus receiving the latter without executing an
+additional API call.</p></li>
+<li><p>You have more control over the columns used to go from wide to
+long format. This function allows you to transpose on the following
+columns: <em>actor1 &amp; actor2</em>, <em>assoc_actor_1</em>,
+<em>assoc_actor_2</em>, and <em>source</em>. The API only allows you to
+receive long-format data based on <em>actor1</em> &amp;
+<em>actor2</em>.</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="acledr-example">acledR Example<a class="anchor" aria-label="anchor" href="#acledr-example"></a>
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Imagine you are doing a network analysis of actor interactions in
-events of Argentina across 2022; more specifically, you want to start
-analyzing the interactions of the “Mapuche Indigenous Militia
-(Argentina)”.</p>
-<p>First, you should collect ACLED data and filter it to events
-featuring the “Mapuche Indigenous Militia (Argentina)”,
-<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> can help you with that.</p>
+<p>In this section we will walkthrough a potential use case for the
+transformation functions to explain how users can take advantage of
+these.</p>
+<p>For this example, assume that you want data of South America
+throughout the first half of 2023.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'igraph'</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:dplyr':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     as_data_frame, groups, union</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     decompose, spectrum</span></span></code></pre>
-<pre><code><span><span class="co">## The following object is masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     union</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Provide your credentials</span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
+<span></span>
+<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Request the Argentinian dataset for 2022</span></span>
-<span><span class="va">argen_acled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span>
-<span>                         start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>, </span>
-<span>                         end_date <span class="op">=</span> <span class="st">"2022-12-30"</span>, </span>
-<span>                         acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                         prompt <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>                         log <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 363 country-days.</span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="st">"South America"</span>,</span>
+<span>                   start_date <span class="op">=</span> <span class="st">"2023-01-01"</span>,</span>
+<span>                   end_date <span class="op">=</span> <span class="st">"2023-06-01"</span>,</span>
+<span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Requesting data for 15 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 2,265 country-days.</span></span></code></pre>
 <pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Filter to include only the interactions of your desired actor</span></span>
-<span><span class="va">mapu_argen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">argen_acled</span>, <span class="st">"Mapuche Indigenous Militia (Argentina)"</span><span class="op">)</span></span></code></pre></div>
-<p>A crucial step for every network analysis is creating edges and node
-lists. Given the structure of ACLED’s dyadic dataset, there are four
-columns to consider: <em>actor1</em>, <em>actor2</em>,
-<em>assoc_actor_1</em> and <em>assoc_actor_2</em>. Because you are
-interested only on the main actors of each event, you are using
-<em>actor1</em> and <em>actor2</em>.</p>
-<p>A very effective approach to create the node lists is transforming
-the dataset towards a long form, where <em>actor1</em> and
-<em>actor2</em> are spread across rows instead of columns.
-<code><a href="../reference/acled_transform.html">acled_transform()</a></code> is ideal for that:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mapu_actors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">mapu_argen</span>,type <span class="op">=</span> <span class="st">"main_actors"</span><span class="op">)</span></span>
-<span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mapu_actors</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">##   event_id_cnty event_date  year time_precision disorder_type         event_type</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG11427      2022-09-25  <span style="text-decoration: underline;">2</span>022              1 Political violence    Battles   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG11427      2022-09-25  <span style="text-decoration: underline;">2</span>022              1 Political violence    Battles   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> ARG11426      2022-08-15  <span style="text-decoration: underline;">2</span>022              3 Strategic developmen… Strategic…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> ARG11426      2022-08-15  <span style="text-decoration: underline;">2</span>022              3 Strategic developmen… Strategic…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> ARG11425      2022-07-31  <span style="text-decoration: underline;">2</span>022              1 Strategic developmen… Strategic…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> ARG11425      2022-07-31  <span style="text-decoration: underline;">2</span>022              1 Strategic developmen… Strategic…</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, type_of_actor &lt;chr&gt;, actor &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   inter_type &lt;chr&gt;, inter &lt;dbl&gt;, assoc_actor_1 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;, admin3 &lt;lgl&gt;, location &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   timestamp &lt;dbl&gt;</span></span></span></code></pre>
-<p>Now start creating the node list by collecting all the unique actors
-in the new <em>actor</em> column.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mapu_node_list</span> <span class="op">&lt;-</span> <span class="va">mapu_actors</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span></span>
+<p>Now, filter to spot events of the “Military Forces of Colombia
+(2022-)”.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mil_colombia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">df_sa</span>,<span class="st">"Military Forces of Colombia (2022-)"</span>, filter_cols <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
+<p>In the filter events there are 143 rows, meaning 143 events where the
+“Military Forces of Colombia (2022-)” participated. However, if you take
+a look more closely, the actor of interest is not only in the main
+columns (i.e, “COL20021”).</p>
+<p>Assume now that you want to count how many events does each actor
+participates in. The problem is that for doing that, you would need to
+sum all the times the actor appears in the four columns. That, while
+possible, is unnecessarily complicated when you can transform your
+dataset into long form, where each actor is spread across rows rather
+than columns. For that, you can use <code><a href="../reference/acled_transform.html">acled_transform()</a></code>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_sa_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">df_sa</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span></code></pre>
+<p>The dataset is now into long form, so you are left with groupping by
+actor, and counting by <strong>unique</strong> <em>event_id_cnty</em>.
+It is very important to count by unique ids, because when transforming
+data to long, we duplicate events, creating rows per event equivalent to
+the number of actors involved.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mapu_node_list</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
-<span><span class="co">##   actor                                 </span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Mapuche Indigenous Militia (Argentina)</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Police Forces of Argentina (2019-)    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Civilians (Argentina)</span></span></code></pre>
-<p>Building the edge list (who interacted with whom) is easy with ACLED
-data. Our data includes <em>actor1</em> and <em>actor2</em> columns to
-identify the main actors in an event, so you need to subset our data
-frame to have these two columns. You can keep some other data as it adds
-context to the interactions.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mapu_edges</span> <span class="op">&lt;-</span> <span class="va">mapu_argen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">actor1</span>,<span class="va">actor2</span>,<span class="va">event_id_cnty</span>,<span class="va">fatalities</span>,<span class="va">event_type</span>,<span class="va">sub_event_type</span><span class="op">)</span></span></code></pre></div>
-<p>Now that the nodes and edges lists have been created, you can plot a
-simple network graph of actor interactions. The one thing that is key to
-remember is that ACLED stores actors in <em>actor1</em> and
-<em>actor2</em> regardless of who initiated the event. Thus,
-interactions in ACLED data are <strong>always undirected</strong>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create the igraph object</span></span>
-<span><span class="va">mapu_undirected</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span></span>
-<span>  <span class="va">mapu_edges</span>, </span>
-<span>  vertices <span class="op">=</span> <span class="va">mapu_node_list</span>, </span>
-<span>  directed <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Separate the ego network of the Mapuche Militia</span></span>
-<span><span class="va">mapu_ego</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/ego.html" class="external-link">make_ego_graph</a></span><span class="op">(</span><span class="va">mapu_undirected</span>, order<span class="op">=</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mapuche Indigenous Militia (Argentina)"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">69</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mapu_ego</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, layout<span class="op">=</span><span class="va">layout.fruchterman.reingold</span>, </span>
-<span>     main<span class="op">=</span><span class="st">"Ego network of the Mapuche Indigenous Militia (Argentina)"</span>,</span>
-<span>     vertex.label.dist<span class="op">=</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="acled_transformations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>As you can see, through 2022, the “Mapuche Indigenous Militia
-(Argentina)” interacted mostly with the “Civilians (Argentina)” and also
-with the police forces of the country of both the Mauricio Macri’s
-2015-2019 government and Alberto Fernandez’s (current) governments.</p>
-<p>This is a basic example of how to start exploring actor interactions
-with the ACLED dataset and how to use the transformation functions to
-shape the dataset structure to fit your methodological requirements.</p>
+<span><span class="va">actors_df_sa</span> <span class="op">&lt;-</span> <span class="va">df_sa_long</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n_events <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">event_id_cnty</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>To verify your results, filter the actor counts to only “Military
+Forces of Colombia (2022-)”.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">actors_df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor</span> <span class="op">==</span> <span class="st">"Military Forces of Colombia (2022-)"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">.</span><span class="op">$</span><span class="va">n_events</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 146</span></span></code></pre>
+<p>The number of events matches the number of rows you got after using
+<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code>, meaning that you effectively
+captured the number of events by each actor.</p>
+<p>This highlights the advantage of both
+<code>acled_filter_actors</code> and <code>acled_transform</code>, which
+allows you to easily manipulate ACLED column structure to better fit
+programmatical approaches of analysis.</p>
+<p>[a]<span class="citation">@m.start</span><span class="citation">@acleddata.com</span>: I think we need to clarify what
+this means. Does it mean it needs ALL the columns from the full acled
+dataset? If so we should probably mention that in the API guide (in the
+choosing columns section).</p>
+<p>Lucas: I would have assumed that by writing like this, it means that
+it needs ALL.</p>
+<p>Tho, not sure about the API guide part. Because if you are using the
+package, I doubt you will use the API, and vice versa.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
