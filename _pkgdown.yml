@@ -16,14 +16,10 @@ navbar:
     menu:
     - text: ACLED API
       href: articles/acled_api.html
-    - text: Keeping your dataset updated
-      href: articles/acled_deletions_api.html
-    - text: Generate Event Counts
-      href: articles/generate_counts.html
-    - text: Generate Moving Statistics
-      href: articles/generate_movers.html
-    - text: Calculate Actor Indexes
-      href: articles/acled_actor_concentration.html
+    - text: Keeping your Dataset Updated
+      href: articles/acled_update.html
+    - text: acledR Exploratory Analysis
+      href: articles/acled_analysis.html
     - text: acledR Data Manipulation
       href: articles/acled_transformations.html
   - text: ACLED Codebook
