@@ -25,14 +25,14 @@
 #' # Aggregate to event counts per month across India
 #' df_india_agg <-
 #'    df_india %>%
-#'    generate_counts(.,
+#'    acled_generate_counts(.,
 #'    unit_id = "country",
 #'    time_id = "event_date",
 #'    time_target = "month")
 #'
 #' # Generate 3 moving average of total events per month
 #' df_india_agg_movers <-
-#'    generate_movers(data = df_india_agg,
+#'    acled_generate_movers(data = df_india_agg,
 #'    var = "total_events",
 #'    unit_id = "country",
 #'    time_id = "event_month",
@@ -50,7 +50,7 @@
 #' @export
 
 
-generate_movers <-
+acled_generate_movers <-
   function(data, var, unit_id, time_id, slide_funs, slide_periods, na.rm = T, complete = T) {
 
     all_funs <- list(mean = function(x) {mean(x, na.rm = na.rm)},

@@ -52,12 +52,15 @@ acled_actor_concentration <- function(events, method = "Effective actors", acled
       if(!is.data.frame(events)){
         stop("Events is not a dataframe. If you are using a vector, please utilize 'acled_dataframe = F'.")
         }
-
-      actors_dataset <- events %>%
-        acled_transform() %>%
-        group_by(.data$actor) %>%
-        summarise(n_events = n())
-
+    suppressWarnings(
+      suppressMessages(
+        actors_dataset <- events %>%
+          acled_transform() %>%
+          group_by(.data$actor) %>%
+          summarise(n_events = n()) %>%
+          filter(!is.na(actor))
+      )
+    )
       actors <- nrow(actors_dataset)
       avg_events <- mean(actors_dataset$n_events)
 

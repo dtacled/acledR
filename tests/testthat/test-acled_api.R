@@ -27,6 +27,19 @@ test_that("Regions in numeric work",{
 
 # Test what happens when someone requests a region and a country of another region
 
+test_that("countries is wrongly input as Country", {
+  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+                         Country = "Argentina",
+                         start_date="2022-01-01",
+                         end_date = "2022-12-31",
+                         prompt = F,
+                         acled_access = T,
+                         log = F),
+               regexp = "Country is not a valid option")
+})
+
+
+# Test errors from incorrectly input arguments.
 
 # Test what happens when someone inputs acled_access as TRUE but it includes email and key.
 test_that("Acled_access is ignored",{

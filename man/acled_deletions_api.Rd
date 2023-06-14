@@ -42,6 +42,7 @@ acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 
 Other API and Access: 
 \code{\link{acled_access}()},
-\code{\link{acled_api}()}
+\code{\link{acled_api}()},
+\code{\link{acled_update}()}
 }
 \concept{API and Access}
