@@ -215,7 +215,7 @@ acled_api <- function(email = NULL,
 
 
   # Approx how many calls are required with 1 call sized at 300k country-days
-  time_units <- ceiling(country_days / 300000)
+  time_units <- ceiling(country_days / 200000)
 
   # Split call into roughly equally sized groups depending on how many country-days are in each country
   # This randomly assigns countries into bins
