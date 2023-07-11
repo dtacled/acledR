@@ -1,5 +1,5 @@
 #' @title Transform ACLED data from wide to long
-#' @name acled_transform
+#' @name acled_transform_wide_to_long
 #' @description Function to convert your ACLED's API calls (if dyadic) into desired monadic forms.
 #' @param data, Dataframe or tibble containing your dataset.
 #' @param type, character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
@@ -16,7 +16,7 @@
 #' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
 #' #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #'
-#' #argen_acled_long_actors <- acled_transform(argen_acled,
+#' #argen_acled_long_actors <- acled_transform_wide_to_long(argen_acled,
 #'#                                            type = "full_actor") # Transforming the data
 #'
 #' #nrow(argen_acled_long_actors) # Number of rows in the dataset
@@ -28,11 +28,12 @@
 #' @md
 #' @export
 #' @importFrom rlang .data
+#' @importFrom dplyr relocate
 
-acled_transform <- function(data,type="full_actors") {
+acled_transform_wide_to_long <- function(data,type="full_actors") {
+ # To - do Remove NAs rows from the assoc actors.
 
-
-  ## types: full_actors, main_actors,assoc_actors,source, all (deprecated)
+  ## types: full_actors, main_actors,assoc_actors,source
 
   columns_present <- function(df, cols) {
     all(sapply(cols, function(x) !is.na(match(x, names(df)))))
@@ -97,31 +98,6 @@ acled_transform <- function(data,type="full_actors") {
       mutate(source = str_trim(source,side = "both")) %>%
       relocate(source,.before="source_scale")%>%
       mutate(source = str_trim(source))
-  }else if(type == "all"){ ## all -> pivot + separate all actor, assoc actor and source columns
-    if(any(grepl("[;]",data$actor1))){
-      stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
-    } else if(any(grepl("[;]",data$actor2))){
-      stop("Your actor2 column seems to include more than one result per row. That is inconsistent with our column structure.")
-    }
-    separated_data <- data %>%
-      pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows("actor", sep = ";") %>%
-      separate_rows("source", sep = ";") %>%
-      # filter(actor != "") %>%
-      relocate(c("type_of_actor","actor"),.after="sub_event_type") %>%
-      relocate(source, .before = "source_scale")%>%
-      mutate(actor = str_trim(actor),
-             source = str_trim(source)) %>%
-    pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
-      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
-      relocate(c("inter_type","inter"),.after="actor")
-
-    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
-
-
-    if(0 %in% nchar(separated_data$actor)){
-      warning("There are empty rows in the actor column.")
-    }
   }
 
   return(separated_data)
