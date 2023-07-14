@@ -40,7 +40,7 @@ filtered_df <- filter_actors(df = df_events, actors = yemen_actors, filter_cols 
 \seealso{
 Other Data Manipulation: 
 \code{\link{acled_regen}()},
-\code{\link{acled_reverse_transform}()},
-\code{\link{acled_transform_wide_to_long}()}
+\code{\link{acled_transform_longer}()},
+\code{\link{acled_transform_wider}()}
 }
 \concept{Data Manipulation}

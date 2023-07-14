@@ -1,5 +1,5 @@
 #' @title Transform ACLED data from wide to long
-#' @name acled_transform_wide_to_long
+#' @name acled_transform_longer
 #' @description Function to convert your ACLED's API calls (if dyadic) into desired monadic forms.
 #' @param data, Dataframe or tibble containing your dataset.
 #' @param type, character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
@@ -30,7 +30,7 @@
 #' @importFrom rlang .data
 #' @importFrom dplyr relocate
 
-acled_transform_wide_to_long <- function(data,type="full_actors") {
+acled_transform_longer <- function(data,type="full_actors") {
  # To - do Remove NAs rows from the assoc actors.
 
   ## types: full_actors, main_actors,assoc_actors,source
@@ -79,6 +79,7 @@ acled_transform_wide_to_long <- function(data,type="full_actors") {
       pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
       filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
       relocate(c("inter_type","inter"),.after="actor")
+
   }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
     separated_data <- data %>%
       pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
