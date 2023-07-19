@@ -87,37 +87,41 @@ acled_api <- function(email = NULL,
 
   }
 
-  if(hasArg(Countries)){
+  if(hasArg("Countries")){
     stop("Countries is not a valid option. Please utilize \"countries\", without capitalizing")
 
   }
 
-  if(hasArg(region)|hasArg(Region)){
+  if(hasArg("Region")){
     stop("Region is not a valid option. Please utilize \"regions\"")
 
   }
 
-  if(hasArg(Regions)){
+  if(hasArg("Regions")){
     stop("Regions is not a valid option. Please utilize \"regions\", without capitalizing")
 
   }
 
-  if(hasArg(event_type)){
-    stop("event type is not a valid option. Please utilize \"event_types\"")
+  # Commenting out the one below - Ideally, this should work, but because of R's Partial argument matching, it wont, as event_type will be matched with event_types
+  # My programmer mentality is telling me red flags everywhere, because I want to tell the user not to use bad code, but R developers seem to be okay with it.
+  # Eventually, I want to move out of this and prevent partial argument matching.
 
-  }
+  # if(hasArg("event_type")){
+  #   stop("event type is not a valid option. Please utilize \"event_types\"")
+  #
+  # }
 
-  if(hasArg(Event_type)){
+  if(hasArg("Event_type")){
     stop("Event type is not a valid option. Please utilize \"event_types\", without capitalizing")
 
   }
 
-  if(hasArg(Start_date)){
+  if(hasArg("Start_date")){
     stop("Start_date is not a valid option. Please utilize \"start_date\", without capitalizing")
 
   }
 
-  if(hasArg(End_date)){
+  if(hasArg("End_date")){
     stop("End_date is not a valid option. Please utilize \"end_date\", without capitalizing")
 
   }
@@ -135,11 +139,6 @@ acled_api <- function(email = NULL,
   }
   key_internal <- paste0("&key=", key)
 
-  # Checking if countries are input incorrectly
-  if(!is.null(countries) & !is.character(countries)){
-    stop("Countries are not strings, please state them as string/character")
-  }
-
   if(!is.null(countries) & sum(unique(countries) %in% acledR::acled_countries[["country"]]) < length(unique(countries))) {
     stop("One or more of the requested countries are not in ACLED's Country list. The full list of countries is available at 'acledR::acled_countries")
   }
@@ -151,8 +150,6 @@ acled_api <- function(email = NULL,
   if(is.numeric(regions) & sum(unique(regions) %in% acledR::acled_regions[["region"]]) < length(unique(regions))) {
     stop("One or more requested region numbers not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
   }
-
-
 
 
 
@@ -178,7 +175,7 @@ acled_api <- function(email = NULL,
         pull(.data$region_name)}
 
     df <- acledR::acled_countries %>%
-      filter(.data$country %in% countries & .data$region %in% regions)
+      filter((.data$country %in% countries) | (.data$region %in% regions))
   }
   else {df <- acledR::acled_countries}
 
@@ -265,21 +262,6 @@ acled_api <- function(email = NULL,
     countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
   }
 
-  ## Regions
-  if(is.numeric(regions)) {
-    regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
-  }
-  if(is.character(regions)) {
-    regions <- acledR::acled_regions %>%
-      filter(.data$region_name %in% regions) %>%
-      pull(.data$region)
-    regions_internal <- paste0("&region=", paste(gsub("\\s{1}", "%20", regions), collapse = ":OR:region="))
-  }
-  if(is.null(regions)) {
-    regions_internal <- ""
-  }
-
-
   # Dates
   if(!is.null(start_date) & !is.null(end_date)) {
     dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
@@ -363,6 +345,8 @@ acled_api <- function(email = NULL,
     event_types <- str_to_upper(event_types)
     if(FALSE %in% unique(event_types %in% str_to_upper(c("Battles", "Violence against civilians", "Protests",
                                                          "Riots", "Strategic Developments", "Explosions/Remote violence")))) {
+      print(event_types)
+
       stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
     }
 
@@ -397,7 +381,7 @@ acled_api <- function(email = NULL,
   for(i in 1:length(out_groups)) {
     url_internal[[i]] <- paste0(base_url, monadic_internal,
                                 email_internal, key_internal,
-                                countries_internal[[i]], regions_internal,
+                                countries_internal[[i]],
                                 dates_internal, timestamp_internal,
                                 event_types_internal, ..., "&limit=0")
   }

@@ -55,7 +55,7 @@ test_that("acled_transform_wider returns expected results for type = 'source'", 
 
 # Tests for proper errors and messages
 
-# Test if function returns an error when a data frame with missing necessary columns is input
+## Test if function returns an error when a data frame with missing necessary columns is input
 test_that("Function returns error with missing columns", {
 
   df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"))
@@ -73,7 +73,7 @@ test_that("Function returns error with missing columns", {
                "Some columns are missing. Please make sure your data frame includes: source")
 })
 
-# Test if function returns an error when a non-existent type is input
+## Test if function returns an error when a non-existent type is input
 test_that("Function returns NULL when non-existent type is input", {
 
   df <- data.frame(actor = c("a", "b"), type_of_actor = c(1, 2), inter_type = c(1, 2), inter = c(1, 2))
