@@ -49,6 +49,7 @@
 #' @import purrr
 #' @import lubridate
 #' @importFrom rlang .data
+#' @importFrom utils menu
 #' @importFrom methods hasArg
 #' @export
 
@@ -129,12 +130,12 @@ acled_api <- function(email = NULL,
   # Required components
   base_url <- "https://api.acleddata.com/acled/read.csv?"
 
-  if((!is.character(email) | is.na(email) | email == "") == TRUE) {
+  if(!is.character(email) || is.null(email) || (is.character(email) && nchar(email) < 3)) {
     stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('acled_email'). Register your email for access at https://developer.acleddata.com.")
   }
   email_internal <- paste0("&email=", email)
 
-  if((!is.character(key) | is.na(key) | key == "") == TRUE) {
+  if((!is.character(key) || is.null(key) || key == "") == TRUE) {
     stop("Key required for ACLED API access. 'key' must be a character string (e.g., 'xyz123!etc') or a call to where your ACLED API key is located if stored as an environment variable (e.g., Sys.getenv('acled_key'). Request and locate your ACLED API key at https://developer.acleddata.com.")
   }
   key_internal <- paste0("&key=", key)
@@ -179,9 +180,10 @@ acled_api <- function(email = NULL,
   }
   else {df <- acledR::acled_countries}
 
-  if(is.null(start_date)) {
+  # Not checking unit test below as it is a non-critical feature, as start_date is no longer NULL by default.
+  if(is.null(start_date)) { # nocov start
     start_date_check <- "1997-01-01"
-  }
+  } # nocov end
   else {start_date_check <- start_date}
 
   if(is.null(end_date)) {
@@ -241,17 +243,23 @@ acled_api <- function(email = NULL,
   if(!is.null(start_date) & !is.null(end_date)) {
     dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
   }
-  if(is.null(start_date) != is.null(end_date)) {
-    stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
-  }
+
+  # I dont think this one immediatly below is correct. If either of these is null, it defaults to either sys today or to one year before for start_date
+  # potentiall commenting out
+  # if(is.null(start_date) != is.null(end_date)) {
+  #   stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
+  # }
+
   if(!is.null(start_date) & !is.null(end_date)){
     if(start_date > end_date) {
       stop("Requested 'start_date' is after the requested 'end_date'.")
     }
   }
-  if(is.null(start_date) & is.null(end_date)) {
-    dates_internal <- ""
-  }
+
+  # Same as before, this cannot be null and null, as they have defaults already.
+  # if(is.null(start_date) & is.null(end_date)) {
+  #   dates_internal <- ""
+  # }
 
   # Where
   ## Countries
@@ -262,21 +270,6 @@ acled_api <- function(email = NULL,
     countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
   }
 
-  # Dates
-  if(!is.null(start_date) & !is.null(end_date)) {
-    dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
-  }
-  if(is.null(start_date) != is.null(end_date)) {
-    stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
-  }
-  if(!is.null(start_date) & !is.null(end_date)){
-    if(start_date > end_date) {
-      stop("Requested 'start_date' is after the requested 'end_date'.")
-    }
-  }
-  if(is.null(start_date) & is.null(end_date)) {
-    dates_internal <- ""
-  }
 
   # Timestamps
   if(!is.null(timestamp)) {
@@ -301,13 +294,13 @@ acled_api <- function(email = NULL,
       timestamp_parsable <- tryCatch({
         lubridate::date(lubridate::as_datetime(timestamp))
         do_i_include_timestamp <- "Yes_but_numerical"
-
       },
       warning = function(w){
-        za <- utils::menu(c("Yes","No"),
+        za <- menu(c("Yes","No"),
                           title=paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n","Do you want me to continue and ignore timestamp?"))
         if(za == 1){
-          assign("do_i_include_timestamp","No")} else{
+          do_i_include_timestamp <<- "No"
+          } else{
             stop("User requested to abort when timestamp was not recognized.")
           }
       },
@@ -319,11 +312,7 @@ acled_api <- function(email = NULL,
     if(do_i_include_timestamp == "Yes"){
       if(timestamp_parsable > lubridate::now()) {
         stop("The timestamp cannot be later than today. Please change the timestamp and try again.")
-      }
-      else if(is.na(timestamp_parsable)){
-        stop("The timestamp must be formated as YYYY-MM-DD")
-      }
-      else{
+      } else{
         timestamp_internal <- paste0("&timestamp=", timestamp_parsable)}
     }
     else if(do_i_include_timestamp == "Yes_but_numerical"){
@@ -345,7 +334,7 @@ acled_api <- function(email = NULL,
     event_types <- str_to_upper(event_types)
     if(FALSE %in% unique(event_types %in% str_to_upper(c("Battles", "Violence against civilians", "Protests",
                                                          "Riots", "Strategic Developments", "Explosions/Remote violence")))) {
-      print(event_types)
+      print(str_to_title(event_types))
 
       stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
     }
@@ -358,23 +347,24 @@ acled_api <- function(email = NULL,
 
 
 
-  # Interactive choice for users after prompting how many calls are required
+  # Interactive choice for users after prompting how many calls are required - I am nocov this one because of discrepancy between
+  # covr, devtools and testthat. After testing with testthat and devtools::test() it shows that it works. But covr seems to fail.
 
-  if(prompt == TRUE){
+  if(prompt == TRUE){ # nocov start
 
     message(paste0("This request requires ",
                    time_units,
                    " API calls. Do you want to proceed with this request?\nIf you need to increase your API quota, please contact access@acleddata.com"))
 
     if(interactive()) {
-      user_input <- readline("Proceed? (Yes/No) \n")
-      if(!((user_input == "Yes") | (user_input == "yes"))){
+      user_input <- menu(title = "Proceed? (Yes/No)", choices = c("Yes","No"))
+      if(user_input == 2){
         stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
              call. = F)
-        }
-    }} else { message("Proceeding with ",
+      } else { message("Proceeding with ",
                    time_units,
                    " API calls")}
+    }} # nocov end
 
   # Loop through country bins to define each api call
   url_internal <- vector("list", length = length(out_groups))

@@ -8,7 +8,8 @@ acled_deletions_api(
   email = NULL,
   key = NULL,
   date_deleted = NULL,
-  acled_access = TRUE
+  acled_access = TRUE,
+  log = F
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ acled_deletions_api(
 \item{date_deleted}{character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.}
 
 \item{acled_access}{logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.}
+
+\item{log}{Only for testing purposes: you can use this to check if all the variables in your call were handled properly.}
 }
 \value{
 Returns a tibble of ACLED data with columns for event_id_cnty and deleted_timestamp.

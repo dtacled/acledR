@@ -14,3 +14,4 @@
 ^test.R
 ^.trackdown
 ^trackdown_uploads.R
+.covrignore

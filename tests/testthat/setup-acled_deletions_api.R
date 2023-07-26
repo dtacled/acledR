@@ -4,4 +4,6 @@ received_deleted_data_date <- acled_deletions_api(email = "acledexamples@gmail.c
 received_deleted_data_unix <- acled_deletions_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5", date_deleted = "1658707200", acled_access = F)
 
 
+received_deleted_log <- acled_deletions_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5", date_deleted = "1658707200", acled_access = F, log = T)
+
 columns_deleted <- c("event_id_cnty", "deleted_timestamp")
