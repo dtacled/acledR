@@ -55,7 +55,7 @@ acled_actor_concentration <- function(events, method = "Effective actors", acled
     suppressWarnings(
       suppressMessages(
         actors_dataset <- events %>%
-          acled_transform() %>%
+          acled_transform_longer() %>%
           group_by(.data$actor) %>%
           summarise(n_events = n()) %>%
           filter(!is.na(actor))

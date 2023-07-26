@@ -1,6 +1,11 @@
 
 # Does it save the credentials in the enviornment? - Missing
 
+test_that("acled_access properly stores the credentials", {
+  expect_equal(Sys.getenv("acled_email"),"acledexamples@gmail.com")
+  expect_equal(Sys.getenv("acled_key"), "M3PWwg3DIdhHMuDiilp5")
+})
+
 
 # Shows the message that it was successful?
 test_that("It shows that it works", {

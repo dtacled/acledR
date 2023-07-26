@@ -1,0 +1,166 @@
+#' @title Reverse Transform ACLED Data from Long to Wide
+#' @name acled_transform_wider
+#' @description Function to convert your ACLED's API calls (if monadic) back into the original dyadic forms.
+#' @param data, a dataframe or tibble containing your dataset.
+#' @param type, a character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
+#' \itemize{
+#' \item full_actors: All actor and associated actor columns
+#' \item main_actors: Actor 1 and Actor 2 columns
+#' \item assoc_actors: All associated actor columns
+#' \item source: The source column becomes dyadic
+#' }
+#' @return A tibble with the data transformed back into wide form.
+#' @family Data Manipulation
+#' @examples
+#' \dontrun{
+#' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#' #                          end_date="2022-02-01", acled_access = T, prompt = F)
+#' #argen_acled_long_actors <- acled_transform_longer(argen_acled,
+#' #                                            type = "full_actor") # Transforming the data to long form
+#'
+#' #argen_acled_wide <- acled_transform_wider(argen_acled_long_actors,
+#' #                                            type = "full_actor") # Transforming the data back to wide form
+#'
+#' #nrow(argen_acled_wide) # Number of rows in the dataset
+#' #[1] 145 # Wide form
+#'
+#' #nrow(argen_acled_long_actors) # Number of rows in the dataset
+#' #[1] 263 # Long form
+#' }
+#' @md
+#' @export
+#' @importFrom rlang .data
+#' @importFrom tidyr pivot_wider
+#' @importFrom stringr str_c str_trim
+
+acled_transform_wider <- function(data, type = "full_actors") {
+
+  # Check if structure is the same as the acled_transform_wide_to_long() output
+
+  if(type == "full_actors") {
+
+    columns_present <- function(df, cols) {
+      all(sapply(cols, function(x) !is.na(match(x, names(df)))))}
+
+    colnames_long <- c(
+      "actor","type_of_actor","inter_type", "inter"
+    )
+    if(!(columns_present(data,colnames_long))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor,type_of_actor,inter_type, and inter.")
+    }
+
+    reverse_data <- data %>%
+      # Pivot actor firsts, flattening joint actors such as assoc actors
+      pivot_wider(names_from = type_of_actor, values_from = actor, values_fn = function(x) str_flatten(x,collapse="; "), values_fill = "") %>%
+      # Pivot inters next, adding a fill 9999 to those that do not apply, as a way of removing. inters from different types of actors
+      pivot_wider(names_from = inter_type, values_from = inter, values_fill = 9999) %>%
+      # Transform inter into character for collapsing
+      mutate(inter1 = as.character(inter1),
+             inter2 = as.character(inter2)) %>%
+      group_by(across(c(-actor1,-actor2, -inter1, -inter2, -assoc_actor_1, -assoc_actor_2))) %>%
+      # Collapse repeated inters and actors
+      summarise(actor1 = str_c(actor1, collapse = ""),
+                actor2 = str_c(actor2, collapse = ""),
+                inter1 = str_trim(str_remove_all(str_c(inter1, collapse = " "), "9999")),
+                inter2 = str_trim(str_remove_all(str_c(inter2, collapse = " "), "9999")),
+                assoc_actor_1 = str_c(assoc_actor_1, collapse = ""),
+                assoc_actor_2 = str_c(assoc_actor_2, collapse = "")) %>%
+      ungroup() %>%
+      # Transform inter into numeric column
+      mutate(inter1 = as.numeric(inter1),
+             inter2 = as.numeric(inter2)) %>%
+      mutate(actor2 = na_if(actor2,""),
+             actor1 = na_if(actor1,""),
+             assoc_actor_1 = na_if(assoc_actor_1,""),
+             assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter2 = replace_na(inter2, 0)) %>%
+      # Match column structure for an acled dataset
+      select(names(acledR::acled_old_dummy))
+
+  } else if(type == "main_actors"){
+    columns_present <- function(df, cols) {
+      all(sapply(cols, function(x) !is.na(match(x, names(df)))))}
+
+    colnames_long <- c(
+      "actor","type_of_actor","inter_type", "inter"
+    )
+    if(!(columns_present(data,colnames_long))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor,type_of_actor,inter_type, and inter.")
+    }
+
+    reverse_data <- data %>%
+      # Pivot actor firsts, flattening joint actors such as assoc actors
+      pivot_wider(names_from = type_of_actor, values_from = actor, values_fn = function(x) str_flatten(x,collapse="; "), values_fill = "") %>%
+      # Pivot inters next, adding a fill 9999 to those that do not apply, as a way of removing. inters from different types of actors
+      pivot_wider(names_from = inter_type, values_from = inter, values_fill = 9999) %>%
+      # Transform inter into character for collapsing
+      mutate(inter1 = as.character(inter1),
+             inter2 = as.character(inter2)) %>%
+      group_by(across(c(-actor1,-actor2, -inter1, -inter2))) %>%
+      # Collapse repeated inters and actors
+      summarise(actor1 = str_c(actor1, collapse = ""),
+                actor2 = str_c(actor2, collapse = ""),
+                inter1 = str_trim(str_remove_all(str_c(inter1, collapse = " "), "9999")),
+                inter2 = str_trim(str_remove_all(str_c(inter2, collapse = " "), "9999"))
+                ) %>%
+      ungroup() %>%
+      # Transform inter into numeric column
+      mutate(inter1 = as.numeric(inter1),
+             inter2 = as.numeric(inter2)) %>%
+      mutate(actor2 = na_if(actor2,""),
+             actor1 = na_if(actor1,""),
+             assoc_actor_1 = na_if(assoc_actor_1,""),
+             assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter2 = replace_na(inter2, 0))%>%
+      # Match column structure for an acled dataset
+      select(names(acledR::acled_old_dummy))
+  } else if(type == "assoc_actors") {
+    columns_present <- function(df, cols) {
+      all(sapply(cols, function(x) !is.na(match(x, names(df)))))}
+
+    colnames_long <- c(
+      "assoc_actor","type_of_assoc_actor"
+    )
+    if(!(columns_present(data,colnames_long))){
+      stop("Some columns are missing. Please make sure your data frame includes: assoc_actor,type_of_assoc_actor.")
+    }
+
+    reverse_data <- data %>%
+      # Pivot actor firsts, flattening joint actors such as assoc actors
+      pivot_wider(names_from = type_of_assoc_actor, values_from = assoc_actor, values_fn = function(x) str_flatten(x,collapse="; "), values_fill = "") %>%
+      # Transform inter into character for collapsing
+      group_by(across(c(-assoc_actor_1,-assoc_actor_2))) %>%
+      # Collapse repeated inters and actors
+      summarise(assoc_actor_1 = str_c(assoc_actor_1, collapse = ""),
+                assoc_actor_2 = str_c(assoc_actor_2, collapse = "")) %>%
+      ungroup() %>%
+      mutate(actor2 = na_if(actor2,""),
+             actor1 = na_if(actor1,""),
+             assoc_actor_1 = na_if(assoc_actor_1,""),
+             assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter2 = replace_na(inter2, 0))%>%
+      # Match column structure for an acled dataset
+      select(names(acledR::acled_old_dummy))
+
+  } else if(type == "source") {
+    columns_present <- function(df, cols) {
+      all(sapply(cols, function(x) !is.na(match(x, names(df)))))}
+
+    colnames_long <- c(
+      "source"
+    )
+    if(!(columns_present(data,colnames_long))){
+      stop("Some columns are missing. Please make sure your data frame includes: source")
+    }
+
+    reverse_data <- data %>%
+      group_by(across(c(-source))) %>%
+      # Collapse repeated inters and actors
+      summarise(source = str_c(source, collapse = "; ")) %>%
+      ungroup() %>%
+      # Match column structure for an acled dataset
+      select(names(acledR::acled_old_dummy))
+
+  return(reverse_data)
+  }
+}

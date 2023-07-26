@@ -8,7 +8,7 @@ acled_update(
   df,
   start_date = min(df$event_date),
   end_date = max(df$event_date),
-  countries = NULL,
+  countries = "current countries",
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,
@@ -19,19 +19,19 @@ acled_update(
 )
 }
 \arguments{
-\item{df}{ACLED dataset that needs to be updated (i.e. a result from acledR::acled_api())}
+\item{df}{The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of \code{acled_api()})}
 
-\item{start_date}{Start date from which to check updates in the dataset (i.e. the minimum date in your dataset)}
+\item{start_date}{The first date of events you want to update from.. These are the celling and floor of \emph{event_date}, not of \emph{timestamp}.}
 
-\item{end_date}{End date from which to check updates in the dataset (i.e., the latest date in your dataset)}
+\item{end_date}{The last date of events you want to update from. These are the celling and floor of \emph{event_date}, not of \emph{timestamp}.}
 
-\item{countries}{string. The countries by which to filter.}
+\item{countries}{string. Additional countries to update your dataset. It defaults to “current countries”, which includes all the countries inside your dataset.}
 
-\item{regions}{string. The regions by which to filter.}
+\item{regions}{string. The regions for which you would like events in your dataset updated.}
 
-\item{event_types}{string. The event types by which to filter.}
+\item{event_types}{string. The event types for which you would like events in your dataset updated.}
 
-\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.}
+\item{acled_access}{logical. If you have already used \code{acled_acess()}, you can set this option as TRUE (default) to avoid having to input your email and access key.}
 
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 

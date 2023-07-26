@@ -3,13 +3,13 @@
 #' @description
 #' This function is meant to help you keep your dataset updated, by automatically checking for new and modified events, as well as deleted events (if deleted = TRUE).
 #' Note: The function makes new api calls to gather new and modified events. See its vignettes in: <https://acled.github.io/acledR/articles/acled_deletions_api.html>
-#' @param df ACLED dataset that needs to be updated (i.e. a result from acledR::acled_api())
-#' @param start_date Start date from which to check updates in the dataset (i.e. the minimum date in your dataset)
-#' @param end_date End date from which to check updates in the dataset (i.e., the latest date in your dataset)
-#' @param countries string. The countries by which to filter.
-#' @param regions string. The regions by which to filter.
-#' @param event_types string. The event types by which to filter.
-#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
+#' @param df The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of `acled_api()`)
+#' @param start_date The first date of events you want to update from.. These are the celling and floor of *event_date*, not of *timestamp*.
+#' @param end_date The last date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
+#' @param countries string. Additional countries to update your dataset. It defaults to “current countries”, which includes all the countries inside your dataset.
+#' @param regions string. The regions for which you would like events in your dataset updated.
+#' @param event_types string. The event types for which you would like events in your dataset updated.
+#' @param acled_access logical. If you have already used `acled_acess()`, you can set this option as TRUE (default) to avoid having to input your email and access key.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param deleted logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().
@@ -41,7 +41,7 @@
 acled_update <- function(df,
                          start_date = min(df$event_date),
                          end_date = max(df$event_date),
-                         countries = NULL,
+                         countries = "current countries",
                          regions = NULL,
                          event_types = NULL,
                          acled_access = TRUE,
@@ -64,6 +64,12 @@ acled_update <- function(df,
 
   if (end_date < max(df$event_date)) {
     warning("Warning: End date is earlier than the latest event date in your dataframe.")
+  }
+
+  if (all(countries == "current countries")){
+    countries <- unique(df$country)
+  } else {
+    countries <- append(unique(df$country), countries)
   }
 
   # Check acled_access

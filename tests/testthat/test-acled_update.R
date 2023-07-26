@@ -8,9 +8,12 @@ test_that("There are no duplicates in the returned data",{
   expect_equal(anyDuplicated(dupes_checks$event_id_cnty), 0L)
 })
 
+## Additional countries are properly added to the dataset
 
-## Missing all bucket 1 unit tests (basic tests of output and proper functioning.)
-
+test_that("Additional countries are properly included",{
+  expect_equal(
+    append(unique(dupes_checks$country), c("Mexico", "Brazil")), unique(dupes_checks_plus_bramex$country))
+})
 
 # Errors and messages ----
 ## An warning appears when requesting an update of data for dates earlier to the min of my dataset ----
@@ -25,7 +28,7 @@ test_that("Warning for earlier dates requested", {
                               regexp = "Start date is earlier than")
 })
 
-## An warning appears when requesting an update of data for dates older to the max of my dataset ----
+## A warning appears when requesting an update of data for dates older to the max of my dataset ----
 
 test_that("Warning for later dates requested", {
   expect_warning(acled_update(acledR::acled_old_dummy,

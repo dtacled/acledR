@@ -27,6 +27,7 @@ Please note that as of today, the one columns available to be regenerated are
 \seealso{
 Other Data Manipulation: 
 \code{\link{acled_filter_actors}()},
-\code{\link{acled_transform}()}
+\code{\link{acled_transform_longer}()},
+\code{\link{acled_transform_wider}()}
 }
 \concept{Data Manipulation}
