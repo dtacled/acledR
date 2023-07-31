@@ -7,7 +7,7 @@ dupes_checks <- acled_update(acledR::acled_old_dummy,
                              acled_access = F, prompts = F)
 
 dupes_checks_plus_bramex <- acled_update(acledR::acled_old_dummy,
-                                         countries = c("Brazil","Mexico"),
+                                         additional_countries = c("Brazil","Mexico"),
                              email = "acledexamples@gmail.com",
                              key = "M3PWwg3DIdhHMuDiilp5",
                              acled_access = F, prompts = F)

@@ -6,14 +6,14 @@
 #' @param df The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of `acled_api()`)
 #' @param start_date The first date of events you want to update from.. These are the celling and floor of *event_date*, not of *timestamp*.
 #' @param end_date The last date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
-#' @param countries string. Additional countries to update your dataset. It defaults to “current countries”, which includes all the countries inside your dataset.
+#' @param additional_countries string. Additional additional_countries to update your dataset. It defaults to “current additional_countries”, which includes all the additional_countries inside your dataset.
 #' @param regions string. The regions for which you would like events in your dataset updated.
 #' @param event_types string. The event types for which you would like events in your dataset updated.
 #' @param acled_access logical. If you have already used `acled_acess()`, you can set this option as TRUE (default) to avoid having to input your email and access key.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param deleted logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().
-#' @param prompts logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
+#' @param prompts logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @return Tibble with updated ACLED data and a newer timestamp.
 #' @family API and Access
 #' @seealso
@@ -26,7 +26,7 @@
 #' acledR::acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
 #'
 #' new_argen_dataset <- acled_update(acledR::acled_old_dummy,
-#'                                   countries = "Argentina",
+#'                                   additional_countries = "Argentina",
 #'                                   acled_access = TRUE,
 #'                                   prompts = FALSE)
 #'
@@ -41,7 +41,7 @@
 acled_update <- function(df,
                          start_date = min(df$event_date),
                          end_date = max(df$event_date),
-                         countries = "current countries",
+                         additional_countries = "current additional_countries",
                          regions = NULL,
                          event_types = NULL,
                          acled_access = TRUE,
@@ -66,10 +66,10 @@ acled_update <- function(df,
     warning("Warning: End date is earlier than the latest event date in your dataframe.")
   }
 
-  if (all(countries == "current countries")){
-    countries <- unique(df$country)
+  if (all(additional_countries == "current additional_countries")){
+    additional_countries <- unique(df$country)
   } else {
-    countries <- append(unique(df$country), countries)
+    additional_countries <- append(unique(df$country), additional_countries)
   }
 
   # Check acled_access
@@ -89,10 +89,10 @@ acled_update <- function(df,
     }
   }
 
-  # Error check for countries
-  if(!all(countries %in% acledR::acled_countries$country)) {
-    missing_countries <- countries[!(countries %in% acledR::acled_countries$country)]
-    stop(paste("Error: The following countries are not present in acledR::acled_countries:",
+  # Error check for additional_countries
+  if(!all(additional_countries %in% acledR::acled_countries$country)) {
+    missing_countries <- additional_countries[!(additional_countries %in% acledR::acled_countries$country)]
+    stop(paste("Error: The following additional_countries are not present in acledR::acled_countries:",
                paste(missing_countries, collapse = ", ")))
   }
 
@@ -120,7 +120,7 @@ acled_update <- function(df,
                            key = key,
                            start_date = start_date,
                            end_date = end_date,
-                           countries = countries,
+                           countries = additional_countries,
                            regions = regions,
                            event_types = event_types,
                            acled_access = acled_access,
