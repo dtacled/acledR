@@ -50,6 +50,12 @@ acled_update <- function(df,
                          deleted = TRUE,
                          prompts = T) { ## This is added for the hasArg statements to work. Not sure why it doenst work without it.
 
+
+  if(!setequal(colnames(df), colnames(acledR::acled_old_deletion_dummy))){
+    stop("The data frame provided does not have ACLED's structure. Please make sure the data frame provided follows the same structure.")
+  }
+
+
   if (start_date < min(df$event_date)) {
     warning("Warning: Start date is earlier than the earliest event date in your dataframe.")
   }
@@ -75,10 +81,6 @@ acled_update <- function(df,
   # Check acled_access
   if (!acled_access && (is.null(email) || is.null(key))) {
     stop("Error: If acled_access is FALSE, you must provide an email and key.")
-  }
-
-  if(!setequal(colnames(df), colnames(acledR::acled_old_deletion_dummy))){
-    stop("The data frame provided does not have ACLED's structure. Please make sure the data frame provided follows the same structure.")
   }
 
   # Check event_types

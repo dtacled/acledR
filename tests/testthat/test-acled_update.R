@@ -15,6 +15,15 @@ test_that("Additional additional_countries are properly included",{
     append(unique(dupes_checks$country), c("Mexico", "Brazil")), unique(dupes_checks_plus_bramex$country))
 })
 
+## When disabling deleted events, users get a different result ----
+
+test_that("acled_update without deletions actually returns events that should be deleted",{
+  expect_snapshot(acled_update(acledR::acled_old_dummy,
+                                               email = "acledexamples@gmail.com",
+                                               key = "M3PWwg3DIdhHMuDiilp5", deleted = FALSE,
+                                               acled_access = F, prompts = F))
+})
+
 # Errors and messages ----
 ## An warning appears when requesting an update of data for dates earlier/later to the min of my dataset ----
 
@@ -76,6 +85,34 @@ test_that("Error if `additional_countries` or `regions` are not in the dataset",
 
 ## Errors if acled_access is used incorrectly ----
 
+test_that("An error appears if acled_access is false but no keys are provided",{
+  expect_error(acled_update(acledR::acled_old_dummy,
+                            additional_countries = "Argentina",
+                            start_date = min(acled_old_dummy$event_date),
+                            acled_access = F, prompts = F), regexp = "Error: If acled_access is FALSE")
+})
+
+## Errors when the dataset does not have the acled structure ----
+
+test_that("If you have a dataset that does not match acled's structure you get an error",{
+  df <- data.frame(
+    x="a", y="b", c="c"
+  )
+  expect_error(acled_update(df,
+                            additional_countries = "Argentina",
+                            start_date = "2022-01-01",
+                            acled_access = F, prompts = F), regexp = "The data frame provided does not have ACLED's structure")
+})
+
+## Errors when requesting event types that are not part of ACLED's event types ----
+
+test_that("Users get an error when requesting a non existent event type",{
+  expect_error(acled_update(acledR::acled_old_dummy,
+                               email = "acledexamples@gmail.com",
+                               key = "M3PWwg3DIdhHMuDiilp5",
+                              event_types = "Snowball fights",
+                               acled_access = F, prompts = F), regexp = "Error: Invalid event_type provided")
+  })
 # Weird use cases ----
 
 ## Does not generate duplicates when fed a non-unique list of values. - But it takes a long time ----
