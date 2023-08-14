@@ -1,4 +1,4 @@
-# Tests for proper functioning of the function (Can they return the equivalent of what is acled_transform_longer input)
+# Tests for proper functioning of the function (Can they return the equivalent of what is acled_transform_longer input)----
 
 test_that("acled_transform_wider returns expected results for type = 'full_actors'", {
 
@@ -53,9 +53,9 @@ test_that("acled_transform_wider returns expected results for type = 'source'", 
   expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty))
 })
 
-# Tests for proper errors and messages
+# Tests for proper errors and messages----
 
-## Test if function returns an error when a data frame with missing necessary columns is input
+## Test if function returns an error when a data frame with missing necessary columns is input----
 test_that("Function returns error with missing columns", {
 
   df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"))
@@ -73,11 +73,37 @@ test_that("Function returns error with missing columns", {
                "Some columns are missing. Please make sure your data frame includes: source")
 })
 
-## Test if function returns an error when a non-existent type is input
+## Test if function returns an error when a non-existent type is input----
 test_that("Function returns NULL when non-existent type is input", {
 
   df <- data.frame(actor = c("a", "b"), type_of_actor = c(1, 2), inter_type = c(1, 2), inter = c(1, 2))
 
-  expect_equal(acled_transform_wider(df, "non_existent_type"), NULL)
+  expect_error(acled_transform_wider(df, "non_existent_type"), regexp = "Please select a valid option:")
 })
 
+
+
+# Weird cases. ----
+
+## Test that if you request monadic data from the API, you can convert it back. ----
+
+test_that("Can you request data from the monadic api, and convert it back?", {
+
+  tester <- acledR::acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+                              countries = "Brazil", start_date="2022-01-01",
+                              end_date = "2022-12-31", monadic = T,
+                              prompt = F, acled_access = F, log = F)%>%
+    acled_transform_wider(type = "api_monadic")
+
+  control <- acledR::acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+                              countries = "Brazil", start_date="2022-01-01",
+                              end_date = "2022-12-31", monadic = F,
+                              prompt = F, acled_access = F, log = F)%>%
+    arrange(desc(event_id_cnty))
+
+
+  expect_equal(tester, control)
+
+})
+
+## Test that if you use the function with some additional transformations made to the dataset, you can transform back without losing any data. ----
