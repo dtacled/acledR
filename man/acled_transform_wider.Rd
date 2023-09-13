@@ -15,6 +15,7 @@ acled_transform_wider(data, type = "full_actors")
 \item main_actors: Actor 1 and Actor 2 columns
 \item assoc_actors: All associated actor columns
 \item source: The source column becomes dyadic
+\item api_monadic: Use this option for data that is the output of the API's monadic option.
 }}
 }
 \value{
@@ -28,10 +29,10 @@ Function to convert your ACLED's API calls (if monadic) back into the original d
 #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
 #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #argen_acled_long_actors <- acled_transform_longer(argen_acled,
-#                                            type = "full_actor") # Transforming the data to long form
+#                        type = "full_actor") # Transforming the data to long form
 
 #argen_acled_wide <- acled_transform_wider(argen_acled_long_actors,
-#                                            type = "full_actor") # Transforming the data back to wide form
+#                        type = "full_actor") # Transforming the data back to wide form
 
 #nrow(argen_acled_wide) # Number of rows in the dataset
 #[1] 145 # Wide form

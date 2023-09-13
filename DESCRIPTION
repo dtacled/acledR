@@ -32,21 +32,15 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    countrycode,
     dplyr,
     methods,
     httr,
-    janitor,
     lubridate,
     stringr,
     tidyr,
-    data.table,
     magrittr,
     purrr,
     rlang,
-    slider,
-    stats,
-    tidyselect,
     utils
 RoxygenNote: 7.2.3
 Depends: 

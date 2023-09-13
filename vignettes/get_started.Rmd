@@ -106,15 +106,3 @@ glimpse(arg_long)
 
 ```
 In our new data frame, we no longer have four actor columns (actor1,actor2,assoc_actor1,assoc_actor2), but instead we only have 1 actor column, with one row per actor. 
-
-## Generate initial analysis from the data
-
-Finally, users may desire to generate some initial analysis of their data. In order to facilitate this last step on acledR workflow, acledR includes four functions: `acled_generate_counts()`, `generate_movers()`, `calculate_actor_index()`, `acled_report_api()`.
-
-The first of these functions, `acled_generate_counts()` aims to generate events counts by event type, spacial (geography) and temporal units of analysis. That means, finding the event counts for a given region, country, admin levels, or counts by event types, or counts by months, weeks or day. 
-
-The second of these functions, `generate_movers()`, focuses on generating moving statistics, across a given temporal and spacial unit of analysis. This functions allows users to find statistics such as standard deviation, mean, median, max and mins. 
-
-The third of these functions, `acled_Actor_concentration()` allows users to find how are the actor interactions in the dataset, more specifically,  how dissipated or concentrated a given dataset is. This function utilizes two types of indexes to assess this, either the Inverse Simpson Index or the Herfindahl-Hirschman Index. 
-
-Finally, `acled_report_api()` allows users to generate an exploratory analysis report of the data, which includes elements covered in the previous three functions, as well as analysis of the number of sources, event counts, and geographical distribution of events. 

@@ -30,38 +30,61 @@
 
 acled_transform_interaction <- function(df, only_inters = F) {
 
+
+  if(!"inter1" %in% colnames(df)){
+    stop("The input dataframe does not contain 'inter1' column. Please utilize a dataframe that has ACLED's column structure for the function to succeed.")
+  }
+  if(!"inter2" %in% colnames(df)){
+    stop("The input dataframe does not contain 'inter2' column. Please utilize a dataframe that has ACLED's column structure for the function to succeed.")
+  }
+  if(!"interaction" %in% colnames(df)){
+    stop("The input dataframe does not contain 'interaction' column. Please utilize a dataframe that has ACLED's column structure for the function to succeed.")
+  }
+
+  possible_inter <- c(0,1,2,3,4,5,6,7,8)
+
+  if(!is.integer(df$inter1) | !is.integer(df$inter2)) {
+    warning("Your inter columns are not integers, which may indicate you have non-integers. Be aware that interaction codes are positive integers from 1 to 8.")
+  }
+
+  if(max(df$inter1 > 8) | max(df$inter2) > 8 | min(df$inter1 < 0 | min(df$inter2) < 0 )) {
+    stop("One or more interaction codes were not recognized. Please remember interaction codes are positive integers from 1 to 8. ")
+  }
+
+
+
   test_changes <- df %>%
     left_join(acledR::acled_interaction_codes, by = c("inter1" = "Numeric Code")) %>%
-    select(-inter1) %>%
+    select(-df$inter1) %>%
     rename(inter1 = "Inter1/Inter2") %>%
-    relocate(inter1, .after = assoc_actor_1) %>%
+    relocate(df$inter1, .after = df$assoc_actor_1) %>%
     left_join(acledR::acled_interaction_codes, by = c("inter2" = "Numeric Code")) %>%
-    select(-inter2) %>%
+    select(-df$inter2) %>%
     rename(inter2 = "Inter1/Inter2") %>%
-    relocate(inter2, .after = assoc_actor_2)
+    relocate(df$inter2, .after = df$assoc_actor_2)
 
   if(only_inters == F){
 
     test_changes <- test_changes %>%
                     mutate(interaction = case_when(
-                      str_detect(interaction, "10") ~ "Sole State Forces",
-                      str_detect(interaction, "20") ~ "Sole Rebel Groups",
-                      str_detect(interaction, "30") ~ "Sole Political Militias",
-                      str_detect(interaction, "40") ~ "Sole Identity Militias",
-                      str_detect(interaction, "50") ~ "Sole Rioters",
-                      str_detect(interaction, "60") ~ "Sole Protesters",
-                      str_detect(interaction, "70") ~ "Sole Civilians",
-                      str_detect(interaction, "80") ~ "Sole Others",
+                      str_detect(test_changes$interaction, "10") ~ "Sole State Forces",
+                      str_detect(test_changes$interaction, "20") ~ "Sole Rebel Groups",
+                      str_detect(test_changes$interaction, "30") ~ "Sole Political Militias",
+                      str_detect(test_changes$interaction, "40") ~ "Sole Identity Militias",
+                      str_detect(test_changes$interaction, "50") ~ "Sole Rioters",
+                      str_detect(test_changes$interaction, "60") ~ "Sole Protesters",
+                      str_detect(test_changes$interaction, "70") ~ "Sole Civilians",
+                      str_detect(test_changes$interaction, "80") ~ "Sole Others",
                       TRUE ~ as.character(interaction))) %>%
-                    mutate(interaction = str_replace_all(interaction, "(\\d)(\\d)", "\\1-\\2"),
-                           interaction = str_replace(as.character(interaction), "1", "State Forces"),
-                           interaction = str_replace(as.character(interaction), "2", "Rebel Groups"),
-                           interaction = str_replace(as.character(interaction), "3", "Political Militias"),
-                           interaction = str_replace(as.character(interaction), "4", "Identity Militias"),
-                           interaction = str_replace(as.character(interaction), "5", "Rioters"),
-                           interaction = str_replace(as.character(interaction), "6", "Protesters"),
-                           interaction = str_replace(as.character(interaction), "7", "Civilians"),
-                           interaction = str_replace(as.character(interaction), "8", "External/Other Forces"))
+                    mutate(interaction = str_replace_all(test_changes$interaction, "(\\d)(\\d)", "\\1-\\2"),
+                           interaction = str_replace(as.character(test_changes$interaction), "1", "State Forces"),
+                           interaction = str_replace(as.character(test_changes$interaction), "2", "Rebel Groups"),
+                           interaction = str_replace(as.character(test_changes$interaction), "3", "Political Militias"),
+                           interaction = str_replace(as.character(test_changes$interaction), "4", "Identity Militias"),
+                           interaction = str_replace(as.character(test_changes$interaction), "5", "Rioters"),
+                           interaction = str_replace(as.character(test_changes$interaction), "6", "Protesters"),
+                           interaction = str_replace(as.character(test_changes$interaction), "7", "Civilians"),
+                           interaction = str_replace(as.character(test_changes$interaction), "8", "External/Other Forces"))
   }
 
 
