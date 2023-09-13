@@ -74,16 +74,13 @@ acled_api(email = NULL,
 
 You can use the `countries` and `regions` parameters to specify the locations from which you would like to request data. If both values are `NULL` or are not included, the API will return data for all countries and regions. If you would like to request data for multiple countries, you can do so by using a vector of country names (e.g., `c("Argentina","Spain","Bolivia")`). Similarly, you can request data from one or more regions by using either a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` show the full lists of countries and regions available. Please visit ACLED’s [Geography vignette](`r vignette("Geography")`) for more information.
 
-
-**Note**: If you include values for both countries and regions, the function will only return cases that match both criteria. For example, if you request `countries = c("Nigeria", "Mexico")` and `regions = c("Western Africa")`, you will only receive data from Nigeria since Mexico is not in Western Africa.
-
 ### Temporal filters
 
 You can specify the date range for which you would like to receive data by using the `start_date` and `end_date` parameters, both of which require data in the "yyyy-mm-dd" format.
 
 You can use the `timestamp` parameter to select data that were added or amended over a specific time period. Please keep in mind that `timestamp` indicates when the event was added or modified in ACLED’s dataset, meaning that an event that occurred far in the past (i.e., with an old *event date*) may still have a recent timestamp if it was recently amended. 
 
-In practice, the `timestamp` parameter is typically not used for analysis but is instead used to keep your own dataset up to date as changes are made to ACLED’s data. To learn more about how to keep your datasets up to date, visit the “Keeping your datasets up to date” page for an acledR approach or this [guide](https://acleddata.com/download/35179/) more relevant to excel or other spreadsheet tools[a].
+In practice, the `timestamp` parameter is typically not used for analysis but is instead used to keep your own dataset up to date as changes are made to ACLED’s data. To learn more about how to keep your datasets up to date, visit the [Keeping your datasets up to date](https://acled.github.io/acledR/articles/acled_update.html) page for an acledR approach or this [guide](https://acleddata.com/download/35179/) more relevant to excel or other spreadsheet tools.
 
 ### Additional filters 
 
