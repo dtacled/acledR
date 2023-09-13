@@ -8,7 +8,7 @@ acled_update(
   df,
   start_date = min(df$event_date),
   end_date = max(df$event_date),
-  countries = "current countries",
+  additional_countries = "current additional_countries",
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,
@@ -25,7 +25,7 @@ acled_update(
 
 \item{end_date}{The last date of events you want to update from. These are the celling and floor of \emph{event_date}, not of \emph{timestamp}.}
 
-\item{countries}{string. Additional countries to update your dataset. It defaults to “current countries”, which includes all the countries inside your dataset.}
+\item{additional_countries}{string. Additional additional_countries to update your dataset. It defaults to “current additional_countries”, which includes all the additional_countries inside your dataset.}
 
 \item{regions}{string. The regions for which you would like events in your dataset updated.}
 
@@ -39,7 +39,7 @@ acled_update(
 
 \item{deleted}{logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().}
 
-\item{prompts}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
+\item{prompts}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
 }
 \value{
 Tibble with updated ACLED data and a newer timestamp.
@@ -54,7 +54,7 @@ Note: The function makes new api calls to gather new and modified events. See it
 acledR::acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
 
 new_argen_dataset <- acled_update(acledR::acled_old_dummy,
-                                  countries = "Argentina",
+                                  additional_countries = "Argentina",
                                   acled_access = TRUE,
                                   prompts = FALSE)
 
