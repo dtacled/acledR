@@ -89,8 +89,6 @@ This emphasis on local, national and sometimes non-english reporting allows us t
 Now that we know our sources, let's explore the scale of these. 
 
 ```{r}
-
-
 df_geo %>%
     tidyr::separate_rows(source_scale, sep = "-") %>%
     mutate(source_scale = stringr::str_trim(source_scale,side = "both")) %>%
