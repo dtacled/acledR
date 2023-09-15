@@ -10,7 +10,7 @@
       Dataset updated. 
        Old number of events: 326. 
        New events: 1. 
-       Total new & modified events: 39
+       Total new & modified events: 46
     Output
       # A tibble: 327 x 31
          event_id_cnty event_date  year time_precision disorder_type event_type

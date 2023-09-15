@@ -2,14 +2,11 @@
 title: "Keeping your dataset up to date"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{Deletions API: Keeping your dataset up to date}
+  %\VignetteIndexEntry{Keeping your dataset up to date}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  markdown: 
-    wrap: sentence
----
+  %\VignetteEncoding{UTF-8}
 
+---
 ```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -19,41 +16,33 @@ options(warn = -1)
 
 ```
 
-ACLED is a living dataset, which means changes happen regularly.
+ACLED’s dataset is living, meaning that the dataset is updated frequently. 
 
-Three types of changes are recurrent in ACLED's dataset:
+The dataset is updated in three ways: 
 
 -   New events
-    -   These are the weekly addition of events, all are published with a new distinctive *event_id_cnty*.
+    -   ACLED adds new events weekly. Each event is published with a new and unique *event_id_cnty*. 
+    
 -   Updates of previously published events
-    -   In some cases, we modify published events, as new information may appear. For example, a particular actor has claimed responsibility for an attack, or the number of fatalities has changed. In these cases, the *event_id_cnty* remains the same, but the new information is updated, and the old information overwritten - including the *timestamp*.
+    -   In some cases ACLED modifies published events, as new information appears. For example, an actor may claim responsibility for an attack long after the event takes place, or the number of fatalities may increase or decrease as victims succumb to their injuries or are found alive. When an event is modified, the *event_id_cnty* remains the same but the information is updated with the old information being overwritten, including the *timestamp*. 
+
 -   Deletion of events
-    -   In some cases, we have to delete previous events. This happens when new information surfaces indicating that the event no longer fits the scope of ACLED's dataset, or it hints that two events are the same and the events are then merged. In these cases, the event is removed, including the *event_id_cnty*.
+    -   In some cases, ACLED deletes already published events. Deletions happen when new information surfaces indicating that the event no longer fits the scope of ACLED's dataset, or when new information suggests that two separate events are actually duplicate reports of a single event. When deletions occur, the event is removed from the dataset along with its unique *event_id_cnty* value.
 
-For users with a personal ACLED file, it is advised to check regularly which events are no longer in the actual ACLED dataset, and which have been updated.
-Otherwise, users risk having an outdated version.
-In this section, we will walk through how to keep your dataset updated with the `acledR` package.
+For users with an ACLED dataset downloaded on their computer, ACLED suggests that you regularly check for deleted or updated events to ensure your dataset is up to date. In this section you will learn how to keep your dataset updated by using the `acledR` package. 
 
-## Keeping check of updates - `acled_update()`
+## Keeping track of updates - `acled_update()`
 
-As we covered in the more detailed guide about [updating your dataset](https://acleddata.com/download/35179/), in some cases, events are updated.
-When they are updated, their *event_id_cnty* remains the same but all the rest of the information gets updated and overwritten.
+As detailed in ACLED’s guide about [updating your dataset](https://acleddata.com/download/35179/), in some cases events are modified or deleted, necessitating an update of your downloaded dataset. 
 
-Different from [deleted events](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html), there is no separate API endpoint to check for updated events.
-When events are updated, their timestamp changes to the timestamp of the update.
-This means, that you can find the modified events by utilizing `acledR::acled_api()` and providing your latest timestamp (i.e. `max({your ACLED dataset}$timestamp))`) in the `timestamp` argument of the function.
-If you get duplicated events, these are likely to be updated events, so you should keep only the ones with a higher timestamp.
+Unlike for [deleted events](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html), there is no separate API endpoint to check for modified events. When events are modified, their timestamp changes to reflect the timing of the most recent update. This means, that you can find the modified events by using `acledR::acled_api()` while providing  the most recent timestamp (i.e. `max({your ACLED dataset}$timestamp))`) in your dataset as the `timestamp` argument of the function. If there is an event with a more recent *timestamp* but the same *event_id_country* as an event in your downloaded dataset, then that event has been modified. Hence, you can remove the duplicated event with the lower timestamp. 
 
-When events are deleted, however, their *event_id_cnty* also gets deleted.
-For that, users can employ `acled_deletion_api()` to gather the *event_id_cnty* of deleted events, which you can use to filter out these events from your dataset.
-While users can find an example below, we kindly suggest you visit our [guide](https://acleddata.com/download/35179/) and more specific guidance about the `deletions` [endpoint](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html) in our API interactive guide.
-
-To simplify both of these processes, `acledR` includes a function that updates your dataset, by checking for new and modified events, as well as removing deleted events: `acled_update()`.
+To simplify this process, `acledR` includes a function which makes the update for you by following the steps previously explained: `acled_update`. 
 
 ```{r, eval=F}
 acled_update(
   df,
-  countries = NULL,
+  additional_countries = NULL,
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,
@@ -63,43 +52,34 @@ acled_update(
   prompts = T)
 ```
 
-The function is composed of the following arguments:
+The function has the following arguments: 
+-   `df`: The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of `acled_api()`)
 
--   `df`: The data frame to update.
-    It has to have the same structure as ACLED's dyadic data frames (i.e. the result of `acled_api()`)
+-   `start_date`: The first date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
 
--   `start_date`: Along with `end_date` these determine the temporal range for your update.
-    They default to the date range of `df`.
+-   `end_date`:  The last date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
 
--   `end_date`: Along with `start_date` these determine the temporal range for your update.
-    They default to the date range of `df`.
+-   `additional_countries`: Additional countries to update your dataset. It defaults to “current countries”, which includes all the countries inside your dataset. 
 
--   `countries`: In case your dataset includes particular countries, you can add them here so that the function filters new events to those countries.
+-   `regions`: The regions for which you would like events in your dataset updated.  
 
--   `regions`: In case your dataset includes particular regions, you can add them here so that the function filters new events to those regions.
+-   `event_types`: The event types for which you would like events in your dataset updated. 
 
--   `event_types`: In case of your dataset includes particular event_types, you can add them here so that the function filters new events to those event_types.
+-   `acled_access`: If you have already used `acled_access()`, you can set this option as TRUE (default) to avoid having to input your email and access key. 
 
--   `acled_acess`: If you have already utilized `acled_acess()`, you can set this option as TRUE (default), and you won't be required to input email or key.
+-   `email`: The email you have registered in [ACLED's Access Portal](https://developer.acleddata.com/). This argument is not required if `acled_access = TRUE`. 
 
--   `email`: The email registered in [ACLED's Access Portal](https://developer.acleddata.com/).
-    Not required if `acled_access = TRUE`.
+-   `key`: The key you have registered in [ACLED's Access Portal](https://developer.acleddata.com/). This argument is not required if `acled_access = TRUE`.
 
--   `key`: The key registered in [ACLED's Access Portal](https://developer.acleddata.com/).
-    Not required if `acled_access = TRUE`.
+-   `deleted`: If TRUE, in addition to updating the information in updated events, this function will also remove deleted events from your dataset by using [ACLED API's deleted endpoint](https://acled.github.io/acledR/articles/acled_deletions_api.html). 
 
--   `deleted`: If TRUE, this function will also deal with deleted events, utilizing [ACLED API's deleted endpoint](https://acled.github.io/acledR/articles/acled_deletions_api.html).
-
--   `prompts`: Use this option to suppress or allow prompts regarding your call.
-    See `acled_api()`.
-
-`acled_update()` will utilize the dataset you provide to gather new events based on the timestamp and add them to the original dataset, as well as remove any deleted events (if `deleted = TRUE`).
+-   `prompts`: If TRUE prompts from your call will be suppressed. See `acled_api()`. 
 
 ## Examples
 
-In this section, we will show how to use `acled_update` to keep your datasets updated.
+In this section you can learn to use `acled_update` to keep your datasets updated. 
 
-Load the dataset:
+Load your downloaded dataset:
 
 ```{r, eval = T, message=FALSE}
 library(acledR)
@@ -110,37 +90,27 @@ library(dplyr)
 ```{r}
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 
-dummy_acled_file <- acledR::acled_old_deletion_dummy # Here is our old personal ACLED dataset
+argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
 ```
 
-When was the last time you gathered your dataset? - The snippet below checks that.
-
+When was the last time you downloaded or updated your dataset? 
 ```{r}
-latest_timestamp_unix <- max(dummy_acled_file$timestamp)
+latest_timestamp_unix <- max(argen_dummy_acled_file$timestamp)
 
 latest_timestamp <- as_datetime(latest_timestamp_unix) 
 ```
 
-The dataset has not been updated since `r date(latest_timestamp)` , so you may need to update it.
-To do so, you just have to utilize `acled_update()`.
-In order to keep the update within the dates of our dataset, you can ignore the `start_date` and `end_date` arguments.
-Similarly, we keep `deleted=TRUE` to also remove deleted events.
+The dataset has not been updated since `r print(latest_timestamp)`, so you may want a more updated version. To do so, you can use `acled_update()`. If you are only interested in updating events that are already in your dataset, you can ignore the `start_date` and `end_date` arguments. If you also wish to remove deleted events from your dataset you can set `deleted=TRUE`. 
 
 ```{r}
 
-# Get the countries in the dataset to avoid asking for events of countries that are not relevant for your dataset. 
-countries_in_dataset <- levels(mutate(dummy_acled_file, country = factor(country))$country)
-event_types_in_dataset <- levels(mutate(dummy_acled_file, country = factor(event_type))$event_type)
-
-
-new_dataset <- acled_update(dummy_acled_file, 
-                                  countries = countries_in_dataset,
-                                  event_types = event_types_in_dataset,
+new_argen_dataset <- acled_update(argen_dummy_acled_file, 
+                                  countries = "Argentina", 
                                   acled_access = T, 
                                   prompts = FALSE) 
 ```
 
-Now your dataset captures deleted, modified, and newly created events.
+Now your dataset captures modified and newly created events. 
 
 Best of luck!
 

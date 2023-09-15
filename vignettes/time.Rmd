@@ -132,7 +132,7 @@ With this we can see that May 2021 was the month hosting the biggest number of e
 
 Lets try to add more nuance to our analysis, and lets analyse the count of different event_types across months. 
 
-```{r,echo=T}
+```{r,echo=T, eval=FALSE}
 
 french_counts <- acled_generate_counts(df_france,
                                  unit_id = "country",

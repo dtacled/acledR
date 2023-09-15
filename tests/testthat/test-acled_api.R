@@ -141,6 +141,9 @@ test_that("The call actually returns monadics.", {
   expect_gte(nrow(received_data_monadic), nrow(received_data))
 })
 
+
+
+
 # Errors ----
 ## Error when someone requests a region that does not exist----
 
@@ -295,7 +298,7 @@ test_that("Error when non existent event types",{
                          log = F), error = TRUE, cnd_class = TRUE)
 })
 
-# A message appears that acled_access is being ignored, and the proper credentials are being used.  ----
+# A message appears that acled_access is being ignored, and the proper credentials are being used.----
 
 test_that("A warning appears that acled_access is being ignored, and the proper credentials are being used.",{
 
@@ -306,4 +309,18 @@ test_that("A warning appears that acled_access is being ignored, and the proper 
                            acled_access = T, log = T), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
 
   expect_true(grepl("acledexamples", alog$email[1]))
+})
+
+
+
+
+# Weird cases ----
+
+# Ensure tables do not display blanks, and display NAs instead
+
+test_that("Tables display NAs instead of blanks", {
+
+  expect_equal(nrow(filter(received_data, if_any(everything(), ~ sjmisc::is_empty(.x, all.na.empty = F)))), 0)
+
+
 })

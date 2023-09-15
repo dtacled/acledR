@@ -8,6 +8,7 @@
 #' \item main_actors: Actor 1 and Actor 2 columns
 #' \item assoc_actors: All associated actor columns
 #' \item source: The source column becomes dyadic
+#' \item api_monadic: Use this option for data that is the output of the API's monadic option.
 #' }
 #' @return A tibble with the data transformed back into wide form.
 #' @family Data Manipulation
@@ -16,10 +17,10 @@
 #' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
 #' #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #' #argen_acled_long_actors <- acled_transform_longer(argen_acled,
-#' #                                            type = "full_actor") # Transforming the data to long form
+#' #                        type = "full_actor") # Transforming the data to long form
 #'
 #' #argen_acled_wide <- acled_transform_wider(argen_acled_long_actors,
-#' #                                            type = "full_actor") # Transforming the data back to wide form
+#' #                        type = "full_actor") # Transforming the data back to wide form
 #'
 #' #nrow(argen_acled_wide) # Number of rows in the dataset
 #' #[1] 145 # Wide form
@@ -30,12 +31,14 @@
 #' @md
 #' @export
 #' @importFrom rlang .data
-#' @importFrom tidyr pivot_wider
+#' @importFrom tidyr pivot_wider replace_na
 #' @importFrom stringr str_c str_trim
 
 acled_transform_wider <- function(data, type = "full_actors") {
 
-  # Check if structure is the same as the acled_transform_wide_to_long() output
+  if(!(type %in% c("full_actors", "main_actors", "assoc_actors", "source", "api_monadic"))){
+    stop(paste0("Error: ", type, " is not a valid option. Please select a valid option:\"full_actors\", \"main_actors\", \"assoc_actors\", \"source\", \"api_monadic\""))
+  }
 
   if(type == "full_actors") {
 
@@ -161,6 +164,34 @@ acled_transform_wider <- function(data, type = "full_actors") {
       # Match column structure for an acled dataset
       select(names(acledR::acled_old_dummy))
 
-  return(reverse_data)
+  } else if(type == "api_monadic"){
+
+
+    df1 <- data %>%
+      group_by(event_id_cnty) %>%
+      slice(1) %>%
+      ungroup() %>%
+      rename(actor1 = actor1,
+             assoc_actor_1 = assoc_actor_1)
+
+    df2 <- data %>%
+      group_by(event_id_cnty) %>%
+      slice(2) %>%
+      ungroup() %>%
+      rename(actor2 = actor1,
+             assoc_actor_2 = assoc_actor_1,
+             inter2 = inter1)
+
+    reverse_data <- df1 %>%
+      left_join(df2, by = c("event_id_cnty", "event_date", "year", "time_precision", "disorder_type", "event_type",
+                            "sub_event_type", "interaction", "civilian_targeting", "iso", "region", "country", "admin1",
+                            "admin2", "admin3", "location", "latitude", "longitude", "geo_precision", "source", "source_scale",
+                            "notes", "fatalities", "tags", "timestamp"))%>%
+      relocate(c(actor2, assoc_actor_2, inter2), .after = inter1)%>%
+      mutate(inter2 = replace_na(inter2, 0))%>%
+      mutate(admin3 = as.logical(admin3))%>%
+      arrange(desc(event_id_cnty))
+
   }
+  return(reverse_data)
 }

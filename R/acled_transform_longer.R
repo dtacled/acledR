@@ -29,6 +29,12 @@
 #' @export
 #' @importFrom rlang .data
 #' @importFrom dplyr relocate
+#' @importFrom dplyr mutate
+#' @importFrom dplyr filter
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr separate_rows
+#' @importFrom stringr str_trim
+#'
 
 acled_transform_longer <- function(data,type="full_actors") {
  # To - do Remove NAs rows from the assoc actors.

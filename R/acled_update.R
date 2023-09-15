@@ -34,6 +34,7 @@
 #' @importFrom dplyr filter
 #' @importFrom dplyr anti_join
 #' @importFrom methods hasArg
+#'
 #' @export
 
 
@@ -112,7 +113,7 @@ acled_update <- function(df,
     deleted_events <- acled_deletions_api(email = email, key = key, date_deleted = max_timestamp, acled_access = acled_access)
 
     after_deleted <- df %>%
-      filter(!(event_id_cnty %in% deleted_events$event_id_cnty))
+      filter(!(df$event_id_cnty %in% deleted_events$event_id_cnty))
   } else {
     after_deleted <- df
   }
