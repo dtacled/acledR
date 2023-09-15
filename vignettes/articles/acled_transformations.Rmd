@@ -18,13 +18,32 @@ The ACLED dataset is designed with user readability in mind. At times, this focu
 
 ## 1. Switch between numeric and string interaction codes - `acled_transform_interactions()`
 
-*- Under construction -*
+One of the first functions you can find in this suite of data manipulation, `acled_transform_interactions()`, allows you to easily transition from numeric interaction codes to string-based interaction codes. 
 
+In our documentation, we often refer to actor types through string-based categories (i.e. *State Forces* or *Rebel Groups*), while our dataset structure these categories through a numeric categorization. You can find more information, visit our [codebook]("https://acleddata.com/download/2827/"). This function allows you to convert your numeric codes into these categories, without the time-consuming need of writing out these changes yourself. 
+
+
+```{fun , eval = FALSE}
+
+acled_transform_longer(df, 
+                only_inters = F) 
+
+```
+
+The function requires two arguments:
+
+*   `data`: An ACLED's dataset which includes inter1 and inter2 (if `only_inter = F`).
+
+*   `only_inters`: Boolean option on whether to include only *inter1* and *inter2*, without including *interaction*. Default to `FALSE`, thus including the *interaction* column.
+
+The function simply returns a modified dataframe with the swapped inter & interaction formats. 
 
 
 ## 2. From wide to long formats - `acled_transform_longer()`
 
-The ACLED dataset is designed with user readability in mind. At times, this focus might conflict with standard clean data principles, such as having only a single value per column and row. To circumvent these issues and to make it easier to use ACLED data in certain programmatic settings, two functions are useful `acled_transform_longer()` and `acled_transform_wider`. `acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see our [API interactive guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type) for a more detailed explanation). However, you may wish to conduct actor-based analyses that are better suited to a long data format where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
+The ACLED dataset is designed with user readability in mind. At times, this focus might conflict with tabular "tidy" principles, such as having only a single value per column and row. To circumvent these issues and make ACLED data easier to use in programmatic settings, `acledR` brings two functions:  `acled_transform_longer()` and `acled_transform_wider`. 
+
+`acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see our [API interactive guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type) for a more detailed explanation). However, for example, you may wish to conduct actor-based analyses that are better suited to a long data format where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
 
 Note that wide and long formats are referred to as dyadic and monadic data types in other ACLED documentation (see [ACLED endpoint guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html)).
 
@@ -37,7 +56,7 @@ acled_transform_longer(data,
 
 `acled_transform_longer()` requires two arguments: 
 
-*   `data`: A wide format ACLED dataset 
+*   `data`: A wide format ACLED dataset. 
 
 *   `type`: A character vector indicating which columns to transpose (the columns that go from wide to long format). 
 
@@ -45,15 +64,15 @@ The available column options upon which ACLED data can be transposed are:
 
 1.  `full_actor`: Transposes all the actor columns in the dataset (*actor1*, *actor2*, *assoc_actor_1*, *assoc_actor_2*). There will be a separate row for each actor or associate actor involved in each event. This generates four new different columns: `type_of_actor` and `actor`, and `inter_type` and `inter`. `type_of_actor` represents in which column the actor was, and actor is self-describing. Similarly, `inter_type` represents in which column inter was, and `inter` is the interaction code of the actor. 
 
-2.  `main_actors`: Transposes only *actor1* and *actor2*. There will be separate rows for main actors only. This generates two different columns: `type_of_actor` and `actor`. `type_of_actor` represent which column the actor was, and actor is self-describing.
+2.  `main_actors`: Transposes only *actor1* and *actor2*. There will be separate rows for main actors only. This generates two different columns: `type_of_actor` and `actor`. `type_of_actor` represent which column the actor was, and `actor` is self-describing.
 
-3.  `assoc_actors`: Transposes only *assoc_actor_1* and *assoc_actor_2* columns. There will be separate rows for associate actors only. This generates two different columns: `type_of_actor` and `actor`. `type_of_actor` represent which column the actor was, and actor is self-describing. **Note:** The data will still include actor1 and actor2 columns. 
+3.  `assoc_actors`: Transposes only *assoc_actor_1* and *assoc_actor_2* columns. There will be separate rows for associate actors only. This generates two different columns: `type_of_actor` and `actor`. `type_of_actor` represent which column the actor was, and `actor` is self-describing. **Note:** The data will still include *actor1* and *actor2* columns. 
 
-4.  `source`: Transposes only the *source* column. There will be a separate row for each source in the source column.
+4.  `source`: Transposes only the *source* column. There will be a separate row for each source in the *source* column.
 
 Keep in mind that you can receive some data in monadic/longer form directly from ACLED’s API, but using this function can provide some added benefits. Specifically: 
 
--   You can use this function to transform a dyadic dataset to a monadic dataset, thus receiving the latter without executing an additional API call. 
+-   You can use this function to transform a dyadic/wide dataset to a monadic/long dataset, thus receiving the latter without executing an additional API call. 
 
 -   You have more control over the columns used to go from wide to long format. This function allows you to transpose on the following columns: *actor1* & *actor2*, *assoc_actor_1*, *assoc_actor_2*, and *source*. The API only allows you to receive long-format data based on *actor1*, *actor2*, *assoc_actor_1*, *assoc_actor_2*, without an option to control if you want some of these columns or all of them.  
 
@@ -63,7 +82,7 @@ Keep in mind that you can receive some data in monadic/longer form directly from
 On the other hand, `acledR` also offers the opposite of `acled_transform_longer()` to pivot your dataframe back to wider form (dyadic form). The function is meant to aid users that may have requested data that may have utilized `acled_transform_longer()` and would like to return the dataframe to its original state. 
 
 The function behaves rather similarly to its counterpart: 
-```{r}
+```{r, eval = F}
 
 acled_transform_wider(data,
                       type = "full_actors")
@@ -75,10 +94,6 @@ As you can see, the arguments remain the same as with `acled_transform_longer()`
 *   `data`: A wide format ACLED dataset
 
 *   `type`: A character vector indicating which columns to transpose (the columns that go from long to wide format). 
-
-*   `concat_name`
-
-*   `concat_values`
 
 
 ## Example 
@@ -106,11 +121,11 @@ Now, you can filter to events involving the "Military Forces of Colombia (2022-)
 ```{r}
 
 mil_colombia <- df_sa %>%
-  filter(str_detect(paste(actor1,actor2,assoc_actor_1, assoc_actor_2, sep = ";"), "Military Forces of Colombia (2022-)"))
+  filter(stringr::str_detect(paste(actor1,actor2,assoc_actor_1, assoc_actor_2, sep = ";"), "Military Forces of Colombia (2022-)"))
 
 ```
 
-In the filtered events there are 143 rows, meaning there were 143 events where the "Military Forces of Colombia (2022-)" were involved as an actor or associate actor. 
+In the filtered events there are `r nrow(mil_colombia)` rows, meaning there were `r nrow(mil_colombia)` events where the "Military Forces of Colombia (2022-)" were involved as an actor or associate actor. 
 
 Instead of filtering to the events containing a particular actor, you may wish to calculate the number of events in which each actor in the dataset participates. The issue is that an actor may be represented in any of the four actor columns, so you cannot simply sum the number of rows in which an actor appears in one particular column. A simple solution is to transform the dataset into long form and then calculate event counts for each actor. You can begin by using the `acled_transform_longer()` function:
 
@@ -120,7 +135,7 @@ df_sa_long <- acled_transform_longer(df_sa, type = "full_actors")
 
 ```
 
-The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but while grouping by **unique** *event_id_cnty*. It is very important to count rows by unique ids because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
+The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but only grouping by **unique** *event_id_cnty*. It is very important to count rows by unique ids because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
 
 ```{r}
 library(tidyr)
@@ -143,7 +158,3 @@ actors_df_sa %>%
 
 The number of events matches the number of rows you got when first filtering by actor. 
 
-
-----
-{ adding a functionality here to permit pivoting back when you applied changes, I will update that here when that is done. }
-----
