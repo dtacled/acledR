@@ -34,7 +34,6 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr separate_rows
 #' @importFrom stringr str_trim
-#' @importFrom stringr str_sub
 #'
 
 acled_transform_longer <- function(data,type="full_actors") {
@@ -59,12 +58,12 @@ acled_transform_longer <- function(data,type="full_actors") {
     }
     separated_data <- data %>%
       pivot_longer(cols = c("actor1","actor2","assoc_actor_1","assoc_actor_2"),names_to = "type_of_actor",values_to = "actor") %>%
-      separate_rows(data$actor, sep = ";") %>%
+      separate_rows(actor, sep = ";") %>%
       # filter(actor != "") %>%
       relocate(c("type_of_actor","actor"),.after="sub_event_type")%>%
-      mutate(actor = str_trim(data$actor)) %>%
+      mutate(actor = str_trim(actor)) %>%
       pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
-      filter(str_sub(data$type_of_actor,start=nchar(data$type_of_actor)) == str_sub(data$inter_type, start=nchar(data$inter_type))) %>%
+      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
       relocate(c("inter_type","inter"),.after="actor")
 
     message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
@@ -80,19 +79,19 @@ acled_transform_longer <- function(data,type="full_actors") {
     }
     separated_data <- data %>%
       pivot_longer(cols = c("actor1","actor2"),names_to = "type_of_actor",values_to = "actor") %>%
-      filter(data$actor != "") %>%
+      filter(actor != "") %>%
       relocate(c("type_of_actor","actor"),.after="sub_event_type")%>%
-      mutate(actor = str_trim(data$actor)) %>%
+      mutate(actor = str_trim(actor)) %>%
       pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
-      filter(str_sub(data$type_of_actor,start=nchar(data$type_of_actor)) == str_sub(data$inter_type, start=nchar(data$inter_type))) %>%
+      filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
       relocate(c("inter_type","inter"),.after="actor")
 
   }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
     separated_data <- data %>%
       pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
-      separate_rows(data$assoc_actor, sep = ";") %>%
+      separate_rows(assoc_actor, sep = ";") %>%
       relocate(c("type_of_assoc_actor","assoc_actor"),.after="sub_event_type")%>%
-      mutate(assoc_actor = str_trim(data$assoc_actor))
+      mutate(assoc_actor = str_trim(assoc_actor))
 
     message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
 
@@ -102,10 +101,10 @@ acled_transform_longer <- function(data,type="full_actors") {
     }
   }else if(type == "source"){  ## source -> pivot + separate source column
     separated_data <- data %>%
-      separate_rows(data$source, sep = ";") %>%
-      mutate(source = str_trim(data$source,side = "both")) %>%
-      relocate(data$source,.before="source_scale")%>%
-      mutate(source = str_trim(data$source))
+      separate_rows(source, sep = ";") %>%
+      mutate(source = str_trim(source,side = "both")) %>%
+      relocate(source,.before="source_scale")%>%
+      mutate(source = str_trim(source))
   }
 
   return(separated_data)

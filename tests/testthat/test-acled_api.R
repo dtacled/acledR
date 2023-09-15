@@ -141,14 +141,7 @@ test_that("The call actually returns monadics.", {
   expect_gte(nrow(received_data_monadic), nrow(received_data))
 })
 
-## Inter columns are integers
 
-test_that("The inter1 and inter2 columns are actual integers",{
-
-  expect_true(is.integer(received_data$inter1))
-  expect_true(is.integer(received_data$inter2))
-
-})
 
 
 # Errors ----

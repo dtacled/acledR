@@ -396,10 +396,6 @@ acled_api <- function(email = NULL,
                                  ~content(.x)))
 
 
-  out <- out %>%
-    mutate(inter1 = as.integer(out$inter1),
-           inter2 = as.integer(out$inter2))
-
   return(out)
 
 

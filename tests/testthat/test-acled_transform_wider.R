@@ -78,7 +78,7 @@ test_that("Function returns NULL when non-existent type is input", {
 
   df <- data.frame(actor = c("a", "b"), type_of_actor = c(1, 2), inter_type = c(1, 2), inter = c(1, 2))
 
-  expect_error(acled_transform_wider(df, "non_existent_type"), regexp = "Please select a valid option:")
+  expect_error(acled_transform_wider(df, type = "non_existent_type"), regexp = "is not a valid option.")
 })
 
 
