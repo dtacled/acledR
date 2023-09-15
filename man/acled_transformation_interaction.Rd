@@ -30,4 +30,10 @@ argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
 argen_acled_transformed <- acled_transformation_interaction(argen_acled, only_inters = F)
 }
 }
-\concept{Data manipulation}
+\seealso{
+Other Data Manipulation: 
+\code{\link{acled_filter_actors}()},
+\code{\link{acled_transform_longer}()},
+\code{\link{acled_transform_wider}()}
+}
+\concept{Data Manipulation}

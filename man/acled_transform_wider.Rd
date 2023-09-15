@@ -44,6 +44,7 @@ Function to convert your ACLED's API calls (if monadic) back into the original d
 \seealso{
 Other Data Manipulation: 
 \code{\link{acled_filter_actors}()},
-\code{\link{acled_transform_longer}()}
+\code{\link{acled_transform_longer}()},
+\code{\link{acled_transformation_interaction}}
 }
 \concept{Data Manipulation}

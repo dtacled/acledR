@@ -4,7 +4,7 @@
 #' @param df dataframe. ACLED data including at least inter1, inter2 columns. If `only_inters` is TRUE, it also requires interaction column.
 #' @param only_inters boolean. Option whether to include the *interaction* column in the transformation (if TRUE) or to only use *inter1* and *inter2* (if FALSE).
 #' @returns Returns a tibble of of ACLED events with modified *inter1*, *inter2* and potentially *interaction* columns .
-#' @family Data manipulation
+#' @family Data Manipulation
 #' @examples
 #' \dontrun{
 #'
