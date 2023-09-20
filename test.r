@@ -1,9 +1,6 @@
-library(tidyverse)
-library(acledR)
-
-py_df <- read.csv("/Users/lfagli/Documents/Github/acledPy/data/acledpy_countries.csv")
-
-new_df <- acledR::acled_countries %>%
-    left_join(py_df, by = c("country"))
-
-save(new_df, file = "acled_countries.rda")
+# library(tidyverse)
+# library(acledR)
+#
+# acled_multipliers <- read.csv("/Users/lfagli/Documents/Github/acledPy/data/acledpy_multipliers.csv")
+#
+# save(acled_multipliers,file = "data/acled_multipliers.rda")
