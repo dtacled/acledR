@@ -288,14 +288,14 @@ test_that("timestamp is from a latter date than today." ,{
 # Error when requesting non-existent event types ----
 
 test_that("Error when non existent event types",{
-  expect_snapshot(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
                          countries = "Argentina",
                          start_date="2021-01-01",
                          end_date = "2022-01-01",
                          event_types = c("Protests","Superhero fight"),
                          prompt = F,
                          acled_access = F,
-                         log = F), error = TRUE, cnd_class = TRUE)
+                         log = F), regexp = "One or more requested event types are not in the ACLED data.")
 })
 
 # A message appears that acled_access is being ignored, and the proper credentials are being used.----

@@ -1,5 +1,5 @@
 #' @title Change interaction codes from numeric labels to string labels
-#' @name acled_transformation_interaction
+#' @name acled_transform_interaction
 #' @description This function allows users to change from numeric interaction codes (i.e. 1, 2, 3, etc) to string interaction codes (i.e. State Forces, Rebel Group, etc.)
 #' @param df dataframe. ACLED data including at least inter1, inter2 columns. If `only_inters` is TRUE, it also requires interaction column.
 #' @param only_inters boolean. Option whether to include the *interaction* column in the transformation (if TRUE) or to only use *inter1* and *inter2* (if FALSE).
