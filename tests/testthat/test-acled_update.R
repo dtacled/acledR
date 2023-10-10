@@ -18,10 +18,13 @@ test_that("Additional additional_countries are properly included",{
 ## When disabling deleted events, users get a different result ----
 
 test_that("acled_update without deletions actually returns events that should be deleted",{
-  expect_snapshot(acled_update(acledR::acled_old_dummy,
-                                               email = "acledexamples@gmail.com",
-                                               key = "M3PWwg3DIdhHMuDiilp5", deleted = FALSE,
-                                               acled_access = F, prompts = F))
+
+  snap_test <- acled_update(acledR::acled_old_deletion_dummy,
+                            email = "acledexamples@gmail.com",
+                            key = "M3PWwg3DIdhHMuDiilp5", deleted = FALSE,
+                            acled_access = F, prompts = F)
+
+   expect_true(any(find_deleted_events$event_id_cnty %in% snap_test$event_id_cnty))
 })
 
 # Errors and messages ----
