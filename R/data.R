@@ -22,6 +22,20 @@
 #' \item{start_year}{First year coded by ACLED}}
 "acled_countries"
 
+#' ACLED Multipliers
+#'
+#' A dataframe with additional information for each country, only for the purpose of estimating events.
+#'
+#' @family Data
+#' @format A data frame:
+#' \describe{
+#' \item{country}{Country names}
+#' \item{bin}{Bin of event frequency}
+#' \item{year}{Year corresponding to the bin}
+#' \item{avg_month_bin}{Average monthly of the bin}
+#' }
+"acled_multipliers"
+
 #' ACLED Regions
 #'
 #' ACLED region names, region numbers, and coding start dates

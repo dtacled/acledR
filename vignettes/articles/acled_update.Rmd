@@ -105,7 +105,7 @@ The dataset has not been updated since `r print(latest_timestamp)`, so you may w
 ```{r}
 
 new_argen_dataset <- acled_update(argen_dummy_acled_file, 
-                                  countries = "Argentina", 
+                                  additional_countries = "Argentina", 
                                   acled_access = T, 
                                   prompts = FALSE) 
 ```

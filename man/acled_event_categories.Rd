@@ -25,6 +25,7 @@ Other Data:
 \code{\link{acled_codebook}},
 \code{\link{acled_countries}},
 \code{\link{acled_interaction_codes}},
+\code{\link{acled_multipliers}},
 \code{\link{acled_old_deletion_dummy}},
 \code{\link{acled_old_dummy}},
 \code{\link{acled_regions}}
