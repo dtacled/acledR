@@ -67,7 +67,7 @@ acled_api <- function(email = NULL,
                        prompt = TRUE,
                        log = F) {
 
-  # Acled Acess and credentials
+  # Acled Acess and credentials ----
 
   if((acled_access %in% c(TRUE,T))&(is.null(email)|is.null(key))){  # Access is true, and credentials are null
     email <- Sys.getenv("acled_email")
@@ -81,7 +81,7 @@ acled_api <- function(email = NULL,
   }
 
 
-  # Stoppers for typos
+  # Stoppers for typos ----
 
   if(hasArg("country") | hasArg("Country")){
     stop("Country is not a valid option. Please utilize \"countries\"")
@@ -127,8 +127,10 @@ acled_api <- function(email = NULL,
 
   }
 
-  # Required components
+  # Required components ----
   base_url <- "https://api.acleddata.com/acled/read.csv?"
+
+  # Error checks for arguments ----
 
   if(!is.character(email) || is.null(email) || (is.character(email) && nchar(email) < 3)) {
     stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('acled_email'). Register your email for access at https://developer.acleddata.com.")
@@ -144,7 +146,7 @@ acled_api <- function(email = NULL,
     stop("One or more of the requested countries are not in ACLED's Country list. The full list of countries is available at 'acledR::acled_countries")
   }
 
-  # Checking if regions are input incorrectly
+  # Checking if regions are input incorrectly ----
   if(is.character(regions) & sum(unique(regions) %in% acledR::acled_regions[["region_name"]]) < length(unique(regions))) {
     stop("One or more requested region names not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
   }
@@ -156,18 +158,29 @@ acled_api <- function(email = NULL,
 
   # Setup base data to check how many country-days are being requested
   if(!is.null(countries) & is.null(regions)) {
-    df <- acledR::acled_countries %>%
-      filter(.data$country %in% countries)
+     df <- acledR::acled_countries %>%
+       filter(.data$country %in% countries)
+
+    # Subset acled_multipliers (subset is faster than filter in our case) by relevant country & year
+
+    ex1_df <- subset(acledR::acled_multipliers, country %in% countries, select = country:avg_month_bin)
+    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
   }
+
   else if(is.null(countries) & !is.null(regions)) {
     if(is.numeric(regions)){
       regions <- acledR::acled_regions %>%
         filter(.data$region %in% regions) %>%
-        pull(.data$region_name)}
+        pull(.data$region_name)
+      }
 
     df <- acledR::acled_countries %>%
       filter(.data$region %in% regions)
+
+    ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
+    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
   }
+
   else if(!is.null(countries) & !is.null(regions)){
 
     if(is.numeric(regions)){
@@ -177,8 +190,15 @@ acled_api <- function(email = NULL,
 
     df <- acledR::acled_countries %>%
       filter((.data$country %in% countries) | (.data$region %in% regions))
+
+    ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
+    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
   }
-  else {df <- acledR::acled_countries}
+  else {
+    df <- acledR::acled_countries
+    ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
+    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
+  }
 
   # Not checking unit test below as it is a non-critical feature, as start_date is no longer NULL by default.
   if(is.null(start_date)) { # nocov start
@@ -191,6 +211,45 @@ acled_api <- function(email = NULL,
   }
   else {end_date_check <- end_date}
 
+
+  # Inject
+
+  days_per_year <- function(sd, ed) {
+    # Convert to Date objects
+    start <- as.Date(start_date)
+    end <- as.Date(end_date)
+
+    # Identify the years in the range
+    years <- seq(year(start), year(end))
+
+    # Calculate days for each year
+    days_in_each_year <- sapply(years, function(y) {
+      start_of_year <- as.Date(paste0(y, "-01-01"))
+      end_of_year <- as.Date(paste0(y, "-12-31"))
+
+      current_start <- ifelse(start_of_year < start, start, start_of_year)
+      current_end <- ifelse(end_of_year > end, end, end_of_year)
+
+      as.numeric(current_end - current_start + 1)  # +1 to make the end_date inclusive
+    })
+
+    names(days_in_each_year) <- years
+    return(days_in_each_year)
+  }
+
+  object <- days_per_year(start_date_check, end_date_check)
+
+  ex1_df <- ex1_df  %>%
+    mutate(
+      # Add n_days_requested based of the days_per_year result
+      n_days = object[as.character(year)],
+      # Devide avg_month_bins into days, because not every call will be about months
+      avg_daily_bin = avg_month_bin/30,
+      # Multiply the avg_daily_bin with the number of days
+      ee_events = avg_daily_bin * n_days
+    )
+
+
   out <- df %>%
     mutate(t_start = lubridate::as_date(start_date_check),
            t_end = lubridate::as_date(end_date_check),
@@ -199,22 +258,23 @@ acled_api <- function(email = NULL,
            time = .data$t_end - .data$t_start)
 
   n_countries <- length(unique(out$country))
-  country_days <- as.numeric(sum(out$time))
+  # country_days <- as.numeric(sum(out$time))
 
 
 
   # Note for how much data is being requested
   size_note <- paste("Requesting data for",
-                     n_countries,
+                     length(unique(ex1_df$country)),
                      "countries.",
-                     "Accounting for the requested time period and ACLED coverage dates, this request includes",
-                     format(country_days, big.mark = ","), "country-days.")
+                     "Accounting for the requested time period and ACLED coverage dates, this request includes approximately",
+                     format(acled_rounding(sum(ex1_df$ee_events)), big.mark = ","), "events.")
 
   message(size_note)
 
 
-  # Approx how many calls are required with 1 call sized at 300k country-days
-  time_units <- ceiling(country_days / 200000)
+  # Approx how many calls are required with 1 call sized at 600k country-days - Increase in the call size thanks to the more approximate approach.
+  # bcse of my testing, at around 900k the call falls.
+  time_units <- ceiling(sum(ex1_df$ee_events) / 600000)
 
   # Split call into roughly equally sized groups depending on how many country-days are in each country
   # This randomly assigns countries into bins

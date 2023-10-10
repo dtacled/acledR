@@ -4,13 +4,13 @@
       acled_update(acledR::acled_old_dummy, email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
       deleted = FALSE, acled_access = F, prompts = F)
     Message <simpleMessage>
-      Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 29 country-days.
+      Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.
       Processing API request
       Extracting content from API request
       Dataset updated. 
        Old number of events: 326. 
        New events: 1. 
-       Total new & modified events: 46
+       Total new & modified events: 64
     Output
       # A tibble: 327 x 31
          event_id_cnty event_date  year time_precision disorder_type event_type
