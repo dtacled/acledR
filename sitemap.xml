@@ -7,9 +7,6 @@
     <loc>https://acled.github.io/acledR/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/articles/acled_analysis.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/articles/acled_api.html</loc>
   </url>
   <url>
@@ -58,10 +55,10 @@
     <loc>https://acled.github.io/acledR/index.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_access.html</loc>
+    <loc>https://acled.github.io/acledR/reference/acledR-package.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_actor_concentration.html</loc>
+    <loc>https://acled.github.io/acledR/reference/acled_access.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_api.html</loc>
@@ -82,16 +79,13 @@
     <loc>https://acled.github.io/acledR/reference/acled_filter_actors.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_generate_counts.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_generate_movers.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/reference/acled_help.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_interaction_codes.html</loc>
+  </url>
+  <url>
+    <loc>https://acled.github.io/acledR/reference/acled_multipliers.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_old_deletion_dummy.html</loc>
@@ -100,19 +94,19 @@
     <loc>https://acled.github.io/acledR/reference/acled_old_dummy.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_regen.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/reference/acled_regions.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_report_api.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_rounding.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/reference/acled_transform.html</loc>
+    <loc>https://acled.github.io/acledR/reference/acled_transform_interaction.html</loc>
+  </url>
+  <url>
+    <loc>https://acled.github.io/acledR/reference/acled_transform_longer.html</loc>
+  </url>
+  <url>
+    <loc>https://acled.github.io/acledR/reference/acled_transform_wider.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_update.html</loc>

@@ -108,73 +108,67 @@
 
     
     
-<p>ACLED is a living dataset, which means changes happen regularly.</p>
-<p>Three types of changes are recurrent in ACLED’s dataset:</p>
+<p>ACLED’s dataset is living, meaning that the dataset is updated
+frequently.</p>
+<p>The dataset is updated in three ways:</p>
 <ul>
 <li>New events
 <ul>
-<li>These are the weekly addition of events, all are published with a
-new distinctive <em>event_id_cnty</em>.</li>
+<li>ACLED adds new events weekly. Each event is published with a new and
+unique <em>event_id_cnty</em>.</li>
 </ul>
 </li>
 <li>Updates of previously published events
 <ul>
-<li>In some cases, we modify published events, as new information may
-appear. For example, a particular actor has claimed responsibility for
-an attack, or the number of fatalities has changed. In these cases, the
-<em>event_id_cnty</em> remains the same, but the new information is
-updated, and the old information overwritten - including the
-<em>timestamp</em>.</li>
+<li>In some cases ACLED modifies published events, as new information
+appears. For example, an actor may claim responsibility for an attack
+long after the event takes place, or the number of fatalities may
+increase or decrease as victims succumb to their injuries or are found
+alive. When an event is modified, the <em>event_id_cnty</em> remains the
+same but the information is updated with the old information being
+overwritten, including the <em>timestamp</em>.</li>
 </ul>
 </li>
 <li>Deletion of events
 <ul>
-<li>In some cases, we have to delete previous events. This happens when
-new information surfaces indicating that the event no longer fits the
-scope of ACLED’s dataset, or it hints that two events are the same and
-the events are then merged. In these cases, the event is removed,
-including the <em>event_id_cnty</em>.</li>
+<li>In some cases, ACLED deletes already published events. Deletions
+happen when new information surfaces indicating that the event no longer
+fits the scope of ACLED’s dataset, or when new information suggests that
+two separate events are actually duplicate reports of a single event.
+When deletions occur, the event is removed from the dataset along with
+its unique <em>event_id_cnty</em> value.</li>
 </ul>
 </li>
 </ul>
-<p>For users with a personal ACLED file, it is advised to check
-regularly which events are no longer in the actual ACLED dataset, and
-which have been updated. Otherwise, users risk having an outdated
-version. In this section, we will walk through how to keep your dataset
-updated with the <code>acledR</code> package.</p>
+<p>For users with an ACLED dataset downloaded on their computer, ACLED
+suggests that you regularly check for deleted or updated events to
+ensure your dataset is up to date. In this section you will learn how to
+keep your dataset updated by using the <code>acledR</code> package.</p>
 <div class="section level2">
-<h2 id="keeping-check-of-updates---acled_update">Keeping check of updates - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#keeping-check-of-updates---acled_update"></a>
+<h2 id="keeping-track-of-updates---acled_update">Keeping track of updates - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#keeping-track-of-updates---acled_update"></a>
 </h2>
-<p>As we covered in the more detailed guide about <a href="https://acleddata.com/download/35179/" class="external-link">updating your dataset</a>,
-in some cases, events are updated. When they are updated, their
-<em>event_id_cnty</em> remains the same but all the rest of the
-information gets updated and overwritten.</p>
-<p>Different from <a href="https://acled.github.io/ACLED-api-guide/deleted_endpoint.html" class="external-link">deleted
-events</a>, there is no separate API endpoint to check for updated
-events. When events are updated, their timestamp changes to the
-timestamp of the update. This means, that you can find the modified
-events by utilizing <code><a href="../reference/acled_api.html">acledR::acled_api()</a></code> and providing your
-latest timestamp
-(i.e. <code>max({your ACLED dataset}$timestamp))</code>) in the
-<code>timestamp</code> argument of the function. If you get duplicated
-events, these are likely to be updated events, so you should keep only
-the ones with a higher timestamp.</p>
-<p>When events are deleted, however, their <em>event_id_cnty</em> also
-gets deleted. For that, users can employ
-<code>acled_deletion_api()</code> to gather the <em>event_id_cnty</em>
-of deleted events, which you can use to filter out these events from
-your dataset. While users can find an example below, we kindly suggest
-you visit our <a href="https://acleddata.com/download/35179/" class="external-link">guide</a>
-and more specific guidance about the <code>deletions</code> <a href="https://acled.github.io/ACLED-api-guide/deleted_endpoint.html" class="external-link">endpoint</a>
-in our API interactive guide.</p>
-<p>To simplify both of these processes, <code>acledR</code> includes a
-function that updates your dataset, by checking for new and modified
-events, as well as removing deleted events:
-<code><a href="../reference/acled_update.html">acled_update()</a></code>.</p>
+<p>As detailed in ACLED’s guide about <a href="https://acleddata.com/download/35179/" class="external-link">updating your dataset</a>,
+in some cases events are modified or deleted, necessitating an update of
+your downloaded dataset.</p>
+<p>Unlike for <a href="https://acled.github.io/ACLED-api-guide/deleted_endpoint.html" class="external-link">deleted
+events</a>, there is no separate API endpoint to check for modified
+events. When events are modified, their timestamp changes to reflect the
+timing of the most recent update. This means, that you can find the
+modified events by using <code><a href="../reference/acled_api.html">acledR::acled_api()</a></code> while
+providing the most recent timestamp
+(i.e. <code>max({your ACLED dataset}$timestamp))</code>) in your dataset
+as the <code>timestamp</code> argument of the function. If there is an
+event with a more recent <em>timestamp</em> but the same
+<em>event_id_country</em> as an event in your downloaded dataset, then
+that event has been modified. Hence, you can remove the duplicated event
+with the lower timestamp.</p>
+<p>To simplify this process, <code>acledR</code> includes a function
+which makes the update for you by following the steps previously
+explained: <code>acled_update</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
-<span>  countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  additional_countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -182,50 +176,44 @@ events, as well as removing deleted events:
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  deleted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  prompts <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p>The function is composed of the following arguments:</p>
+<p>The function has the following arguments: - <code>df</code>: The
+dataframe to update, it has to have the same structure as ACLED’s dyadic
+dataframe (i.e. the result of <code><a href="../reference/acled_api.html">acled_api()</a></code>)</p>
 <ul>
-<li><p><code>df</code>: The data frame to update. It has to have the
-same structure as ACLED’s dyadic data frames (i.e. the result of
-<code><a href="../reference/acled_api.html">acled_api()</a></code>)</p></li>
-<li><p><code>start_date</code>: Along with <code>end_date</code> these
-determine the temporal range for your update. They default to the date
-range of <code>df</code>.</p></li>
-<li><p><code>end_date</code>: Along with <code>start_date</code> these
-determine the temporal range for your update. They default to the date
-range of <code>df</code>.</p></li>
-<li><p><code>countries</code>: In case your dataset includes particular
-countries, you can add them here so that the function filters new events
-to those countries.</p></li>
-<li><p><code>regions</code>: In case your dataset includes particular
-regions, you can add them here so that the function filters new events
-to those regions.</p></li>
-<li><p><code>event_types</code>: In case of your dataset includes
-particular event_types, you can add them here so that the function
-filters new events to those event_types.</p></li>
-<li><p><code>acled_acess</code>: If you have already utilized
-<code>acled_acess()</code>, you can set this option as TRUE (default),
-and you won’t be required to input email or key.</p></li>
-<li><p><code>email</code>: The email registered in <a href="https://developer.acleddata.com/" class="external-link">ACLED’s Access Portal</a>. Not
-required if <code>acled_access = TRUE</code>.</p></li>
-<li><p><code>key</code>: The key registered in <a href="https://developer.acleddata.com/" class="external-link">ACLED’s Access Portal</a>. Not
-required if <code>acled_access = TRUE</code>.</p></li>
-<li><p><code>deleted</code>: If TRUE, this function will also deal with
-deleted events, utilizing <a href="https://acled.github.io/acledR/articles/acled_deletions_api.html">ACLED
+<li><p><code>start_date</code>: The first date of events you want to
+update from. These are the celling and floor of <em>event_date</em>, not
+of <em>timestamp</em>.</p></li>
+<li><p><code>end_date</code>: The last date of events you want to update
+from. These are the celling and floor of <em>event_date</em>, not of
+<em>timestamp</em>.</p></li>
+<li><p><code>additional_countries</code>: Additional countries to update
+your dataset. It defaults to “current countries”, which includes all the
+countries inside your dataset.</p></li>
+<li><p><code>regions</code>: The regions for which you would like events
+in your dataset updated.</p></li>
+<li><p><code>event_types</code>: The event types for which you would
+like events in your dataset updated.</p></li>
+<li><p><code>acled_access</code>: If you have already used
+<code><a href="../reference/acled_access.html">acled_access()</a></code>, you can set this option as TRUE (default)
+to avoid having to input your email and access key.</p></li>
+<li><p><code>email</code>: The email you have registered in <a href="https://developer.acleddata.com/" class="external-link">ACLED’s Access Portal</a>. This
+argument is not required if <code>acled_access = TRUE</code>.</p></li>
+<li><p><code>key</code>: The key you have registered in <a href="https://developer.acleddata.com/" class="external-link">ACLED’s Access Portal</a>. This
+argument is not required if <code>acled_access = TRUE</code>.</p></li>
+<li><p><code>deleted</code>: If TRUE, in addition to updating the
+information in updated events, this function will also remove deleted
+events from your dataset by using <a href="https://acled.github.io/acledR/articles/acled_deletions_api.html">ACLED
 API’s deleted endpoint</a>.</p></li>
-<li><p><code>prompts</code>: Use this option to suppress or allow
-prompts regarding your call. See <code><a href="../reference/acled_api.html">acled_api()</a></code>.</p></li>
+<li><p><code>prompts</code>: If TRUE prompts from your call will be
+suppressed. See <code><a href="../reference/acled_api.html">acled_api()</a></code>.</p></li>
 </ul>
-<p><code><a href="../reference/acled_update.html">acled_update()</a></code> will utilize the dataset you provide to
-gather new events based on the timestamp and add them to the original
-dataset, as well as remove any deleted events (if
-<code>deleted = TRUE</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>In this section, we will show how to use <code>acled_update</code> to
+<p>In this section you can learn to use <code>acled_update</code> to
 keep your datasets updated.</p>
-<p>Load the dataset:</p>
+<p>Load your downloaded dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
@@ -234,41 +222,32 @@ keep your datasets updated.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummy_acled_file</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_deletion_dummy.html">acled_old_deletion_dummy</a></span> <span class="co"># Here is our old personal ACLED dataset</span></span></code></pre></div>
-<p>When was the last time you gathered your dataset? - The snippet below
-checks that.</p>
+<code class="sourceCode R"><span><span class="va">argen_dummy_acled_file</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span> <span class="co"># Here is our old personal ACLED dataset</span></span></code></pre></div>
+<p>When was the last time you downloaded or updated your dataset?</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">latest_timestamp_unix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dummy_acled_file</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">latest_timestamp_unix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">latest_timestamp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_datetime</a></span><span class="op">(</span><span class="va">latest_timestamp_unix</span><span class="op">)</span> </span></code></pre></div>
-<p>The dataset has not been updated since 2022-08-01 , so you may need
-to update it. To do so, you just have to utilize
-<code><a href="../reference/acled_update.html">acled_update()</a></code>. In order to keep the update within the
-dates of our dataset, you can ignore the <code>start_date</code> and
-<code>end_date</code> arguments. Similarly, we keep
-<code>deleted=TRUE</code> to also remove deleted events.</p>
+<p>The dataset has not been updated since , so you may want a more
+updated version. To do so, you can use <code><a href="../reference/acled_update.html">acled_update()</a></code>. If
+you are only interested in updating events that are already in your
+dataset, you can ignore the <code>start_date</code> and
+<code>end_date</code> arguments. If you also wish to remove deleted
+events from your dataset you can set <code>deleted=TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get the countries in the dataset to avoid asking for events of countries that are not relevant for your dataset. </span></span>
-<span><span class="va">countries_in_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">dummy_acled_file</span>, country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">country</span><span class="op">)</span></span>
-<span><span class="va">event_types_in_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">dummy_acled_file</span>, country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">event_type</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">event_type</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">new_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="va">dummy_acled_file</span>, </span>
-<span>                                  countries <span class="op">=</span> <span class="va">countries_in_dataset</span>,</span>
-<span>                                  event_types <span class="op">=</span> <span class="va">event_types_in_dataset</span>,</span>
+<code class="sourceCode R"><span><span class="va">new_argen_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span>, </span>
+<span>                                  additional_countries <span class="op">=</span> <span class="st">"Argentina"</span>, </span>
 <span>                                  acled_access <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                                  prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 169 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 30,420 country-days.</span></span></code></pre>
-<pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
+<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <pre><code><span><span class="co">## Dataset updated. </span></span>
-<span><span class="co">##  Old number of events: 9000. </span></span>
-<span><span class="co">##  New events: 40762. </span></span>
-<span><span class="co">##  Deleted events: 34. </span></span>
-<span><span class="co">##  Total new &amp; modified events: 43119</span></span></code></pre>
-<p>Now your dataset captures deleted, modified, and newly created
-events.</p>
+<span><span class="co">##  Old number of events: 326. </span></span>
+<span><span class="co">##  New events: 1. </span></span>
+<span><span class="co">##  Deleted events: 0. </span></span>
+<span><span class="co">##  Total new &amp; modified events: 64</span></span></code></pre>
+<p>Now your dataset captures modified and newly created events.</p>
 <p>Best of luck!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

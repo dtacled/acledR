@@ -168,8 +168,7 @@ to request data from Argentina throughout 2022.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">argentinian_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>, start_date<span class="op">=</span><span class="st">"2022-01-01"</span>,end_date <span class="op">=</span> <span class="st">"2022-12-31"</span>, prompt<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 364 country-days.</span></span>
-<span><span class="co">#&gt; Proceeding with 1 API calls</span></span>
+<span><span class="co">#&gt; Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 4,258 events.</span></span>
 <span><span class="co">#&gt; Processing API request</span></span>
 <span><span class="co">#&gt; Extracting content from API request</span></span></code></pre></div>
 <p>While in our example we utilized only three arguments
@@ -226,7 +225,7 @@ inspect the Argentinian data we gather now.</p>
 <span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
 <span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "crowd size=no report", "crowd size=no report",…</span></span>
-<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1693414514, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="transforming-the-data-from-the-api">Transforming the data from the API<a class="anchor" aria-label="anchor" href="#transforming-the-data-from-the-api"></a>
@@ -234,7 +233,8 @@ inspect the Argentinian data we gather now.</p>
 <p>In some cases you may prefer to fit the data into a different format
 than the default wide-form output that its received from the API call.
 For these cases we offer users two functions:
-<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> and <code>acled_transform</code>.</p>
+<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> and
+<code>acled_transform_longer</code>.</p>
 <p>The first of this, <code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code>, attempts to
 help users to filter events by the actors involved, in any of the four
 columns which include actors. While that is a simple filter operation,
@@ -277,10 +277,10 @@ form, that would entail another independent call. Thus, it may be useful
 for some users to request the data as normal, and make any
 transformation after making the API call, without utilizing more API
 calls of their limited quota. In such cases, users can utilize
-<code><a href="../reference/acled_transform.html">acled_transform()</a></code>. In this example we are going to
+<code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>. In this example we are going to
 transform our data to be in long-form based on the actor column:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arg_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform.html">acled_transform</a></span><span class="op">(</span><span class="va">argentinian_data</span>, <span class="co"># data</span></span>
+<code class="sourceCode R"><span><span class="va">arg_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, <span class="co"># data</span></span>
 <span>                            type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> <span class="co"># The type of operation we want to do to transform the data</span></span>
 <span><span class="co">#&gt; Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span>
 <span></span>
@@ -315,38 +315,10 @@ transform our data to be in long-form based on the actor column:</p>
 <span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
 <span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, "crowd size=no report", "crowd size…</span></span>
-<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1673295342, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1693414514, 1693414514, 1693414514, 1693414514, 167…</span></span></code></pre></div>
 <p>In our new data frame, we no longer have four actor columns
 (actor1,actor2,assoc_actor1,assoc_actor2), but instead we only have 1
 actor column, with one row per actor.</p>
-</div>
-<div class="section level2">
-<h2 id="generate-initial-analysis-from-the-data">Generate initial analysis from the data<a class="anchor" aria-label="anchor" href="#generate-initial-analysis-from-the-data"></a>
-</h2>
-<p>Finally, users may desire to generate some initial analysis of their
-data. In order to facilitate this last step on acledR workflow, acledR
-includes four functions: <code><a href="../reference/acled_generate_counts.html">acled_generate_counts()</a></code>,
-<code>generate_movers()</code>, <code>calculate_actor_index()</code>,
-<code><a href="../reference/acled_report_api.html">acled_report_api()</a></code>.</p>
-<p>The first of these functions, <code><a href="../reference/acled_generate_counts.html">acled_generate_counts()</a></code>
-aims to generate events counts by event type, spacial (geography) and
-temporal units of analysis. That means, finding the event counts for a
-given region, country, admin levels, or counts by event types, or counts
-by months, weeks or day.</p>
-<p>The second of these functions, <code>generate_movers()</code>,
-focuses on generating moving statistics, across a given temporal and
-spacial unit of analysis. This functions allows users to find statistics
-such as standard deviation, mean, median, max and mins.</p>
-<p>The third of these functions,
-<code>acled_Actor_concentration()</code> allows users to find how are
-the actor interactions in the dataset, more specifically, how dissipated
-or concentrated a given dataset is. This function utilizes two types of
-indexes to assess this, either the Inverse Simpson Index or the
-Herfindahl-Hirschman Index.</p>
-<p>Finally, <code><a href="../reference/acled_report_api.html">acled_report_api()</a></code> allows users to generate an
-exploratory analysis report of the data, which includes elements covered
-in the previous three functions, as well as analysis of the number of
-sources, event counts, and geographical distribution of events.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

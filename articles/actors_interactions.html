@@ -723,13 +723,13 @@ entries.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># number of ACLED events</span></span>
 <span><span class="va">df_yemen</span><span class="op">$</span><span class="va">event_id_cnty</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 895</span></span>
+<span><span class="co">#&gt; [1] 902</span></span>
 <span><span class="co"># number of unique actor1s</span></span>
 <span><span class="va">df_yemen</span><span class="op">$</span><span class="va">actor1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 28</span></span>
 <span><span class="co"># number of unique actor2s</span></span>
 <span><span class="va">df_yemen</span><span class="op">$</span><span class="va">actor2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 24</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 25</span></span></code></pre></div>
 <p>The most common <code>actor1</code> was “Operation Restoring Hope”,
 accounting for over 50% of events.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -738,12 +738,12 @@ accounting for over 50% of events.</p>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_rounding.html" class="external-link">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                                      actor1   n percent</span></span>
-<span><span class="co">#&gt;                                    Operation Restoring Hope 460    0.51</span></span>
-<span><span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 146    0.16</span></span>
-<span><span class="co">#&gt;                                              Giants Brigade 115    0.13</span></span>
-<span><span class="co">#&gt;                            Military Forces of Yemen (2012-)  70    0.08</span></span>
-<span><span class="co">#&gt;                            Unidentified Armed Group (Yemen)  22    0.02</span></span></code></pre></div>
+<span><span class="co">#&gt;                                     actor1   n percent</span></span>
+<span><span class="co">#&gt;                   Operation Restoring Hope 447    0.50</span></span>
+<span><span class="co">#&gt;    Military Forces of Yemen (2017-) Houthi 147    0.16</span></span>
+<span><span class="co">#&gt;                            Giants Brigades 115    0.13</span></span>
+<span><span class="co">#&gt;  Military Forces of Yemen (2012-2022) Hadi  73    0.08</span></span>
+<span><span class="co">#&gt;                    West Coast Joint Forces  33    0.04</span></span></code></pre></div>
 <p>We can see that “Operation Restoring Hope” is coded with
 <code>inter1 = 8</code>, indicating that this actor falls in the
 “External/Other Forces” category.</p>
@@ -763,12 +763,12 @@ Yemen.</p>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">valid_percent</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                                      actor2   n    percent</span></span>
-<span><span class="co">#&gt;                                                        &lt;NA&gt; 386 0.43128492</span></span>
-<span><span class="co">#&gt;  Military Forces of Yemen (2016-) Supreme Political Council 301 0.33631285</span></span>
-<span><span class="co">#&gt;                                           Civilians (Yemen) 110 0.12290503</span></span>
-<span><span class="co">#&gt;                            Military Forces of Yemen (2012-)  29 0.03240223</span></span>
-<span><span class="co">#&gt;                                              Giants Brigade  24 0.02681564</span></span></code></pre></div>
+<span><span class="co">#&gt;                                     actor2   n    percent</span></span>
+<span><span class="co">#&gt;                                       &lt;NA&gt; 387 0.42904656</span></span>
+<span><span class="co">#&gt;    Military Forces of Yemen (2017-) Houthi 306 0.33924612</span></span>
+<span><span class="co">#&gt;                          Civilians (Yemen) 110 0.12195122</span></span>
+<span><span class="co">#&gt;  Military Forces of Yemen (2012-2022) Hadi  29 0.03215078</span></span>
+<span><span class="co">#&gt;                            Giants Brigades  24 0.02660754</span></span></code></pre></div>
 <p>Inspecting further, we see from the joined <code>interaction</code>
 column that most events were coded as “Sole other Action”, mostly from
 the activity of “Operation Restoring Hope”.</p>
@@ -781,8 +781,8 @@ the activity of “Operation Restoring Hope”.</p>
 <span><span class="co">#&gt;  interaction   n percent</span></span>
 <span><span class="co">#&gt;           80 325    0.36</span></span>
 <span><span class="co">#&gt;           13 154    0.17</span></span>
-<span><span class="co">#&gt;           18 110    0.12</span></span>
-<span><span class="co">#&gt;           11  95    0.11</span></span>
+<span><span class="co">#&gt;           18 112    0.12</span></span>
+<span><span class="co">#&gt;           11  98    0.11</span></span>
 <span><span class="co">#&gt;           17  54    0.06</span></span>
 <span></span>
 <span><span class="va">df_yemen</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -792,19 +792,19 @@ the activity of “Operation Restoring Hope”.</p>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  interaction   n percent</span></span>
-<span><span class="co">#&gt;           80 321    0.70</span></span>
-<span><span class="co">#&gt;           18 103    0.22</span></span>
-<span><span class="co">#&gt;           78  33    0.07</span></span>
+<span><span class="co">#&gt;           80 305    0.68</span></span>
+<span><span class="co">#&gt;           18 105    0.23</span></span>
+<span><span class="co">#&gt;           78  34    0.08</span></span>
 <span><span class="co">#&gt;           38   3    0.01</span></span></code></pre></div>
 <p>Using the <code>sub_event_type</code> column in tandem with the
 <code>actor1</code> column, we see that “Operation Restoring Hope”
 mostly conducted air/drone strikes over this period.</p>
 <pre><code><span><span class="co">#&gt;                     sub_event_type   n percent</span></span>
-<span><span class="co">#&gt;                   Air/drone strike 439    0.95</span></span>
+<span><span class="co">#&gt;                   Air/drone strike 423    0.95</span></span>
 <span><span class="co">#&gt;  Shelling/artillery/missile attack  11    0.02</span></span>
-<span><span class="co">#&gt;                             Attack   2    0.00</span></span>
-<span><span class="co">#&gt;           Change to group/activity   2    0.00</span></span>
-<span><span class="co">#&gt;              Disrupted weapons use   2    0.00</span></span></code></pre>
+<span><span class="co">#&gt;              Disrupted weapons use   4    0.01</span></span>
+<span><span class="co">#&gt;                             Attack   3    0.01</span></span>
+<span><span class="co">#&gt;           Change to group/activity   2    0.00</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

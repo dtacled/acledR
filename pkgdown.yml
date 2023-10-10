@@ -5,7 +5,6 @@ articles:
   acled_codebook: acled_codebook.html
   acled_sources: acled_sources.html
   actors_interactions: actors_interactions.html
-  acled_analysis: acled_analysis.html
   acled_api: acled_api.html
   acled_deletions_api: acled_deletions_api.html
   acled_rounding: acled_rounding.html
@@ -16,7 +15,7 @@ articles:
   geography: geography.html
   get_started: get_started.html
   time: time.html
-last_built: 2023-06-14T19:36Z
+last_built: 2023-10-10T13:44Z
 urls:
   reference: https://acled.github.io/acledR/reference
   article: https://acled.github.io/acledR/articles

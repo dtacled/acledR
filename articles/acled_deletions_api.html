@@ -235,18 +235,17 @@ we going to keep <code>deleted=TRUE</code> to also remove deleted
 events.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_argen_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span>, </span>
-<span>                                  countries <span class="op">=</span> <span class="st">"Argentina"</span>, </span>
+<span>                                  additional_countries <span class="op">=</span> <span class="st">"Argentina"</span>, </span>
 <span>                                  acled_access <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                                  prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 29 country-days.</span></span></code></pre>
-<pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
+<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <pre><code><span><span class="co">## Dataset updated. </span></span>
 <span><span class="co">##  Old number of events: 326. </span></span>
 <span><span class="co">##  New events: 1. </span></span>
 <span><span class="co">##  Deleted events: 0. </span></span>
-<span><span class="co">##  Total new &amp; modified events: 39</span></span></code></pre>
+<span><span class="co">##  Total new &amp; modified events: 64</span></span></code></pre>
 <p>Now your dataset captures modified and newly created events.</p>
 <p>Best of luck!</p>
 </div>

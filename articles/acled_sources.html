@@ -195,8 +195,7 @@ sources in the dataset.</p>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 365 country-days.</span></span></code></pre>
-<pre><code><span><span class="co">## Proceeding with 1 API calls</span></span></code></pre>
+<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 913 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <p>Now that we have the data for Georgia throughout 2021, we would like
@@ -209,7 +208,7 @@ meaningful statistics of this, we have to separate values and pivot
 them.</p>
 <p>Let’s do this for the sources column, which has sources delimited by
 <code>;</code></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sources_df_geo</span> <span class="op">&lt;-</span> <span class="va">df_geo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>      <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">source</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>      <span class="fu">mutate</span><span class="op">(</span>source <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">source</span>,side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -245,7 +244,7 @@ allows us to avoid some of the pitfalls of english and international
 coverage of political violence outside traditionally western countries.
 See (<strong>need to add clionah &amp; roudabeh article</strong>)</p>
 <p>Now that we know our sources, let’s explore the scale of these.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_geo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">source_scale</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu">mutate</span><span class="op">(</span>source_scale <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">source_scale</span>,side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>

@@ -82,7 +82,8 @@
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  date_deleted <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">F</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,6 +103,10 @@
 
 <dt>acled_access</dt>
 <dd><p>logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.</p></dd>
+
+
+<dt>log</dt>
+<dd><p>Only for testing purposes: you can use this to check if all the variables in your call were handled properly.</p></dd>
 
 </dl></div>
     <div class="section level2">

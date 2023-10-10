@@ -85,7 +85,7 @@ Note: The function makes new api calls to gather new and modified events. See it
 <span>  <span class="va">df</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">event_date</span><span class="op">)</span>,</span>
 <span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">event_date</span><span class="op">)</span>,</span>
-<span>  countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  additional_countries <span class="op">=</span> <span class="st">"current additional_countries"</span>,</span>
 <span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -99,31 +99,31 @@ Note: The function makes new api calls to gather new and modified events. See it
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
-<dd><p>ACLED dataset that needs to be updated (i.e. a result from acledR::acled_api())</p></dd>
+<dd><p>The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of <code><a href="acled_api.html">acled_api()</a></code>)</p></dd>
 
 
 <dt>start_date</dt>
-<dd><p>Start date from which to check updates in the dataset (i.e. the minimum date in your dataset)</p></dd>
+<dd><p>The first date of events you want to update from.. These are the celling and floor of <em>event_date</em>, not of <em>timestamp</em>.</p></dd>
 
 
 <dt>end_date</dt>
-<dd><p>End date from which to check updates in the dataset (i.e., the latest date in your dataset)</p></dd>
+<dd><p>The last date of events you want to update from. These are the celling and floor of <em>event_date</em>, not of <em>timestamp</em>.</p></dd>
 
 
-<dt>countries</dt>
-<dd><p>string. The countries by which to filter.</p></dd>
+<dt>additional_countries</dt>
+<dd><p>string. Additional additional_countries to update your dataset. It defaults to “current additional_countries”, which includes all the additional_countries inside your dataset.</p></dd>
 
 
 <dt>regions</dt>
-<dd><p>string. The regions by which to filter.</p></dd>
+<dd><p>string. The regions for which you would like events in your dataset updated.</p></dd>
 
 
 <dt>event_types</dt>
-<dd><p>string. The event types by which to filter.</p></dd>
+<dd><p>string. The event types for which you would like events in your dataset updated.</p></dd>
 
 
 <dt>acled_access</dt>
-<dd><p>logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.</p></dd>
+<dd><p>logical. If you have already used <code>acled_acess()</code>, you can set this option as TRUE (default) to avoid having to input your email and access key.</p></dd>
 
 
 <dt>email</dt>
@@ -139,7 +139,7 @@ Note: The function makes new api calls to gather new and modified events. See it
 
 
 <dt>prompts</dt>
-<dd><p>logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.</p></dd>
+<dd><p>logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -166,18 +166,17 @@ Note: The function makes new api calls to gather new and modified events. See it
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Success! Credentials authorized</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">new_argen_dataset</span> <span class="op">&lt;-</span> <span class="fu">acled_update</span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="acled_old_dummy.html">acled_old_dummy</a></span>,</span></span>
-<span class="r-in"><span>                                  countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span></span>
+<span class="r-in"><span>                                  additional_countries <span class="op">=</span> <span class="st">"Argentina"</span>,</span></span>
 <span class="r-in"><span>                                  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                                  prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes 29 country-days.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Proceeding with 1 API calls</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing API request</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting content from API request</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Dataset updated. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Old number of events: 326. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  New events: 1. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Deleted events: 0. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Total new &amp; modified events: 39</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  Total new &amp; modified events: 64</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
