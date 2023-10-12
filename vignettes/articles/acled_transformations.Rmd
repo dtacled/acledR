@@ -97,6 +97,7 @@ As you can see, the arguments are the same as those for `acled_transform_longer(
 *   `type`: A character vector indicating which columns to transpose (the columns that go from long to wide format). 
 
 
+
 ## Example 
 
 In this section you can walk through a potential use case for the transformation functions. 
@@ -117,7 +118,7 @@ df_sa <- acled_api(regions = "South America",
                    prompt = F)
 ```
 
-Now that your data are in long format with one actor per row, you can much more easily  filter to the data to retain only those events involving the "Military Forces of Colombia (2022-)": 
+Now that your data are in long format with one actor per row, you can much more easily  filter the data to retain only those events involving the "Military Forces of Colombia (2022-)": 
 
 ```{r}
 
@@ -136,7 +137,7 @@ df_sa_long <- acled_transform_longer(df_sa, type = "full_actors")
 
 ```
 
-The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but only by grouping by **unique** *event_id_cnty*. It is very important to count rows by unique ids because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
+The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but only after grouping by **unique** *event_id_cnty*. It is very important to count rows by unique identifiers because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
 
 ```{r}
 library(tidyr)
@@ -157,4 +158,4 @@ actors_df_sa %>%
   .$n_events
 ```
 
-The number of events matches the number of rows you got when first filtering by actor. 
+The number of events matches the number of rows you got when first filtering by actor.

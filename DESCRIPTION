@@ -3,14 +3,14 @@ Type: Package
 Title: Manipulate 'ACLED' Data
 Version: 0.1.0
 Authors@R: c(
-    person(given = "Trey", 
-	       family = "Billing",
-	       role = "aut", 
-           email = "t.billing@acleddata.com"),
     person(given = "Lucas", 
 	       family = "Fagliano",
 	       role = "aut", 
 	       email = "l.fagliano@acleddata.com"),
+    person(given = "Trey", 
+	       family = "Billing",
+	       role = "aut", 
+           email = "t.billing@acleddata.com"),
     person(given = "Rachel", 
            family = "Goodman", 
            role = "aut", 
