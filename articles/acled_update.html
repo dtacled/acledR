@@ -108,9 +108,9 @@
 
     
     
-<p>ACLED’s dataset is living, meaning that the dataset is updated
-frequently.</p>
-<p>The dataset is updated in three ways:</p>
+<p>ACLED’s is a ‘living dataset’, meaning the dataset is added to
+frequently and existing data can be updated.</p>
+<p>The dataset changes in three ways:</p>
 <ul>
 <li>New events
 <ul>
@@ -120,48 +120,48 @@ unique <em>event_id_cnty</em>.</li>
 </li>
 <li>Updates of previously published events
 <ul>
-<li>In some cases ACLED modifies published events, as new information
-appears. For example, an actor may claim responsibility for an attack
-long after the event takes place, or the number of fatalities may
+<li>In some cases, ACLED modifies published events as new information
+comes to light. For example, an actor may claim responsibility for an
+attack long after the event takes place, or the number of fatalities may
 increase or decrease as victims succumb to their injuries or are found
 alive. When an event is modified, the <em>event_id_cnty</em> remains the
 same but the information is updated with the old information being
-overwritten, including the <em>timestamp</em>.</li>
+overwritten, including the <em>timestamp</em> field.</li>
 </ul>
 </li>
 <li>Deletion of events
 <ul>
-<li>In some cases, ACLED deletes already published events. Deletions
-happen when new information surfaces indicating that the event no longer
-fits the scope of ACLED’s dataset, or when new information suggests that
-two separate events are actually duplicate reports of a single event.
-When deletions occur, the event is removed from the dataset along with
-its unique <em>event_id_cnty</em> value.</li>
+<li>In some cases, ACLED deletes published events. Deletions happen when
+new information surfaces indicating that the event no longer fits the
+scope of ACLED’s dataset, or when new information suggests that two
+separate events are actually duplicate reports of a single event. When
+deletions occur, the event is removed from the dataset along with its
+unique <em>event_id_cnty</em> value.</li>
 </ul>
 </li>
 </ul>
-<p>For users with an ACLED dataset downloaded on their computer, ACLED
-suggests that you regularly check for deleted or updated events to
+<p>For users with an ACLED dataset saved locally on their computer,
+ACLED suggests that you regularly check for deleted or updated events to
 ensure your dataset is up to date. In this section you will learn how to
 keep your dataset updated by using the <code>acledR</code> package.</p>
 <div class="section level2">
 <h2 id="keeping-track-of-updates---acled_update">Keeping track of updates - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#keeping-track-of-updates---acled_update"></a>
 </h2>
 <p>As detailed in ACLED’s guide about <a href="https://acleddata.com/download/35179/" class="external-link">updating your dataset</a>,
-in some cases events are modified or deleted, necessitating an update of
+in some cases events are updated or deleted, necessitating an update of
 your downloaded dataset.</p>
 <p>Unlike for <a href="https://acled.github.io/ACLED-api-guide/deleted_endpoint.html" class="external-link">deleted
-events</a>, there is no separate API endpoint to check for modified
-events. When events are modified, their timestamp changes to reflect the
-timing of the most recent update. This means, that you can find the
-modified events by using <code><a href="../reference/acled_api.html">acledR::acled_api()</a></code> while
-providing the most recent timestamp
-(i.e. <code>max({your ACLED dataset}$timestamp))</code>) in your dataset
-as the <code>timestamp</code> argument of the function. If there is an
-event with a more recent <em>timestamp</em> but the same
-<em>event_id_country</em> as an event in your downloaded dataset, then
-that event has been modified. Hence, you can remove the duplicated event
-with the lower timestamp.</p>
+events</a>, there is no separate API endpoint to check for updated
+events. When events are updated, their timestamp changes to reflect the
+timing of the most recent change. This means, that you can find the
+updated events by using <code><a href="../reference/acled_api.html">acledR::acled_api()</a></code> while providing
+the most recent timestamp
+(i.e. <code>max({your ACLED dataset}$timestamp))</code>) in your local
+dataset as the <code>timestamp</code> argument of the function. If there
+is an event with a more recent <em>timestamp</em> but the same
+<em>event_id_cnty</em> as an event in your downloaded dataset, then that
+event has been modified. Hence, you can remove the duplicated event with
+the smaller timestamp value.</p>
 <p>To simplify this process, <code>acledR</code> includes a function
 which makes the update for you by following the steps previously
 explained: <code>acled_update</code>.</p>
@@ -176,17 +176,24 @@ explained: <code>acled_update</code>.</p>
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  deleted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  prompts <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p>The function has the following arguments: - <code>df</code>: The
-dataframe to update, it has to have the same structure as ACLED’s dyadic
-dataframe (i.e. the result of <code><a href="../reference/acled_api.html">acled_api()</a></code>)</p>
+<p>The function has the following arguments:</p>
 <ul>
+<li><p><code>df</code>: The dataframe to update. It has to have the same
+structure as ACLED’s dyadic dataframe (i.e. the default result of
+<code><a href="../reference/acled_api.html">acled_api()</a></code>)</p></li>
 <li><p><code>start_date</code>: The first date of events you want to
 update from. These are the celling and floor of <em>event_date</em>, not
-of <em>timestamp</em>.</p></li>
+of <em>timestamp</em>. For example,
+<code>start_date = “2023-06-01”</code> will update every event where the
+<em>event_date</em> is above or equal to 2023-06-01.</p></li>
 <li><p><code>end_date</code>: The last date of events you want to update
 from. These are the celling and floor of <em>event_date</em>, not of
-<em>timestamp</em>.</p></li>
-<li><p><code>additional_countries</code>: Additional countries to update
+<em>timestamp</em>. For example, <code>end_date = “2023-06-06”</code>
+will update every event where the <em>event_date</em> is below or equal
+to 2023-06-06. Both <code>start_date</code> and <code>end_date</code>
+default to the corresponding max and min <em>event_date</em> in your
+dataset.</p></li>
+<li><p><code>additional_countries</code>: Additional countries to add to
 your dataset. It defaults to “current countries”, which includes all the
 countries inside your dataset.</p></li>
 <li><p><code>regions</code>: The regions for which you would like events
@@ -258,7 +265,7 @@ events from your dataset you can set <code>deleted=TRUE</code>.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
+<p>Developed by Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">

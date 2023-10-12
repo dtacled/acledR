@@ -275,8 +275,8 @@ website</a>.</p>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <p>Now that your data are in long format with one actor per row, you can
-much more easily filter to the data to retain only those events
-involving the “Military Forces of Colombia (2022-)”:</p>
+much more easily filter the data to retain only those events involving
+the “Military Forces of Colombia (2022-)”:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mil_colombia</span> <span class="op">&lt;-</span> <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">actor1</span>,<span class="va">actor2</span>,<span class="va">assoc_actor_1</span>, <span class="va">assoc_actor_2</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>, <span class="st">"Military Forces of Colombia (2022-)"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -296,11 +296,11 @@ event counts for each actor. You can begin by using the
 <pre><code><span><span class="co">## Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span></code></pre>
 <p>The dataset is now in long form with each row representing a single
 actor in a single event. You can now count the number of rows for each
-actor, but only by grouping by <strong>unique</strong>
-<em>event_id_cnty</em>. It is very important to count rows by unique ids
-because when transforming data to long format, events can be represented
-in multiple rows equal to the number of actors involved in that
-event.</p>
+actor, but only after grouping by <strong>unique</strong>
+<em>event_id_cnty</em>. It is very important to count rows by unique
+identifiers because when transforming data to long format, events can be
+represented in multiple rows equal to the number of actors involved in
+that event.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -326,7 +326,7 @@ filtering by actor.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Trey Billing, Lucas Fagliano, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
+<p>Developed by Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">
