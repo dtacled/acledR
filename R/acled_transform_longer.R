@@ -45,12 +45,15 @@ acled_transform_longer <- function(data,type="full_actors") {
     all(sapply(cols, function(x) !is.na(match(x, names(df)))))
   }
 
-  if(!(columns_present(data,c("actor1","actor2","assoc_actor_1","assoc_actor_2","sub_event_type","source_scale","source")))){
-    stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
-  }
+
 
 
   if(type == "full_actors") { ## full actor -> pivot + separate into rows all actor columns
+
+    if(!(columns_present(data,c("actor1","actor2","assoc_actor_1","assoc_actor_2","sub_event_type")))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
+    }
+
     if(any(grepl("[;]",data$actor1))){
       stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
     } else if(any(grepl("[;]",data$actor2))){
@@ -72,6 +75,10 @@ acled_transform_longer <- function(data,type="full_actors") {
       warning("There are empty rows in the actor column.")
     }
   }else if (type == "main_actors"){ ## main_actors -> only pivot actor columns
+    if(!(columns_present(data,c("actor1","actor2","assoc_actor_1","assoc_actor_2","sub_event_type")))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
+    }
+
     if(any(grepl("[;]",data$actor1))){
       stop("Your actor1 column seems to include more than one result per row. That is inconsistent with our column structure.")
     } else if(any(grepl("[;]",data$actor2))){
@@ -87,6 +94,10 @@ acled_transform_longer <- function(data,type="full_actors") {
       relocate(c("inter_type","inter"),.after="actor")
 
   }else if (type == "assoc_actors"){ ## assoc_actors -> pivot + separate all assoc actor columns
+    if(!(columns_present(data,c("actor1","actor2","assoc_actor_1","assoc_actor_2","sub_event_type")))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
+    }
+
     separated_data <- data %>%
       pivot_longer(cols = c("assoc_actor_1","assoc_actor_2"),names_to = "type_of_assoc_actor",values_to = "assoc_actor") %>%
       separate_rows(assoc_actor, sep = ";") %>%
@@ -100,6 +111,10 @@ acled_transform_longer <- function(data,type="full_actors") {
       warning("There are empty rows in the assoc_actor column.")
     }
   }else if(type == "source"){  ## source -> pivot + separate source column
+    if(!(columns_present(data,c("source_scale","source")))){
+      stop("Some columns are missing. Please make sure your data frame includes: actor1, actor2, assoc_actor_1, assoc_actor_2, sub_event_type, source_scale, source.")
+    }
+
     separated_data <- data %>%
       separate_rows(source, sep = ";") %>%
       mutate(source = str_trim(source,side = "both")) %>%
