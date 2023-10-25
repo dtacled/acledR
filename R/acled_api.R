@@ -164,7 +164,7 @@ acled_api <- function(email = NULL,
     # Subset acled_multipliers (subset is faster than filter in our case) by relevant country & year
 
     ex1_df <- subset(acledR::acled_multipliers, country %in% countries, select = country:avg_month_bin)
-    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
+    ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
   }
 
   else if(is.null(countries) & !is.null(regions)) {
@@ -178,7 +178,8 @@ acled_api <- function(email = NULL,
       filter(.data$region %in% regions)
 
     ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
-    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
+    ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
+
   }
 
   else if(!is.null(countries) & !is.null(regions)){
@@ -192,12 +193,12 @@ acled_api <- function(email = NULL,
       filter((.data$country %in% countries) | (.data$region %in% regions))
 
     ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
-    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
+    ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
   }
   else {
     df <- acledR::acled_countries
     ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
-    ex1_df <- subset(ex1_df, year == lubridate::year(end_date) | year == lubridate::year(start_date))
+    ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
   }
 
   # Not checking unit test below as it is a non-critical feature, as start_date is no longer NULL by default.
@@ -210,7 +211,6 @@ acled_api <- function(email = NULL,
     end_date_check <- Sys.Date()
   }
   else {end_date_check <- end_date}
-
 
   # Inject
 
@@ -249,7 +249,6 @@ acled_api <- function(email = NULL,
       ee_events = avg_daily_bin * n_days
     )
 
-
   out <- df %>%
     mutate(t_start = lubridate::as_date(start_date_check),
            t_end = lubridate::as_date(end_date_check),
@@ -274,7 +273,7 @@ acled_api <- function(email = NULL,
 
   # Approx how many calls are required with 1 call sized at 600k country-days - Increase in the call size thanks to the more approximate approach.
   # bcse of my testing, at around 900k the call falls.
-  time_units <- ceiling(sum(ex1_df$ee_events) / 600000)
+  time_units <- ceiling(sum(ex1_df$ee_events) / 400000)
 
   # Split call into roughly equally sized groups depending on how many country-days are in each country
   # This randomly assigns countries into bins

@@ -27,8 +27,4 @@ acled_rounding(x2)
 acled_rounding(x3)
 acled_rounding(x4)
 }
-\seealso{
-Other Helpers: 
-\code{\link{acled_help}()}
-}
 \concept{Helpers}

@@ -1,6 +1,6 @@
 # Helpers for test-acled_api.R
 
-received_data <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",countries = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = T, log = T)
+received_data <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",countries = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = T, log = F)
 received_data_monadic <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",countries = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",prompt = F, monadic = T, acled_access = F, log = F)
 log_received_data <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",regions = c("Western Africa", "Eastern Africa", "Europe"),end_date = "2022-12-31",prompt = F, acled_access = F, log = T)
 received_data_numeric_region <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",regions = 1,end_date = "2022-12-31",prompt = F, acled_access = F)

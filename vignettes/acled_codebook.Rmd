@@ -7,52 +7,126 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  warning=F, message=F,
-  echo = F,
-  cache = T
-)
-```
 
-Pages under the ACLED Codebook tab describe the variables in the ACLED data and shows provides usage examples via the `acledR` package. Users should consult the complete guide summarizing ACLED's methodology at [here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Codebook_v1_January-2021.pdf) for more details on each variable.
+Pages under the ACLED Codebook tab describe the variables in ACLED's data and provide usage examples. Users should consult the complete guide summarizing ACLED's methodology at [here](https://acleddata.com/download/2827/) for more details on each column.
 
 # ACLED Overview
 
-The ACLED project codes reported information on the type, agents, location, date, and other characteristics of political violence events, demonstrations and select politically relevant non-violent events. ACLED focuses on tracking a range of violent and non-violent actions by political agents, including governments, rebels, militias, identity groups, political parties, external actors, rioters, protesters and civilians.
+The ACLED project codes reported information on the type, agents, location, date, and other characteristics of political violence events, demonstrations and politically relevant non-violent events (referred to as 'Strategic developments'). ACLED focuses on tracking a range of violent and non-violent actions by political agents, including governments, rebels, militias, identity groups, political parties, external actors, rioters, protesters and civilians.
 
 Political violence is defined as the use of force by a group with a political purpose or motivation. ACLED records political violence through its constituent events, the intent of which is to produce a comprehensive overview of all forms of political disorder, expressed through violence and demonstrations, within and across states. A politically violent event is a single altercation where often force is used by one or more groups toward a political end, although some non-violent instances -- including protests and strategic developments -- are included in the dataset to capture the potential pre-cursors or critical junctures of a violent conflict.
 
 The fundamental unit of observation in ACLED is the *event*. Events involve designated actors -- e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day.
 
-## Variable List {#variable-list}
+## Column List
 
-```{r}
+```{r, echo = FALSE, warning=F, message=FALSE}
 library(kableExtra)
 library(dplyr)
-acledR::acled_codebook %>% 
-  kable() %>%
+
+
+returned_data_acled <- data.frame(`Column Name` = c("event_id_cnty", "event_date", "year", "time_precision", "disorder_type",
+                                    "event_type", "sub_event_type", "actor1", "assoc_actor_1", "inter1",
+                                    "actor2", "assoc_actor_2", "inter2", "interaction", "civilian_targeting",
+                                    "iso", "region", "country", "admin1", "admin2", "admin3", "location",
+                                    "latitude", "longitude", "geo_precision", "source", "source_scale", "notes",
+                                    "fatalities", "tags", "timestamp"),
+                 Type = c("string", "date", "double", "double", "string", "string", "string", "string", "string", "double",
+                          "string", "string", "double", "double", "string", "double", "string", "string", "string", "string",
+                          "string", "string", "double", "double", "double", "string", "string", "string", "double",
+                          "string", "double"),
+                 Description = c("A unique alphanumeric event identifier by number and country acronym. This identifier remains constant even when the event details are updated.",
+                                 "The date on which the event took
+place. Recorded as Year-Month-Day.", "The year in which the event took
+place.",
+                                 "A numeric code between 1 and 3
+indicating the level of precision of
+the date recorded for the event.
+The higher the number, the lower
+the precision.",
+                                 "The disorder category an event
+belongs to.
+",
+                                 "The type of event; further
+specifies the nature of the event.", "A subcategory of the event type.", "One of two main actors involved
+in the event (does not necessarily
+indicate the aggressor).",
+                                 "Actor(s) involved in the event
+alongside ‘Actor 1’ or actor
+designations that further identify
+‘Actor 1’", "A numeric code between 0 and
+8 indicating the type of ‘Actor 1’.
+",
+                                 "One of two main actors involved
+in the event (does not necessarily
+indicate the target or victim).", "Actor(s) involved in the event
+alongside ‘Actor 2’ or actor
+designation further identifying
+‘Actor 2’. ",
+                                 "A numeric code between 0 to 8
+indicating the type of ‘Actor 2’.", "A two-digit numeric code
+(combination of ‘Inter 1’ and ‘Inter
+2’) indicating the two actor types
+interacting in the event.",
+                                 "This column indicates whether
+the event involved civilian
+targeting. ", "A unique three-digit numeric
+code assigned to each country or
+territory according to ISO 3166.",
+                                 "The region of the world where the
+event took place.", "The country or territory in which
+the event took place.",
+                                 "The largest sub-national
+administrative region in which the
+event took place.",
+                                 "The second largest sub-national administrative region in which the event took place.",
+                                 "The third largest sub-national administrative region in which the event took place.",
+                                 "The name of the location at which
+the event took place.", "The latitude of the location in
+four decimal degrees notation
+(EPSG:3857).", "The longitude of the location in
+four decimal degrees notation
+(EPSG:3857).",
+                                 "A numeric code between 1 and
+3 indicating the level of certainty
+of the location recorded for the
+event. The higher the number,
+the lower the precision.",
+                                 "The sources used to record the
+event. Separated by a semicolon.", "An indication of the geographic
+closeness of the used sources to
+the event", "A short description of the event.",
+                                 "The number of reported fatalities
+arising from an event. When there
+are conflicting reports, the most
+conservative estimate is recorded", "Additional structured information
+about the event. Separated by a
+semicolon.",
+                                 "An automatically generated Unix timestamp that represents the exact date and time an event was last uploaded to the ACLED API."), check.names = F
+)
+
+returned_data_acled %>% 
+  kable(align=rep('c')) %>%
   kable_styling("striped", full_width = F) %>%
   column_spec(2, width = "20em") %>% 
   column_spec(3, width = "50em")
+
 ```
 
 ## ACLED Help
 
-To further assist our users to understand what each column in our dataset represents, we have added a function that redirects users to relevant documentation for the column in question. That function is `acled_help()`:
+To better understand what each column in our dataset represents, `acledR::acled_help()` redirects you to relevant documentation for the column in question. 
 
-```{r,eval = FALSE}
+```{r,eval=FALSE}
 
 acled_help(column = NULL)
 
 ```
 
-As users can observe, the function is relatively straightforward, only requiring one argument. In this case `column` refers to the column which users may be interested on exploring further. Note: `acled_help()` only supports one column at a time. 
+The function is very straightforward, only requiring one argument.  `column` refers to the column which users may be interested on exploring further. 
 
-For example, if an user would like to know more about the fatalities column, he/she/they can write `acled_help(column="fatalities")` which will prompt the fatalities vignette.
+**Note**: `acled_help()` only supports one column at a time. 
 
-Some columns have an standalone documentation vignette, e.g. Fatalities. However, others will be either part of another vignette, e.g. admins and geographical vignette.
+For example, if you would like to know more about the *fatalities* column, you can write `acled_help(column="fatalities")` which will prompt a fatalities vignette in the RStudio Help pane.
 
-
+While some columns have an standalone documentation vignette, e.g. Fatalities; others may be part of another vignette, e.g. admins are in the geographical vignette. 
