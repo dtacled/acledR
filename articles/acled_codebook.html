@@ -52,28 +52,18 @@
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/get_started.html">Get Started</a>
+  <a class="nav-link" href="../get_started.html">Get Started</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-utilizing-acledr">
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/acled_update.html">Keeping your Dataset Updated</a>
-    <a class="dropdown-item" href="../articles/acled_analysis.html">acledR Exploratory Analysis</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
-<li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-acled-codebook">ACLED Codebook</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-acled-codebook">
-    <a class="dropdown-item" href="../articles/acled_codebook.html">Overview</a>
-    <a class="dropdown-item" href="../articles/event_types.html">Event and Sub-Event Types</a>
-    <a class="dropdown-item" href="../articles/actors_interactions.html">Actors and Interactions</a>
-    <a class="dropdown-item" href="../articles/time.html">Time</a>
-    <a class="dropdown-item" href="../articles/geography.html">Geography</a>
-    <a class="dropdown-item" href="../articles/acled_sources.html">Sources</a>
-    <a class="dropdown-item" href="../articles/fatalities.html">Fatalities</a>
-  </div>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/acled_codebook.html">ACLED Codebook</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -108,21 +98,20 @@
 
     
     
-<p>Pages under the ACLED Codebook tab describe the variables in the
-ACLED data and shows provides usage examples via the <code>acledR</code>
-package. Users should consult the complete guide summarizing ACLED’s
-methodology at <a href="https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Codebook_v1_January-2021.pdf" class="external-link">here</a>
-for more details on each variable.</p>
+<p>Pages under the ACLED Codebook tab describe the variables in ACLED’s
+data and provide usage examples. Users should consult the complete guide
+summarizing ACLED’s methodology at <a href="https://acleddata.com/download/2827/" class="external-link">here</a> for more details on
+each column.</p>
 <div class="section level2">
 <h2 id="acled-overview">ACLED Overview<a class="anchor" aria-label="anchor" href="#acled-overview"></a>
 </h2>
 <p>The ACLED project codes reported information on the type, agents,
 location, date, and other characteristics of political violence events,
-demonstrations and select politically relevant non-violent events. ACLED
-focuses on tracking a range of violent and non-violent actions by
-political agents, including governments, rebels, militias, identity
-groups, political parties, external actors, rioters, protesters and
-civilians.</p>
+demonstrations and politically relevant non-violent events (referred to
+as ‘Strategic developments’). ACLED focuses on tracking a range of
+violent and non-violent actions by political agents, including
+governments, rebels, militias, identity groups, political parties,
+external actors, rioters, protesters and civilians.</p>
 <p>Political violence is defined as the use of force by a group with a
 political purpose or motivation. ACLED records political violence
 through its constituent events, the intent of which is to produce a
@@ -138,403 +127,381 @@ Events involve designated actors – e.g. a named rebel group, a militia
 or state forces. They occur at a specific named location (identified by
 name and geographic coordinates) and on a specific day.</p>
 <div class="section level3">
-<h3 id="variable-list">Variable List<a class="anchor" aria-label="anchor" href="#variable-list"></a>
+<h3 id="column-list">Column List<a class="anchor" aria-label="anchor" href="#column-list"></a>
 </h3>
 <table class="table table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
-<th style="text-align:left;">
-Variable
+<th style="text-align:center;">
+Column Name
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
+Type
+</th>
+<th style="text-align:center;">
 Description
-</th>
-<th style="text-align:left;">
-Values
 </th>
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-data_id
-</td>
-<td style="text-align:left;width: 20em; ">
-Numeric code of event ID
-</td>
-<td style="text-align:left;width: 50em; ">
-Numeric code
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-iso
-</td>
-<td style="text-align:left;width: 20em; ">
-A numeric code for each individual country
-</td>
-<td style="text-align:left;width: 50em; ">
-Numeric ISO codes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 event_id_cnty
 </td>
-<td style="text-align:left;width: 20em; ">
-An unique individual identifier by number and country acronym (updated
-annually)
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Numeric identifiers
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-event_id_no_cnty
-</td>
-<td style="text-align:left;width: 20em; ">
-A non-unique individual numeric identifier (updated annually)
-</td>
-<td style="text-align:left;width: 50em; ">
-Numeric identifiers
+<td style="text-align:center;width: 50em; ">
+A unique alphanumeric event identifier by number and country acronym.
+This identifier remains constant even when the event details are
+updated.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 event_date
 </td>
-<td style="text-align:left;width: 20em; ">
-The day, month and year on which an event took place
+<td style="text-align:center;width: 20em; ">
+date
 </td>
-<td style="text-align:left;width: 50em; ">
-Date in dd-mm-yyyy format
+<td style="text-align:center;width: 50em; ">
+The date on which the event took place. Recorded as Year-Month-Day.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 year
 </td>
-<td style="text-align:left;width: 20em; ">
-The year in which an event took place
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-Date in yyyy format
+<td style="text-align:center;width: 50em; ">
+The year in which the event took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 time_precision
 </td>
-<td style="text-align:left;width: 20em; ">
-A numeric code indicating the level of certainty of the date coded for
-the event
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-1 = Actual date; 2 = Specific week or weekend; 3 = Middle of week or
-weekend
+<td style="text-align:center;width: 50em; ">
+A numeric code between 1 and 3 indicating the level of precision of the
+date recorded for the event. The higher the number, the lower the
+precision.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
+disorder_type
+</td>
+<td style="text-align:center;width: 20em; ">
+string
+</td>
+<td style="text-align:center;width: 50em; ">
+The disorder category an event belongs to.
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
 event_type
 </td>
-<td style="text-align:left;width: 20em; ">
-The type of event
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Battles; Violence against civilians; Protests; Riots; Strategic
-Developments; Explosions/Remote violence
+<td style="text-align:center;width: 50em; ">
+The type of event; further specifies the nature of the event.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 sub_event_type
 </td>
-<td style="text-align:left;width: 20em; ">
-The type of sub-event
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Armed clash; Government regains territory; Non-state actor overtakes
-territory; Sexual violence; Attack; Abduction/forced disappearance;
-Chemical weapon; Air/drone strike; Suicide bomb;
-Shelling/artillery/missile attack; Remote explosive/landmine/IED;
-Grenade; Peaceful protest; Protest with intervention; Excessive force
-against protestors; Violent demonstration; Mob violence; Agreement;
-Arrests; Change to group/activity; Disrupted weapons use; Headquarters
-or base established; Looting/property destruction; Non-violent transfer
-of territory; Other
+<td style="text-align:center;width: 50em; ">
+A subcategory of the event type.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 actor1
 </td>
-<td style="text-align:left;width: 20em; ">
-The named actor involved in the event. Note: Actor 1 and Actor 2 do not
-imply directionality (e.g. attacker or defender)
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of actor name
+<td style="text-align:center;width: 50em; ">
+One of two main actors involved in the event (does not necessarily
+indicate the aggressor).
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 assoc_actor_1
 </td>
-<td style="text-align:left;width: 20em; ">
-The named actor associated with or identifying actor1
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of associated actor name
+<td style="text-align:center;width: 50em; ">
+Actor(s) involved in the event alongside ‘Actor 1’ or actor designations
+that further identify ‘Actor 1’
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 inter1
 </td>
-<td style="text-align:left;width: 20em; ">
-A numeric code indicating the type of actor1
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-1 = State Forces; 2 = Rebel Groups; 3 = Political Militias; 4 = Identity
-Militias; 5 = Rioters; 6 = Protestors; 7 = Civilians; 8 = External/Other
-Forces
+<td style="text-align:center;width: 50em; ">
+A numeric code between 0 and 8 indicating the type of ‘Actor 1’.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 actor2
 </td>
-<td style="text-align:left;width: 20em; ">
-The named actor involved in the event. Note: Actor 1 and Actor 2 do not
-imply directionality (e.g. attacker or defender)
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of actor name
+<td style="text-align:center;width: 50em; ">
+One of two main actors involved in the event (does not necessarily
+indicate the target or victim).
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 assoc_actor_2
 </td>
-<td style="text-align:left;width: 20em; ">
-The named actor associated with or identifying actor1
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of associated actor name
+<td style="text-align:center;width: 50em; ">
+Actor(s) involved in the event alongside ‘Actor 2’ or actor designation
+further identifying ‘Actor 2’.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 inter2
 </td>
-<td style="text-align:left;width: 20em; ">
-A numeric code indicating the type of actor1
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-1 = State Forces; 2 = Rebel Groups; 3 = Political Militias; 4 = Identity
-Militias; 5 = Rioters; 6 = Protestors; 7 = Civilians; 8 = External/Other
-Forces
+<td style="text-align:center;width: 50em; ">
+A numeric code between 0 to 8 indicating the type of ‘Actor 2’.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 interaction
 </td>
-<td style="text-align:left;width: 20em; ">
-A numeric code indicating the interaction between types of actor1 and
-actor2
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-10 = Sole Military Action; 11 = Military versus Military; 12 = Military
-versus Rebels; 13 = Military versus Political Militia; 14 = Military
-versus Communal Militia; 15 = Military versus Rioters; 16 = Military
-versus Protestors; 17 = Military versus Civilians; 18 = Military versus
-Other; 20 = Sole Rebel Action; 22 = Rebels versus Rebels; 23 = Rebels
-versus Political Militia; 24 = Rebels versus Communal Militia; 25 =
-Rebels versus Rioters; 26 = Rebels versus Protestors; 27 = Rebels versus
-Civilians; 28 = Rebels versus Other; 30 = Sole Political Militia Action
-; 33 = Political Militia versus Political Militia; 34 = Political
-Militia versus Communal Militia; 35 = Political Militia versus Rioters;
-36 = Political Militia versus Protestors; 37 = Political Militia versus
-Civilians; 38 = Political Militia versus Other; 40 = Sole Communal
-Militia Action ; 44 = Communal Militia versus Communal Militia; 45 =
-Communal Militia versus Rioters; 46 = Communal Militia versus
-Protestors; 47 = Communal Militia versus Civilians; 48 = Communal
-Militia versus Other; 50 = Sole Rioter Action; 55 = Rioters versus
-Rioters; 56 = Rioters versus Protestors; 57 = Rioters versus Civilians;
-58 = Rioters versus Other; 60 = Sole Protestor Action; 66 = Protestors
-versus Protestors; 67 = Protestors versus Civilians; 68 = Protestors
-versus Other; 78 = Other Actor versus Civilians; 80 = Sole other Action
+<td style="text-align:center;width: 50em; ">
+A two-digit numeric code (combination of ‘Inter 1’ and ‘Inter 2’)
+indicating the two actor types interacting in the event.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
+civilian_targeting
+</td>
+<td style="text-align:center;width: 20em; ">
+string
+</td>
+<td style="text-align:center;width: 50em; ">
+This column indicates whether the event involved civilian targeting.
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+iso
+</td>
+<td style="text-align:center;width: 20em; ">
+double
+</td>
+<td style="text-align:center;width: 50em; ">
+A unique three-digit numeric code assigned to each country or territory
+according to ISO 3166.
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
 region
 </td>
-<td style="text-align:left;width: 20em; ">
-The region of the world where the event took place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of region; see acledR::acled_regions
+<td style="text-align:center;width: 50em; ">
+The region of the world where the event took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 country
 </td>
-<td style="text-align:left;width: 20em; ">
-The country in which the event took place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of country; see acledR::acled_countries
+<td style="text-align:center;width: 50em; ">
+The country or territory in which the event took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 admin1
 </td>
-<td style="text-align:left;width: 20em; ">
-The largest sub-national administrative region in which the event took
-place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of ADMIN1 name
+<td style="text-align:center;width: 50em; ">
+The largest sub-national administrative region in which the event took
+place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 admin2
 </td>
-<td style="text-align:left;width: 20em; ">
-The second largest sub-national administrative region in which the event
-took place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of ADMIN2 name
+<td style="text-align:center;width: 50em; ">
+The second largest sub-national administrative region in which the event
+took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 admin3
 </td>
-<td style="text-align:left;width: 20em; ">
-The third largest sub-national administrative region in which the event
-took place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of ADMIN3 name
+<td style="text-align:center;width: 50em; ">
+The third largest sub-national administrative region in which the event
+took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 location
 </td>
-<td style="text-align:left;width: 20em; ">
-The location in which the event took place
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of location
+<td style="text-align:center;width: 50em; ">
+The name of the location at which the event took place.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 latitude
 </td>
-<td style="text-align:left;width: 20em; ">
-The latitude of the location
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-Coordinates
+<td style="text-align:center;width: 50em; ">
+The latitude of the location in four decimal degrees notation
+(EPSG:3857).
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 longitude
 </td>
-<td style="text-align:left;width: 20em; ">
-The longitude of the location
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-Coordinates
+<td style="text-align:center;width: 50em; ">
+The longitude of the location in four decimal degrees notation
+(EPSG:3857).
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 geo_precision
 </td>
-<td style="text-align:left;width: 20em; ">
-A numeric code indicating the level of certainty of the location coded
-for the event
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-1 = Particular town; 2 = Small part of regions/general area or near a
-town; 3 = Larger portion of region
+<td style="text-align:center;width: 50em; ">
+A numeric code between 1 and 3 indicating the level of certainty of the
+location recorded for the event. The higher the number, the lower the
+precision.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 source
 </td>
-<td style="text-align:left;width: 20em; ">
-The source of the event report
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of source name
+<td style="text-align:center;width: 50em; ">
+The sources used to record the event. Separated by a semicolon.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 source_scale
 </td>
-<td style="text-align:left;width: 20em; ">
-The scale (local, regional, national, international) of the source
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string of source scale
+<td style="text-align:center;width: 50em; ">
+An indication of the geographic closeness of the used sources to the
+event
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 notes
 </td>
-<td style="text-align:left;width: 20em; ">
-A short description of the event
+<td style="text-align:center;width: 20em; ">
+string
 </td>
-<td style="text-align:left;width: 50em; ">
-Character string
+<td style="text-align:center;width: 50em; ">
+A short description of the event.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
 fatalities
 </td>
-<td style="text-align:left;width: 20em; ">
-The number of reported fatalities which occurred during the event
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-Numeric value of fatalities
+<td style="text-align:center;width: 50em; ">
+The number of reported fatalities arising from an event. When there are
+conflicting reports, the most conservative estimate is recorded
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:center;">
+tags
+</td>
+<td style="text-align:center;width: 20em; ">
+string
+</td>
+<td style="text-align:center;width: 50em; ">
+Additional structured information about the event. Separated by a
+semicolon.
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
 timestamp
 </td>
-<td style="text-align:left;width: 20em; ">
-Numeric code of time
+<td style="text-align:center;width: 20em; ">
+double
 </td>
-<td style="text-align:left;width: 50em; ">
-Numeric code
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-iso3
-</td>
-<td style="text-align:left;width: 20em; ">
-A character code for each individual country
-</td>
-<td style="text-align:left;width: 50em; ">
-Character ISO 3 strings
+<td style="text-align:center;width: 50em; ">
+An automatically generated Unix timestamp that represents the exact date
+and time an event was last uploaded to the ACLED API.
 </td>
 </tr>
 </tbody>
@@ -543,21 +510,23 @@ Character ISO 3 strings
 <div class="section level3">
 <h3 id="acled-help">ACLED Help<a class="anchor" aria-label="anchor" href="#acled-help"></a>
 </h3>
-<p>To further assist our users to understand what each column in our
-dataset represents, we have added a function that redirects users to
-relevant documentation for the column in question. That function is
-<code><a href="../reference/acled_help.html">acled_help()</a></code>:</p>
-<p>As users can observe, the function is relatively straightforward,
-only requiring one argument. In this case <code>column</code> refers to
-the column which users may be interested on exploring further. Note:
-<code><a href="../reference/acled_help.html">acled_help()</a></code> only supports one column at a time.</p>
-<p>For example, if an user would like to know more about the fatalities
-column, he/she/they can write
-<code>acled_help(column="fatalities")</code> which will prompt the
-fatalities vignette.</p>
-<p>Some columns have an standalone documentation vignette,
-e.g. Fatalities. However, others will be either part of another
-vignette, e.g. admins and geographical vignette.</p>
+<p>To better understand what each column in our dataset represents,
+<code>acledR::acled_help()</code> redirects you to relevant
+documentation for the column in question.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">acled_help</span><span class="op">(</span>column <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<p>The function is very straightforward, only requiring one argument.
+<code>column</code> refers to the column which users may be interested
+on exploring further.</p>
+<p><strong>Note</strong>: <code>acled_help()</code> only supports one
+column at a time.</p>
+<p>For example, if you would like to know more about the
+<em>fatalities</em> column, you can write
+<code>acled_help(column="fatalities")</code> which will prompt a
+fatalities vignette in the RStudio Help pane.</p>
+<p>While some columns have an standalone documentation vignette,
+e.g. Fatalities; others may be part of another vignette, e.g. admins are
+in the geographical vignette.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

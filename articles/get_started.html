@@ -51,29 +51,19 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/get_started.html">Get Started</a>
+<li class="nav-item">
+  <a class="nav-link" href="../get_started.html">Get Started</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-utilizing-acledr">
     <a class="dropdown-item" href="../articles/acled_api.html">ACLED API</a>
     <a class="dropdown-item" href="../articles/acled_update.html">Keeping your Dataset Updated</a>
-    <a class="dropdown-item" href="../articles/acled_analysis.html">acledR Exploratory Analysis</a>
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-acled-codebook">ACLED Codebook</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-acled-codebook">
-    <a class="dropdown-item" href="../articles/acled_codebook.html">Overview</a>
-    <a class="dropdown-item" href="../articles/event_types.html">Event and Sub-Event Types</a>
-    <a class="dropdown-item" href="../articles/actors_interactions.html">Actors and Interactions</a>
-    <a class="dropdown-item" href="../articles/time.html">Time</a>
-    <a class="dropdown-item" href="../articles/geography.html">Geography</a>
-    <a class="dropdown-item" href="../articles/acled_sources.html">Sources</a>
-    <a class="dropdown-item" href="../articles/fatalities.html">Fatalities</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/acled_codebook.html">ACLED Codebook</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -108,12 +98,13 @@
 
     
     
-<p>Welcome! In this vignette we are going to give you a brief tour on
-how the package works and how to get started with its core functions.
-Aside from this walkthrough, you are going to be able to find more
-detailed explanations and examples in rest of the articles in the
-website, available under the ACLED Codebook Tab (for methodology
-questions) and Articles tab.</p>
+<p>Welcome!</p>
+<p>In this vignette you are going to get a brief explanation on how the
+package works and how to get started with its core functions. Aside from
+this walkthrough, you are going to be able to find more detailed
+explanations and examples under the ACLED Codebook Tab and Articles tab.
+Alternatively, for metholodgy-related questions, please visit <a href="https://acleddata.com/knowledge-base/" class="external-link">ACLED’s Knowledge
+Base</a>.</p>
 <p>Naturally, the first step is loading installing the package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -124,26 +115,25 @@ questions) and Articles tab.</p>
 <span></span>
 <span><span class="co"># Loading the package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/billingtt/acledR" class="external-link">acledR</a></span><span class="op">)</span></span></code></pre></div>
-<p>Primarily, this package will allow users to more easily access ACLED
-data by providing a wrapper to submit GET requests to the ACLED’s API.
-This means users can request data through a more acccesible approach
+<p>The main objective of this package is to allow R users easier access
+to ACLED data by providing a wrapper to submit GET requests to the
+ACLED’s API, as well as other functions to manipulate ACLED data.</p>
+<p>This means users can request data through a more acccesible approach
 rather than utilizing lengthy and often comboluted API calls. The
 general workflow for which this package was designed was as follows:</p>
-<ol style="list-style-type: decimal">
-<li>Authenticate your API credentials.</li>
-<li>Request data from ACLED API.</li>
-<li>Transform data received from the API.</li>
-<li>Generate initial analysis from the data.</li>
-</ol>
+<div class="figure">
+<img src="workflow.png" alt=""><p class="caption">Authenticate your API credentials. Request data from
+ACLED API. Transform data received from the API. Generate initial
+analysis from the data.</p>
+</div>
 <p>This vignette will follow the same general layout.</p>
 <div class="section level2">
-<h2 id="authenticating-your-credentials">Authenticating your credentials<a class="anchor" aria-label="anchor" href="#authenticating-your-credentials"></a>
+<h2 id="authenticating-your-credentials---acled_update">Authenticating your credentials - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#authenticating-your-credentials---acled_update"></a>
 </h2>
-<p>To be able to access the API, users require an API key. If you are
-not registered in ACLED’s Access portal, you can visit it <a href="https://billingtt.github.io/acledR/articles/developer.acleddata.com" class="external-link">here</a>.
-If you would like a detail guide on how to create your account and get
-your API, you can utilize <a href="https://acleddata.com/download/35300/" class="external-link">ACLED’s Access
-Guide</a></p>
+<p>To be able to access the API, you require an API key. If you are not
+registered in ACLED’s Access portal, you can visit it <a href="developer.acleddata.com">here</a>. If you would like a detail
+guide on how to create your account and get your API, you can utilize <a href="https://acleddata.com/download/35300/" class="external-link">ACLED’s Access
+Guide</a>.</p>
 <p>Once you are registered, we encourage you to save your credentials
 and authenticate them through <code><a href="../reference/acled_access.html">acled_access()</a></code>. This function
 allows you to test that your credentials are working as intended, and
@@ -151,14 +141,13 @@ save them into your enviorment, which in turn allows users to avoid
 having to input the credentials every time there is a request to the
 API.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
 <span><span class="co">#&gt; Success! Credentials authorized</span></span></code></pre></div>
-<p>If the authentication was successfull, you will find a message in the
-console stating “Authorisation accepted”.</p>
+<p>If the authentication was successful, you will find a message in the
+console stating “Authorization accepted”.</p>
 </div>
 <div class="section level2">
-<h2 id="requesting-data-from-acled-api">Requesting data from ACLED API<a class="anchor" aria-label="anchor" href="#requesting-data-from-acled-api"></a>
+<h2 id="requesting-data-from-acled-api---acled_api">Requesting data from ACLED API - <code>acled_api()</code><a class="anchor" aria-label="anchor" href="#requesting-data-from-acled-api---acled_api"></a>
 </h2>
 <p>Once the credentials are authenticated, users can easily start
 requesting data from the API. To do so, you can use the
@@ -166,8 +155,7 @@ requesting data from the API. To do so, you can use the
 which to gather the data from. Thus, in the example below we are going
 to request data from Argentina throughout 2022.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">argentinian_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>, start_date<span class="op">=</span><span class="st">"2022-01-01"</span>,end_date <span class="op">=</span> <span class="st">"2022-12-31"</span>, prompt<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">argentinian_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span>, start_date<span class="op">=</span><span class="st">"2022-01-01"</span>,end_date <span class="op">=</span> <span class="st">"2022-12-31"</span>, prompt<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 4,258 events.</span></span>
 <span><span class="co">#&gt; Processing API request</span></span>
 <span><span class="co">#&gt; Extracting content from API request</span></span></code></pre></div>
@@ -183,16 +171,16 @@ input our email and key.</p>
 <p>Finally, acled_api allows you to gather vast amounts of data from the
 API, however, to make these big calls of data, we need to segment these
 calls into multiple smaller ones. Thus, the function includes a
-<code>prompt</code> paramenter which is set to <code>TRUE</code> or
-<code>FALSE</code>. When <code>TRUE</code>, after utilizing the
-function, you will receive a message with the number of API calls that
-this will require (an important aspect to consider if you have a limited
-number of calls), and a confirmation if you want to request data.
-Alternatively, when it is marked as <code>FALSE</code>, you will not
-receive the prompt.</p>
-<p>The data you will receive, will be a data frame of the events
-throughout the request dates and the requested region/country. We can
-inspect the Argentinian data we gather now.</p>
+<code>prompt</code> parameter which is set to <code>TRUE</code>
+(default). When <code>TRUE</code>, you will receive a message with the
+number of API requests that this will require (an important aspect to
+consider if you have a limited number of calls), and a confirmation
+message if you want to request data. Alternatively, when it is marked as
+<code>FALSE</code>, you will not receive the prompt and execute the
+required number of API requests</p>
+<p>The data you receive will be a data frame of the events throughout
+the request dates and the requested region/country. We can inspect the
+Argentinian data we gathered now.</p>
 <pre><code><span><span class="co">#&gt; Rows: 2,677</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
 <span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG12064", "AR…</span></span>
@@ -228,39 +216,128 @@ inspect the Argentinian data we gather now.</p>
 <span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1693414514, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="transforming-the-data-from-the-api">Transforming the data from the API<a class="anchor" aria-label="anchor" href="#transforming-the-data-from-the-api"></a>
+<h2 id="updating-acled-data---acled_update">Updating ACLED Data - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#updating-acled-data---acled_update"></a>
 </h2>
-<p>In some cases you may prefer to fit the data into a different format
-than the default wide-form output that its received from the API call.
-For these cases we offer users two functions:
-<code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> and
-<code>acled_transform_longer</code>.</p>
-<p>The first of this, <code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code>, attempts to
-help users to filter events by the actors involved, in any of the four
-columns which include actors. While that is a simple filter operation,
-which can easily be done through the tidyverse packages, in the case of
-ACLED data, actors maybe in any of four columns, and in some cases where
-associated actors are multiple, an actor maybe found inside one cell
-along with multiple others. Thus, <code><a href="../reference/acled_filter_actors.html">acled_filter_actors()</a></code> is
-particularly useful to work with acled_data. For instance, we are
-interested in all thje events where the Argentinian Police Forces were
-involved:</p>
+<p>To ensure your ACLED dataset remains current and accurate, regular
+updates are essential. The acledR package facilitates this process with
+the <code><a href="../reference/acled_update.html">acled_update()</a></code> function. <code><a href="../reference/acled_update.html">acled_update()</a></code> is
+designed to handle the intricacies of updating your ACLED dataset,
+accounting for new events, modifications to existing events, and
+deletions.</p>
+<p>For utilizing <code>acled_update</code>, you must provide it the old
+dataset to update. There other options that you can also utilize, which
+are mostly aimed at giving you options on how to update the dataset. You
+can find more information in `vignette(“acled_update”)</p>
+<p>Here is an example of how to use <code><a href="../reference/acled_update.html">acled_update()</a></code> to
+update an old dataset:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">arg_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_filter_actors.html">acled_filter_actors</a></span><span class="op">(</span><span class="va">argentinian_data</span>,  <span class="co"># data</span></span>
-<span>                        <span class="st">"Police Forces of Argentina (2019-)"</span>, <span class="co"># actors we are interested on</span></span>
-<span>                        filter_cols <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="co"># where we want to filter </span></span>
+<code class="sourceCode R"><span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_deletion_dummy.html">acled_old_deletion_dummy</a></span>, prompts <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Requesting data for 169 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 144,348 events.</span></span>
+<span><span class="co">#&gt; Processing API request</span></span>
+<span><span class="co">#&gt; Extracting content from API request</span></span>
+<span><span class="co">#&gt; Dataset updated. </span></span>
+<span><span class="co">#&gt;  Old number of events: 9000. </span></span>
+<span><span class="co">#&gt;  New events: 47653. </span></span>
+<span><span class="co">#&gt;  Deleted events: 40. </span></span>
+<span><span class="co">#&gt;  Total new &amp; modified events: 50367</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="transforming-acled-data---acled_transform_">Transforming ACLED Data - <code>acled_transform_*</code><a class="anchor" aria-label="anchor" href="#transforming-acled-data---acled_transform_"></a>
+</h2>
+<p>The <code>acledR</code> package provides a suite of functions to
+manipulate and transform ACLED data, these may aid you on simplifying
+part of the transformations required for your desired analysis. You can
+visit all the information obout our transformation functions in
+vignette(“acled_transformations”).</p>
+<div class="section level3">
+<h3 id="converting-interaction-codes---acled_transform_interaction">1. Converting Interaction Codes -
+<code>acled_transform_interaction()</code><a class="anchor" aria-label="anchor" href="#converting-interaction-codes---acled_transform_interaction"></a>
+</h3>
+<p>The <code><a href="../reference/acled_transform_interaction.html">acled_transform_interaction()</a></code> function allows you to
+convert between numeric and text interaction codes, facilitating easier
+interpretation and analysis of ACLED data. The function requires your
+ACLED dataset and an optional boolean argument <code>only_inters</code>,
+which determines whether to include only <code>inter1</code> and
+<code>inter2</code> columns or also the <code>interaction</code> column
+in the output. By default, <code>only_inters</code> is set to
+<code>FALSE</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">transformed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="va">argentinian_data</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">arg_pf</span><span class="op">)</span></span>
+<span><span class="co"># Note the inter1 and inter2 columns</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">transformed_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
 <span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type      event_type   </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG11985      2022-12-22  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG11971      2022-12-20  <span style="text-decoration: underline;">2</span>022              1 Political violence Riots        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG12031      2022-12-13  <span style="text-decoration: underline;">2</span>022              1 Political violence Riots        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG12005      2022-12-11  <span style="text-decoration: underline;">2</span>022              1 Political violence Riots        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG11872      2022-12-02  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG11965      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG12064      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG12078      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG12079      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, actor1 &lt;chr&gt;, assoc_actor_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   inter1 &lt;chr&gt;, actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   interaction &lt;chr&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;, admin3 &lt;lgl&gt;, location &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   timestamp &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="reshaping-data-wide-to-long-format---acled_transform_longer">2. Reshaping Data: Wide to Long Format -
+<code>acled_transform_longer()</code><a class="anchor" aria-label="anchor" href="#reshaping-data-wide-to-long-format---acled_transform_longer"></a>
+</h3>
+<p>The <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> function transforms ACLED
+data from a wide format, where multiple actors are represented in each
+row, to a long format, with separate rows for each actor. This is
+particularly useful for actor-based analyses.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">long_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 29</span></span></span>
+<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type      event_type   </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 23 more variables: sub_event_type &lt;chr&gt;, type_of_actor &lt;chr&gt;, actor &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   inter_type &lt;chr&gt;, inter &lt;dbl&gt;, interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   iso &lt;dbl&gt;, region &lt;chr&gt;, country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   admin3 &lt;lgl&gt;, location &lt;chr&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   geo_precision &lt;dbl&gt;, source &lt;chr&gt;, source_scale &lt;chr&gt;, notes &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   fatalities &lt;dbl&gt;, tags &lt;chr&gt;, timestamp &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>You can specify the type of transformation using the type argument,
+choosing from <code>full_actors</code>, <code>main_actors</code>,
+<code>assoc_actors</code>, or <code>source</code>. This function
+provides flexibility and control over the transformation process,
+allowing you to tailor the data structure to your specific needs.</p>
+</div>
+<div class="section level3">
+<h3 id="reshaping-data-long-to-wide-format---acled_transform_wider">3. Reshaping Data: Long to Wide Format -
+<code>acled_transform_wider()</code><a class="anchor" aria-label="anchor" href="#reshaping-data-long-to-wide-format---acled_transform_wider"></a>
+</h3>
+<p>Conversely, the <code><a href="../reference/acled_transform_wider.html">acled_transform_wider()</a></code> function enables
+you to pivot your data back to a wide format, useful if you have
+previously used <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> and wish to revert
+to the original data structure.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">wide_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_wider.html">acled_transform_wider</a></span><span class="op">(</span><span class="va">long_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">wide_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
+<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type  event_type</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG10000      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG10001      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG10002      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG10003      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG10004      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG10005      2022-04-12  <span style="text-decoration: underline;">2</span>022              2 Demonstrations Protests  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, actor1 &lt;chr&gt;, assoc_actor_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   inter1 &lt;dbl&gt;, actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
@@ -268,57 +345,15 @@ involved:</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, geo_precision &lt;dbl&gt;, source &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   source_scale &lt;chr&gt;, notes &lt;chr&gt;, fatalities &lt;dbl&gt;, tags &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   timestamp &lt;dbl&gt;</span></span></span></code></pre></div>
-<p>Finally, considering that ACLED data is structured into wide-form, it
-may be of use for some users to have the data into long-form instead. If
-users are interested only in ACLED monadic data, they can opt to make
-the API call with the monadic option set to TRUE, however, that is an
-standalone call. If users are interested on getting data into dyadic
-form, that would entail another independent call. Thus, it may be useful
-for some users to request the data as normal, and make any
-transformation after making the API call, without utilizing more API
-calls of their limited quota. In such cases, users can utilize
-<code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>. In this example we are going to
-transform our data to be in long-form based on the actor column:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arg_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, <span class="co"># data</span></span>
-<span>                            type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> <span class="co"># The type of operation we want to do to transform the data</span></span>
-<span><span class="co">#&gt; Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">arg_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 13,517</span></span>
-<span><span class="co">#&gt; Columns: 29</span></span>
-<span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG12068", "ARG12068", "ARG12068", "AR…</span></span>
-<span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-31, 2022-12-31, 2022-12-31, 20…</span></span>
-<span><span class="co">#&gt; $ year               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 202…</span></span>
-<span><span class="co">#&gt; $ time_precision     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Political violence", "Politi…</span></span>
-<span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Violence against civ…</span></span>
-<span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Attack", "Attack", "Attack", "Peaceful p…</span></span>
-<span><span class="co">#&gt; $ type_of_actor      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "actor1", "actor2", "assoc_actor_1", "assoc_actor_2…</span></span>
-<span><span class="co">#&gt; $ actor              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Civilians (A…</span></span>
-<span><span class="co">#&gt; $ inter_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "inter1", "inter2", "inter1", "inter2", "inter1", "…</span></span>
-<span><span class="co">#&gt; $ inter              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 7, 1, 7, 6, 0, 6, 0, 6, 0, 6, 0, 6, 0, 6, 0, 6, …</span></span>
-<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 17, 17, 17, 60, 60, 60, 60, 60, 60, 60, 60, 60,…</span></span>
-<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", "Civilian targeting", "Civili…</span></span>
-<span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
-<span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
-<span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina",…</span></span>
-<span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Buenos Aires", "Buenos Aires", "Bu…</span></span>
-<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Moreno", "Moreno", "Moreno", "Rawson", "…</span></span>
-<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
-<span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "La Reja", "La Reja", "La Reja", "Rawson…</span></span>
-<span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -34.6397, -34.6397, -34.6397, -43.2993, -…</span></span>
-<span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -58.8294, -58.8294, -58.8294, -65.0935, -…</span></span>
-<span><span class="co">#&gt; $ geo_precision      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ source             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "La Nacion (Argentina)", "…</span></span>
-<span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "National", "National", "Na…</span></span>
-<span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
-<span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, "crowd size=no report", "crowd size…</span></span>
-<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1693414514, 1693414514, 1693414514, 1693414514, 167…</span></span></code></pre></div>
-<p>In our new data frame, we no longer have four actor columns
-(actor1,actor2,assoc_actor1,assoc_actor2), but instead we only have 1
-actor column, with one row per actor.</p>
+<p>Like its counterpart, this function requires the data and type
+arguments, ensuring consistency and ease of use across the
+transformation functions.</p>
+<hr>
+<p>Now your dataset should be ready for you to analyse! Remember to
+always consult <a href="https://acleddata.com/resources/" class="external-link">ACLED’s
+Methodology</a> when analysing to get a better understanding of our
+dataset.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

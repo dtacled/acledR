@@ -19,34 +19,16 @@
     <loc>https://acled.github.io/acledR/articles/acled_rounding.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/articles/acled_sources.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/articles/acled_transformations.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/articles/acled_update.html</loc>
   </url>
   <url>
-    <loc>https://acled.github.io/acledR/articles/actors_interactions.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/event_types.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/fatalities.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/geography.html</loc>
-  </url>
-  <url>
     <loc>https://acled.github.io/acledR/articles/get_started.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/time.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/authors.html</loc>
@@ -77,9 +59,6 @@
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_filter_actors.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_help.html</loc>
   </url>
   <url>
     <loc>https://acled.github.io/acledR/reference/acled_interaction_codes.html</loc>
