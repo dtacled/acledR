@@ -10,7 +10,7 @@ navbar:
   - text: Reference
     href: reference/index.html
   - text: Get Started
-    href: get_started.html
+    href: articles/get_started.html
   - text: Utilizing acledR
     href: index.html
     menu:

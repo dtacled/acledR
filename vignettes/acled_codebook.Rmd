@@ -8,15 +8,14 @@ vignette: >
 ---
 
 
-Pages under the ACLED Codebook tab describe the variables in ACLED's data and provide usage examples. Users should consult the complete guide summarizing ACLED's methodology at [here](https://acleddata.com/download/2827/) for more details on each column.
+Pages in the ACLED Codebook tab describe the variables found in ACLED's data, while also providing examples of their use. You can consult the complete guide summarizing ACLED's methodology [here](https://acleddata.com/download/2827/) for a more thorough description of the methodology underlying each column.
 
 # ACLED Overview
 
-The ACLED project codes reported information on the type, agents, location, date, and other characteristics of political violence events, demonstrations and politically relevant non-violent events (referred to as 'Strategic developments'). ACLED focuses on tracking a range of violent and non-violent actions by political agents, including governments, rebels, militias, identity groups, political parties, external actors, rioters, protesters and civilians.
+The ACLED project codes and standardizes reported information on the type, agents, location, date, and other characteristics of events of political violence, demonstrations, and politically relevant non-violent events (referred to as 'Strategic developments'). ACLED focuses on tracking a range of violent and non-violent actions by political agents, including governments, rebels, militias, identity groups, political parties, external actors, rioters, protesters and civilians.
 
-Political violence is defined as the use of force by a group with a political purpose or motivation. ACLED records political violence through its constituent events, the intent of which is to produce a comprehensive overview of all forms of political disorder, expressed through violence and demonstrations, within and across states. A politically violent event is a single altercation where often force is used by one or more groups toward a political end, although some non-violent instances -- including protests and strategic developments -- are included in the dataset to capture the potential pre-cursors or critical junctures of a violent conflict.
 
-The fundamental unit of observation in ACLED is the *event*. Events involve designated actors -- e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day.
+The fundamental unit of observation in ACLED is the *event*. Events involve designated actors -- e.g. a named rebel group, a militia or state forces. They occur at a specific named location (identified by name and geographic coordinates) and on a specific day. For more information on what qualifies as an event, and how ACLED codes long-running conflicts, please see our [knowledge base](https://acleddata.com/knowledge-base/how-are-events-disaggregated/). Every event is described by information in a standardized set of columns comprising ACLED’s core dataset. Below you can find a brief description of each column. 
 
 ## Column List
 
@@ -115,7 +114,7 @@ returned_data_acled %>%
 
 ## ACLED Help
 
-To better understand what each column in our dataset represents, `acledR::acled_help()` redirects you to relevant documentation for the column in question. 
+Rather than referring to this table during coding, and to provide a deeper understanding of a column’s meaning, you can use the  `acledR::acled_help()` function. This function will redirect you to the relevant documentation for the column in question. 
 
 ```{r,eval=FALSE}
 
@@ -123,10 +122,10 @@ acled_help(column = NULL)
 
 ```
 
-The function is very straightforward, only requiring one argument.  `column` refers to the column which users may be interested on exploring further. 
+The function is very straightforward, requiring only one argument.  `column` refers to the column for which you would like to be provided with more information. 
 
 **Note**: `acled_help()` only supports one column at a time. 
 
-For example, if you would like to know more about the *fatalities* column, you can write `acled_help(column="fatalities")` which will prompt a fatalities vignette in the RStudio Help pane.
+For example, if you would like to know more about the *fatalities* column, you can run`acled_help(column="fatalities")`, prompting the fatalities vignette to appear in the RStudio Help pane.
 
-While some columns have an standalone documentation vignette, e.g. Fatalities; others may be part of another vignette, e.g. admins are in the geographical vignette. 
+While some columns have their own vignette, e.g. fatalities; others may be grouped together with documentation of similar columns, e.g. admins are in the geographical vignette.

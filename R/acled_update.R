@@ -6,7 +6,7 @@
 #' @param df The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of `acled_api()`)
 #' @param start_date The first date of events you want to update from.. These are the celling and floor of *event_date*, not of *timestamp*.
 #' @param end_date The last date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
-#' @param additional_countries string. Additional additional_countries to update your dataset. It defaults to “current additional_countries”, which includes all the additional_countries inside your dataset.
+#' @param additional_countries string. Additional additional_countries to update your dataset. It defaults to “current countries”, which includes all the additional_countries inside your dataset.
 #' @param regions string. The regions for which you would like events in your dataset updated.
 #' @param event_types string. The event types for which you would like events in your dataset updated.
 #' @param acled_access logical. If you have already used `acled_acess()`, you can set this option as TRUE (default) to avoid having to input your email and access key.
@@ -42,14 +42,14 @@
 acled_update <- function(df,
                          start_date = min(df$event_date),
                          end_date = max(df$event_date),
-                         additional_countries = "current additional_countries",
+                         additional_countries = "current countries",
                          regions = NULL,
                          event_types = NULL,
                          acled_access = TRUE,
                          email = NULL,
                          key = NULL,
                          deleted = TRUE,
-                         prompts = T) { ## This is added for the hasArg statements to work. Not sure why it doenst work without it.
+                         prompts = TRUE) { ## This is added for the hasArg statements to work. Not sure why it doenst work without it.
 
 
   if(!setequal(colnames(df), colnames(acledR::acled_old_deletion_dummy))){
@@ -73,7 +73,7 @@ acled_update <- function(df,
     warning("Warning: End date is earlier than the latest event date in your dataframe.")
   }
 
-  if (all(additional_countries == "current additional_countries")){
+  if (all(additional_countries == "current countries")){
     additional_countries <- unique(df$country)
   } else {
     additional_countries <- append(unique(df$country), additional_countries)

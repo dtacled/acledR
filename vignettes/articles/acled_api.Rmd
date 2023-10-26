@@ -80,7 +80,7 @@ You can specify the date range for which you would like to receive data by using
 
 You can use the `timestamp` parameter to select data that were added or updated over a specific time period. Please keep in mind that `timestamp` indicates when the event was added or modified in ACLED’s dataset, meaning that an event that occurred far in the past (i.e., with an old *event date*) may still have a recent timestamp if it was recently updated. 
 
-In practice, the `timestamp` parameter is typically not used for analysis but is instead used to keep your own dataset up to date as changes are made to ACLED’s data. To learn more about how to keep your datasets up to date, visit the [Keeping your datasets up to date](https://acled.github.io/acledR/articles/acled_update.html) page for an `acledR` approach or this [guide](https://acleddata.com/download/35179/) more relevant to Excel or other spreadsheet tools.
+In practice, the `timestamp` parameter is typically not used for analysis but is instead used to keep your own dataset up to date as changes are made to ACLED’s data. To learn more about how to keep your datasets up to date, visit the [Keeping your datasets up to date](https://acled.github.io/acledR/articles/acled_update.html) page for an acledR approach or this [guide](https://acleddata.com/download/35179/) more relevant to Excel or other spreadsheet tools.
 
 ### Additional filters 
 
@@ -196,5 +196,3 @@ df_sa_monadic <- acled_api(regions = c("South America"),
 ```
 
 Best of luck!
-
-

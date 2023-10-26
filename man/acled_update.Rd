@@ -8,14 +8,14 @@ acled_update(
   df,
   start_date = min(df$event_date),
   end_date = max(df$event_date),
-  additional_countries = "current additional_countries",
+  additional_countries = "current countries",
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,
   email = NULL,
   key = NULL,
   deleted = TRUE,
-  prompts = T
+  prompts = TRUE
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ acled_update(
 
 \item{end_date}{The last date of events you want to update from. These are the celling and floor of \emph{event_date}, not of \emph{timestamp}.}
 
-\item{additional_countries}{string. Additional additional_countries to update your dataset. It defaults to “current additional_countries”, which includes all the additional_countries inside your dataset.}
+\item{additional_countries}{string. Additional additional_countries to update your dataset. It defaults to “current countries”, which includes all the additional_countries inside your dataset.}
 
 \item{regions}{string. The regions for which you would like events in your dataset updated.}
 

@@ -42,14 +42,16 @@ To simplify this process, `acledR` includes a function which makes the update fo
 ```{r, eval=F}
 acled_update(
   df,
-  additional_countries = NULL,
+  start_date = min(df$event_date),
+  end_date = max(df$event_date),
+  additional_countries = "current countries",
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,
   email = NULL,
   key = NULL,
   deleted = TRUE,
-  prompts = T)
+  prompts = TRUE)
 ```
 
 The function has the following arguments: 
@@ -106,7 +108,7 @@ The dataset has not been updated since `r print(latest_timestamp)`, so you may w
 ```{r}
 
 new_argen_dataset <- acled_update(argen_dummy_acled_file, 
-                                  additional_countries = "Argentina", 
+                                  countries = "Argentina", 
                                   acled_access = T, 
                                   prompts = FALSE) 
 ```
@@ -118,4 +120,5 @@ Best of luck!
 ```{r, echo=F}
 options(warn = defaultW)
 ```
+
 
