@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# acledR <a href='billingtt.github.io/acledR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# acledR <a href='ACLED.github.io/acledR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/billingtt/acledR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/billingtt/acledR/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ACLED/acledR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ACLED/acledR/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx)](https://codecov.io/gh/ACLED/acledR)
 
 <!-- badges: end -->
@@ -65,7 +65,7 @@ PAT.
 
 ``` r
 # install from github
-devtools::install_github("billingtt/acledR")
+devtools::install_github("ACLED/acledR")
 ```
 
 ## Installation (for public use)
@@ -76,5 +76,5 @@ Github. Thankfully, the installation is rather simple. You can install
 it through the following code:
 
 ``` r
-devtools::install_github("billingtt/acledR") ## if you are interested in a particular branch, please add a 'ref' argument. 
+devtools::install_github("ACLED/acledR") ## if you are interested in a particular branch, please add a 'ref' argument. 
 ```
