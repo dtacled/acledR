@@ -26,7 +26,7 @@ Function to convert your ACLED's API calls (if monadic) back into the original d
 }
 \examples{
 \dontrun{
-#argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
 #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #argen_acled_long_actors <- acled_transform_longer(argen_acled,
 #                        type = "full_actor") # Transforming the data to long form
@@ -43,7 +43,6 @@ Function to convert your ACLED's API calls (if monadic) back into the original d
 }
 \seealso{
 Other Data Manipulation: 
-\code{\link{acled_filter_actors}()},
 \code{\link{acled_transform_interaction}()},
 \code{\link{acled_transform_longer}()}
 }

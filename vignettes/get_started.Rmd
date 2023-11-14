@@ -64,10 +64,10 @@ If the authentication was successful, you will find a message in the console sta
 Once the credentials are authenticated, users can easily start requesting data from the API. To do so, you can use the `acled_api()` function. The function requires the fields for which to gather the data from. Thus, in the example below we are going to request data from Argentina throughout 2022. 
 
 ```{r}
-argentinian_data <- acled_api(countries = "Argentina", start_date="2022-01-01",end_date = "2022-12-31", prompt=F)
+argentinian_data <- acled_api(country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31", prompt=F)
 ```
 
-While in our example we utilized only three arguments (`countries`, `start_date` and `end_date`), `acled_api()` features a number of other arguments such as regions, timestamp, event_types, and more. You can find more in `vignette("acled_api")`.
+While in our example we utilized only three arguments (`country`, `start_date` and `end_date`), `acled_api()` features a number of other arguments such as regions, timestamp, event_types, and more. You can find more in `vignette("acled_api")`.
 
 Additionally, due to the fact that we authenticated our credentials before, we are not required to input these into the function. Otherwise, if we didn't utilize `acled_access()` we would be required to input our email and key. 
 

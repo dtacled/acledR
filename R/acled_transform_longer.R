@@ -13,7 +13,7 @@
 #' @family Data Manipulation
 #' @examples
 #' \dontrun{
-#' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#' #argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
 #' #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #'
 #' #argen_acled_long_actors <- acled_transform_wide_to_long(argen_acled,
@@ -67,7 +67,11 @@ acled_transform_longer <- function(data,type="full_actors") {
       mutate(actor = str_trim(actor)) %>%
       pivot_longer(cols = c("inter1", "inter2"),names_to = "inter_type",values_to = "inter") %>%
       filter(str_sub(type_of_actor,start=nchar(type_of_actor)) == str_sub(inter_type, start=nchar(inter_type))) %>%
-      relocate(c("inter_type","inter"),.after="actor")
+      relocate(c("inter_type","inter"),.after="actor") %>%
+      # Removing inters when the actor is an assoc_actor_1/2
+      mutate(inter = case_when(
+        str_detect(type_of_actor, "assoc_*") ~ NA,
+        TRUE ~ inter))
 
     message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
 

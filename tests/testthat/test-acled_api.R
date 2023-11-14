@@ -13,7 +13,7 @@ test_that("names of columns are correct", {
 test_that("event_type filters work or not",{
 
   expect_equal(unique(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                         start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
+                         start_date="2022-01-01",end_date = "2022-12-31", country = "Argentina",
                          event_type = "Protests", prompt = F, acled_access = F, log = F)$event_type), "Protests" )
 
 })
@@ -30,7 +30,7 @@ test_that("country days are calculated as expected",{
            unit_test = t_end - ymd(paste0(start_year, "-01-01")))
 
   argentina_test_call <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                                   countries = "Argentina", start_date="1998-01-01",
+                                   country = "Argentina", start_date="1998-01-01",
                                    end_date = "2021-01-01",prompt = F, acled_access = F, log = T)
 
   expect_equal(argentina_test_call$time, argentina_country_days$unit_test)
@@ -58,9 +58,9 @@ local({
   test_that("Users continue call", {
 
     expect_equal(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                           start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
+                           start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                            prompt = T, acled_access = F, log = F), acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                 start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
+                 start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                  prompt = F, acled_access = F, log = F))
   })
 }) # test on whether they can continue
@@ -113,7 +113,7 @@ local({
   test_that("A user can stop a call when the provided timestamp is not recognized",{
 
   expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                         start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
+                         start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                          timestamp = "muchachos", prompt = F, acled_access = F, log = F), regexp =  "User requested")
   })
 })
@@ -125,7 +125,7 @@ local({
   test_that("A user can ignore the provided timestamp if it is not recognized",{
 
     expect_no_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                           start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
+                           start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                            timestamp = "muchachos", prompt = F, acled_access = F, log = F))
   })
 })
@@ -135,8 +135,10 @@ local({
 
 test_that("The call actually returns monadics.", {
   expect_equal(min(received_data_monadic$event_date), min(received_data$event_date))
+
   expect_equal(max(received_data_monadic$event_date), max(received_data$event_date))
-  expect_equal(unique(received_data_monadic$country), min(received_data$country))
+
+  expect_equal(unique(received_data_monadic$country), unique(received_data$country))
 
   expect_gte(nrow(received_data_monadic), nrow(received_data))
 })
@@ -160,9 +162,9 @@ test_that("Error when region number does not exist", {
 
 ## Errors when a country requested doesnt exists ----
 test_that("Error when one of two countries are wrong",{
-          expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",countries = c("Argentia","Bolivia"),
+          expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",country = c("Argentia","Bolivia"),
                                  start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F),
-                       regexp = "One or more of the requested countries *")})
+                       regexp = "One or more of the requested *")})
 
 ## Test what happens when someone inputs acled_access as TRUE but it includes email and key. ----
 test_that("Acled_access is ignored",{
@@ -172,13 +174,6 @@ test_that("Acled_access is ignored",{
 # Test errors from incorrectly input arguments. ----
 
 test_that("acled_api() throws an error when called with invalid arguments", {
-  expect_error(acled_api(Countries = "Argentina",
-                         start_date="2022-01-01",
-                         end_date = "2022-12-31",
-                         prompt = F,
-                         acled_access = T,
-                         log = F), regexp=
-               "Countries is not a valid option. Please utilize \"countries\", without capitalizing")
 
   expect_error(acled_api(Country = "Argentina",
                          start_date="2022-01-01",
@@ -186,15 +181,7 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          prompt = F,
                          acled_access = T,
                          log = F), regexp=
-                 "Country is not a valid option. Please utilize \"countries\"")
-
-  expect_error(acled_api(country = "Argentina",
-                         start_date="2022-01-01",
-                         end_date = "2022-12-31",
-                         prompt = F,
-                         acled_access = T,
-                         log = F), regexp=
-                 "Country is not a valid option. Please utilize \"countries\"")
+                 "Country is not a valid option. Please utilize \"country\", without capitalizing")
 
 
   expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
@@ -221,13 +208,13 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          prompt = F,
                          acled_access = T), regexp=
                "Event type is not a valid option. Please utilize \"event_types\", without capitalizing")
-  expect_error(acled_api(countries = "Argentina",
+  expect_error(acled_api(country = "Argentina",
                          Start_date="2022-01-01",
                          end_date = "2022-12-31",
                          prompt = F,
                          acled_access = T), regexp=
                "Start_date is not a valid option. Please utilize \"start_date\", without capitalizing")
-  expect_error(acled_api(countries = "Argentina",
+  expect_error(acled_api(country = "Argentina",
                          start_date="2022-01-01",
                          End_date = "2022-12-31",
                          prompt = F,
@@ -249,10 +236,10 @@ test_that("If access is TRUE and credentials are null, credentials are ignored, 
 
 test_that("Users gets an error when acled_access is False, but no key or email are provided.", {
 
-  expect_error(acled_api(countries = "Argentina", start_date="2022-01-01",
+  expect_error(acled_api(country = "Argentina", start_date="2022-01-01",
                          end_date = "2022-12-31", prompt = F, acled_access = F), regexp = "Email address required")
 
-  expect_error(acled_api(email = "stuff",countries = "Argentina", start_date="2022-01-01",
+  expect_error(acled_api(email = "stuff",country = "Argentina", start_date="2022-01-01",
                          end_date = "2022-12-31", prompt = F, acled_access = F), regexp = "Key required")
 
 
@@ -264,7 +251,7 @@ test_that("Users gets an error when acled_access is False, but no key or email a
 test_that("start_date is after end_date", {
   expect_error(
     acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-              countries = "Argentina",
+              country = "Argentina",
               start_date="2022-01-01",
               end_date = "2021-01-01",
               prompt = F,
@@ -276,7 +263,7 @@ test_that("start_date is after end_date", {
 test_that("timestamp is from a latter date than today." ,{
 
  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                        countries = "Argentina",
+                        country = "Argentina",
                         start_date="2021-01-01",
                         end_date = "2022-01-01",
                         prompt = F,
@@ -289,7 +276,7 @@ test_that("timestamp is from a latter date than today." ,{
 
 test_that("Error when non existent event types",{
   expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                         countries = "Argentina",
+                         country = "Argentina",
                          start_date="2021-01-01",
                          end_date = "2022-01-01",
                          event_types = c("Protests","Superhero fight"),
@@ -324,3 +311,4 @@ test_that("Tables display NAs instead of blanks", {
 
 
 })
+

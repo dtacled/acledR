@@ -55,7 +55,7 @@ You can confirm that they have been properly stored by running `Sys.getenv("emai
 ```{r, eval = F}
 acled_api(email = NULL,
           key = NULL,
-          countries = NULL,
+          country = NULL,
           regions = NULL,
           start_date = "1997-01-01",
           end_date = Sys.Date(),
@@ -72,7 +72,7 @@ acled_api(email = NULL,
 
 ### Geographical filters
 
-You can use the `countries` and `regions` parameters to specify the locations from which you would like to request data. If both values are `NULL` or are not included, the API will return data for all countries and regions. If you would like to request data for multiple countries, you can do so by using a vector of country names (e.g., `c("Argentina","Spain","Bolivia")`). Similarly, you can request data from one or more regions by using either a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` show the full lists of countries and regions available. Please visit ACLED’s [Geography vignette](`r vignette("Geography")`) for more information.
+You can use the `country` and `regions` parameters to specify the locations from which you would like to request data. If both values are `NULL` or are not included, the API will return data for all countries and regions. If you would like to request data for multiple countries, you can do so by using a vector of country names (e.g., `c("Argentina","Spain","Bolivia")`). Similarly, you can request data from one or more regions by using either a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` show the full lists of countries and regions available. Please visit ACLED’s [Geography vignette](`r vignette("Geography")`) for more information.
 
 ### Temporal filters
 
@@ -104,7 +104,7 @@ As is common when executing API calls, handling large volumes of data requires s
 
 -   The number of countries for which data is being requested,
 
--  The number of estimated events requested (based only on country and year, and NOT event type),
+-   The number of estimated events requested (based only on country and year, and NOT event type),
 
 -   The number of API calls needed, based on an estimate of how big the call is, 
 
@@ -122,7 +122,7 @@ library(dplyr)
 
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") 
 
-df_br <- acled_api(countries = c("Brazil"),
+df_br <- acled_api(country = c("Brazil"),
                    start_date = "2022-01-01",
                    end_date = "2022-12-01",
                    monadic = F,
@@ -139,7 +139,7 @@ head(df_br, 5)
 If you wanted data from both “Brazil” and “Colombia”, you would execute the following:
 
 ```{r, eval = F}
-df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
+df_br_co <- acled_api(country = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
                       end_date = "2022-12-01",
                       monadic = F,
@@ -147,7 +147,7 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
                       prompt = F)
 ```
 
-If you are interested in events occurring over a larger area, it may be simpler to omit the `countries` parameter and include a `regions` argument instead. You could also include an `event_type` argument to receive only a specific type of event:
+If you are interested in events occurring over a larger area, it may be simpler to omit the `country` parameter and include a `regions` argument instead. You could also include an `event_type` argument to receive only a specific type of event:
 
 ```{r, eval = F}
 df_sa <- acled_api(regions = c("South America"),
@@ -162,7 +162,7 @@ df_sa <- acled_api(regions = c("South America"),
 You can use the *timestamp* column/filter to specify the dates from which you would like to receive new or updated data. You can include the argument as either a string ("yyyy-mm-dd") or a numeric Unix timestamp:
 
 ```{r, eval = F}
-df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
+df_br_co <- acled_api(country = c("Brazil", "Colombia"),
                       start_date = "2022-01-01",
                       end_date = "2022-12-01",
                       monadic = F,
@@ -175,7 +175,7 @@ df_br_co <- acled_api(countries = c("Brazil", "Colombia"),
 If you would like to include only one type of *interaction* (e.g., "Rioters versus Civilians (57)"), then you can add *interaction* code to the `...` argument:
 
 ```{r, eval = F}
-df_sa <- acled_api(countries = c("Brazil", "Colombia"),
+df_sa <- acled_api(country = c("Brazil", "Colombia"),
                    start_date = "2022-01-01",
                    end_date = "2022-12-01",
                    monadic = F,

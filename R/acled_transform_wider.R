@@ -14,7 +14,7 @@
 #' @family Data Manipulation
 #' @examples
 #' \dontrun{
-#' #argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#' #argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
 #' #                          end_date="2022-02-01", acled_access = T, prompt = F)
 #' #argen_acled_long_actors <- acled_transform_longer(argen_acled,
 #' #                        type = "full_actor") # Transforming the data to long form
@@ -60,12 +60,14 @@ acled_transform_wider <- function(data, type = "full_actors") {
       # Transform inter into character for collapsing
       mutate(inter1 = as.character(inter1),
              inter2 = as.character(inter2)) %>%
+      mutate(inter1 = replace_na(inter1, ""))%>%
+      mutate(inter2 = replace_na(inter2, ""))%>%
       group_by(across(c(-actor1,-actor2, -inter1, -inter2, -assoc_actor_1, -assoc_actor_2))) %>%
       # Collapse repeated inters and actors
       summarise(actor1 = str_c(actor1, collapse = ""),
                 actor2 = str_c(actor2, collapse = ""),
-                inter1 = str_trim(str_remove_all(str_c(inter1, collapse = " "), "9999")),
-                inter2 = str_trim(str_remove_all(str_c(inter2, collapse = " "), "9999")),
+                inter1 = str_trim(str_remove_all(str_c(inter1, collapse = " "), "9999|\\s0\\s")),
+                inter2 = str_trim(str_remove_all(str_c(inter2, collapse = " "), "9999|\\s0\\s")),
                 assoc_actor_1 = str_c(assoc_actor_1, collapse = ""),
                 assoc_actor_2 = str_c(assoc_actor_2, collapse = "")) %>%
       ungroup() %>%
@@ -76,6 +78,7 @@ acled_transform_wider <- function(data, type = "full_actors") {
              actor1 = na_if(actor1,""),
              assoc_actor_1 = na_if(assoc_actor_1,""),
              assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter1 = replace_na(inter1, 0),
              inter2 = replace_na(inter2, 0)) %>%
       # Match column structure for an acled dataset
       select(names(acledR::acled_old_dummy))
@@ -99,6 +102,8 @@ acled_transform_wider <- function(data, type = "full_actors") {
       # Transform inter into character for collapsing
       mutate(inter1 = as.character(inter1),
              inter2 = as.character(inter2)) %>%
+      mutate(inter1 = replace_na(inter1, ""))%>%
+      mutate(inter2 = replace_na(inter2, ""))%>%
       group_by(across(c(-actor1,-actor2, -inter1, -inter2))) %>%
       # Collapse repeated inters and actors
       summarise(actor1 = str_c(actor1, collapse = ""),
@@ -114,6 +119,7 @@ acled_transform_wider <- function(data, type = "full_actors") {
              actor1 = na_if(actor1,""),
              assoc_actor_1 = na_if(assoc_actor_1,""),
              assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter1 = replace_na(inter1, 0),
              inter2 = replace_na(inter2, 0))%>%
       # Match column structure for an acled dataset
       select(names(acledR::acled_old_dummy))
@@ -141,6 +147,7 @@ acled_transform_wider <- function(data, type = "full_actors") {
              actor1 = na_if(actor1,""),
              assoc_actor_1 = na_if(assoc_actor_1,""),
              assoc_actor_2 = na_if(assoc_actor_2,""),
+             inter1 = replace_na(inter1, 0),
              inter2 = replace_na(inter2, 0))%>%
       # Match column structure for an acled dataset
       select(names(acledR::acled_old_dummy))

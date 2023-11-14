@@ -1,10 +1,10 @@
 #' @title Request data from ACLED API
 #' @name acled_api
-#' @description This function allows users to easily request data from the ACLED API. Users can include variables such as countries, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+#' @description This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
-#' @param countries character vector. Default is NULL, which will return events for all countries. Pass a vector of country names to retrieve events from specific countries. The list of ACLED country names may be found via acledR::acled_countries.
-#' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
+#' @param country character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.
+#' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries. within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is `1997-01-01`, which is the earliest date available.
 #' @param end_date character string. Format 'yyyy-mm-dd'. The latest date for which to return events. The default is Sys.Date(), which is the most present date.
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
@@ -13,12 +13,12 @@
 #' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
 #' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
 #' @param log logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.
-#' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
+#' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of estimated events, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
 #' \itemize{
-#' \item ACLED API guide. <https://acleddata.com/acleddatanew//wp-content/uploads/dlm_uploads/2021/11/API-User-Guide_Feb2022.pdf>
+#' \item ACLED API guide. <https://apidocs.acleddata.com/>
 #' }
 #' @examples
 #' \dontrun{
@@ -26,7 +26,7 @@
 #' # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 #' # in dyadic-wide form
 #' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
-#'                         countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
+#'                         country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
 #'                         acled_access = FALSE)
 #'
 #' # tibble with all the events from Argentina where each row is one event.
@@ -55,7 +55,7 @@
 
 acled_api <- function(email = NULL,
                        key = NULL,
-                       countries = NULL,
+                       country = NULL,
                        regions = NULL,
                        start_date = floor_date(Sys.Date(), "year") - years(1),
                        end_date = Sys.Date(),
@@ -83,13 +83,8 @@ acled_api <- function(email = NULL,
 
   # Stoppers for typos ----
 
-  if(hasArg("country") | hasArg("Country")){
-    stop("Country is not a valid option. Please utilize \"countries\"")
-
-  }
-
-  if(hasArg("Countries")){
-    stop("Countries is not a valid option. Please utilize \"countries\", without capitalizing")
+  if(hasArg("Country")){
+    stop("Country is not a valid option. Please utilize \"country\", without capitalizing ")
 
   }
 
@@ -142,8 +137,8 @@ acled_api <- function(email = NULL,
   }
   key_internal <- paste0("&key=", key)
 
-  if(!is.null(countries) & sum(unique(countries) %in% acledR::acled_countries[["country"]]) < length(unique(countries))) {
-    stop("One or more of the requested countries are not in ACLED's Country list. The full list of countries is available at 'acledR::acled_countries")
+  if(!is.null(country) & sum(unique(country) %in% acledR::acled_countries[["country"]]) < length(unique(country))) {
+    stop("One or more of the requested countries are not in ACLED's countries list. The full list of countries is available at 'acledR::acled_countries")
   }
 
   # Checking if regions are input incorrectly ----
@@ -157,17 +152,19 @@ acled_api <- function(email = NULL,
 
 
   # Setup base data to check how many country-days are being requested
-  if(!is.null(countries) & is.null(regions)) {
-     df <- acledR::acled_countries %>%
-       filter(.data$country %in% countries)
+  if(!is.null(country) & is.null(regions)) {
+    test <- country
+
+
+    df <- acledR::acled_countries %>%
+       filter(.data$country %in% test)
 
     # Subset acled_multipliers (subset is faster than filter in our case) by relevant country & year
-
-    ex1_df <- subset(acledR::acled_multipliers, country %in% countries, select = country:avg_month_bin)
+    ex1_df <- subset(acledR::acled_multipliers, country %in% test, select = country:avg_month_bin)
     ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
   }
 
-  else if(is.null(countries) & !is.null(regions)) {
+  else if(is.null(country) & !is.null(regions)) {
     if(is.numeric(regions)){
       regions <- acledR::acled_regions %>%
         filter(.data$region %in% regions) %>%
@@ -182,15 +179,17 @@ acled_api <- function(email = NULL,
 
   }
 
-  else if(!is.null(countries) & !is.null(regions)){
+  else if(!is.null(country) & !is.null(regions)){
 
     if(is.numeric(regions)){
       regions <- acledR::acled_regions %>%
         filter(.data$region %in% regions) %>%
         pull(.data$region_name)}
 
+    test <- country
+
     df <- acledR::acled_countries %>%
-      filter((.data$country %in% countries) | (.data$region %in% regions))
+      filter((.data$country %in% test) | (.data$region %in% regions))
 
     ex1_df <- subset(acledR::acled_multipliers, country %in% unique(df$country), select = country:avg_month_bin)
     ex1_df <- subset(ex1_df, year <= lubridate::year(end_date) & year >= lubridate::year(start_date))
@@ -249,6 +248,7 @@ acled_api <- function(email = NULL,
       ee_events = avg_daily_bin * n_days
     )
 
+
   out <- df %>%
     mutate(t_start = lubridate::as_date(start_date_check),
            t_end = lubridate::as_date(end_date_check),
@@ -264,19 +264,18 @@ acled_api <- function(email = NULL,
   # Note for how much data is being requested
   size_note <- paste("Requesting data for",
                      length(unique(ex1_df$country)),
-                     "countries.",
+                     "country.",
                      "Accounting for the requested time period and ACLED coverage dates, this request includes approximately",
                      format(acled_rounding(sum(ex1_df$ee_events)), big.mark = ","), "events.")
 
   message(size_note)
 
 
-  # Approx how many calls are required with 1 call sized at 600k country-days - Increase in the call size thanks to the more approximate approach.
-  # bcse of my testing, at around 900k the call falls.
+  # Current ceilling 400k
   time_units <- ceiling(sum(ex1_df$ee_events) / 400000)
 
   # Split call into roughly equally sized groups depending on how many country-days are in each country
-  # This randomly assigns countries into bins
+  # This randomly assigns country into bins
   out_groups <- split(out, sample(1:time_units, nrow(out), replace = T))
 
   if(log == T){
@@ -321,7 +320,7 @@ acled_api <- function(email = NULL,
   # }
 
   # Where
-  ## Countries
+  ## country
 
   countries_internal <- vector("list", length = length(out_groups))
   for(i in 1:length(out_groups)){
@@ -434,6 +433,7 @@ acled_api <- function(email = NULL,
                                 dates_internal, timestamp_internal,
                                 event_types_internal, ..., "&limit=0")
   }
+
 
   # Loop through the api requests
   response <- vector("list", length = length(out_groups))

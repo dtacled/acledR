@@ -90,13 +90,13 @@ test_that("Function returns NULL when non-existent type is input", {
 test_that("Can you request data from the monadic api, and convert it back?", {
 
   tester <- acledR::acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                              countries = "Brazil", start_date="2022-01-01",
+                              country = "Brazil", start_date="2022-01-01",
                               end_date = "2022-12-31", monadic = T,
                               prompt = F, acled_access = F, log = F)%>%
     acled_transform_wider(type = "api_monadic")
 
   control <- acledR::acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                              countries = "Brazil", start_date="2022-01-01",
+                              country = "Brazil", start_date="2022-01-01",
                               end_date = "2022-12-31", monadic = F,
                               prompt = F, acled_access = F, log = F)%>%
     arrange(desc(event_id_cnty))

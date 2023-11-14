@@ -40,7 +40,7 @@ To simplify this process, `acledR` includes a function which makes the update fo
 ```{r, eval=F}
 acled_update(
   df,
-  countries = NULL,
+  additional_countries = NULL,
   regions = NULL,
   event_types = NULL,
   acled_access = TRUE,

@@ -25,7 +25,7 @@ Function to convert your ACLED's API calls (if dyadic) into desired monadic form
 }
 \examples{
 \dontrun{
-#argen_acled <- acled_api(countries = "Argentina",start_date = "2022-01-01",
+#argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
 #                          end_date="2022-02-01", acled_access = T, prompt = F)
 
 #argen_acled_long_actors <- acled_transform_wide_to_long(argen_acled,
@@ -40,7 +40,6 @@ Function to convert your ACLED's API calls (if dyadic) into desired monadic form
 }
 \seealso{
 Other Data Manipulation: 
-\code{\link{acled_filter_actors}()},
 \code{\link{acled_transform_interaction}()},
 \code{\link{acled_transform_wider}()}
 }

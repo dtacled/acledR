@@ -10,7 +10,7 @@
 #'
 #' # Load data frame
 #' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
-#'                         countries = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
+#'                         country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
 #'                         acled_access = FALSE)
 #'
 #' # Transform the interactions
