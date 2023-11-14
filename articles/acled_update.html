@@ -52,7 +52,7 @@
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../get_started.html">Get Started</a>
+  <a class="nav-link" href="../articles/get_started.html">Get Started</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
@@ -158,14 +158,16 @@ explained: <code>acled_update</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
-<span>  additional_countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">event_date</span><span class="op">)</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">event_date</span><span class="op">)</span>,</span>
+<span>  additional_countries <span class="op">=</span> <span class="st">"current countries"</span>,</span>
 <span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  deleted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  prompts <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<span>  prompts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The function has the following arguments:</p>
 <ul>
 <li><p><code>df</code>: The dataframe to update. It has to have the same
@@ -236,14 +238,14 @@ events from your dataset you can set <code>deleted=TRUE</code>.</p>
 <span>                                  additional_countries <span class="op">=</span> <span class="st">"Argentina"</span>, </span>
 <span>                                  acled_access <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                                  prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## Requesting data for 1 countries. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span></span></code></pre>
+<pre><code><span><span class="co">## Requesting data for 1 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <pre><code><span><span class="co">## Dataset updated. </span></span>
 <span><span class="co">##  Old number of events: 326. </span></span>
 <span><span class="co">##  New events: 1. </span></span>
 <span><span class="co">##  Deleted events: 0. </span></span>
-<span><span class="co">##  Total new &amp; modified events: 64</span></span></code></pre>
+<span><span class="co">##  Total new &amp; modified events: 67</span></span></code></pre>
 <p>Now your dataset captures modified and newly created events.</p>
 <p>Best of luck!</p>
 </div>

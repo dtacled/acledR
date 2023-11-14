@@ -52,7 +52,7 @@
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../get_started.html">Get Started</a>
+  <a class="nav-link" href="../articles/get_started.html">Get Started</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
@@ -98,34 +98,29 @@
 
     
     
-<p>Pages under the ACLED Codebook tab describe the variables in ACLED’s
-data and provide usage examples. Users should consult the complete guide
-summarizing ACLED’s methodology at <a href="https://acleddata.com/download/2827/" class="external-link">here</a> for more details on
-each column.</p>
+<p>Pages in the ACLED Codebook tab describe the variables found in
+ACLED’s data, while also providing examples of their use. You can
+consult the complete guide summarizing ACLED’s methodology <a href="https://acleddata.com/download/2827/" class="external-link">here</a> for a more thorough
+description of the methodology underlying each column.</p>
 <div class="section level2">
 <h2 id="acled-overview">ACLED Overview<a class="anchor" aria-label="anchor" href="#acled-overview"></a>
 </h2>
-<p>The ACLED project codes reported information on the type, agents,
-location, date, and other characteristics of political violence events,
-demonstrations and politically relevant non-violent events (referred to
-as ‘Strategic developments’). ACLED focuses on tracking a range of
-violent and non-violent actions by political agents, including
-governments, rebels, militias, identity groups, political parties,
-external actors, rioters, protesters and civilians.</p>
-<p>Political violence is defined as the use of force by a group with a
-political purpose or motivation. ACLED records political violence
-through its constituent events, the intent of which is to produce a
-comprehensive overview of all forms of political disorder, expressed
-through violence and demonstrations, within and across states. A
-politically violent event is a single altercation where often force is
-used by one or more groups toward a political end, although some
-non-violent instances – including protests and strategic developments –
-are included in the dataset to capture the potential pre-cursors or
-critical junctures of a violent conflict.</p>
+<p>The ACLED project codes and standardizes reported information on the
+type, agents, location, date, and other characteristics of events of
+political violence, demonstrations, and politically relevant non-violent
+events (referred to as ‘Strategic developments’). ACLED focuses on
+tracking a range of violent and non-violent actions by political agents,
+including governments, rebels, militias, identity groups, political
+parties, external actors, rioters, protesters and civilians.</p>
 <p>The fundamental unit of observation in ACLED is the <em>event</em>.
 Events involve designated actors – e.g. a named rebel group, a militia
 or state forces. They occur at a specific named location (identified by
-name and geographic coordinates) and on a specific day.</p>
+name and geographic coordinates) and on a specific day. For more
+information on what qualifies as an event, and how ACLED codes
+long-running conflicts, please see our <a href="https://acleddata.com/knowledge-base/how-are-events-disaggregated/" class="external-link">knowledge
+base</a>. Every event is described by information in a standardized set
+of columns comprising ACLED’s core dataset. Below you can find a brief
+description of each column.</p>
 <div class="section level3">
 <h3 id="column-list">Column List<a class="anchor" aria-label="anchor" href="#column-list"></a>
 </h3>
@@ -510,23 +505,24 @@ and time an event was last uploaded to the ACLED API.
 <div class="section level3">
 <h3 id="acled-help">ACLED Help<a class="anchor" aria-label="anchor" href="#acled-help"></a>
 </h3>
-<p>To better understand what each column in our dataset represents,
-<code>acledR::acled_help()</code> redirects you to relevant
-documentation for the column in question.</p>
+<p>Rather than referring to this table during coding, and to provide a
+deeper understanding of a column’s meaning, you can use the
+<code>acledR::acled_help()</code> function. This function will redirect
+you to the relevant documentation for the column in question.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">acled_help</span><span class="op">(</span>column <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
-<p>The function is very straightforward, only requiring one argument.
-<code>column</code> refers to the column which users may be interested
-on exploring further.</p>
+<p>The function is very straightforward, requiring only one argument.
+<code>column</code> refers to the column for which you would like to be
+provided with more information.</p>
 <p><strong>Note</strong>: <code>acled_help()</code> only supports one
 column at a time.</p>
 <p>For example, if you would like to know more about the
-<em>fatalities</em> column, you can write
-<code>acled_help(column="fatalities")</code> which will prompt a
-fatalities vignette in the RStudio Help pane.</p>
-<p>While some columns have an standalone documentation vignette,
-e.g. Fatalities; others may be part of another vignette, e.g. admins are
-in the geographical vignette.</p>
+<em>fatalities</em> column, you can
+run<code>acled_help(column="fatalities")</code>, prompting the
+fatalities vignette to appear in the RStudio Help pane.</p>
+<p>While some columns have their own vignette, e.g. fatalities; others
+may be grouped together with documentation of similar columns,
+e.g. admins are in the geographical vignette.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

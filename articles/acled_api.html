@@ -52,7 +52,7 @@
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../get_started.html">Get Started</a>
+  <a class="nav-link" href="../articles/get_started.html">Get Started</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-utilizing-acledr">Utilizing acledR</a>
@@ -140,7 +140,7 @@ process ACLED API calls. The function takes the following arguments:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>email <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>          key <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>          countries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          country <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>          regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>          start_date <span class="op">=</span> <span class="st">"1997-01-01"</span>,</span>
 <span>          end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -157,7 +157,7 @@ process ACLED API calls. The function takes the following arguments:</p>
 <div class="section level3">
 <h3 id="geographical-filters">Geographical filters<a class="anchor" aria-label="anchor" href="#geographical-filters"></a>
 </h3>
-<p>You can use the <code>countries</code> and <code>regions</code>
+<p>You can use the <code>country</code> and <code>regions</code>
 parameters to specify the locations from which you would like to request
 data. If both values are <code>NULL</code> or are not included, the API
 will return data for all countries and regions. If you would like to
@@ -186,9 +186,8 @@ timestamp if it was recently updated.</p>
 used for analysis but is instead used to keep your own dataset up to
 date as changes are made to ACLED’s data. To learn more about how to
 keep your datasets up to date, visit the <a href="https://acled.github.io/acledR/articles/acled_update.html">Keeping
-your datasets up to date</a> page for an <code>acledR</code> approach or
-this <a href="https://acleddata.com/download/35179/" class="external-link">guide</a> more
-relevant to Excel or other spreadsheet tools.</p>
+your datasets up to date</a> page for an acledR approach or this <a href="https://acleddata.com/download/35179/" class="external-link">guide</a> more relevant to
+Excel or other spreadsheet tools.</p>
 </div>
 <div class="section level3">
 <h3 id="additional-filters">Additional filters<a class="anchor" aria-label="anchor" href="#additional-filters"></a>
@@ -277,7 +276,7 @@ January 1st, 2022, and December 1st, 2022.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,</span>
+<span><span class="va">df_br</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-12-01"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
@@ -305,14 +304,14 @@ during the specified period:</p>
 <p>If you wanted data from both “Brazil” and “Colombia”, you would
 execute the following:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                      end_date <span class="op">=</span> <span class="st">"2022-12-01"</span>,</span>
 <span>                      monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                      acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                      prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>If you are interested in events occurring over a larger area, it may
-be simpler to omit the <code>countries</code> parameter and include a
+be simpler to omit the <code>country</code> parameter and include a
 <code>regions</code> argument instead. You could also include an
 <code>event_type</code> argument to receive only a specific type of
 event:</p>
@@ -329,7 +328,7 @@ from which you would like to receive new or updated data. You can
 include the argument as either a string (“yyyy-mm-dd”) or a numeric Unix
 timestamp:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">df_br_co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                      start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                      end_date <span class="op">=</span> <span class="st">"2022-12-01"</span>,</span>
 <span>                      monadic <span class="op">=</span> <span class="cn">F</span>,</span>
@@ -341,7 +340,7 @@ timestamp:</p>
 (e.g., “Rioters versus Civilians (57)”), then you can add
 <em>interaction</em> code to the <code>...</code> argument:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">df_sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Colombia"</span><span class="op">)</span>,</span>
 <span>                   start_date <span class="op">=</span> <span class="st">"2022-01-01"</span>,</span>
 <span>                   end_date <span class="op">=</span> <span class="st">"2022-12-01"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
