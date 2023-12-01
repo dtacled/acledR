@@ -139,7 +139,9 @@ intended and save your credentials in your R environment, thus allowing
 you to avoid the need to manually input your credentials during each
 data request.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EMAIL_ADDRESS_EXAMPLES"</span><span class="op">)</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLES_KEY"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Success! Credentials authorized</span></span></code></pre></div>
 <p>If the authentication was successful, you will find a message in the
 console stating “Authorization accepted”.</p>
@@ -152,7 +154,7 @@ data from the API using the <code><a href="../reference/acled_api.html">acled_ap
 function accepts several fields used to filter data and specify data
 formatting. For example, you could request data from Argentina in 2022
 using the following code chunk to receive a dataframe:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argentinian_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"Argentina"</span>, start_date<span class="op">=</span><span class="st">"2022-01-01"</span>,end_date <span class="op">=</span> <span class="st">"2022-12-31"</span>, prompt<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Requesting data for 1 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 4,258 events.</span></span>
 <span><span class="co">#&gt; Processing API request</span></span>
@@ -219,7 +221,7 @@ dataset is updated, more information for which can be found in the
 `vignette(“acled_update”)</p>
 <p>Here is an example of how you can use <code><a href="../reference/acled_update.html">acled_update()</a></code> to
 update an old dataset:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_deletion_dummy.html">acled_old_deletion_dummy</a></span>, prompts <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Requesting data for 169 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 144,348 events.</span></span>
 <span><span class="co">#&gt; Processing API request</span></span>
@@ -250,7 +252,7 @@ which determines whether to include only <code>inter1</code> and
 <code>inter2</code> columns or also the <code>interaction</code> column
 in the output. By default, <code>only_inters</code> is set to
 <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">transformed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="va">argentinian_data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Note the inter1 and inter2 columns</span></span>
@@ -280,7 +282,7 @@ in the output. By default, <code>only_inters</code> is set to
 data from a wide format, where multiple actors are represented in each
 row, to a long format, with separate rows for each actor. This is
 particularly useful for actor-based analyses.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span>
 <span></span>
@@ -317,7 +319,7 @@ structure to your specific needs.</p>
 you to pivot your data back to a wide format. This function may be
 useful if you used <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> and wish to
 revert to the original data structure.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wide_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_wider.html">acled_transform_wider</a></span><span class="op">(</span><span class="va">long_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">wide_data</span><span class="op">)</span></span>
