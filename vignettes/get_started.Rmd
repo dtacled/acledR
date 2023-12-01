@@ -55,7 +55,7 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 ```
 
 ```{r}
-acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = ys.getenv("EXAMPLES_KEY"))
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 ```
 
 
