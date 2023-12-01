@@ -31,6 +31,11 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - name: load enviornment variables 
+        run: |
+          echo "EMAIL_ADDRESS_EXAMPLES=${{ secrets.EMAIL_ADDRESS_EXAMPLES}}" >> .Renviron
+          echo "EXAMPLES_KEY=${{ secrets.EXAMPLES_KEY}}" >> .Renviron
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}

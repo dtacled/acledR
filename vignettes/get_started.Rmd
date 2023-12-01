@@ -50,9 +50,15 @@ To be able to access the API, you require an API key. If you are not registered 
  
 Once you are registered, we encourage you to authenticate your credentials by using the `acled_access()` function. This function allows you to test that your credentials are working as intended and save your credentials in your R environment, thus allowing you to avoid the need to manually input your credentials during each data request. 
 
-```{r}
+```{r, eval=FALSE}
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 ```
+
+```{r}
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = ys.getenv("EXAMPLES_KEY"))
+```
+
+
 
 If the authentication was successful, you will find a message in the console stating "Authorization accepted". 
 
