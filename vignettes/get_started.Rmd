@@ -23,9 +23,15 @@ library(dplyr)
 
 Welcome! 
 
-In this vignette you are going to get a brief explanation on how the package works and how to get started with its core functions. Aside from this walkthrough, you are going to be able to find more detailed explanations and examples under the ACLED Codebook Tab and Articles tab. Alternatively, for metholodgy-related questions, please visit [ACLED's Knowledge Base](https://acleddata.com/knowledge-base/). 
+In this vignette you will receive a brief explanation of how to use ACLED’s R package. Besides this initial walkthrough, you can find more detailed explanations and examples under the ACLED Codebook Tab and Utilizing acledR tab. Alternatively, for information relating to ACLED’s methodology, please visit [ACLED's Knowledge Base](https://acleddata.com/knowledge-base/). 
 
-Naturally, the first step is loading installing the package:
+The main objectives of this package are (i) to facilitate access to ACLED data in R by providing a wrapper to submit GET requests to ACLED’s API, and (ii) to simplify the manipulation of ACLED data. 
+
+The general workflow for which this package was designed, and therefore the layout of this vignette, is as follows:
+
+![Authenticate your API credentials. Request data from ACLED API. Transform data received from the API. Generate initial analysis from the data.](workflow.png)
+
+You can begin by installing the package:
 
 ```{r, eval=FALSE}
 
@@ -38,20 +44,11 @@ devtools::install_github("ACLED/acledR") # To install the developer's branch fro
 library(acledR)
 ```
 
-
-The main objective of this package is to allow R users easier access to ACLED data by providing a wrapper to submit GET requests to the ACLED's API, as well as other functions to manipulate ACLED data. 
-
-This means users can request data through a more acccesible approach rather than utilizing lengthy and often comboluted API calls. The general workflow for which this package was designed was as follows:
-
-![Authenticate your API credentials. Request data from ACLED API. Transform data received from the API. Generate initial analysis from the data.](workflow.png)
-
-This vignette will follow the same general layout. 
-
 ## Authenticating your credentials - `acled_update()`
 
-To be able to access the API, you require an API key. If you are not registered in ACLED's Access portal, you can visit it [here](developer.acleddata.com). If you would like a detail guide on how to create your account and get your API, you can utilize [ACLED's Access Guide](https://acleddata.com/download/35300/). 
+To be able to access the API, you require an API key. If you are not registered in ACLED's Access portal, you can find it [here](developer.acleddata.com). If you would like a detailed guide on how to create your account and get your API key, please see [ACLED's Access Guide](https://acleddata.com/download/35300/). 
  
-Once you are registered, we encourage you to save your credentials and authenticate them through `acled_access()`. This function allows you to test that your credentials are working as intended, and save them into your enviorment, which in turn allows users to avoid having to input the credentials every time there is a request to the API. 
+Once you are registered, we encourage you to authenticate your credentials by using the `acled_access()` function. This function allows you to test that your credentials are working as intended and save your credentials in your R environment, thus allowing you to avoid the need to manually input your credentials during each data request. 
 
 ```{r}
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
@@ -59,21 +56,18 @@ acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") # 
 
 If the authentication was successful, you will find a message in the console stating "Authorization accepted". 
 
-## Requesting data from ACLED API - `acled_api()`
+## Requesting data from ACLED’s API - `acled_api()`
 
-Once the credentials are authenticated, users can easily start requesting data from the API. To do so, you can use the `acled_api()` function. The function requires the fields for which to gather the data from. Thus, in the example below we are going to request data from Argentina throughout 2022. 
+Once your credentials are authenticated, you can start requesting data from the API using the `acled_api()` function. The function accepts several fields used to filter data and specify data formatting.  For example, you could request data from Argentina in 2022 using the following code chunk to receive a dataframe: 
 
 ```{r}
 argentinian_data <- acled_api(country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31", prompt=F)
 ```
 
-While in our example we utilized only three arguments (`country`, `start_date` and `end_date`), `acled_api()` features a number of other arguments such as regions, timestamp, event_types, and more. You can find more in `vignette("acled_api")`.
+Note that while this example uses only three arguments (`country`, `start_date` and `end_date`), `acled_api()` accepts several other useful arguments, descriptions of which can be found in `vignette("acled_api")`. Further note that if you are not using the `acled_access` function to store your credentials, you would also need to specify your email and key when making API requests. 
 
-Additionally, due to the fact that we authenticated our credentials before, we are not required to input these into the function. Otherwise, if we didn't utilize `acled_access()` we would be required to input our email and key. 
 
-Finally, acled_api allows you to gather vast amounts of data from the API, however, to make these big calls of data, we need to segment these calls into multiple smaller ones. Thus, the function includes a `prompt` parameter which is set to `TRUE` (default). When `TRUE`, you will receive a message with the number of API requests that this will require (an important aspect to consider if you have a limited number of calls), and a confirmation message if you want to request data. Alternatively, when it is marked as `FALSE`, you will not receive the prompt and execute the required number of API requests
-
-The data you receive will be a data frame of the events throughout the request dates and the requested region/country. We can inspect the Argentinian data we gathered now. 
+Finally, `acled_api()` allows you to request large amounts of data from the API, potentially requiring the subsetting of your requests into multiple smaller requests. You can find more about how `acled_api()` subsets data by visiting `vignette(“acled_api”).
 
 ```{r, echo=F}
 glimpse(argentinian_data)
@@ -82,11 +76,11 @@ glimpse(argentinian_data)
 
 ## Updating ACLED Data - `acled_update()`
 
-To ensure your ACLED dataset remains current and accurate, regular updates are essential. The acledR package facilitates this process with the `acled_update()` function. `acled_update()` is designed to handle the intricacies of updating your ACLED dataset, accounting for new events, modifications to existing events, and deletions.
+ACLED data are regularly updated. You can ensure that your own dataset remains current by using the `acled_update()` function. `acled_update()` is designed to handle the intricacies of updating your ACLED dataset, accounting for new events, modifications to existing events, and deletions.
 
-For utilizing `acled_update`, you must provide it the old dataset to update. There other options that you can also utilize, which are mostly aimed at giving you options on how to update the dataset. You can find more information in `vignette("acled_update")
+To update your dataset you need only to provide the `acled_update` function with a dataframe of your old dataset. Note that there are other options providing more control over how your dataset is updated, more information for which can be found in the `vignette("acled_update")
 
-Here is an example of how to use `acled_update()` to update an old dataset:
+Here is an example of how you can use `acled_update()` to update an old dataset:
 
 ```{r}
 new_data <- acled_update(acledR::acled_old_deletion_dummy, prompts = F)
@@ -94,7 +88,7 @@ new_data <- acled_update(acledR::acled_old_deletion_dummy, prompts = F)
 
 ## Transforming ACLED Data - `acled_transform_*`
 
-The `acledR` package provides a suite of functions to manipulate and transform ACLED data, these may aid you on simplifying part of the transformations required for your desired analysis. You can visit all the information obout our transformation functions in vignette("acled_transformations").
+ACLED data has a unique structure which can make data manipulation non-trivial. The `acledR` package provides a suite of functions to simplify data manipulation. You can find a more in-depth treatment of ACLED’s data transformation functions by visiting the vignette("acled_transformations").
 
 ### 1. Converting Interaction Codes - `acled_transform_interaction()`
 
@@ -117,11 +111,11 @@ long_data <- acled_transform_longer(argentinian_data, type = "full_actors")
 head(long_data)
 ```
 
-You can specify the type of transformation using the type argument, choosing from `full_actors`, `main_actors`, `assoc_actors`, or `source`. This function provides flexibility and control over the transformation process, allowing you to tailor the data structure to your specific needs.
+You can specify the type of transformation using the type argument, choosing from `full_actors`, `main_actors`, `assoc_actors`, or `source`. For instance, specifying ‘full_actors’ will result in you transforming the data frame such that every actor and associate actor for a given event is represented in a separate row. This function provides flexibility and control over the transformation process, allowing you to tailor the data structure to your specific needs.
 
 ### 3. Reshaping Data: Long to Wide Format - `acled_transform_wider()`
 
-Conversely, the `acled_transform_wider()` function enables you to pivot your data back to a wide format, useful if you have previously used `acled_transform_longer()` and wish to revert to the original data structure.
+Conversely, the `acled_transform_wider()` function enables you to pivot your data back to a wide format. This function may be useful if you used `acled_transform_longer()` and wish to revert to the original data structure.
 
 ```{r}
 wide_data <- acled_transform_wider(long_data, type = "full_actors")
@@ -129,8 +123,8 @@ wide_data <- acled_transform_wider(long_data, type = "full_actors")
 head(wide_data)
 ```
 
-Like its counterpart, this function requires the data and type arguments, ensuring consistency and ease of use across the transformation functions.
+Like its counterpart, this function requires the data and type arguments.
 
 ----
 
-Now your dataset should be ready for you to analyse! Remember to always consult [ACLED's Methodology](https://acleddata.com/resources/) when analysing to get a better understanding of our dataset. 
+Now your dataset should be ready for you to analyze! Remember to always consult [ACLED's Methodology](https://acleddata.com/resources/) when analyzing ACLED data–it should provide a deeper understanding of ACLED data and your analyses.

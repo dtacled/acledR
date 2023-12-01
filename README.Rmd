@@ -20,6 +20,11 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx)](https://codecov.io/gh/ACLED/acledR)
 <!-- badges: end -->
 
+Welcome to ACLED's official R package! With this package we want to bring you an even more convenient way to access ACLED data, building on top of our existing API. 
+
+In this repo you can find the source code of the package, as well as the documentation. You can also visit https://acled.github.io/acledR/ for more information and walkthroughs on how to use the package.
+
+
 # Overview
 
 This package provides tools to extract and manipulate data from the [Armed Conflict Location and Event Data Project (ACLED)](https://acleddata.com/). 
@@ -39,22 +44,13 @@ Since the package repo is currently private, you need to tell R and Github that 
 usethis::create_github_token()
 ```
 
-After you've copied the PAT from the browser, return to R and run this, which will store the PAT locally.
+After you've copied the PAT from the browser and saved it somewhere safe, return to R and run this, which will store the PAT locally.
 
 ```{r, eval=F}
 # paste the token where it says YourPAT
 credentials::set_github_pat("YourPAT")
 # if you run this, it should print your token; if not we've failed
 Sys.getenv("GITHUB_PAT")
-```
-
-I recommend also setting the PAT in your `.Rprofile` so it's stored for all R sessions (i.e., you don't have to save the PAT and paste it in each time you re-install).
-
-```{r, eval=F}
-# to set your PAT for all R sessions, run
-file.edit(file.path("~", ".Rprofile"))
-# and then paste credentials::set_github_pat("YourPAT") into the .Rprofile script
-# save the file
 ```
 
 Now you can install the package and it will automatically locate your PAT.
@@ -67,8 +63,12 @@ devtools::install_github("ACLED/acledR")
 
 ## Installation (for public use) 
 
-Until the acledR package gets added into the Comprehensive R Archive Network (CRAN), users can utilize devtools to install the package from Github. Thankfully, the installation is rather simple. You can install it through the following code:
-
+The package is on the process to get submited to the Comprehensive R Archive Network (CRAN). In the meantime, you can install the package from Github.
 ```{r, eval = F}
 devtools::install_github("ACLED/acledR") ## if you are interested in a particular branch, please add a 'ref' argument. 
+```
+
+Once the package is uploaded to CRAN, you can install it with the following command:
+```{r, eval = F}
+install.packages("acledR")
 ```
