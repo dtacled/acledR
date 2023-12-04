@@ -62,9 +62,6 @@
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/acled_codebook.html">ACLED Codebook</a>
-</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -154,7 +151,7 @@ event has been modified. Hence, you can remove the duplicated event with
 the smaller timestamp value.</p>
 <p>To simplify this process, <code>acledR</code> includes a function
 which makes the update for you by following the steps previously
-explained: <code>acled_update</code>.</p>
+explained:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
@@ -218,7 +215,7 @@ keep your datasets updated.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"your_email"</span>, key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span>
 <span></span>
 <span><span class="va">argen_dummy_acled_file</span> <span class="op">&lt;-</span> <span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span> <span class="co"># Here is our old personal ACLED dataset</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
@@ -227,9 +224,9 @@ keep your datasets updated.</p>
 <code class="sourceCode R"><span><span class="va">latest_timestamp_unix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">latest_timestamp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_datetime</a></span><span class="op">(</span><span class="va">latest_timestamp_unix</span><span class="op">)</span> </span></code></pre></div>
-<p>The dataset has not been updated since , so you may want a more
-updated version. To do so, you can use <code><a href="../reference/acled_update.html">acled_update()</a></code>. If
-you are only interested in updating events that are already in your
+<p>The dataset has not been updated since 2022-07-25, so you may want a
+more updated version. To do so, you can use <code><a href="../reference/acled_update.html">acled_update()</a></code>.
+If you are only interested in updating events that are already in your
 dataset, you can ignore the <code>start_date</code> and
 <code>end_date</code> arguments. If you also wish to remove deleted
 events from your dataset you can set <code>deleted=TRUE</code>.</p>

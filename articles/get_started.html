@@ -62,9 +62,6 @@
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/acled_codebook.html">ACLED Codebook</a>
-</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -101,9 +98,9 @@
 <p>Welcome!</p>
 <p>In this vignette you will receive a brief explanation of how to use
 ACLED’s R package. Besides this initial walkthrough, you can find more
-detailed explanations and examples under the ACLED Codebook Tab and
-Utilizing acledR tab. Alternatively, for information relating to ACLED’s
-methodology, please visit <a href="https://acleddata.com/knowledge-base/" class="external-link">ACLED’s Knowledge
+detailed explanations and examples under the ‘Utilizing acledR’ tab.
+Alternatively, for information relating to ACLED’s methodology, please
+visit <a href="https://acleddata.com/knowledge-base/" class="external-link">ACLED’s Knowledge
 Base</a>.</p>
 <p>The main objectives of this package are (i) to facilitate access to
 ACLED data in R by providing a wrapper to submit GET requests to ACLED’s
@@ -139,7 +136,7 @@ intended and save your credentials in your R environment, thus allowing
 you to avoid the need to manually input your credentials during each
 data request.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"acledexamples@gmail.com"</span>, key <span class="op">=</span> <span class="st">"M3PWwg3DIdhHMuDiilp5"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"your_email"</span>, key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; Success! Credentials authorized</span></span></code></pre>
 <p>If the authentication was successful, you will find a message in the
 console stating “Authorization accepted”.</p>
@@ -169,7 +166,7 @@ requests.</p>
 of data from the API, potentially requiring the subsetting of your
 requests into multiple smaller requests. You can find more about how
 <code><a href="../reference/acled_api.html">acled_api()</a></code> subsets data by visiting
-`vignette(“acled_api”).</p>
+<code>vignette(“acled_api”)</code>.</p>
 <pre><code><span><span class="co">#&gt; Rows: 2,677</span></span>
 <span><span class="co">#&gt; Columns: 31</span></span>
 <span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG12064", "AR…</span></span>
@@ -216,7 +213,7 @@ modifications to existing events, and deletions.</p>
 <code>acled_update</code> function with a dataframe of your old dataset.
 Note that there are other options providing more control over how your
 dataset is updated, more information for which can be found in the
-`vignette(“acled_update”)</p>
+<code><a href="../articles/acled_update.html">vignette("acled_update")</a></code>.</p>
 <p>Here is an example of how you can use <code><a href="../reference/acled_update.html">acled_update()</a></code> to
 update an old dataset:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -237,7 +234,7 @@ update an old dataset:</p>
 non-trivial. The <code>acledR</code> package provides a suite of
 functions to simplify data manipulation. You can find a more in-depth
 treatment of ACLED’s data transformation functions by visiting the
-vignette(“acled_transformations”).</p>
+<code><a href="../articles/acled_transformations.html">vignette("acled_transformations")</a></code>.</p>
 <div class="section level3">
 <h3 id="converting-interaction-codes---acled_transform_interaction">1. Converting Interaction Codes -
 <code>acled_transform_interaction()</code><a class="anchor" aria-label="anchor" href="#converting-interaction-codes---acled_transform_interaction"></a>
@@ -282,7 +279,6 @@ row, to a long format, with separate rows for each actor. This is
 particularly useful for actor-based analyses.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">long_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 29</span></span></span>
@@ -303,9 +299,9 @@ particularly useful for actor-based analyses.</p>
 <p>You can specify the type of transformation using the type argument,
 choosing from <code>full_actors</code>, <code>main_actors</code>,
 <code>assoc_actors</code>, or <code>source</code>. For instance,
-specifying ‘full_actors’ will result in you transforming the data frame
-such that every actor and associate actor for a given event is
-represented in a separate row. This function provides flexibility and
+specifying <code>full_actors</code> will result in you transforming the
+data frame such that every actor and associate actor for a given event
+is represented in a separate row. This function provides flexibility and
 control over the transformation process, allowing you to tailor the data
 structure to your specific needs.</p>
 </div>

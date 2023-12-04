@@ -62,9 +62,6 @@
     <a class="dropdown-item" href="../articles/acled_transformations.html">acledR Data Manipulation</a>
   </div>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/acled_codebook.html">ACLED Codebook</a>
-</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -167,8 +164,8 @@ Similarly, you can request data from one or more regions by using either
 a vector of region names or numeric codes.
 <code><a href="../reference/acled_countries.html">acledR::acled_countries</a></code> and
 <code><a href="../reference/acled_regions.html">acledR::acled_regions</a></code> show the full lists of countries and
-regions available. Please visit ACLED’s <a href="">Geography
-vignette</a> for more information.</p>
+regions available. Please visit ACLED’s <a href="https://acleddata.com/article-categories/region-specific-methodology/" class="external-link">Knowledge
+Base</a> for region-specific methodology questions.</p>
 </div>
 <div class="section level3">
 <h3 id="temporal-filters">Temporal filters<a class="anchor" aria-label="anchor" href="#temporal-filters"></a>
@@ -209,8 +206,9 @@ data. When <code>monadic=TRUE</code>, the function will return a monadic
 (“long-form”) data frame with only one actor (based on <em>actor1</em>
 and <em>actor2</em>). For transforming your dataset from wide to long
 without utilizing the API, or transforming it based on different sets of
-columns, visit . For more information on the difference between our
-wide/dyadic and monadic/long datasets, please visit our <a href="https://apidocs.acleddata.com/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">API
+columns, visit <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>. For more
+information on the difference between our wide/dyadic and monadic/long
+datasets, please visit our <a href="https://apidocs.acleddata.com/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">API
 guide</a></p>
 <p>The <code>...</code> parameter represents any other arguments you
 might want to include in your API query, such as <em>ISO</em> or
