@@ -114,13 +114,13 @@ As is common when executing API calls, handling large volumes of data requires s
 
 Imagine you are interested in events from “Brazil” occurring between January 1st, 2022, and December 1st, 2022.
 
-```{r}
+```{r, eval = FALSE}
 library(acledR)
 library(dplyr)
 
 #Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
 
-acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") 
+acled_access(email = "your_email", key = "your_key") 
 
 df_br <- acled_api(country = c("Brazil"),
                    start_date = "2022-01-01",
@@ -129,6 +129,23 @@ df_br <- acled_api(country = c("Brazil"),
                    acled_access = TRUE,
                    prompt = F)
 ```
+```{r,echo=FALSE}
+library(acledR)
+library(dplyr)
+
+#Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
+
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
+
+df_br <- acled_api(country = c("Brazil"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-12-01",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
+
+
 
 This returns a tibble that includes each ACLED event in “Brazil” during the specified period:
 

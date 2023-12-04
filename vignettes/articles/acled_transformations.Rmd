@@ -119,11 +119,11 @@ In this section you can walk through a potential use case for the transformation
 
 For this example, assume that you are interested in data from “South America” during the first half of 2023. **NOTE**: The email and key values below are only examples. You should provide your own credentials that you can create by using [ACLED’s website](https://apidocs.acleddata.com/get_started.html#getting-your-api-key). 
 
-```{r}
+```{r, eval = False}
 
 library(acledR)
 
-acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") 
+acled_access(email = "your_email", key = "your_key") 
 
 df_sa <- acled_api(regions = "South America",
                    start_date = "2023-01-01",
@@ -132,7 +132,19 @@ df_sa <- acled_api(regions = "South America",
                    acled_access = TRUE,
                    prompt = F)
 ```
+```{r, echo=FALSE}
 
+library(acledR)
+
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
+
+df_sa <- acled_api(regions = "South America",
+                   start_date = "2023-01-01",
+                   end_date = "2023-06-01",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
 Now that your data are in long format with one actor per row, you can much more easily filter the data to retain only those events involving the "Military Forces of Colombia (2022-)": 
 
 ```{r}

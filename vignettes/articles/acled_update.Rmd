@@ -90,8 +90,13 @@ library(lubridate)
 library(dplyr)
 ```
 
-```{r}
+```{r, eval=FALSE}
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+
+argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
+```
+```{r, echo=FALSE}
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY")) #  This is an example, you will need to input your credentials.
 
 argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
 ```

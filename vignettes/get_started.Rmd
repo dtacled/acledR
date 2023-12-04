@@ -54,7 +54,7 @@ Once you are registered, we encourage you to authenticate your credentials by us
 acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
 ```
 
-```{r}
+```{r,echo=FALSE}
 acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 ```
 
