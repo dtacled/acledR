@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      EMAIL_ADDRESS_EXAMPLES: ${{ secrets.EMAIL_ADDRESS_EXAMPLES}}
+      EXAMPLES_KEY: ${{ secrets.EXAMPLES_KEY}}
 
     steps:
       - uses: actions/checkout@v3

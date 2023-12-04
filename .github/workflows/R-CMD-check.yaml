@@ -26,6 +26,8 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      EMAIL_ADDRESS_EXAMPLES: ${{ secrets.EMAIL_ADDRESS_EXAMPLES}}
+      EXAMPLES_KEY: ${{ secrets.EXAMPLES_KEY}}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
