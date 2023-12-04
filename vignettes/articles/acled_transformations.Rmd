@@ -119,7 +119,7 @@ In this section you can walk through a potential use case for the transformation
 
 For this example, assume that you are interested in data from “South America” during the first half of 2023. **NOTE**: The email and key values below are only examples. You should provide your own credentials that you can create by using [ACLED’s website](https://apidocs.acleddata.com/get_started.html#getting-your-api-key). 
 
-```{r, eval = False}
+```{r, eval = FALSE}
 
 library(acledR)
 
