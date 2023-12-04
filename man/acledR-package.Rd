@@ -13,10 +13,9 @@ The package allows users to easily interact with 'ACLED' data by providing wrapp
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/billingtt/acledR}
-  \item \url{https://billingtt.github.io/acledR/}
+  \item \url{https://github.com/ACLED/acledR}
   \item \url{https://acled.github.io/acledR/}
-  \item Report bugs at \url{https://github.com/billingtt/acledR/issues}
+  \item Report bugs at \url{https://github.com/ACLED/acledR/issues}
 }
 
 }

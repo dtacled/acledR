@@ -2,14 +2,14 @@
 #' @name acled_update
 #' @description
 #' This function is meant to help you keep your dataset updated, by automatically checking for new and modified events, as well as deleted events (if deleted = TRUE).
-#' Note: The function makes new api calls to gather new and modified events. See its vignettes in: <https://acled.github.io/acledR/articles/acled_deletions_api.html>
+#' Note: The function makes new API calls to gather new and modified events.
 #' @param df The dataframe to update, it has to have the same structure as ACLED's dyadic dataframe (i.e. the result of `acled_api()`)
 #' @param start_date The first date of events you want to update from.. These are the celling and floor of *event_date*, not of *timestamp*.
 #' @param end_date The last date of events you want to update from. These are the celling and floor of *event_date*, not of *timestamp*.
 #' @param additional_countries string. Additional additional_countries to update your dataset. It defaults to “current countries”, which includes all the additional_countries inside your dataset.
 #' @param regions string. The regions for which you would like events in your dataset updated.
 #' @param event_types string. The event types for which you would like events in your dataset updated.
-#' @param acled_access logical. If you have already used `acled_acess()`, you can set this option as TRUE (default) to avoid having to input your email and access key.
+#' @param acled_access logical. If you have already used `acled_access()`, you can set this option as TRUE (default) to avoid having to input your email and access key.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param deleted logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().
@@ -21,14 +21,16 @@
 #' \item ACLED Keeping your dataset updated guide. <https://acleddata.com/download/35179/>
 #' }
 #' @examples
+#' \dontrun{
 #' # Updating dataset to include newer data from Argentina
 #'
-#' acledR::acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
+#' acledR::acled_access(email = "your_email", key = "your_key")
 #'
 #' new_argen_dataset <- acled_update(acledR::acled_old_dummy,
 #'                                   additional_countries = "Argentina",
 #'                                   acled_access = TRUE,
 #'                                   prompts = FALSE)
+#' }
 #'
 #' @md
 #' @importFrom dplyr filter

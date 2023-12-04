@@ -51,14 +51,14 @@ acled_api(
 Returns a tibble of of ACLED events.
 }
 \description{
-This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the format (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 }
 \examples{
 \dontrun{
 
 # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 # in dyadic-wide form
-argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
+argen_acled <- acled_api(email = "your_email", key = "your_key",
                         country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
                         acled_access = FALSE)
 
@@ -68,7 +68,7 @@ argen_acled
 # Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022
 # in monadic-long form using email and key saved in environment
 
-acled_access(email = "jane.doe.email", key = "jane.doe.key")
+acled_access(email = "your_email", key = "your_key")
 carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01",
                          end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
 

@@ -7,7 +7,7 @@
 acled_transform_longer(data, type = "full_actors")
 }
 \arguments{
-\item{data, }{Dataframe or tibble containing your dataset.}
+\item{data, }{dataframe or tibble containing your dataset.}
 
 \item{type, }{character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
 \itemize{

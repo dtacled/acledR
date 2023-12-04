@@ -37,7 +37,7 @@ As detailed in ACLED’s guide about [updating your dataset](https://acleddata.c
 
 Unlike for [deleted events](https://acled.github.io/ACLED-api-guide/deleted_endpoint.html), there is no separate API endpoint to check for updated events. When events are updated, their timestamp changes to reflect the timing of the most recent change. This means, that you can find the updated events by using `acledR::acled_api()` while providing  the most recent timestamp (i.e. `max({your ACLED dataset}$timestamp))`) in your local dataset as the `timestamp` argument of the function. If there is an event with a more recent *timestamp* but the same *event_id_cnty* as an event in your downloaded dataset, then that event has been modified. Hence, you can remove the duplicated event with the smaller timestamp value. 
 
-To simplify this process, `acledR` includes a function which makes the update for you by following the steps previously explained: `acled_update`. 
+To simplify this process, `acledR` includes a function which makes the update for you by following the steps previously explained: 
 
 ```{r, eval=F}
 acled_update(
@@ -91,7 +91,7 @@ library(dplyr)
 ```
 
 ```{r, eval=FALSE}
-acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5") #  This is an example, you will need to input your credentials.
+acled_access(email = "your_email", key = "your_key") #  This is an example, you will need to input your credentials.
 
 argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
 ```
@@ -108,7 +108,7 @@ latest_timestamp_unix <- max(argen_dummy_acled_file$timestamp)
 latest_timestamp <- as_datetime(latest_timestamp_unix) 
 ```
 
-The dataset has not been updated since `r print(latest_timestamp)`, so you may want a more updated version. To do so, you can use `acled_update()`. If you are only interested in updating events that are already in your dataset, you can ignore the `start_date` and `end_date` arguments. If you also wish to remove deleted events from your dataset you can set `deleted=TRUE`. 
+The dataset has not been updated since `r as_date(latest_timestamp)`, so you may want a more updated version. To do so, you can use `acled_update()`. If you are only interested in updating events that are already in your dataset, you can ignore the `start_date` and `end_date` arguments. If you also wish to remove deleted events from your dataset you can set `deleted=TRUE`. 
 
 ```{r}
 

@@ -1,7 +1,7 @@
 #' @title Transform ACLED data from wide to long
 #' @name acled_transform_longer
 #' @description Function to convert your ACLED's API calls (if dyadic) into desired monadic forms.
-#' @param data, Dataframe or tibble containing your dataset.
+#' @param data, dataframe or tibble containing your dataset.
 #' @param type, character string. One of five types: full_actors, main_actors, assoc_actors, source, or all.
 #' \itemize{
 #' \item full_actors: All actor and associated actor columns
@@ -73,8 +73,6 @@ acled_transform_longer <- function(data,type="full_actors") {
         str_detect(type_of_actor, "assoc_*") ~ NA,
         TRUE ~ inter))
 
-    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
-
     if(0 %in% nchar(separated_data$actor)){
       warning("There are empty rows in the actor column.")
     }
@@ -108,7 +106,6 @@ acled_transform_longer <- function(data,type="full_actors") {
       relocate(c("type_of_assoc_actor","assoc_actor"),.after="sub_event_type")%>%
       mutate(assoc_actor = str_trim(assoc_actor))
 
-    message("Be aware, inter1 and inter2 represent the actor type of actor1 and actor2 respectively.")
 
 
     if(0 %in% nchar(separated_data$assoc_actor)){

@@ -20,8 +20,6 @@ navbar:
       href: articles/acled_update.html
     - text: acledR Data Manipulation
       href: articles/acled_transformations.html
-  - text: ACLED Codebook
-    href: articles/acled_codebook.html
 reference:
 - title: Functions
 - subtitle: API & Access

@@ -31,7 +31,7 @@ acled_update(
 
 \item{event_types}{string. The event types for which you would like events in your dataset updated.}
 
-\item{acled_access}{logical. If you have already used \code{acled_acess()}, you can set this option as TRUE (default) to avoid having to input your email and access key.}
+\item{acled_access}{logical. If you have already used \code{acled_access()}, you can set this option as TRUE (default) to avoid having to input your email and access key.}
 
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 
@@ -46,17 +46,19 @@ Tibble with updated ACLED data and a newer timestamp.
 }
 \description{
 This function is meant to help you keep your dataset updated, by automatically checking for new and modified events, as well as deleted events (if deleted = TRUE).
-Note: The function makes new api calls to gather new and modified events. See its vignettes in: \url{https://acled.github.io/acledR/articles/acled_deletions_api.html}
+Note: The function makes new API calls to gather new and modified events.
 }
 \examples{
+\dontrun{
 # Updating dataset to include newer data from Argentina
 
-acledR::acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
+acledR::acled_access(email = "your_email", key = "your_key")
 
 new_argen_dataset <- acled_update(acledR::acled_old_dummy,
                                   additional_countries = "Argentina",
                                   acled_access = TRUE,
                                   prompts = FALSE)
+}
 
 }
 \seealso{

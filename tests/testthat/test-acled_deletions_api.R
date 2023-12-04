@@ -28,7 +28,7 @@ test_that("Email and key are handled as expected without acled_access",{
 ## Test that acled_access is handled appropiately. ----
 
 test_that("Email and Key are handled appropiately",{
-  acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5")
+  acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 
   some_log <- acled_deletions_api(date_deleted = "1658707200", acled_access = T, log = T)
 
@@ -49,7 +49,7 @@ test_that("names of columns are correct - unix", {
 
 test_that("users can opt not to include a timestamp and they will get all the possible events", {
 
-  stuff <- acled_deletions_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5", acled_access = F, log = F)
+  stuff <- acled_deletions_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"), acled_access = F, log = F)
 
   expect_gt(nrow(stuff), 140150)
 })
@@ -61,10 +61,10 @@ test_that("Users get an error if the email or key are not provided", {
 
   expect_error(acled_deletions_api(date_deleted = "1658707200", acled_access = F, log = T), regexp = "Email address required for ACLED API access")
 
-  expect_error(acled_deletions_api(key = "M3PWwg3DIdhHMuDiilp5",
+  expect_error(acled_deletions_api(key = "key",
                                    date_deleted = "1658707200", acled_access = F, log = T), regexp = "Email address required for ACLED API access")
 
-  expect_error(acled_deletions_api(email = "acledexamples@gmail.com",
+  expect_error(acled_deletions_api(email = "Email",
                                    date_deleted = "1658707200", acled_access = F, log = T), regexp = 'Key required for ACLED API access' )
 
 })
@@ -84,10 +84,10 @@ test_that("If access is TRUE and credentials are null, credentials are ignored, 
 
 test_that("A warning appears that acled_access is being ignored, and the proper credentials are being used.",{
 
-  alog <- acled_deletions_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  alog <- acled_deletions_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                   date_deleted = "1658707200",acled_access = T, log = T)
 
-  expect_message(acled_deletions_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_message(acled_deletions_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                      date_deleted = "1658707200",acled_access = T, log = T), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
 
   expect_true(grepl("acledexamples", alog$email[1]))

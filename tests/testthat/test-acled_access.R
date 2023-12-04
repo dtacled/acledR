@@ -3,18 +3,18 @@
 
 test_that("acled_access properly stores the credentials", {
   expect_equal(Sys.getenv("acled_email"),"acledexamples@gmail.com")
-  expect_equal(Sys.getenv("acled_key"), "M3PWwg3DIdhHMuDiilp5")
+  expect_equal(nchar(Sys.getenv("acled_key")), 20)
 })
 
 
 # Shows the message that it was successful?
 test_that("It shows that it works", {
-  expect_message(acled_access(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5"), "Success! Credentials authorized")
+  expect_message(acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY")), "Success! Credentials authorized")
 })
 
 
 # Does it shows a message when it fails?
 test_that("It shows that is doesn't work", {
-  expect_error(acled_access(email = "acledexamples@gmail123123.com", key = "M3PWwg3DIdhHMuDiilp5"),
+  expect_error(acled_access(email = "an@email!!!", key = "akey!!!"),
                regex = "Key and email not authorized.*")
 })

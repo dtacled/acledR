@@ -1,6 +1,6 @@
 #' @title Request data from ACLED API
 #' @name acled_api
-#' @description This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the type of file (monadic or dyadic). The function returns a tibble of the desired ACLED events.
+#' @description This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the format (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param country character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.
@@ -25,7 +25,7 @@
 #'
 #' # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 #' # in dyadic-wide form
-#' argen_acled <- acled_api(email = jane.doe.email, key = jane.doe.key,
+#' argen_acled <- acled_api(email = "your_email", key = "your_key",
 #'                         country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
 #'                         acled_access = FALSE)
 #'
@@ -35,7 +35,7 @@
 #' # Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022
 #' # in monadic-long form using email and key saved in environment
 #'
-#' acled_access(email = "jane.doe.email", key = "jane.doe.key")
+#' acled_access(email = "your_email", key = "your_key")
 #' carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01",
 #'                          end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
 #'
