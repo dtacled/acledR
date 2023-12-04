@@ -135,7 +135,7 @@ library(dplyr)
 
 #Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
 
-#acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 
 df_br <- acled_api(country = c("Brazil"),
                    start_date = "2022-01-01",
