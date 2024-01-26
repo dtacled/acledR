@@ -143,6 +143,7 @@ process ACLED API calls. The function takes the following arguments:</p>
 <span>          end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>          timestamp <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>          event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>          population <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>          monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>          <span class="va">...</span>,</span>
 <span>          acled_access <span class="op">=</span> <span class="cn">TRUE</span>, </span>
@@ -210,6 +211,13 @@ columns, visit <code><a href="../reference/acled_transform_longer.html">acled_tr
 information on the difference between our wide/dyadic and monadic/long
 datasets, please visit our <a href="https://apidocs.acleddata.com/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">API
 guide</a></p>
+<p>Finally, you can use the <code>population</code> argument to specify
+if you want to include the estimated affected population columns. This
+argument takes three options, <code>none</code> which returns no extra
+columns, <code>best</code> which only returns the population_best
+column, or <code>full</code> which returns all the estimated population
+columns. For more information, visit our <a href="https://acleddata.com/conflict-exposure/" class="external-link">Conflict Exposure
+piece</a>.</p>
 <p>The <code>...</code> parameter represents any other arguments you
 might want to include in your API query, such as <em>ISO</em> or
 <em>Interaction</em>. If you want to use these filters or others not

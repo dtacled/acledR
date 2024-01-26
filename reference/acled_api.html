@@ -74,6 +74,7 @@
 <span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  timestamp <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  event_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  population <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -114,6 +115,10 @@
 
 <dt>event_types</dt>
 <dd><p>vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.</p></dd>
+
+
+<dt>population</dt>
+<dd><p>character. Specify whether to return population estimates for each event. It accepts three options: "none" (default), "best", and "full".</p></dd>
 
 
 <dt>monadic</dt>

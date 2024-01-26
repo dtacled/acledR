@@ -176,13 +176,13 @@ requests into multiple smaller requests. You can find more about how
 <span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Demonstrations", "Demonstrat…</span></span>
 <span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests", "Protests…</span></span>
 <span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful protest", "…</span></span>
-<span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-)", "Protesters (…</span></span>
+<span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-2023)", "Proteste…</span></span>
 <span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "Health Workers (Argentina)", NA, "Labor Group …</span></span>
-<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, …</span></span>
+<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, 6, …</span></span>
 <span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
-<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, …</span></span>
-<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "Jo…</span></span>
+<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 37,…</span></span>
 <span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
 <span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
@@ -199,7 +199,7 @@ requests into multiple smaller requests. You can find more about how
 <span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
 <span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "crowd size=no report", "crowd size=no report",…</span></span>
-<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1693414514, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
+<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1705379976, 1673295342, 1673295342, 1673295342, 167…</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="updating-acled-data---acled_update">Updating ACLED Data - <code>acled_update()</code><a class="anchor" aria-label="anchor" href="#updating-acled-data---acled_update"></a>
@@ -223,9 +223,9 @@ update an old dataset:</p>
 <span><span class="co">#&gt; Extracting content from API request</span></span>
 <span><span class="co">#&gt; Dataset updated. </span></span>
 <span><span class="co">#&gt;  Old number of events: 9000. </span></span>
-<span><span class="co">#&gt;  New events: 48798. </span></span>
+<span><span class="co">#&gt;  New events: 57088. </span></span>
 <span><span class="co">#&gt;  Deleted events: 44. </span></span>
-<span><span class="co">#&gt;  Total new &amp; modified events: 51574</span></span></code></pre></div>
+<span><span class="co">#&gt;  Total new &amp; modified events: 60412</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="transforming-acled-data---acled_transform_">Transforming ACLED Data - <code>acled_transform_*</code><a class="anchor" aria-label="anchor" href="#transforming-acled-data---acled_transform_"></a>
