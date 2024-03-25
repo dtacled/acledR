@@ -1,0 +1,219 @@
+---
+title: "Accessing and Utilizing ACLED's API"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Accessing and Utilizing ACLED's API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = F, 
+  message = F,
+  cache = F
+)
+```
+
+## Accessing the API
+
+To use ACLED's [API](https://apidocs.acleddata.com/), you must first register an account in [ACLED's Access Portal](developer.acleddata.com). You can find more information about registering your account by visiting ACLED’s [access guide](https://acleddata.com/download/35300/). To store and utilize your registered credentials (your email and a unique key), you can either:
+
+-   (recommended) Use `acled_access()` to verify your credentials and store them in your local environment for a given session.
+
+-   Manually store your credentials for permanent use across all sessions.
+
+You can store your credentials using  `acled_access()` by doing the following:
+
+```{r, eval = F}
+acled_access("your_email", "your_key") # to be run every session before doing an API call. 
+```
+
+Alternatively, to manually store your credentials as a variable in the R environment, you can run the following:
+
+```{r, eval = F}
+file.edit(file.path("~", ".Renviron"))
+```
+
+which will open your `.Renviron` file. Once open, you can set:
+
+```{r, eval = F}
+email_address = "your_email"
+acled_key = "your_key"
+```
+
+Afterwards, you should save the file.
+
+You can confirm that they have been properly stored by running `Sys.getenv("email_address")` to return the stored email address and `Sys.getenv("acled_key")` to return the stored ACLED key in the console.
+
+## ACLED API
+
+`acled_api()` is a function you can use to request and process ACLED API calls. The function takes the following arguments:
+
+```{r, eval = F}
+acled_api(email = NULL,
+          key = NULL,
+          country = NULL,
+          regions = NULL,
+          start_date = "1997-01-01",
+          end_date = Sys.Date(),
+          timestamp = NULL,
+          event_types = NULL,
+          population = "none",
+          monadic = FALSE,
+          ...,
+          acled_access = TRUE, 
+          prompt = TRUE)
+
+```
+
+## Parameters for the API
+
+### Geographical filters
+
+You can use the `country` and `regions` parameters to specify the locations from which you would like to request data. If both values are `NULL` or are not included, the API will return data for all countries and regions. If you would like to request data for multiple countries, you can do so by using a vector of country names (e.g., `c("Argentina","Spain","Bolivia")`). Similarly, you can request data from one or more regions by using either a vector of region names or numeric codes. `acledR::acled_countries` and `acledR::acled_regions` show the full lists of countries and regions available. Please visit ACLED’s [Knowledge Base](https://acleddata.com/article-categories/region-specific-methodology/) for region-specific methodology questions.
+
+### Temporal filters
+
+You can specify the date range for which you would like to receive data by using the `start_date` and `end_date` parameters, both of which require data in the "yyyy-mm-dd" format.
+
+You can use the `timestamp` parameter to select data that were added or updated over a specific time period. Please keep in mind that `timestamp` indicates when the event was added or modified in ACLED’s dataset, meaning that an event that occurred far in the past (i.e., with an old *event date*) may still have a recent timestamp if it was recently updated. 
+
+In practice, the `timestamp` parameter is typically not used for analysis but is instead used to keep your own dataset up to date as changes are made to ACLED’s data. To learn more about how to keep your datasets up to date, visit the [Keeping your datasets up to date](https://acled.github.io/acledR/articles/acled_update.html) page for an acledR approach or this [guide](https://acleddata.com/download/35179/) more relevant to Excel or other spreadsheet tools.
+
+### Additional filters 
+
+You can also use the `event_types` argument to filter to specific *event_types* in ACLED data. To do so, you should enter the *event_type* of interest as a string or as a vector of strings (e.g., `event_types = "Battles"` or `event_types = c("Battles", "Protests")`). For a description of all available *event_types* in ACLED’s dataset, please refer to [ACLED’s codebook](https://acleddata.com/download/2827/).
+
+ACLED data defaults to a wide (or dyadic) format, where each row contains multiple actor columns, with those actors interacting during the event. However, you can request a long (or monadic) format using the `monadic` argument. By default, this argument is `FALSE`, meaning you will receive a dyadic version of the data. When `monadic=TRUE`, the function will return a monadic ("long-form") data frame with only one actor (based on *actor1* and *actor2*). For transforming your dataset from wide to long without utilizing the API, or transforming it based on different sets of columns, visit `acled_transform_longer()`. For more information on the difference between our wide/dyadic and monadic/long datasets, please visit our [API guide](https://apidocs.acleddata.com/acled_endpoint.html#dyadic-versus-monadic-formats---export_type)
+
+Finally, you can use the `population` argument to specify if you want to include the estimated affected population columns. This argument takes three options, `none` which returns no extra columns, `best` which only returns the population_best column, or `full` which returns all the estimated population columns. For more information, visit our [Conflict Exposure piece](https://acleddata.com/conflict-exposure/).
+
+The `...` parameter represents any other arguments you might want to include in your API query, such as *ISO* or *Interaction*. If you want to use these filters or others not included in the list of parameters described above, then you can write them as `&paramenter=value`. For instance, you might wish to include `&iso=4` at the end of the function. You can visit ACLED’s [API guide](https://apidocs.acleddata.com/acled_endpoint.html) to learn more about other valid parameters.
+
+
+### Function options 
+
+You can exclude the email and key parameters within the function when `acled_access()` has been used beforehand or the credentials are stored as environment variables. Alternatively, you can set `acled_access` to `FALSE` and then manually include your email and key as arguments in the function.
+
+You can use the `prompt` argument to specify how the function handles API calls that return large amounts of data. If `prompt=TRUE`, then you will receive an interactive prompt (see `Handling big API calls` immediately below). If you do not want this interactive prompt (e.g., because `acled_api()` is part of a routine script), then you can set `prompt = FALSE`.
+
+## Handling big API calls
+
+As is common when executing API calls, handling large volumes of data requires some special consideration. In ACLED’s case, the base API uses pagination to address some of these issues, but pagination can be confusing for newer users (see our [API guide](https://apidocs.acleddata.com/generalities_section.html#file-size-limits-pagination) for a more detailed explanation). Fortunately, this package avoids this issue. Instead of manual pagination, the `acled_api()` function splits the call automatically.
+
+`acled_api()` will first estimate how much data you are requesting. You will then be prompted with a message which includes the following:
+
+-   The number of countries for which data is being requested,
+
+-   The number of estimated events requested (based only on country and year, and NOT event type),
+
+-   The number of API calls needed, based on an estimate of how big the call is, 
+
+-   A question asking whether given this information and the number of available API calls linked to your account – you would like to proceed with your API call.
+
+## Example - Gathering data with `acled_api()`
+
+Imagine you are interested in events from “Brazil” occurring between January 1st, 2022, and December 1st, 2022.
+
+```{r, eval = FALSE}
+library(acledR)
+library(dplyr)
+
+#Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
+
+acled_access(email = "your_email", key = "your_key") 
+
+df_br <- acled_api(country = c("Brazil"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-12-01",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
+```{r,echo=FALSE }
+library(acledR)
+library(dplyr)
+
+#Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
+
+acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
+
+df_br <- acled_api(country = c("Brazil"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-12-01",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
+
+
+
+This returns a tibble that includes each ACLED event in “Brazil” during the specified period:
+
+```{r}
+head(df_br, 5)
+```
+
+If you wanted data from both “Brazil” and “Colombia”, you would execute the following:
+
+```{r, eval = F}
+df_br_co <- acled_api(country = c("Brazil", "Colombia"),
+                      start_date = "2022-01-01",
+                      end_date = "2022-12-01",
+                      monadic = F,
+                      acled_access = TRUE,
+                      prompt = F)
+```
+
+If you are interested in events occurring over a larger area, it may be simpler to omit the `country` parameter and include a `regions` argument instead. You could also include an `event_type` argument to receive only a specific type of event:
+
+```{r, eval = F}
+df_sa <- acled_api(regions = c("South America"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-12-01",
+                   event_type = "Protests",
+                   monadic = F,
+                   acled_access = TRUE,
+                   prompt = F)
+```
+
+You can use the *timestamp* column/filter to specify the dates from which you would like to receive new or updated data. You can include the argument as either a string ("yyyy-mm-dd") or a numeric Unix timestamp:
+
+```{r, eval = F}
+df_br_co <- acled_api(country = c("Brazil", "Colombia"),
+                      start_date = "2022-01-01",
+                      end_date = "2022-12-01",
+                      monadic = F,
+                      # timestamp = "2022-01-24" -> in the case of string
+                      timestamp = 1643056974, # -> in the case of a numeric Unix timestamp
+                      acled_access = TRUE,
+                      prompt = F)
+```
+
+If you would like to include only one type of *interaction* (e.g., "Rioters versus Civilians (57)"), then you can add *interaction* code to the `...` argument:
+
+```{r, eval = F}
+df_sa <- acled_api(country = c("Brazil", "Colombia"),
+                   start_date = "2022-01-01",
+                   end_date = "2022-12-01",
+                   monadic = F,
+                   ... = "&interaction=57",
+                   acled_access = TRUE,
+                   prompt = F)
+```
+
+You could also request the monadic version of the data by setting `monadic = TRUE`:
+
+```{r}
+df_sa_monadic <- acled_api(regions = c("South America"),
+                           start_date = "2022-01-01",
+                           end_date = "2022-12-01",
+                           monadic = T,
+                           acled_access = TRUE,
+                           prompt = F)
+```
+
+Best of luck!
