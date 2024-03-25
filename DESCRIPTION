@@ -1,20 +1,67 @@
 Package: acledR
 Type: Package
-Title: Manipulate ACLED Data
+Title: Manipulate 'ACLED' Data
 Version: 0.1.0
-Author: Trey Billing
-Maintainer: Trey Billing <t.billing@acleddata.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+    person(given = "Lucas", 
+	       family = "Fagliano",
+	       role = "aut", 
+	       email = "l.fagliano@acleddata.com"),
+    person(given = "Trey", 
+	       family = "Billing",
+	       role = "aut", 
+           email = "t.billing@acleddata.com"),
+    person(given = "Rachel", 
+           family = "Goodman", 
+           role = "aut", 
+           email = "goodman.r@wustl.edu"),
+    person(given = "Katayoun", 
+           family = "Kishi", 
+           role = "aut", 
+           email = "k.kishi@acleddata.com"),
+    person(given = "Michael", 
+           family = "Start", 
+           role = "aut", 
+           email = "m.start@acleddata.com"),
+    person(given = "",
+           family = "ACLED", 
+           role = c("cph", "cre"), 
+           email ="data@acleddata.com"))
+Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Imports: 
     dplyr,
+    methods,
+    httr,
     lubridate,
+    stringr,
+    tidyr,
+    magrittr,
     purrr,
-    slider,
-    tidyr
-RoxygenNote: 7.1.1
+    rlang,
+    utils
+RoxygenNote: 7.2.3
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)
+URL: https://github.com/ACLED/acledR, https://acled.github.io/acledR/
+BugReports: https://github.com/ACLED/acledR/issues
+Suggests: 
+    knitr,
+    janitor,
+    rmarkdown,
+    readr,
+    kableExtra,
+    ggplot2,
+    covr,
+    here,
+    secret,
+    sf,
+    raster,
+    forcats,
+    igraph,
+    sjmisc,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

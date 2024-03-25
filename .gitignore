@@ -2,3 +2,17 @@
 .Rhistory
 .RData
 .Ruserdata
+.DS_Store
+inst/doc
+/doc/
+/Meta/
+docs
+.Renviron
+.Rprofile
+vault
+vault/secret-keys.R
+gadm36_NGA_1_sp.rds
+trackdown_uploads.R
+.RDataTmp
+test.r
+.Renviorn

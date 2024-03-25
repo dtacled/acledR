@@ -1,0 +1,36 @@
+url: https://acled.github.io/acledR/
+template:
+  bootstrap: 5
+  bootswatch: zephyr
+navbar:
+  title: acledR
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Get Started
+    href: articles/get_started.html
+  - text: Utilizing acledR
+    href: index.html
+    menu:
+    - text: ACLED API
+      href: articles/acled_api.html
+    - text: Keeping your Dataset Updated
+      href: articles/acled_update.html
+    - text: acledR Data Manipulation
+      href: articles/acled_transformations.html
+reference:
+- title: Functions
+- subtitle: API & Access
+  desc: Functions to aid gathering data
+- contents: has_concept("API and Access")
+- subtitle: Data Manipulation
+  desc: Manipulation of data provided by ACLED API.
+  contents: has_concept("Data Manipulation")
+- subtitle: Helpers
+  desc: Functions for general help on using acledR
+  contents: has_concept("Helpers")
+- subtitle: Data
+  contents: has_concept("Data")
+
