@@ -26,19 +26,19 @@ Function to convert your ACLED's API calls (if monadic) back into the original d
 }
 \examples{
 \dontrun{
-#argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
+# argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
 #                          end_date="2022-02-01", acled_access = T, prompt = F)
-#argen_acled_long_actors <- acled_transform_longer(argen_acled,
+# argen_acled_long_actors <- acled_transform_longer(argen_acled,
 #                        type = "full_actor") # Transforming the data to long form
 
-#argen_acled_wide <- acled_transform_wider(argen_acled_long_actors,
+# argen_acled_wide <- acled_transform_wider(argen_acled_long_actors,
 #                        type = "full_actor") # Transforming the data back to wide form
 
-#nrow(argen_acled_wide) # Number of rows in the dataset
-#[1] 145 # Wide form
+# nrow(argen_acled_wide) # Number of rows in the dataset
+# [1] 145 # Wide form
 
-#nrow(argen_acled_long_actors) # Number of rows in the dataset
-#[1] 263 # Long form
+# nrow(argen_acled_long_actors) # Number of rows in the dataset
+# [1] 263 # Long form
 }
 }
 \seealso{

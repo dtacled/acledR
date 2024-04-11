@@ -21,9 +21,11 @@ This function allows users to change from numeric interaction codes (i.e. 1, 2, 
 \dontrun{
 
 # Load data frame
-argen_acled <- acled_api(email = "your_email", key = "your_key",
-                        country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
-                        acled_access = FALSE)
+argen_acled <- acled_api(
+  email = "your_email", key = "your_key",
+  country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01",
+  acled_access = FALSE
+)
 
 # Transform the interactions
 argen_acled_transformed <- acled_transformation_interaction(argen_acled, only_inters = F)

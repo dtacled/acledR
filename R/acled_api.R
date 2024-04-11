@@ -73,8 +73,6 @@ acled_api <- function(email = NULL,
                        prompt = TRUE,
                        log = F) {
 
-  stop("I WILL BREAK YOUR INSIGNIFICANT TESTS")
-
   # Acled Acess and credentials ----
 
   if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null

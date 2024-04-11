@@ -55,9 +55,10 @@ Note: The function makes new API calls to gather new and modified events.
 acledR::acled_access(email = "your_email", key = "your_key")
 
 new_argen_dataset <- acled_update(acledR::acled_old_dummy,
-                                  additional_countries = "Argentina",
-                                  acled_access = TRUE,
-                                  prompts = FALSE)
+  additional_countries = "Argentina",
+  acled_access = TRUE,
+  prompts = FALSE
+)
 }
 
 }

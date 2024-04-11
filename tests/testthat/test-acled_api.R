@@ -12,7 +12,7 @@ test_that("names of columns are correct", {
 ## test if event_type filters work----
 test_that("event_type filters work or not",{
 
-  expect_equal(unique(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_equal(unique(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          start_date="2022-01-01",end_date = "2022-12-31", country = "Argentina",
                          event_type = "Protests", prompt = F, acled_access = F, log = F)$event_type), "Protests" )
 
@@ -29,7 +29,7 @@ test_that("country days are calculated as expected",{
     mutate(t_end = lubridate::ymd("2021-01-01"),
            unit_test = t_end - ymd(paste0(start_year, "-01-01")))
 
-  argentina_test_call <- acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  argentina_test_call <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                    country = "Argentina", start_date="1998-01-01",
                                    end_date = "2021-01-01",prompt = F, acled_access = F, log = T)
 
@@ -37,27 +37,13 @@ test_that("country days are calculated as expected",{
 
 })
 
-# This works locally, but fails on devtools::check() and covr::package_coverge, but not on devtools::test() and simple execution.
-# local({
-#
-#   local_mocked_bindings(menu = function(choices,title=NULL) 2)
-#
-#   test_that("Users can stop a call if they need to", {
-#
-#     expect_snapshot(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-#                            start_date="2022-01-01",end_date = "2022-12-31",countries = "Argentina",
-#                            prompt = T, acled_access = F, log = F), error = T)
-#   })
-#
-# }) # test on whether they can cancel
-
 local({
 
   local_mocked_bindings(menu = function(choices,title=NULL) 1)
 
   test_that("Users continue call", {
 
-    expect_equal(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+    expect_equal(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                            start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                            prompt = T, acled_access = F, log = F), acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
                  start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
@@ -112,7 +98,7 @@ local({
 
   test_that("A user can stop a call when the provided timestamp is not recognized",{
 
-  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                          timestamp = "muchachos", prompt = F, acled_access = F, log = F), regexp =  "User requested")
   })
@@ -124,7 +110,7 @@ local({
 
   test_that("A user can ignore the provided timestamp if it is not recognized",{
 
-    expect_no_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+    expect_no_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                            start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
                            timestamp = "muchachos", prompt = F, acled_access = F, log = F))
   })
@@ -171,12 +157,12 @@ test_that("Population columns are being received", {
 ## Error when someone requests a region that does not exist----
 
 test_that("Error prompted when region does not exist", {
-  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",regions = "Narnia",
+  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = "Narnia",
                          start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F), regexp = "One or more requested region names not in the ACLED country list.")
 })
 
 test_that("Error when region number does not exist", {
-  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",regions = 420,
+  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = 420,
                          start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F),
                regexp = "One or more requested region numbers not in the ACLED country list")
 })
@@ -184,7 +170,7 @@ test_that("Error when region number does not exist", {
 
 ## Errors when a country requested doesnt exists ----
 test_that("Error when one of two countries are wrong",{
-          expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",country = c("Argentia","Bolivia"),
+          expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),country = c("Argentia","Bolivia"),
                                  start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F),
                        regexp = "One or more of the requested *")})
 
@@ -206,7 +192,7 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                  "Country is not a valid option. Please utilize \"country\", without capitalizing")
 
 
-  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          Region = "North America",
                          start_date="2022-01-01",
                          end_date = "2022-12-31",
@@ -215,7 +201,7 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          log = F), regexp=
                "Region is not a valid option. Please utilize \"regions\"")
 
-  expect_error(acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          Regions = "North America",
                          start_date="2022-01-01",
                          end_date = "2022-12-31",
@@ -272,7 +258,7 @@ test_that("Users gets an error when acled_access is False, but no key or email a
 # Test error if start_date is after end_date ----
 test_that("start_date is after end_date", {
   expect_error(
-    acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
+    acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
               country = "Argentina",
               start_date="2022-01-01",
               end_date = "2021-01-01",

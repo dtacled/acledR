@@ -34,7 +34,6 @@ This function allows users to pull deleted ACLED event IDs from the Deletions AP
 
 # Request deleted ACLED events since January 1, 2022
 acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
-
 }
 }
 \seealso{

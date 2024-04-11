@@ -61,9 +61,11 @@ This function allows users to easily request data from the ACLED API. Users can 
 
 # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 # in dyadic-wide form
-argen_acled <- acled_api(email = "your_email", key = "your_key",
-                        country = "Argentina", start_date = "2022-01-01", end_date="2022-02-01",
-                        acled_access = FALSE)
+argen_acled <- acled_api(
+  email = "your_email", key = "your_key",
+  country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01",
+  acled_access = FALSE
+)
 
 # tibble with all the events from Argentina where each row is one event.
 argen_acled
@@ -72,8 +74,10 @@ argen_acled
 # in monadic-long form using email and key saved in environment
 
 acled_access(email = "your_email", key = "your_key")
-carib_acled <- acled_api(regions = "Caribbean", start_date = "2022-01-01",
-                         end_date="2022-01-10", monadic=TRUE, acled_access = TRUE)
+carib_acled <- acled_api(
+  regions = "Caribbean", start_date = "2022-01-01",
+  end_date = "2022-01-10", monadic = TRUE, acled_access = TRUE
+)
 
 ## Tibble with all the events from the Caribbean where each row is one actor
 carib_acled
