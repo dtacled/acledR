@@ -14,6 +14,7 @@ acled_api(
   timestamp = NULL,
   event_types = NULL,
   population = "none",
+  inter_numeric = FALSE,
   monadic = FALSE,
   ...,
   acled_access = TRUE,
@@ -39,6 +40,8 @@ acled_api(
 \item{event_types}{vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.}
 
 \item{population}{character. Specify whether to return population estimates for each event. It accepts three options: "none" (default), "best", and "full".}
+
+\item{inter_numeric}{logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values.}
 
 \item{monadic}{logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.}
 
