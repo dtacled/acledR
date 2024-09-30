@@ -10,6 +10,7 @@
 #' @param timestamp numerical or character string. Provide a date or datetime written as either a character string of yyyy-mm-dd or as a numeric Unix timestamp to access all events added or updated after that date.
 #' @param event_types vector of one or more event types (character). Default is NULL, which will return data for all event types. To reurn data for only specific event types, request one or more of the following options (not case sensitive): Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence.
 #' @param population character. Specify whether to return population estimates for each event. It accepts three options: "none" (default), "best", and "full".
+#' @param inter_numeric logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
 #' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
@@ -67,9 +68,10 @@ acled_api <- function(email = NULL,
                        timestamp = NULL,
                        event_types = NULL,
                        population = "none",
-                       monadic = FALSE,
-                       ...,
-                       acled_access = TRUE,
+                      inter_numeric = FALSE,
+                      monadic = FALSE,
+                      ...,
+                      acled_access = TRUE,
                        prompt = TRUE,
                        log = F) {
 
@@ -439,15 +441,7 @@ acled_api <- function(email = NULL,
     }
   } # nocov end
 
-  # Population argument
 
-  if (population == "none") {
-    population_internal <- ""
-  } else if (population == "best") {
-    population_internal <- "&population=true"
-  } else {
-    population_internal <- "&population=full"
-  }
 
   # Population argument
 
@@ -459,6 +453,14 @@ acled_api <- function(email = NULL,
     population_internal <- "&population=full"
   }
 
+  # Inter argument
+
+  if(inter_numeric == TRUE) {
+    inter_internal <- "&inter_num=1"
+  } else {
+    inter_internal <- "&inter_num=0"
+  }
+
   # Loop through country bins to define each api call
   url_internal <- vector("list", length = length(out_groups))
   for(i in 1:length(out_groups)) {
@@ -466,7 +468,8 @@ acled_api <- function(email = NULL,
                                 email_internal, key_internal,
                                 countries_internal[[i]],
                                 dates_internal, timestamp_internal,
-                                event_types_internal, population_internal, ..., "&limit=0")
+                                event_types_internal, population_internal,
+                                inter_internal, ..., "&limit=0")
   }
 
 
