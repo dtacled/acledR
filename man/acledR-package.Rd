@@ -15,6 +15,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/ACLED/acledR}
   \item \url{https://acled.github.io/acledR/}
+  \item \url{https://dtacled.github.io/acledR/}
   \item Report bugs at \url{https://github.com/ACLED/acledR/issues}
 }
 

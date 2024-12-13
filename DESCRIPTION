@@ -45,7 +45,9 @@ Imports:
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 3.5.0)
-URL: https://github.com/ACLED/acledR, https://acled.github.io/acledR/
+URL: https://github.com/ACLED/acledR,
+    https://acled.github.io/acledR/,
+    https://dtacled.github.io/acledR/
 BugReports: https://github.com/ACLED/acledR/issues
 Suggests: 
     knitr,
