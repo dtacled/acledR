@@ -22,7 +22,7 @@ test_that("names of columns are correct - unix", {
 ## Test that email and key are handled appropiately ----
 
 test_that("Email and key are handled as expected without acled_access",{
-          expect_true(grepl("acledexamples", received_deleted_log$email[1]))}
+          expect_true(grepl("t.billing", received_deleted_log$email[1]))}
 )
 
 ## Test that acled_access is handled appropiately. ----
@@ -32,7 +32,7 @@ test_that("Email and Key are handled appropiately",{
 
   some_log <- acled_deletions_api(date_deleted = "1658707200", acled_access = T, log = T)
 
-  expect_true(grepl("acledexamples", some_log$email[1]))}
+  expect_true(grepl("t.billing", some_log$email[1]))}
 )
 
 ## Date and unix return the same output ----
@@ -90,7 +90,7 @@ test_that("A warning appears that acled_access is being ignored, and the proper 
   expect_message(acled_deletions_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                      date_deleted = "1658707200",acled_access = T, log = T), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
 
-  expect_true(grepl("acledexamples", alog$email[1]))
+  expect_true(grepl("t.billing@acleddata.com", alog$email[1]))
  })
 
 

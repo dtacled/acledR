@@ -25,9 +25,7 @@ In our analyses, we often refer to actor types by using text categories (e.g. *S
 This function allows you to convert your numeric codes into text descriptions, without the time-consuming need of writing out these changes yourself. 
 
 ```{fun , eval = FALSE}
-acled_transform_interactions(df, 
-                only_inters = F) 
-
+acled_transform_interactions(df, only_inters = F) 
 ```
 
 The function requires two arguments:
@@ -100,8 +98,7 @@ Keep in mind that you can receive some data in monadic/longer form directly from
 The function is similar to its counterpart: 
 ```{r, eval = F}
 
-acled_transform_wider(data,
-                      type = "full_actors")
+acled_transform_wider(data, type = "full_actors")
 
 ```
 
@@ -132,6 +129,7 @@ df_sa <- acled_api(regions = "South America",
                    acled_access = TRUE,
                    prompt = F)
 ```
+
 ```{r, echo=FALSE}
 
 library(acledR)
@@ -143,25 +141,33 @@ df_sa <- acled_api(regions = "South America",
                    end_date = "2023-06-01",
                    monadic = F,
                    acled_access = TRUE,
+                   inter_numeric = TRUE,
                    prompt = F)
 ```
-Now that your data are in long format with one actor per row, you can much more easily filter the data to retain only those events involving the "Military Forces of Colombia (2022-)": 
+Now that your data are in long format with one actor per row, you can much more easily filter the data to retain only those events involving the "ELN: National Liberation Army": 
 
 ```{r}
 
-mil_colombia <- df_sa %>%
-  filter(stringr::str_detect(paste(actor1,actor2,assoc_actor_1, assoc_actor_2, sep = ";"), "Military Forces of Colombia (2022-)"))
+df_eln <-
+  df_sa %>% 
+  filter(
+    # Check main actors
+    actor1 == "ELN: National Liberation Army" |
+    actor2 == "ELN: National Liberation Army" |
+    # Check associate actors
+    assoc_actor_1 == "ELN: National Liberation Army" |
+    assoc_actor_2 == "ELN: National Liberation Army"
+    )
+    
 
 ```
 
-In the filtered events there are `r nrow(mil_colombia)` rows, meaning there were `r nrow(mil_colombia)` events where the "Military Forces of Colombia (2022-)" were involved as an actor or associate actor. 
+In the filtered events there are `r nrow(df_eln)` rows, meaning there were `r nrow(df_eln)` events where the "ELN: National Liberation Army" were involved as an actor or associate actor. 
 
 Instead of filtering to the events involving a particular actor, you may wish to calculate the number of events in which each actor in the dataset participates. The issue is that an actor may be represented in any of the four actor columns, so you cannot simply sum the number of rows in which an actor appears in one particular column. A simple solution is to transform the dataset into long form and then calculate event counts for each actor. You can begin by using the `acled_transform_longer()` function:
 
 ```{r}
-
 df_sa_long <- acled_transform_longer(df_sa, type = "full_actors")
-
 ```
 
 The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but only after grouping by **unique** *event_id_cnty*. It is very important to count rows by unique identifiers because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
@@ -170,7 +176,9 @@ The dataset is now in long form with each row representing a single actor in a s
 library(tidyr)
 library(dplyr)
 
-actors_df_sa <- df_sa_long %>%
+actors_df_sa <-
+  df_sa_long %>% 
+    filter(actor == "ELN: National Liberation Army") %>%
   group_by(actor) %>%
   summarise(n_events = n_distinct(unique(event_id_cnty)))
 
@@ -179,10 +187,9 @@ actors_df_sa <- df_sa_long %>%
 To verify your results, you can filter actor counts to only "Military Forces of Colombia (2022-)". 
 
 ```{r}
-
-actors_df_sa %>%
-  filter(actor == "Military Forces of Colombia (2022-)") %>%
-  .$n_events
+actors_df_sa %>% 
+  filter(actor == "ELN: National Liberation Army") %>%
+  pull(n_events)
 ```
 
 The number of events matches the number of rows you got when first filtering by actor.

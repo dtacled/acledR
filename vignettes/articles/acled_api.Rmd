@@ -63,6 +63,7 @@ acled_api(email = NULL,
           event_types = NULL,
           population = "none",
           monadic = FALSE,
+          inter_numeric = FALSE,
           ...,
           acled_access = TRUE, 
           prompt = TRUE)
@@ -133,7 +134,8 @@ df_br <- acled_api(country = c("Brazil"),
                    acled_access = TRUE,
                    prompt = F)
 ```
-```{r,echo=FALSE }
+
+```{r, echo=FALSE}
 library(acledR)
 library(dplyr)
 
@@ -146,6 +148,7 @@ df_br <- acled_api(country = c("Brazil"),
                    end_date = "2022-12-01",
                    monadic = F,
                    acled_access = TRUE,
+                   inter_numeric = TRUE,
                    prompt = F)
 ```
 
@@ -207,10 +210,10 @@ df_sa <- acled_api(country = c("Brazil", "Colombia"),
 
 You could also request the monadic version of the data by setting `monadic = TRUE`:
 
-```{r}
+```{r, eval = F}
 df_sa_monadic <- acled_api(regions = c("South America"),
                            start_date = "2022-01-01",
-                           end_date = "2022-12-01",
+                           end_date = "2022-01-01",
                            monadic = T,
                            acled_access = TRUE,
                            prompt = F)
