@@ -92,13 +92,13 @@ test_that("Can you request data from the monadic api, and convert it back?", {
   tester <- acledR::acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                               country = "Brazil", start_date="2022-01-01",
                               end_date = "2022-12-31", monadic = T,
-                              prompt = F, acled_access = F, log = F)%>%
+                              prompt = F, acled_access = F, log = F, inter_numeric = TRUE)%>%
     acled_transform_wider(type = "api_monadic")
 
   control <- acledR::acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                               country = "Brazil", start_date="2022-01-01",
                               end_date = "2022-12-31", monadic = F,
-                              prompt = F, acled_access = F, log = F)%>%
+                              prompt = F, acled_access = F, log = F, inter_numeric = TRUE)%>%
     arrange(desc(event_id_cnty))
 
 

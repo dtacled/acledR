@@ -11,7 +11,7 @@ navbar:
     href: reference/index.html
   - text: Get Started
     href: articles/get_started.html
-  - text: Utilizing acledR
+  - text: Using acledR
     href: index.html
     menu:
     - text: ACLED API

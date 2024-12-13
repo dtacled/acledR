@@ -6,3 +6,5 @@
 .RDataTmp
 .Renviron
 .DS_Store
+/doc/
+/Meta/

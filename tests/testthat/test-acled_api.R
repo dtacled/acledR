@@ -14,7 +14,7 @@ test_that("event_type filters work or not",{
 
   expect_equal(unique(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          start_date="2022-01-01",end_date = "2022-12-31", country = "Argentina",
-                         event_type = "Protests", prompt = F, acled_access = F, log = F)$event_type), "Protests" )
+                         event_type = "Protests", prompt = F, acled_access = F, log = F, inter_numeric = TRUE)$event_type), "Protests" )
 
 })
 
@@ -31,7 +31,7 @@ test_that("country days are calculated as expected",{
 
   argentina_test_call <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                    country = "Argentina", start_date="1998-01-01",
-                                   end_date = "2021-01-01",prompt = F, acled_access = F, log = T)
+                                   end_date = "2021-01-01",prompt = F, acled_access = F, log = T, inter_numeric = TRUE)
 
   expect_equal(argentina_test_call$time, argentina_country_days$unit_test)
 
@@ -45,9 +45,10 @@ local({
 
     expect_equal(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                            start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
-                           prompt = T, acled_access = F, log = F), acled_api(email = "acledexamples@gmail.com", key = "M3PWwg3DIdhHMuDiilp5",
-                 start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
-                 prompt = F, acled_access = F, log = F))
+                           prompt = T, acled_access = F, log = F, inter_numeric = TRUE),
+                 acled_api(Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
+                           start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
+                           prompt = F, acled_access = F, log = F, inter_numeric = TRUE))
   })
 }) # test on whether they can continue
 
@@ -100,7 +101,8 @@ local({
 
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
-                         timestamp = "muchachos", prompt = F, acled_access = F, log = F), regexp =  "User requested")
+                         timestamp = "muchachos", prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
+               regexp =  "User requested")
   })
 })
 
@@ -112,7 +114,7 @@ local({
 
     expect_no_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                            start_date="2022-01-01",end_date = "2022-12-31",country = "Argentina",
-                           timestamp = "muchachos", prompt = F, acled_access = F, log = F))
+                           timestamp = "muchachos", prompt = F, acled_access = F, log = F, inter_numeric = TRUE))
   })
 })
 
@@ -138,11 +140,11 @@ test_that("Population columns are being received", {
 
   received_data_pops <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                   country="Argentina", start_date="2022-01-01",end_date = "2022-01-04",
-                                  population='full',prompt = F, acled_access = F)
+                                  population='full', prompt = F, acled_access = F, inter_numeric = TRUE)
 
   received_data_best <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                   country="Argentina", start_date="2022-01-01",end_date = "2022-01-04",
-                                  population='best',prompt = F, acled_access = F)
+                                  population='best',prompt = F, acled_access = F, inter_numeric = TRUE)
 
 
   expect_true(all(population_cols %in% colnames(received_data_pops)))
@@ -158,12 +160,12 @@ test_that("Population columns are being received", {
 
 test_that("Error prompted when region does not exist", {
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = "Narnia",
-                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F), regexp = "One or more requested region names not in the ACLED country list.")
+                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE), regexp = "One or more requested region names not in the ACLED country list.")
 })
 
 test_that("Error when region number does not exist", {
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = 420,
-                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F),
+                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
                regexp = "One or more requested region numbers not in the ACLED country list")
 })
 
@@ -171,12 +173,12 @@ test_that("Error when region number does not exist", {
 ## Errors when a country requested doesnt exists ----
 test_that("Error when one of two countries are wrong",{
           expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),country = c("Argentia","Bolivia"),
-                                 start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F),
+                                 start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
                        regexp = "One or more of the requested *")})
 
 ## Test what happens when someone inputs acled_access as TRUE but it includes email and key. ----
 test_that("Acled_access is ignored",{
-  expect_true(grepl("acledexamples", log_received_data_check_credential$email[1]))
+  expect_true(grepl("t.billing", log_received_data_check_credential$email[1]))
 })
 
 # Test errors from incorrectly input arguments. ----
@@ -188,7 +190,7 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          end_date = "2022-12-31",
                          prompt = F,
                          acled_access = T,
-                         log = F), regexp=
+                         log = F, inter_numeric = TRUE), regexp=
                  "Country is not a valid option. Please utilize \"country\", without capitalizing")
 
 
@@ -198,7 +200,7 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          end_date = "2022-12-31",
                          prompt = F,
                          acled_access = T,
-                         log = F), regexp=
+                         log = F, inter_numeric = TRUE), regexp=
                "Region is not a valid option. Please utilize \"regions\"")
 
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
@@ -207,26 +209,26 @@ test_that("acled_api() throws an error when called with invalid arguments", {
                          end_date = "2022-12-31",
                          prompt = F,
                          acled_access = T,
-                         log = F), regexp=
+                         log = F, inter_numeric = TRUE), regexp=
                "Regions is not a valid option. Please utilize \"regions\", without capitalizing")
 
   expect_error(acled_api(Event_type = "Argentina",
                          start_date="2022-01-01",
                          end_date = "2022-12-31",
                          prompt = F,
-                         acled_access = T), regexp=
+                         acled_access = T, inter_numeric = TRUE), regexp=
                "Event type is not a valid option. Please utilize \"event_types\", without capitalizing")
   expect_error(acled_api(country = "Argentina",
                          Start_date="2022-01-01",
                          end_date = "2022-12-31",
                          prompt = F,
-                         acled_access = T), regexp=
+                         acled_access = T, inter_numeric = TRUE), regexp=
                "Start_date is not a valid option. Please utilize \"start_date\", without capitalizing")
   expect_error(acled_api(country = "Argentina",
                          start_date="2022-01-01",
                          End_date = "2022-12-31",
                          prompt = F,
-                         acled_access = T), regexp=
+                         acled_access = T, inter_numeric = TRUE), regexp=
                "End_date is not a valid option. Please utilize \"end_date\", without capitalizing")
 })
 
@@ -239,16 +241,16 @@ test_that("If access is TRUE and credentials are null, credentials are ignored, 
                 end_date = "2022-12-31",
                 prompt = F,
                 acled_access = T,
-                log = F), regexp = "acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
+                log = F, inter_numeric = TRUE), regexp = "acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
 })
 
 test_that("Users gets an error when acled_access is False, but no key or email are provided.", {
 
   expect_error(acled_api(country = "Argentina", start_date="2022-01-01",
-                         end_date = "2022-12-31", prompt = F, acled_access = F), regexp = "Email address required")
+                         end_date = "2022-12-31", prompt = F, acled_access = F, inter_numeric = TRUE), regexp = "Email address required")
 
   expect_error(acled_api(email = "stuff",country = "Argentina", start_date="2022-01-01",
-                         end_date = "2022-12-31", prompt = F, acled_access = F), regexp = "Key required")
+                         end_date = "2022-12-31", prompt = F, acled_access = F, inter_numeric = TRUE), regexp = "Key required")
 
 
 
@@ -264,7 +266,7 @@ test_that("start_date is after end_date", {
               end_date = "2021-01-01",
               prompt = F,
               acled_access = F,
-              log = F), regexp = "Requested \'start_date\'")})
+              log = F, inter_numeric = TRUE), regexp = "Requested \'start_date\'")})
 
 # Error when timestamp is from a date later than today ----
 
@@ -277,7 +279,7 @@ test_that("timestamp is from a latter date than today." ,{
                         prompt = F,
                         acled_access = F,
                         timestamp = paste0(year(now())+1, "01-01"), # Way to make it always in the future
-                        log = F), regexp = "The timestamp cannot be" )
+                        log = F, inter_numeric = TRUE), regexp = "The timestamp cannot be" )
 })
 
 # Error when requesting non-existent event types ----
@@ -290,7 +292,7 @@ test_that("Error when non existent event types",{
                          event_types = c("Protests","Superhero fight"),
                          prompt = F,
                          acled_access = F,
-                         log = F), regexp = "One or more requested event types are not in the ACLED data.")
+                         log = F, inter_numeric = TRUE), regexp = "One or more requested event types are not in the ACLED data.")
 })
 
 # A message appears that acled_access is being ignored, and the proper credentials are being used.----
@@ -298,12 +300,12 @@ test_that("Error when non existent event types",{
 test_that("A warning appears that acled_access is being ignored, and the proper credentials are being used.",{
 
   alog <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              acled_access = T, log = T)
+                              acled_access = T, log = T, inter_numeric = TRUE)
 
   expect_message(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                           acled_access = T, log = T), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
+                           acled_access = T, log = T, inter_numeric = TRUE), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
 
-  expect_true(grepl("acledexamples", alog$email[1]))
+  expect_true(grepl("t.billing", alog$email[1]))
 })
 
 
