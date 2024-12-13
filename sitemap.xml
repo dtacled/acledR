@@ -1,87 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://acled.github.io/acledR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/acled_api.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/acled_transformations.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/acled_update.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/get_started.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acledR-package.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_access.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_api.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_codebook.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_countries.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_deletions_api.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_event_categories.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_interaction_codes.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_multipliers.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_old_deletion_dummy.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_old_dummy.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_regions.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_rounding.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_transform_interaction.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_transform_longer.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_transform_wider.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/acled_update.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://acled.github.io/acledR/reference/pipe.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://acled.github.io/acledR/404.html</loc></url>
+<url><loc>https://acled.github.io/acledR/LICENSE.html</loc></url>
+<url><loc>https://acled.github.io/acledR/articles/acled_api.html</loc></url>
+<url><loc>https://acled.github.io/acledR/articles/acled_transformations.html</loc></url>
+<url><loc>https://acled.github.io/acledR/articles/acled_update.html</loc></url>
+<url><loc>https://acled.github.io/acledR/articles/get_started.html</loc></url>
+<url><loc>https://acled.github.io/acledR/articles/index.html</loc></url>
+<url><loc>https://acled.github.io/acledR/authors.html</loc></url>
+<url><loc>https://acled.github.io/acledR/index.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acledR-package.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_access.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_api.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_codebook.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_countries.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_deletions_api.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_event_categories.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_interaction_codes.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_multipliers.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_old_deletion_dummy.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_old_dummy.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_regions.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_rounding.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_transform_interaction.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_transform_longer.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_transform_wider.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/acled_update.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/index.html</loc></url>
+<url><loc>https://acled.github.io/acledR/reference/pipe.html</loc></url>
 </urlset>
+

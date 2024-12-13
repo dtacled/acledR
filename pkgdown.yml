@@ -1,13 +1,12 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  acled_api: acled_api.html
-  acled_transformations: acled_transformations.html
-  acled_update: acled_update.html
+  articles/acled_api: acled_api.html
+  articles/acled_transformations: acled_transformations.html
+  articles/acled_update: acled_update.html
   get_started: get_started.html
-last_built: 2024-05-14T20:48Z
+last_built: 2024-12-13T17:41Z
 urls:
   reference: https://acled.github.io/acledR/reference
   article: https://acled.github.io/acledR/articles
-
