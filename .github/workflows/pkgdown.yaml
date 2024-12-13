@@ -20,6 +20,8 @@ jobs:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      EMAIL_ADDRESS_EXAMPLES: ${{ secrets.EMAIL_ADDRESS_EXAMPLES}}
+      EXAMPLES_KEY: ${{ secrets.EXAMPLES_KEY}}
     permissions:
       contents: write
     steps:
