@@ -54,7 +54,7 @@ Once you are registered, we encourage you to authenticate your credentials by us
 acled_access(email = "your_email", key = "your_key") #  This is an example, you will need to input your credentials.
 ```
 
-```{r,echo=FALSE}
+```{r, echo=FALSE}
 acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 ```
 
@@ -67,7 +67,7 @@ If the authentication was successful, you will find a message in the console sta
 Once your credentials are authenticated, you can start requesting data from the API using the `acled_api()` function. The function accepts several fields used to filter data and specify data formatting.  For example, you could request data from Argentina in 2022 using the following code chunk to receive a dataframe: 
 
 ```{r}
-argentinian_data <- acled_api(country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31", prompt=F)
+argentinian_data <- acled_api(country = "Argentina", start_date="2022-01-01", end_date = "2022-12-31", prompt = F, inter_numeric = TRUE)
 ```
 
 Note that while this example uses only three arguments (`country`, `start_date` and `end_date`), `acled_api()` accepts several other useful arguments, descriptions of which can be found in `vignette("acled_api")`. Further note that if you are not using the `acled_access` function to store your credentials, you would also need to specify your email and key when making API requests. 
@@ -101,10 +101,10 @@ ACLED data has a unique structure which can make data manipulation non-trivial. 
 The `acled_transform_interaction()` function allows you to convert between numeric and text interaction codes, facilitating easier interpretation and analysis of ACLED data. The function requires your ACLED dataset and an optional boolean argument `only_inters`, which determines whether to include only `inter1` and `inter2` columns or also the `interaction` column in the output. By default, `only_inters` is set to `FALSE`.
 
 ```{r}
-transformed_data <- acled_transform_interaction(argentinian_data)
-
-# Note the inter1 and inter2 columns
-head(transformed_data)
+# transformed_data <- acled_transform_interaction(argentinian_data)
+# 
+# # Note the inter1 and inter2 columns
+# head(transformed_data)
 ```
 
 ### 2. Reshaping Data: Wide to Long Format - `acled_transform_longer()`
