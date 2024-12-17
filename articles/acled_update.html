@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">acledR</a>
 
@@ -204,14 +204,18 @@ keep your datasets updated.</p>
 <span><span class="va">latest_timestamp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_datetime</a></span><span class="op">(</span><span class="va">latest_timestamp_unix</span><span class="op">)</span> </span></code></pre></div>
 <p>The dataset has not been updated since 2022-07-25, so you may want a
 more updated version. To do so, you can use <code><a href="../reference/acled_update.html">acled_update()</a></code>.
-If you are only interested in updating events that are already in your
-dataset, you can ignore the <code>start_date</code> and
-<code>end_date</code> arguments. If you also wish to remove deleted
+Note that the <code>inter_numeric</code> parameter is set to
+<code>TRUE</code> because the original data –
+<code>argen_dummy_acled_file</code> – has variables specified as numeric
+rather than strings. If you are only interested in updating events that
+are already in your dataset, you can ignore the <code>start_date</code>
+and <code>end_date</code> arguments. If you also wish to remove deleted
 events from your dataset you can set <code>deleted=TRUE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_argen_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="va">argen_dummy_acled_file</span>, </span>
 <span>                                  additional_countries <span class="op">=</span> <span class="st">"Argentina"</span>, </span>
-<span>                                  acled_access <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                                  acled_access <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                                  inter_numeric <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                                  prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## Requesting data for 1 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 350 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
@@ -222,7 +226,6 @@ events from your dataset you can set <code>deleted=TRUE</code>.</p>
 <span><span class="co">##  Deleted events: 0. </span></span>
 <span><span class="co">##  Total new &amp; modified events: 164</span></span></code></pre>
 <p>Now your dataset captures modified and newly created events.</p>
-<p>Best of luck!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -231,7 +234,7 @@ events from your dataset you can set <code>deleted=TRUE</code>.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
+  <p>Developed by ACLED, Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start.</p>
 </div>
 
 <div class="pkgdown-footer-right">

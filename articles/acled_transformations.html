@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Transformation of ACLED data • acledR</title>
+<title>Transforming ACLED data • acledR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,13 +16,13 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Transformation of ACLED data">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Transforming ACLED data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">acledR</a>
 
@@ -64,9 +64,8 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Transformation of ACLED data</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Transforming ACLED data</h1>
             
-            <h4 data-toc-skip class="date">2022-11-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ACLED/acledR/blob/master/vignettes/articles/acled_transformations.Rmd" class="external-link"><code>vignettes/articles/acled_transformations.Rmd</code></a></small>
       <div class="d-none name"><code>acled_transformations.Rmd</code></div>
@@ -74,86 +73,34 @@
 
     
     
-<p>The ACLED dataset is designed with user readability in mind. At
-times, this focus might conflict with standard clean data principles,
-such as having only a single value per column and row. To circumvent
-these issues, and to make it easier to use ACLED data in certain
-programmatic settings, you can use the data manipulation suite of
-functions in the <code>acledR</code> package. Currently, ACLED has three
-available functions: <code>acled_transform_interactions</code>,
-<code>acled_transform_longer</code> and
-<code>acled_transform_wider</code>.</p>
+<p>The ACLED dataset is designed with user readability in mind. This
+focus might complicate data manipulation in some use cases. To make the
+data easier to use in a variety of settings, <code>acledR</code>
+provides a suite of functions for data transformations often applied to
+ACLED data. Currently, <code>acledR</code> has three functions in the
+‘transform’ family: <code>acled_transform_longer</code>,
+<code>acled_transform_wider</code>, and
+<code>acled_transform_interactions</code>.</p>
 <div class="section level2">
-<h2 id="switch-between-numeric-and-string-interaction-codes---acled_transform_interactions">1. Switch between numeric and string interaction codes -
-<code>acled_transform_interactions()</code><a class="anchor" aria-label="anchor" href="#switch-between-numeric-and-string-interaction-codes---acled_transform_interactions"></a>
-</h2>
-<p>The first function in this suite,
-<code>acled_transform_interactions()</code>, allows you to easily
-transition from numeric interaction codes to a text description of the
-interaction code.</p>
-<p>In our analyses, we often refer to actor types by using text
-categories (e.g. <em>State Forces</em> or <em>Rebel Groups</em>), while
-our dataset structures these categories using a numeric categorization.
-You can find more information - including a table of which actor
-categories correspond to which numeric codes – in ACLED’s <a href="https://acleddata.com/download/2827/" class="external-link">codebook</a>.</p>
-<p>This function allows you to convert your numeric codes into text
-descriptions, without the time-consuming need of writing out these
-changes yourself.</p>
-<pre class="fun"><code><span><span class="fu">acled_transform_interactions</span><span class="op">(</span><span class="va">df</span>, only_inters <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </span></code></pre>
-<p>The function requires two arguments:</p>
-<ul>
-<li><p><code>data</code>: An ACLED dataset which includes the inter1 and
-inter2 variables (when <code>only_inter = F</code>).</p></li>
-<li><p><code>only_inters</code>: Boolean option on whether to include
-only <em>inter1</em> and <em>inter2</em>, without including
-<em>interaction</em>. This option defaults to <code>FALSE</code>, thus
-including the <em>interaction</em> column.</p></li>
-</ul>
-<p>The function simply returns a modified dataframe with the swapped
-inter &amp; interaction formats. In the <em>interaction</em> column, you
-will find the actor types separated by “-”, for example:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="co"># Displaying only relevant columns</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
-<span><span class="co">##   event_id_cnty inter1 inter2 interaction</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG10606           6      0          60</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG10605           5      1          15</span></span></code></pre>
-<p>… will change to …</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
-<span><span class="co">##   event_id_cnty inter1     inter2       interaction         </span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG10606      Protesters <span style="color: #BB0000;">NA</span>           Sole Protesters     </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG10605      Rioters    State Forces State Forces-Rioters</span></span></code></pre>
-</div>
-<div class="section level2">
-<h2 id="from-wide-to-long-formats---acled_transform_longer">2. From wide to long formats -
-<code>acled_transform_longer()</code><a class="anchor" aria-label="anchor" href="#from-wide-to-long-formats---acled_transform_longer"></a>
+<h2 id="from-wide-to-long-format---acled_transform_longer">1. From wide to long format -
+<code>acled_transform_longer()</code><a class="anchor" aria-label="anchor" href="#from-wide-to-long-format---acled_transform_longer"></a>
 </h2>
 <p><code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> allows you to switch between
 wide and long formats without the need to make a new API call. Typical
 ACLED data is in a wide format, with multiple actors represented in each
-row (see our <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">API
-interactive guide</a> for a more detailed explanation). This format
-generally works well if you are interested in conducting event-based
-analyses. Still, there are times when you may wish to conduct
-actor-based analyses that are better suited to a long data format where
-each actor has a separate row, and a single event may therefore be
-represented in multiple rows.</p>
+row (see the <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type" class="external-link">ACLED
+API guide</a> for a more detailed explanation). This format generally
+works well if you are interested in conducting event-based analyses.
+Still, there are times when you may wish to conduct actor-based analyses
+that might require a long data format, where each actor has a separate
+row, and a single event may therefore be represented in multiple
+rows.</p>
 <p>Note that wide and long formats are generic terms that are more
 specifically referred to as dyadic and monadic data types in other ACLED
-documentation (see <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html" class="external-link">ACLED
+documentation (see the <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html" class="external-link">ACLED
 endpoint guide</a>).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">data</span>, </span>
-<span>                type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> </span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> </span></code></pre></div>
 <p><code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> requires two arguments:</p>
 <ul>
 <li><p><code>data</code>: A wide format ACLED dataset.</p></li>
@@ -212,7 +159,8 @@ these columns or all of them.</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="from-long-to-wide-format---acled_transform_wider">From long to wide format - <code>acled_transform_wider()</code><a class="anchor" aria-label="anchor" href="#from-long-to-wide-format---acled_transform_wider"></a>
+<h2 id="from-long-to-wide-format---acled_transform_wider">2. From long to wide format -
+<code>acled_transform_wider()</code><a class="anchor" aria-label="anchor" href="#from-long-to-wide-format---acled_transform_wider"></a>
 </h2>
 <p><code>acledR</code> also offers the inverse of
 <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>, allowing you to pivot your
@@ -220,7 +168,7 @@ dataframe back to a wider format (dyadic form). The function is meant to
 aid users that may have used <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> and
 would like to return the dataframe to its original state.</p>
 <p>The function is similar to its counterpart:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform_wider.html">acled_transform_wider</a></span><span class="op">(</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span></code></pre></div>
 <p>As you can see, the arguments are the same as those for
 <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>:</p>
@@ -231,15 +179,60 @@ transpose (the columns that go from long to wide format).</p></li>
 </ul>
 </div>
 <div class="section level2">
+<h2 id="switch-between-numeric-and-string-interaction-codes---acled_transform_interactions">3. Switch between numeric and string interaction codes -
+<code>acled_transform_interactions()</code><a class="anchor" aria-label="anchor" href="#switch-between-numeric-and-string-interaction-codes---acled_transform_interactions"></a>
+</h2>
+<p>The final function in this suite,
+<code>acled_transform_interactions()</code>, allows you to easily
+transition from numeric interaction codes to a text description of the
+interaction code. You can find more information - including which actor
+categories correspond to which numeric codes – in ACLED’s <a href="https://acleddata.com/knowledge-base/codebook/#actors" class="external-link">codebook</a>.
+While the <code><a href="../reference/acled_api.html">acled_api()</a></code> function returns interaction codes as
+text strings by default, this function is useful when the original API
+call included the parameter value <code>inter_numeric = TRUE</code>.</p>
+<pre class="fun"><code><span><span class="fu">acled_transform_interactions</span><span class="op">(</span><span class="va">df</span>, only_inters <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre>
+<p>The function requires two arguments:</p>
+<ul>
+<li><p><code>data</code>: An ACLED dataset which includes the inter1 and
+inter2 variables (when <code>only_inter = F</code>).</p></li>
+<li><p><code>only_inters</code>: Boolean option on whether to include
+only <em>inter1</em> and <em>inter2</em>, without including
+<em>interaction</em>. This option defaults to <code>FALSE</code>, thus
+including the <em>interaction</em> column.</p></li>
+</ul>
+<p>The function simply returns a modified dataframe with the swapped
+inter &amp; interaction formats. In the <em>interaction</em> column, you
+will find the actor types separated by “-”, for example:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Displaying only relevant columns</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
+<span><span class="co">##   event_id_cnty inter1 inter2 interaction</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG10606           6      0          60</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG10605           5      1          15</span></span></code></pre>
+<p>… will change to …</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
+<span><span class="co">##   event_id_cnty inter1     inter2       interaction         </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG10606      Protesters <span style="color: #BB0000;">NA</span>           Sole Protesters     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG10605      Rioters    State Forces State Forces-Rioters</span></span></code></pre>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>In this section you can walk through a potential use case for the
+<p>This section walks through a potential use case for the
 transformation functions.</p>
-<p>For this example, assume that you are interested in data from “South
-America” during the first half of 2023. <strong>NOTE</strong>: The email
-and key values below are only examples. You should provide your own
-credentials that you can create by using <a href="https://apidocs.acleddata.com/get_started.html#getting-your-api-key" class="external-link">ACLED’s
-website</a>.</p>
+<p>Assume that you are interested in data from “South America” during
+the first half of 2023. The email and key values below are only
+examples. To replicate the output, provide your own credentials as
+detailed in the <code><a href="../reference/acled_api.html">acled_api()</a></code> vignette.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ACLED/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span></span>
@@ -250,14 +243,14 @@ website</a>.</p>
 <span>                   end_date <span class="op">=</span> <span class="st">"2023-06-01"</span>,</span>
 <span>                   monadic <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                   acled_access <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                   inter_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
 <pre><code><span><span class="co">## Requesting data for 13 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 14,693 events.</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
-<p>Now that your data are in long format with one actor per row, you can
-much more easily filter the data to retain only those events involving
-the “ELN: National Liberation Army”:</p>
+<p>Let’s filter to events involving only the “ELN: National Liberation
+Army” in any of the primary or associate actor columns:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_eln</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -269,22 +262,23 @@ the “ELN: National Liberation Army”:</p>
 <span>    <span class="va">assoc_actor_1</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span> <span class="op">|</span></span>
 <span>    <span class="va">assoc_actor_2</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<p>In the filtered events there are 174 rows, meaning there were 174
+<p>In the filtered events, there are 174 rows, meaning there were 174
 events where the “ELN: National Liberation Army” were involved as an
 actor or associate actor.</p>
 <p>Instead of filtering to the events involving a particular actor, you
 may wish to calculate the number of events in which each actor in the
-dataset participates. The issue is that an actor may be represented in
-any of the four actor columns, so you cannot simply sum the number of
-rows in which an actor appears in one particular column. A simple
-solution is to transform the dataset into long form and then calculate
-event counts for each actor. You can begin by using the
-<code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> function:</p>
+dataset participates. This can be difficult with wide (i.e., dyadic)
+data, as an actor may be represented in any of the four actor columns.
+As such, you cannot simply sum the number of rows in which an actor
+appears in one particular column. A simple solution is to transform the
+dataset into long form and then calculate event counts for each actor.
+You can begin by using the <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>
+function:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">df_sa</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span></code></pre></div>
-<p>The dataset is now in long form with each row representing a single
-actor in a single event. You can now count the number of rows for each
-actor, but only after grouping by <strong>unique</strong>
+<p>The dataset is now in long form, with each row representing a single
+actor in a single event. With this data, you can count the number of
+rows for each actor, but only after grouping by <strong>unique</strong>
 <em>event_id_cnty</em>. It is very important to count rows by unique
 identifiers because when transforming data to long format, events can be
 represented in multiple rows equal to the number of actors involved in
@@ -295,11 +289,10 @@ that event.</p>
 <span></span>
 <span><span class="va">actors_df_sa</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa_long</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">actor</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n_events <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">event_id_cnty</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>To verify your results, you can filter actor counts to only “Military
-Forces of Colombia (2022-)”.</p>
+<p>To verify your results, you can filter actor counts to only “ELN:
+National Liberation Army”.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">actors_df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -315,7 +308,7 @@ filtering by actor.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start, ACLED.</p>
+  <p>Developed by ACLED, Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start.</p>
 </div>
 
 <div class="pkgdown-footer-right">
