@@ -21,7 +21,7 @@ test_that("acled_update without deletions actually returns events that should be
 
   snap_test <- acled_update(acledR::acled_old_deletion_dummy,
                             email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"), deleted = FALSE,
-                            acled_access = F, prompts = F)
+                            acled_access = F, prompts = F, inter_numeric = TRUE)
 
    expect_true(any(find_deleted_events$event_id_cnty %in% snap_test$event_id_cnty))
 })
@@ -34,7 +34,7 @@ test_that("Warning for earlier dates requested", {
                               additional_countries = "Argentina",
                               start_date = (min(acledR::acled_old_dummy$event_date) + 10),
                               email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              acled_access = F, prompts = F),
+                              acled_access = F, prompts = F, inter_numeric = TRUE),
                               regexp = "Start date is later")
 })
 
@@ -43,7 +43,7 @@ test_that("Warning for start dates that are later than the earliest in the datas
                               additional_countries = "Argentina",
                               start_date = (min(acledR::acled_old_dummy$event_date) - 10),
                               email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              acled_access = F, prompts = F),
+                              acled_access = F, prompts = F, inter_numeric = TRUE),
                  regexp = "Start date is earlier than")
 })
 
@@ -54,7 +54,7 @@ test_that("Warning for later end dates than requested", {
                               additional_countries = "Argentina",
                               end_date = (max(acledR::acled_old_dummy$event_date) + 10),
                               email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              acled_access = F, prompts = F),
+                              acled_access = F, prompts = F, inter_numeric = TRUE),
                  regexp = "End date is later than")
 })
 
@@ -63,7 +63,7 @@ test_that("Warning for ealier end dates than the max requested", {
                               additional_countries = "Argentina",
                               end_date = (max(acledR::acled_old_dummy$event_date) - 10),
                               email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              acled_access = F, prompts = F),
+                              acled_access = F, prompts = F, inter_numeric = TRUE),
                  regexp = "End date is earlier than")
 })
 
@@ -73,9 +73,9 @@ test_that("Warning for ealier end dates than the max requested", {
 
 test_that("Error if `additional_countries` or `regions` are not in the dataset", {
 
-  expect_error(acled_update(acledR::acled_old_dummy, additional_countries = "Unknown Country"),
+  expect_error(acled_update(acledR::acled_old_dummy, additional_countries = "Unknown Country", inter_numeric = TRUE),
                "Error: The following additional_countries are not present in acledR::acled_countries: Unknown Country")
-  expect_error(acled_update(acledR::acled_old_dummy, regions = "Unknown Region"),
+  expect_error(acled_update(acledR::acled_old_dummy, regions = "Unknown Region", inter_numeric = TRUE),
                "Error: The following regions are not present in acledR::acled_regions: Unknown Region")
 
 })
@@ -87,7 +87,7 @@ test_that("An error appears if acled_access is false but no keys are provided",{
   expect_error(acled_update(acledR::acled_old_dummy,
                             additional_countries = "Argentina",
                             start_date = min(acled_old_dummy$event_date),
-                            acled_access = F, prompts = F), regexp = "Error: If acled_access is FALSE")
+                            acled_access = F, prompts = F, inter_numeric = TRUE), regexp = "Error: If acled_access is FALSE")
 })
 
 ## Errors when the dataset does not have the acled structure ----
@@ -99,7 +99,7 @@ test_that("If you have a dataset that does not match acled's structure you get a
   expect_error(acled_update(df,
                             additional_countries = "Argentina",
                             start_date = "2022-01-01",
-                            acled_access = F, prompts = F), regexp = "The data frame provided does not have ACLED's structure")
+                            acled_access = F, prompts = F, inter_numeric = TRUE), regexp = "The data frame provided does not have ACLED's structure")
 })
 
 ## Errors when requesting event types that are not part of ACLED's event types ----
@@ -108,7 +108,7 @@ test_that("Users get an error when requesting a non existent event type",{
   expect_error(acled_update(acledR::acled_old_dummy,
                             email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                               event_types = "Snowball fights",
-                               acled_access = F, prompts = F), regexp = "Error: Invalid event_type provided")
+                               acled_access = F, prompts = F, inter_numeric = TRUE), regexp = "Error: Invalid event_type provided")
   })
 # Weird use cases ----
 

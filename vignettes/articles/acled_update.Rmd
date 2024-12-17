@@ -95,6 +95,7 @@ acled_access(email = "your_email", key = "your_key") #  This is an example, you 
 
 argen_dummy_acled_file <- acledR::acled_old_dummy # Here is our old personal ACLED dataset
 ```
+
 ```{r, echo=FALSE}
 acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY")) #  This is an example, you will need to input your credentials.
 
@@ -108,19 +109,17 @@ latest_timestamp_unix <- max(argen_dummy_acled_file$timestamp)
 latest_timestamp <- as_datetime(latest_timestamp_unix) 
 ```
 
-The dataset has not been updated since `r as_date(latest_timestamp)`, so you may want a more updated version. To do so, you can use `acled_update()`. If you are only interested in updating events that are already in your dataset, you can ignore the `start_date` and `end_date` arguments. If you also wish to remove deleted events from your dataset you can set `deleted=TRUE`. 
+The dataset has not been updated since `r as_date(latest_timestamp)`, so you may want a more updated version. To do so, you can use `acled_update()`. Note that the `inter_numeric` parameter is set to `TRUE` because the original data -- `argen_dummy_acled_file` -- has variables specified as numeric rather than strings. If you are only interested in updating events that are already in your dataset, you can ignore the `start_date` and `end_date` arguments. If you also wish to remove deleted events from your dataset you can set `deleted=TRUE`. 
 
 ```{r}
-
 new_argen_dataset <- acled_update(argen_dummy_acled_file, 
                                   additional_countries = "Argentina", 
-                                  acled_access = T, 
+                                  acled_access = TRUE, 
+                                  inter_numeric = TRUE, 
                                   prompts = FALSE) 
 ```
 
 Now your dataset captures modified and newly created events. 
-
-Best of luck!
 
 ```{r, echo=F}
 options(warn = defaultW)
