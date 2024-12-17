@@ -20,9 +20,7 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx)](https://codecov.io/gh/ACLED/acledR)
 <!-- badges: end -->
 
-Welcome to ACLED's official R package! With this package we want to bring you an even more convenient way to access ACLED data, building on top of our existing API. 
-
-In this repo you can find the source code of the package, as well as the documentation. You can also visit https://acled.github.io/acledR/ for more information and walkthroughs on how to use the package.
+Welcome to ACLED's official R package! This package simplifies access to the data via ACLED's API. It also provides convenient functions for making common ACLED data transformations. See dtacled.github.io/acledR for more information and tutorials on how to use the package.
 
 
 # Overview
@@ -34,41 +32,12 @@ To access ACLED data, please register an account at [developer.acleddata.com](de
 * You can visit our [guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf) on how to easily set up your ACLED account. 
 * We recommend you to save your ACLED API Key in an R object so you can easily re-use your key. 
 
-## Installation (for private repo)
 
-Since the package repo is currently private, you need to tell R and Github that you're a collaborator. To do so, you first create a Github personal access token (PAT). You can set this to expire after a certain time (the default) or be permanent. We can initiate this process internally via:
+## Installation
 
-```{r, eval=F}
-# install.packages("usethis") if not installed already
-# create personal access token - this should redirect to your github page where you can copy the token
-usethis::create_github_token()
-```
+The package will be reviewed and available on CRAN shortly. In the meantime, you can install the package from Github:
 
-After you've copied the PAT from the browser and saved it somewhere safe, return to R and run this, which will store the PAT locally.
-
-```{r, eval=F}
-# paste the token where it says YourPAT
-credentials::set_github_pat("YourPAT")
-# if you run this, it should print your token; if not we've failed
-Sys.getenv("GITHUB_PAT")
-```
-
-Now you can install the package and it will automatically locate your PAT.
-
-```{r, eval=F}
-# install from github
+```{r, eval = F}
 devtools::install_github("ACLED/acledR")
 ```
 
-
-## Installation (for public use) 
-
-The package is on the process to get submited to the Comprehensive R Archive Network (CRAN). In the meantime, you can install the package from Github.
-```{r, eval = F}
-devtools::install_github("ACLED/acledR") ## if you are interested in a particular branch, please add a 'ref' argument. 
-```
-
-Once the package is uploaded to CRAN, you can install it with the following command:
-```{r, eval = F}
-install.packages("acledR")
-```
