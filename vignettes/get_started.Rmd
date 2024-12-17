@@ -101,7 +101,9 @@ To update your dataset, provide the `acled_update` function a dataframe of your 
 Here is an example of how you can use `acled_update()` to update an old dataset:
 
 ```{r}
-new_data <- acled_update(acledR::acled_old_deletion_dummy, prompts = F)
+new_data <- acled_update(acledR::acled_old_deletion_dummy, 
+                         inter_numeric = TRUE,
+                         prompts = FALSE)
 ```
 
 ## Transforming ACLED Data - `acled_transform_*`
