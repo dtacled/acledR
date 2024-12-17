@@ -14,6 +14,7 @@ acled_update(
   acled_access = TRUE,
   email = NULL,
   key = NULL,
+  inter_numeric = FALSE,
   deleted = TRUE,
   prompts = TRUE
 )
@@ -36,6 +37,8 @@ acled_update(
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 
 \item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+
+\item{inter_numeric}{logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values. Must match the inter type (numeric or string) in the dataframe being updated.}
 
 \item{deleted}{logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().}
 

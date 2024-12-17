@@ -20,6 +20,5 @@ test_more_than_one <- acled_update(acledR::acled_old_deletion_dummy,
 
 find_deleted_events <- acled_deletions_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                                            date_deleted = max(acledR::acled_old_deletion_dummy$timestamp),
-                                           acled_access = F,
-                                           inter_numeric = TRUE)
+                                           acled_access = F)
 
