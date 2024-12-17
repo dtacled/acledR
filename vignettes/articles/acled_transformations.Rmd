@@ -1,12 +1,12 @@
 ---
-title: "Transformation of ACLED data"
+title: "Transforming ACLED data"
 output: html_document
-date: "2022-11-11"
 vignette: >
-  %\VignetteIndexEntry{Transformation of ACLED data}
+  %\VignetteIndexEntry{Transforming ACLED data}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
+
 ```{r loading packs, echo = F, message=FALSE, warning=FALSE}
 library(kableExtra)
 library(knitr)
@@ -14,56 +14,18 @@ library(acledR)
 library(dplyr)
 ```
 
-The ACLED dataset is designed with user readability in mind. At times, this focus might conflict with standard clean data principles, such as having only a single value per column and row. To circumvent these issues, and to make it easier to use ACLED data in certain programmatic settings, you can use the data manipulation suite of functions in the `acledR` package. Currently, ACLED has three available functions: `acled_transform_interactions`, `acled_transform_longer` and `acled_transform_wider`.
-
-## 1. Switch between numeric and string interaction codes - `acled_transform_interactions()`
-
-The first function in this suite, `acled_transform_interactions()`, allows you to easily transition from numeric interaction codes to a text description of the interaction code. 
-
-In our analyses, we often refer to actor types by using text categories (e.g. *State Forces* or *Rebel Groups*), while our dataset structures these categories using a numeric categorization. You can find more information - including a table of which actor categories correspond to which numeric codes – in ACLED’s [codebook](https://acleddata.com/download/2827/). 
-
-This function allows you to convert your numeric codes into text descriptions, without the time-consuming need of writing out these changes yourself. 
-
-```{fun , eval = FALSE}
-acled_transform_interactions(df, only_inters = F) 
-```
-
-The function requires two arguments:
-
-*   `data`: An ACLED dataset which includes the inter1 and inter2 variables (when `only_inter = F`).
-
-*   `only_inters`: Boolean option on whether to include only *inter1* and *inter2*, without including *interaction*. This option defaults to `FALSE`, thus including the *interaction* column.
-
-The function simply returns a modified dataframe with the swapped inter & interaction formats. In the *interaction* column, you will find the actor types separated by “-”, for example:
-
-```{r}
-acledR::acled_old_dummy[39:40,] %>%
-  # Displaying only relevant columns
-  select(event_id_cnty, inter1, inter2, interaction)
-
-```
-
-... will change to ...
-
-```{r}
-acledR::acled_old_dummy[39:40,] %>%
-  acled_transform_interaction()%>%
-  select(event_id_cnty, inter1, inter2, interaction)%>%
-  head(2)
-```
+The ACLED dataset is designed with user readability in mind. This focus might complicate data manipulation in some use cases. To make the data easier to use in a variety of settings, `acledR` provides a suite of functions for data transformations often applied to ACLED data. Currently, `acledR` has three functions in the 'transform' family:  `acled_transform_longer`, `acled_transform_wider`, and `acled_transform_interactions`.
 
 
-## 2. From wide to long formats - `acled_transform_longer()`
+## 1. From wide to long format - `acled_transform_longer()`
 
+`acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see the [ACLED API guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type) for a more detailed explanation). This format generally works well if you are interested in conducting event-based analyses. Still, there are times when you may wish to conduct actor-based analyses that might require a long data format, where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
 
-`acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see our [API interactive guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type) for a more detailed explanation). This format generally works well if you are interested in conducting event-based analyses. Still, there are times when you may wish to conduct actor-based analyses that are better suited to a long data format where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
-
-Note that wide and long formats are generic terms that are more specifically referred to as dyadic and monadic data types in other ACLED documentation (see [ACLED endpoint guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html)).
+Note that wide and long formats are generic terms that are more specifically referred to as dyadic and monadic data types in other ACLED documentation (see the [ACLED endpoint guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html)).
 
 ```{r setup, eval = FALSE}
 
-acled_transform_longer(data, 
-                type = "full_actors") 
+acled_transform_longer(data, type = "full_actors") 
 
 ```
 
@@ -91,7 +53,7 @@ Keep in mind that you can receive some data in monadic/longer form directly from
 
 
 
-## From long to wide format - `acled_transform_wider()`
+## 2. From long to wide format - `acled_transform_wider()`
 
 `acledR` also offers the inverse of `acled_transform_longer()`, allowing you to pivot your dataframe back to a wider format (dyadic form). The function is meant to aid users that may have used `acled_transform_longer()` and would like to return the dataframe to its original state. 
 
@@ -109,12 +71,43 @@ As you can see, the arguments are the same as those for `acled_transform_longer(
 *   `type`: A character vector indicating which columns to transpose (the columns that go from long to wide format). 
 
 
+## 3. Switch between numeric and string interaction codes - `acled_transform_interactions()`
+
+The final function in this suite, `acled_transform_interactions()`, allows you to easily transition from numeric interaction codes to a text description of the interaction code.  You can find more information - including which actor categories correspond to which numeric codes – in ACLED’s [codebook](https://acleddata.com/knowledge-base/codebook/#actors). While the `acled_api()` function returns interaction codes as text strings by default, this function is useful when the original API call included the parameter value `inter_numeric = TRUE`.
+
+```{fun , eval = FALSE}
+acled_transform_interactions(df, only_inters = FALSE) 
+```
+
+The function requires two arguments:
+
+*   `data`: An ACLED dataset which includes the inter1 and inter2 variables (when `only_inter = F`).
+
+*   `only_inters`: Boolean option on whether to include only *inter1* and *inter2*, without including *interaction*. This option defaults to `FALSE`, thus including the *interaction* column.
+
+The function simply returns a modified dataframe with the swapped inter & interaction formats. In the *interaction* column, you will find the actor types separated by “-”, for example:
+
+```{r}
+acledR::acled_old_dummy[39:40,] %>%
+  # Displaying only relevant columns
+  select(event_id_cnty, inter1, inter2, interaction)
+
+```
+
+... will change to ...
+
+```{r}
+acledR::acled_old_dummy[39:40,] %>%
+  acled_transform_interaction()%>%
+  select(event_id_cnty, inter1, inter2, interaction)%>%
+  head(2)
+```
 
 ## Example 
 
-In this section you can walk through a potential use case for the transformation functions. 
+This section walks through a potential use case for the transformation functions. 
 
-For this example, assume that you are interested in data from “South America” during the first half of 2023. **NOTE**: The email and key values below are only examples. You should provide your own credentials that you can create by using [ACLED’s website](https://apidocs.acleddata.com/get_started.html#getting-your-api-key). 
+Assume that you are interested in data from “South America” during the first half of 2023. The email and key values below are only examples. To replicate the output, provide your own credentials as detailed in the `acled_api()` vignette.
 
 ```{r, eval = FALSE}
 
@@ -127,6 +120,7 @@ df_sa <- acled_api(regions = "South America",
                    end_date = "2023-06-01",
                    monadic = F,
                    acled_access = TRUE,
+                   inter_numeric = TRUE,
                    prompt = F)
 ```
 
@@ -144,7 +138,8 @@ df_sa <- acled_api(regions = "South America",
                    inter_numeric = TRUE,
                    prompt = F)
 ```
-Now that your data are in long format with one actor per row, you can much more easily filter the data to retain only those events involving the "ELN: National Liberation Army": 
+
+Let's filter to events involving only the "ELN: National Liberation Army" in any of the primary or associate actor columns: 
 
 ```{r}
 
@@ -162,29 +157,28 @@ df_eln <-
 
 ```
 
-In the filtered events there are `r nrow(df_eln)` rows, meaning there were `r nrow(df_eln)` events where the "ELN: National Liberation Army" were involved as an actor or associate actor. 
+In the filtered events, there are `r nrow(df_eln)` rows, meaning there were `r nrow(df_eln)` events where the "ELN: National Liberation Army" were involved as an actor or associate actor. 
 
-Instead of filtering to the events involving a particular actor, you may wish to calculate the number of events in which each actor in the dataset participates. The issue is that an actor may be represented in any of the four actor columns, so you cannot simply sum the number of rows in which an actor appears in one particular column. A simple solution is to transform the dataset into long form and then calculate event counts for each actor. You can begin by using the `acled_transform_longer()` function:
+Instead of filtering to the events involving a particular actor, you may wish to calculate the number of events in which each actor in the dataset participates. This can be difficult with wide (i.e., dyadic) data, as an actor may be represented in any of the four actor columns. As such, you cannot simply sum the number of rows in which an actor appears in one particular column. A simple solution is to transform the dataset into long form and then calculate event counts for each actor. You can begin by using the `acled_transform_longer()` function:
 
 ```{r}
 df_sa_long <- acled_transform_longer(df_sa, type = "full_actors")
 ```
 
-The dataset is now in long form with each row representing a single actor in a single event. You can now count the number of rows for each actor, but only after grouping by **unique** *event_id_cnty*. It is very important to count rows by unique identifiers because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
+The dataset is now in long form, with each row representing a single actor in a single event. With this data, you can count the number of rows for each actor, but only after grouping by **unique** *event_id_cnty*. It is very important to count rows by unique identifiers because when transforming data to long format, events can be represented in multiple rows equal to the number of actors involved in that event. 
 
-```{r}
+```{r, warning=F, message=F}
 library(tidyr)
 library(dplyr)
 
 actors_df_sa <-
   df_sa_long %>% 
-    filter(actor == "ELN: National Liberation Army") %>%
   group_by(actor) %>%
   summarise(n_events = n_distinct(unique(event_id_cnty)))
-
+  
 ```
 
-To verify your results, you can filter actor counts to only "Military Forces of Colombia (2022-)". 
+To verify your results, you can filter actor counts to only "ELN: National Liberation Army". 
 
 ```{r}
 actors_df_sa %>% 
