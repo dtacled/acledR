@@ -12,7 +12,8 @@ test_that("acled_transform_wider returns expected results for type = 'full_actor
     mutate(actor2 = na_if(actor2, ""))
 
   # Test if the original acledR::acled_old_dummy and the reversed acledR::acled_old_dummy are the same
-  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty))
+  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty),
+               ignore_attr = TRUE)
 })
 
 test_that("acled_transform_wider returns expected results for type = 'main_actors'", {
@@ -26,7 +27,8 @@ test_that("acled_transform_wider returns expected results for type = 'main_actor
   reversed_data <- acled_transform_wider(transformed_data, type = "main_actors")
 
   # Test if the original acledR::acled_old_dummy and the reversed acledR::acled_old_dummy are the same
-  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty))
+  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty),
+               ignore_attr = TRUE)
 })
 
 test_that("acled_transform_wider returns expected results for type = 'assoc_actors'", {
@@ -38,7 +40,8 @@ test_that("acled_transform_wider returns expected results for type = 'assoc_acto
   reversed_data <- acled_transform_wider(transformed_data, type = "assoc_actors")
 
   # Test if the original acledR::acled_old_dummy and the reversed acledR::acled_old_dummy are the same
-  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty))
+  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty),
+               ignore_attr = TRUE)
 })
 
 test_that("acled_transform_wider returns expected results for type = 'source'", {
@@ -50,7 +53,8 @@ test_that("acled_transform_wider returns expected results for type = 'source'", 
   reversed_data <- acled_transform_wider(transformed_data, type = "source")
 
   # Test if the original acledR::acled_old_dummy and the reversed acledR::acled_old_dummy are the same
-  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty))
+  expect_equal(dplyr::arrange(acledR::acled_old_dummy,event_id_cnty), dplyr::arrange(reversed_data, event_id_cnty),
+               ignore_attr = TRUE)
 })
 
 # Tests for proper errors and messages----

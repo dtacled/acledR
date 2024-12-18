@@ -39,6 +39,10 @@ acled_transform_wider <- function(data, type = "full_actors") {
     stop(paste0("Error: ", type, " is not a valid option. Please select a valid option:\"full_actors\", \"main_actors\", \"assoc_actors\", \"source\", \"api_monadic\""))
   }
 
+  if(type %in% c("full_actors", "main_actors")) {
+    inter_numeric <- any(1:8 %in% unique(data$inter))
+  }
+
   if (type == "full_actors") {
     columns_present <- function(df, cols) {
       all(sapply(cols, function(x) !is.na(match(x, names(df)))))
@@ -51,6 +55,8 @@ acled_transform_wider <- function(data, type = "full_actors") {
       stop("Some columns are missing. Please make sure your data frame includes: actor,type_of_actor,inter_type, and inter.")
     }
 
+
+
     reverse_data <- data %>%
       # Pivot actor firsts, flattening joint actors such as assoc actors
       pivot_wider(names_from = type_of_actor, values_from = actor, values_fn = function(x) str_flatten(x, collapse = "; "), values_fill = "") %>%
@@ -60,7 +66,6 @@ acled_transform_wider <- function(data, type = "full_actors") {
       ) %>%
 
       # Pivot inters next, adding a fill 9999 to those that do not apply, as a way of removing. inters from different types of actors
-      # Coerced to character to account for inters being text or numeric
       pivot_wider(names_from = inter_type, values_from = inter, values_fill = as.character(9999)) %>%
       mutate(inter1 = replace_na(inter1, "")) %>%
       mutate(inter2 = replace_na(inter2, "")) %>%
@@ -79,20 +84,27 @@ acled_transform_wider <- function(data, type = "full_actors") {
         actor2 = na_if(actor2, ""),
         actor1 = na_if(actor1, ""),
         assoc_actor_1 = na_if(assoc_actor_1, ""),
-        assoc_actor_2 = na_if(assoc_actor_2, ""),
-        inter1 = replace_na(inter1, 0),
-        inter2 = replace_na(inter2, 0)
+        assoc_actor_2 = na_if(assoc_actor_2, "")
       ) %>%
       # Match column structure for an acled dataset
-      select(names(acledR::acled_old_dummy))
+      dplyr::select(names(acledR::acled_old_dummy))
 
     # Coerce to numeric if inter were originally numeric
-    if(max(length(reverse_data$inter1)) == 1) {
+    if(inter_numeric == TRUE) {
       reverse_data <-
         reverse_data %>%
         mutate(
           inter1 = as.numeric(inter1),
-          inter2 = as.numeric(inter2)
+          inter2 = as.numeric(inter2),
+          inter1 = replace_na(inter1, 0),
+          inter2 = replace_na(inter2, 0)
+        )
+    } else {
+      reverse_data <-
+        reverse_data %>%
+        mutate(
+          inter1 = case_when(inter1 == "" ~ NA_character_, TRUE ~ inter1),
+          inter2 = case_when(inter2 == "" ~ NA_character_, TRUE ~ inter2)
         )
     }
 
@@ -136,21 +148,28 @@ acled_transform_wider <- function(data, type = "full_actors") {
         actor2 = na_if(actor2, ""),
         actor1 = na_if(actor1, ""),
         assoc_actor_1 = na_if(assoc_actor_1, ""),
-        assoc_actor_2 = na_if(assoc_actor_2, ""),
-        inter1 = replace_na(inter1, 0),
-        inter2 = replace_na(inter2, 0)
+        assoc_actor_2 = na_if(assoc_actor_2, "")
       ) %>%
       # Match column structure for an acled dataset
-      select(names(acledR::acled_old_dummy))
+      dplyr::select(names(acledR::acled_old_dummy))
 
     # Coerce to numeric if inter were originally numeric
-    if(max(length(reverse_data$inter1)) == 1) {
+    if(inter_numeric == TRUE) {
       reverse_data <-
         reverse_data %>%
         mutate(
         inter1 = as.numeric(inter1),
-        inter2 = as.numeric(inter2)
+        inter2 = as.numeric(inter2),
+        inter1 = replace_na(inter1, 0),
+        inter2 = replace_na(inter2, 0)
       )
+    } else {
+      reverse_data <-
+        reverse_data %>%
+        mutate(
+          inter1 = case_when(inter1 == "" ~ NA_character_, TRUE ~ inter1),
+          inter2 = case_when(inter2 == "" ~ NA_character_, TRUE ~ inter2)
+        )
     }
 
   } else if (type == "assoc_actors") {
@@ -180,12 +199,30 @@ acled_transform_wider <- function(data, type = "full_actors") {
         actor2 = na_if(actor2, ""),
         actor1 = na_if(actor1, ""),
         assoc_actor_1 = na_if(assoc_actor_1, ""),
-        assoc_actor_2 = na_if(assoc_actor_2, ""),
-        inter1 = replace_na(inter1, 0),
-        inter2 = replace_na(inter2, 0)
+        assoc_actor_2 = na_if(assoc_actor_2, "")
       ) %>%
       # Match column structure for an acled dataset
-      select(names(acledR::acled_old_dummy))
+      dplyr::select(names(acledR::acled_old_dummy))
+
+    # Coerce to numeric if inter were originally numeric
+    # if(inter_numeric == TRUE) {
+    #   reverse_data <-
+    #     reverse_data %>%
+    #     mutate(
+    #       inter1 = as.numeric(inter1),
+    #       inter2 = as.numeric(inter2),
+    #       inter1 = replace_na(inter1, 0),
+    #       inter2 = replace_na(inter2, 0)
+    #     )
+    # } else {
+    #   reverse_data <-
+    #     reverse_data %>%
+    #     mutate(
+    #       inter1 = case_when(inter1 == "" ~ NA_character_, TRUE ~ inter1),
+    #       inter2 = case_when(inter2 == "" ~ NA_character_, TRUE ~ inter2)
+    #     )
+    # }
+
   } else if (type == "source") {
     columns_present <- function(df, cols) {
       all(sapply(cols, function(x) !is.na(match(x, names(df)))))
@@ -204,7 +241,7 @@ acled_transform_wider <- function(data, type = "full_actors") {
       summarise(source = str_c(source, collapse = "; ")) %>%
       ungroup() %>%
       # Match column structure for an acled dataset
-      select(names(acledR::acled_old_dummy))
+      dplyr::select(names(acledR::acled_old_dummy))
   } else if (type == "api_monadic") {
     df1 <- data %>%
       group_by(event_id_cnty) %>%

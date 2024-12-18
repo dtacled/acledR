@@ -77,7 +77,7 @@ acled_update <- function(df,
     warning("Warning: End date is earlier than the latest event date in your dataframe.")
   }
 
-  if (inter_numeric == FALSE & length(df$inter1[[1]]) == 1) {
+  if (inter_numeric == FALSE & any(1:8 %in% unique(df$inter1))) {
     stop("The data frame provided appears to have numeric interaction values (inter1, inter2, and interaction variables). Set inter_numeric = TRUE in the acled_update() call to update data with numeric interaction values.")
   }
 
