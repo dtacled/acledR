@@ -20,17 +20,11 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx)](https://codecov.io/gh/ACLED/acledR)
 <!-- badges: end -->
 
-Welcome to ACLED's official R package! This package simplifies access to the data via ACLED's API. It also provides convenient functions for making common ACLED data transformations. See dtacled.github.io/acledR for more information and tutorials on how to use the package.
 
 
-# Overview
+Welcome to acledR! This package provides tools to extract and manipulate data from the [Armed Conflict Location and Event Data Project (ACLED)](https://acleddata.com/). It also provides convenient functions for making common ACLED data transformations. See [dtacled.github.io/acledR](https://dtacled.github.io/acledR) for more information and tutorials on how to use the package.
 
-This package provides tools to extract and manipulate data from the [Armed Conflict Location and Event Data Project (ACLED)](https://acleddata.com/). 
-
-To access ACLED data, please register an account at [developer.acleddata.com](developer.acleddata.com). 
-
-* You can visit our [guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf) on how to easily set up your ACLED account. 
-* We recommend you to save your ACLED API Key in an R object so you can easily re-use your key. 
+To access ACLED data, please register an account at [developer.acleddata.com](https://developer.acleddata.com). You can find detailed instructions for setting up your account and retreiving an API key [here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf). 
 
 
 ## Installation

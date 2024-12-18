@@ -178,7 +178,7 @@ test_that("Error when one of two countries are wrong",{
 
 ## Test what happens when someone inputs acled_access as TRUE but it includes email and key. ----
 test_that("Acled_access is ignored",{
-  expect_true(grepl("t.billing", log_received_data_check_credential$email[1]))
+  expect_true(grepl("acledrexamples", log_received_data_check_credential$email[1]))
 })
 
 # Test errors from incorrectly input arguments. ----
@@ -305,7 +305,7 @@ test_that("A warning appears that acled_access is being ignored, and the proper 
   expect_message(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                            acled_access = T, log = T, inter_numeric = TRUE), regexp = "acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
 
-  expect_true(grepl("t.billing", alog$email[1]))
+  expect_true(grepl("acledrexamples", alog$email[1]))
 })
 
 
