@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Getting Started • acledR</title>
+<title>Get Started • acledR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get Started">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -64,7 +64,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Getting Started</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Get Started</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ACLED/acledR/blob/master/vignettes/get_started.Rmd" class="external-link"><code>vignettes/get_started.Rmd</code></a></small>
@@ -149,19 +149,19 @@ example, let’s request all events in Argentina throughout 2022:</p>
 <span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests", "Protests…</span></span>
 <span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful protest", "…</span></span>
 <span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-2023)", "Proteste…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "Health Workers (Argentina)", NA, "Labor Group …</span></span>
+<span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "Health Workers (Argentina)", <span style="color: #BB0000;">NA</span>, "Labor Group …</span></span>
 <span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, 6, 6, 6, 6, 6, …</span></span>
-<span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, "Journalists (Argen…</span></span>
+<span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>…</span></span>
+<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "Journalists (Argen…</span></span>
 <span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 37, 60, 60, 60, 60,…</span></span>
-<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", NA, NA, NA, NA, NA, NA, NA, "…</span></span>
+<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "…</span></span>
 <span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
 <span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
 <span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina",…</span></span>
 <span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Chubut", "Santa Fe", "San Juan", "…</span></span>
-<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Rawson", "Caseros", "Capital", NA, NA, "…</span></span>
-<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span></span>
+<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Rawson", "Caseros", "Capital", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "…</span></span>
+<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>,…</span></span>
 <span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "Rawson", "Casilda", "San Juan", "Buenos…</span></span>
 <span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -43.2993, -33.0441, -31.5347, -34.6141, -…</span></span>
 <span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -65.0935, -61.1642, -68.5303, -58.4579, -…</span></span>
@@ -170,7 +170,7 @@ example, let’s request all events in Argentina throughout 2022:</p>
 <span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "Subnational", "Subnational…</span></span>
 <span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
 <span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "crowd size=no report", "crowd size=no report",…</span></span>
+<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "crowd size=no report", "crowd size=no report",…</span></span>
 <span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1705379976, 1673295342, 1673295342, 1673295342, 171…</span></span></code></pre></div>
 <p>Note that while this example uses only five arguments
 (<code>country</code>, <code>start_date</code>, <code>end_date</code>,
@@ -212,9 +212,9 @@ update an old dataset:</p>
 <span><span class="co">#&gt; Extracting content from API request</span></span>
 <span><span class="co">#&gt; Dataset updated. </span></span>
 <span><span class="co">#&gt;  Old number of events: 9000. </span></span>
-<span><span class="co">#&gt;  New events: 95679. </span></span>
+<span><span class="co">#&gt;  New events: 96114. </span></span>
 <span><span class="co">#&gt;  Deleted events: 55. </span></span>
-<span><span class="co">#&gt;  Total new &amp; modified events: 101398</span></span></code></pre></div>
+<span><span class="co">#&gt;  Total new &amp; modified events: 101861</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="transforming-acled-data---acled_transform_">Transforming ACLED Data - <code>acled_transform_*</code><a class="anchor" aria-label="anchor" href="#transforming-acled-data---acled_transform_"></a>

@@ -73,6 +73,8 @@
 
     
     
+<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <p>The ACLED dataset is designed with user readability in mind. This
 focus might complicate data manipulation in some use cases. To make the
 data easier to use in a variety of settings, <code>acledR</code>
@@ -99,7 +101,7 @@ rows.</p>
 specifically referred to as dyadic and monadic data types in other ACLED
 documentation (see the <a href="https://acled.github.io/ACLED-api-guide/acled_endpoint.html" class="external-link">ACLED
 endpoint guide</a>).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span> </span></code></pre></div>
 <p><code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> requires two arguments:</p>
 <ul>
@@ -168,7 +170,7 @@ dataframe back to a wider format (dyadic form). The function is meant to
 aid users that may have used <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> and
 would like to return the dataframe to its original state.</p>
 <p>The function is similar to its counterpart:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_transform_wider.html">acled_transform_wider</a></span><span class="op">(</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span></code></pre></div>
 <p>As you can see, the arguments are the same as those for
 <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>:</p>
@@ -203,7 +205,7 @@ including the <em>interaction</em> column.</p></li>
 <p>The function simply returns a modified dataframe with the swapped
 inter &amp; interaction formats. In the <em>interaction</em> column, you
 will find the actor types separated by “-”, for example:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># Displaying only relevant columns</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span></span></code></pre></div>
@@ -213,7 +215,7 @@ will find the actor types separated by “-”, for example:</p>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> ARG10606           6      0          60</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">2</span> ARG10605           5      1          15</span></span></code></pre>
 <p>… will change to …</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">[</span><span class="fl">39</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">event_id_cnty</span>, <span class="va">inter1</span>, <span class="va">inter2</span>, <span class="va">interaction</span><span class="op">)</span><span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -233,7 +235,7 @@ transformation functions.</p>
 the first half of 2023. The email and key values below are only
 examples. To replicate the output, provide your own credentials as
 detailed in the <code><a href="../reference/acled_api.html">acled_api()</a></code> vignette.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ACLED/acledR" class="external-link">acledR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"your_email"</span>, key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span> </span>
@@ -251,7 +253,7 @@ detailed in the <code><a href="../reference/acled_api.html">acled_api()</a></cod
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <p>Let’s filter to events involving only the “ELN: National Liberation
 Army” in any of the primary or associate actor columns:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_eln</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
@@ -274,7 +276,7 @@ appears in one particular column. A simple solution is to transform the
 dataset into long form and then calculate event counts for each actor.
 You can begin by using the <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code>
 function:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sa_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">df_sa</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span></code></pre></div>
 <p>The dataset is now in long form, with each row representing a single
 actor in a single event. With this data, you can count the number of
@@ -283,7 +285,7 @@ rows for each actor, but only after grouping by <strong>unique</strong>
 identifiers because when transforming data to long format, events can be
 represented in multiple rows equal to the number of actors involved in
 that event.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -293,7 +295,7 @@ that event.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n_events <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">event_id_cnty</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To verify your results, you can filter actor counts to only “ELN:
 National Liberation Army”.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">actors_df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">n_events</span><span class="op">)</span></span></code></pre></div>
