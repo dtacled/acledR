@@ -6,7 +6,7 @@ articles:
   articles/acled_transformations: acled_transformations.html
   articles/acled_update: acled_update.html
   get_started: get_started.html
-last_built: 2024-12-20T13:30Z
+last_built: 2024-12-20T15:07Z
 urls:
   reference: https://dtacled.github.io/acledR/reference
   article: https://dtacled.github.io/acledR/articles
