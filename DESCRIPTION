@@ -6,27 +6,7 @@ Authors@R: c(
     person(given = "",
            family = "ACLED", 
            role = c("cph", "cre"), 
-           email ="data@acleddata.com"),
-    person(given = "Lucas", 
-	       family = "Fagliano",
-	       role = "aut", 
-	       email = "l.fagliano@acleddata.com"),
-    person(given = "Trey", 
-	       family = "Billing",
-	       role = "aut", 
-           email = "t.billing@acleddata.com"),
-    person(given = "Rachel", 
-           family = "Goodman", 
-           role = "aut", 
-           email = "goodman.r@wustl.edu"),
-    person(given = "Katayoun", 
-           family = "Kishi", 
-           role = "aut", 
-           email = "k.kishi@acleddata.com"),
-    person(given = "Michael", 
-           family = "Start", 
-           role = "aut", 
-           email = "m.start@acleddata.com"))
+           email ="data@acleddata.com"))
 Description: The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data. 
 License: GPL (>= 3)
 Encoding: UTF-8

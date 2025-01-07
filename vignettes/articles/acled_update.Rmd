@@ -16,7 +16,7 @@ options(warn = -1)
 
 ```
 
-ACLED’s is a ‘living dataset’, meaning the dataset is added to frequently and existing data can be updated. 
+ACLED is a ‘living dataset’ -- the dataset is added to frequently and existing data can be updated. 
 
 The dataset changes in three ways: 
 
