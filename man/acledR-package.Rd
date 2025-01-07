@@ -23,14 +23,5 @@ Useful links:
 \author{
 \strong{Maintainer}:  ACLED \email{data@acleddata.com} [copyright holder]
 
-Authors:
-\itemize{
-  \item Lucas Fagliano \email{l.fagliano@acleddata.com}
-  \item Trey Billing \email{t.billing@acleddata.com}
-  \item Rachel Goodman \email{goodman.r@wustl.edu}
-  \item Katayoun Kishi \email{k.kishi@acleddata.com}
-  \item Michael Start \email{m.start@acleddata.com}
-}
-
 }
 \keyword{internal}

@@ -20,7 +20,7 @@ library(acledR)
 library(dplyr)
 ```
 
-This vignette provides a brief overview of the `acledR` package. You can find more detailed explanations and examples under the 'Using acledR' tab. For general information on ACLED’s methodology, please visit [ACLED's Knowledge Base](https://acleddata.com/knowledge-base/). 
+This vignette provides a brief overview of the acledR package. You can find more detailed explanations and examples under the 'Using acledR' tab. For general information on ACLED’s methodology, please visit [ACLED's Knowledge Base](https://acleddata.com/knowledge-base/). 
 
 The main objectives of this package are:
 
@@ -40,7 +40,7 @@ You can begin by installing and then loading the package:
 # Install acledR
 install.packages("acledR") # from CRAN
 
-devtools::install_github("ACLED/acledR") # or from the developer's branch from Github.
+devtools::install_github("ACLED/acledR") # or from github.
 
 # Load acledR
 library(acledR)
@@ -60,7 +60,7 @@ acled_access(email = "email@example.com", key = "your_key") #  This is an exampl
 acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
 ```
 
-If the authentication was successful, you will find a message in the console stating "Authorization accepted".
+If the authentication was successful, you will find a message in the console stating that your credentials were authorized.
 
 ## Requesting data from ACLED’s API - `acled_api()`
 

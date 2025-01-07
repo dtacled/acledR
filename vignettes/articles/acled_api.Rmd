@@ -136,7 +136,7 @@ As is common when executing API calls, handling large volumes of data requires s
 
 -   A question asking whether given this information and the number of available API calls linked to your account – you would like to proceed with your API call.
 
-## Example - Gathering data with `acled_api()`
+## Example - Requesting data with `acled_api()`
 
 Imagine you are interested in events from “Brazil” occurring between January 1st, 2022, and December 1st, 2022.
 
