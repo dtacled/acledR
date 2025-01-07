@@ -73,11 +73,11 @@
 
     
     
-<p>This vignette provides a brief overview of the <code>acledR</code>
-package. You can find more detailed explanations and examples under the
-‘Using acledR’ tab. For general information on ACLED’s methodology,
-please visit <a href="https://acleddata.com/knowledge-base/" class="external-link">ACLED’s
-Knowledge Base</a>.</p>
+<p>This vignette provides a brief overview of the acledR package. You
+can find more detailed explanations and examples under the ‘Using
+acledR’ tab. For general information on ACLED’s methodology, please
+visit <a href="https://acleddata.com/knowledge-base/" class="external-link">ACLED’s Knowledge
+Base</a>.</p>
 <p>The main objectives of this package are:</p>
 <ol style="list-style-type: decimal">
 <li>Facilitating access to ACLED data via ACLED’s API</li>
@@ -91,7 +91,7 @@ Knowledge Base</a>.</p>
 <code class="sourceCode R"><span><span class="co"># Install acledR</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"acledR"</span><span class="op">)</span> <span class="co"># from CRAN</span></span>
 <span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ACLED/acledR"</span><span class="op">)</span> <span class="co"># or from the developer's branch from Github.</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ACLED/acledR"</span><span class="op">)</span> <span class="co"># or from github.</span></span>
 <span></span>
 <span><span class="co"># Load acledR</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ACLED/acledR" class="external-link">acledR</a></span><span class="op">)</span></span></code></pre></div>
@@ -111,7 +111,7 @@ with each API request.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"email@example.com"</span>, key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; Success! Credentials authorized</span></span></code></pre>
 <p>If the authentication was successful, you will find a message in the
-console stating “Authorization accepted”.</p>
+console stating that your credentials were authorized.</p>
 </div>
 <div class="section level2">
 <h2 id="requesting-data-from-acleds-api---acled_api">Requesting data from ACLED’s API - <code>acled_api()</code><a class="anchor" aria-label="anchor" href="#requesting-data-from-acleds-api---acled_api"></a>
@@ -338,7 +338,7 @@ example.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by ACLED, Lucas Fagliano, Trey Billing, Rachel Goodman, Katayoun Kishi, Michael Start.</p>
+  <p>Developed by ACLED.</p>
 </div>
 
 <div class="pkgdown-footer-right">
