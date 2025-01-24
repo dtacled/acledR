@@ -28,9 +28,11 @@ To access ACLED data, please register an account at [developer.acleddata.com](ht
 
 ## Installation
 
-The package will be reviewed and available on CRAN shortly. In the meantime, you can install the package from Github:
-
 ```{r, eval = F}
+# Install via cran
+install.packages("acledR")
+
+# Install development version from github
 devtools::install_github("ACLED/acledR")
 ```
 
