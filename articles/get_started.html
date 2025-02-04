@@ -51,7 +51,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ACLED/acledR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/dtacled/acledR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -67,7 +67,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Get Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ACLED/acledR/blob/master/vignettes/get_started.Rmd" class="external-link"><code>vignettes/get_started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dtacled/acledR/blob/master/vignettes/get_started.Rmd" class="external-link"><code>vignettes/get_started.Rmd</code></a></small>
       <div class="d-none name"><code>get_started.Rmd</code></div>
     </div>
 
@@ -94,7 +94,7 @@ Base</a>.</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ACLED/acledR"</span><span class="op">)</span> <span class="co"># or from github.</span></span>
 <span></span>
 <span><span class="co"># Load acledR</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ACLED/acledR" class="external-link">acledR</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dtacled.github.io/acledR/">acledR</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="authenticating-your-credentials---acled_access">Authenticating your credentials - <code>acled_access()</code><a class="anchor" aria-label="anchor" href="#authenticating-your-credentials---acled_access"></a>
 </h2>
@@ -109,7 +109,6 @@ your R environment, eliminating the need for repeated authentication
 with each API request.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/acled_access.html">acled_access</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"email@example.com"</span>, key <span class="op">=</span> <span class="st">"your_key"</span><span class="op">)</span> <span class="co">#  This is an example, you will need to input your credentials.</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Success! Credentials authorized</span></span></code></pre>
 <p>If the authentication was successful, you will find a message in the
 console stating that your credentials were authorized.</p>
 </div>
@@ -120,7 +119,7 @@ console stating that your credentials were authorized.</p>
 API using the <code><a href="../reference/acled_api.html">acled_api()</a></code> function. This function accepts
 several fields for filtering and formatting ACLED data. As a running
 example, let’s request all events in Argentina throughout 2022:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">argentinian_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_api.html">acled_api</a></span><span class="op">(</span></span>
 <span>  <span class="co"># Country of interest</span></span>
 <span>  country <span class="op">=</span> <span class="st">"Argentina"</span>,</span>
@@ -132,46 +131,7 @@ example, let’s request all events in Argentina throughout 2022:</p>
 <span>  inter_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="co"># Turn off acled_api() interactive prompt</span></span>
 <span>  prompt <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Requesting data for 1 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 4,258 events.</span></span>
-<span><span class="co">#&gt; Processing API request</span></span>
-<span><span class="co">#&gt; Extracting content from API request</span></span></code></pre></div>
-<p>This request returns the following data:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">argentinian_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 2,677</span></span>
-<span><span class="co">#&gt; Columns: 31</span></span>
-<span><span class="co">#&gt; $ event_id_cnty      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ARG12068", "ARG11964", "ARG11965", "ARG12064", "AR…</span></span>
-<span><span class="co">#&gt; $ event_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-12-31, 2022-12-30, 2022-12-30, 2022-12-30, 20…</span></span>
-<span><span class="co">#&gt; $ year               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2022, 2022, 2022, 2022, 2022, 2022, 2022, 2022, 202…</span></span>
-<span><span class="co">#&gt; $ time_precision     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ disorder_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Political violence", "Demonstrations", "Demonstrat…</span></span>
-<span><span class="co">#&gt; $ event_type         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Violence against civilians", "Protests", "Protests…</span></span>
-<span><span class="co">#&gt; $ sub_event_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Attack", "Peaceful protest", "Peaceful protest", "…</span></span>
-<span><span class="co">#&gt; $ actor1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Police Forces of Argentina (2019-2023)", "Proteste…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_1      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "Health Workers (Argentina)", <span style="color: #BB0000;">NA</span>, "Labor Group …</span></span>
-<span><span class="co">#&gt; $ inter1             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 6, 6, 6, 6, 6, 6, 6, 3, 6, 6, 6, 6, 6, 6, 6, 6, …</span></span>
-<span><span class="co">#&gt; $ actor2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilians (Argentina)", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>…</span></span>
-<span><span class="co">#&gt; $ assoc_actor_2      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "Journalists (Argen…</span></span>
-<span><span class="co">#&gt; $ inter2             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">#&gt; $ interaction        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 60, 60, 60, 60, 60, 60, 60, 37, 60, 60, 60, 60,…</span></span>
-<span><span class="co">#&gt; $ civilian_targeting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Civilian targeting", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "…</span></span>
-<span><span class="co">#&gt; $ iso                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,…</span></span>
-<span><span class="co">#&gt; $ region             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "South America", "South America", "South America", …</span></span>
-<span><span class="co">#&gt; $ country            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentina", "Argentina", "Argentina", "Argentina",…</span></span>
-<span><span class="co">#&gt; $ admin1             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Buenos Aires", "Chubut", "Santa Fe", "San Juan", "…</span></span>
-<span><span class="co">#&gt; $ admin2             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Moreno", "Rawson", "Caseros", "Capital", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, "…</span></span>
-<span><span class="co">#&gt; $ admin3             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>,…</span></span>
-<span><span class="co">#&gt; $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Reja", "Rawson", "Casilda", "San Juan", "Buenos…</span></span>
-<span><span class="co">#&gt; $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -34.6397, -43.2993, -33.0441, -31.5347, -34.6141, -…</span></span>
-<span><span class="co">#&gt; $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -58.8294, -65.0935, -61.1642, -68.5303, -58.4579, -…</span></span>
-<span><span class="co">#&gt; $ geo_precision      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ source             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "La Nacion (Argentina)", "Diario Cronica (Argentina…</span></span>
-<span><span class="co">#&gt; $ source_scale       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "National", "National", "Subnational", "Subnational…</span></span>
-<span><span class="co">#&gt; $ notes              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "On 31 December 2022, in La Reja (Buenos Aires), a …</span></span>
-<span><span class="co">#&gt; $ fatalities         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">#&gt; $ tags               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "crowd size=no report", "crowd size=no report",…</span></span>
-<span><span class="co">#&gt; $ timestamp          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1705379976, 1673295342, 1673295342, 1673295342, 171…</span></span></code></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>Note that while this example uses only five arguments
 (<code>country</code>, <code>start_date</code>, <code>end_date</code>,
 <code>inter_numeric</code>, and <code>prompt</code>),
@@ -203,18 +163,10 @@ information for which can be found in the
 <code>vignette("acled_update")</code>.</p>
 <p>Here is an example of how you can use <code><a href="../reference/acled_update.html">acled_update()</a></code> to
 update an old dataset:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_update.html">acled_update</a></span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_deletion_dummy.html">acled_old_deletion_dummy</a></span>, </span>
 <span>                         inter_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                         prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Requesting data for 169 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 144,348 events.</span></span>
-<span><span class="co">#&gt; Processing API request</span></span>
-<span><span class="co">#&gt; Extracting content from API request</span></span>
-<span><span class="co">#&gt; Dataset updated. </span></span>
-<span><span class="co">#&gt;  Old number of events: 9000. </span></span>
-<span><span class="co">#&gt;  New events: 97839. </span></span>
-<span><span class="co">#&gt;  Deleted events: 55. </span></span>
-<span><span class="co">#&gt;  Total new &amp; modified events: 103705</span></span></code></pre></div>
+<span>                         prompts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="transforming-acled-data---acled_transform_">Transforming ACLED Data - <code>acled_transform_*</code><a class="anchor" aria-label="anchor" href="#transforming-acled-data---acled_transform_"></a>
@@ -232,19 +184,19 @@ treatment of ACLED’s data transformation functions by visiting the
 data from a wide format, where multiple actors are represented in each
 row, to a long format, with separate rows for each actor. This is
 particularly useful for actor-based analyses.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="va">argentinian_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">long_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_longer.html">acled_transform_longer</a></span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">long_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 29</span></span></span>
-<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type      event_type   </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type event_type</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 23 more variables: sub_event_type &lt;chr&gt;, type_of_actor &lt;chr&gt;, actor &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   inter_type &lt;chr&gt;, inter &lt;dbl&gt;, interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   iso &lt;dbl&gt;, region &lt;chr&gt;, country &lt;chr&gt;, admin1 &lt;chr&gt;, admin2 &lt;chr&gt;,</span></span></span>
@@ -268,19 +220,19 @@ structure to your specific needs.</p>
 you to pivot your data back to a wide format. This function may be
 useful if you used <code><a href="../reference/acled_transform_longer.html">acled_transform_longer()</a></code> and wish to
 revert to the original data structure.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wide_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_wider.html">acled_transform_wider</a></span><span class="op">(</span><span class="va">long_data</span>, type <span class="op">=</span> <span class="st">"full_actors"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">wide_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type  event_type</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG10000      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG10001      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG10002      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG10003      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG10004      2022-04-12  <span style="text-decoration: underline;">2</span>022              1 Demonstrations Protests  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG10005      2022-04-12  <span style="text-decoration: underline;">2</span>022              2 Demonstrations Protests  </span></span>
+<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type event_type</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG10295      2022-06-01  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG10296      2022-06-01  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG10297      2022-06-01  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG10298      2022-06-01  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG10299      2022-06-01  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG10300      2022-06-02  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, actor1 &lt;chr&gt;, assoc_actor_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   inter1 &lt;dbl&gt;, actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   interaction &lt;dbl&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
@@ -307,20 +259,20 @@ function returns interaction codes as text strings by default, making
 this function most useful when the original API call included the
 parameter value <code>inter_numeric = TRUE</code>, as in the running
 example.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">transformed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="va">argentinian_data</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">transformed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acled_transform_interaction.html">acled_transform_interaction</a></span><span class="op">(</span><span class="fu">acledR</span><span class="fu">::</span><span class="va"><a href="../reference/acled_old_dummy.html">acled_old_dummy</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Note the inter1 and inter2 columns</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">transformed_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type      event_type   </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG12068      2022-12-31  <span style="text-decoration: underline;">2</span>022              1 Political violence Violence aga…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG11964      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG11965      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG12064      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG12078      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG12079      2022-12-30  <span style="text-decoration: underline;">2</span>022              1 Demonstrations     Protests     </span></span>
+<span><span class="co">#&gt;   event_id_cnty event_date  year time_precision disorder_type event_type</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ARG10607      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ARG10626      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ARG10618      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ARG10615      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ARG10627      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ARG10625      2022-06-30  <span style="text-decoration: underline;">2</span>022              1 Demostrations Protests  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: sub_event_type &lt;chr&gt;, actor1 &lt;chr&gt;, assoc_actor_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   inter1 &lt;chr&gt;, actor2 &lt;chr&gt;, assoc_actor_2 &lt;chr&gt;, inter2 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   interaction &lt;chr&gt;, civilian_targeting &lt;chr&gt;, iso &lt;dbl&gt;, region &lt;chr&gt;,</span></span></span>
@@ -338,7 +290,7 @@ example.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by ACLED.</p>
+  <p>Developed by Armed Conflict Location and Event Data ACLED, Trey Billing, Lucas Fagliano.</p>
 </div>
 
 <div class="pkgdown-footer-right">

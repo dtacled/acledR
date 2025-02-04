@@ -26,7 +26,7 @@
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ACLED/acledR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/dtacled/acledR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -35,7 +35,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Rounding function</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ACLED/acledR/blob/master/R/acled_rounding.R" class="external-link"><code>R/acled_rounding.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dtacled/acledR/blob/master/R/acled_rounding.R" class="external-link"><code>R/acled_rounding.R</code></a></small>
       <div class="d-none name"><code>acled_rounding.Rd</code></div>
     </div>
 
@@ -60,6 +60,10 @@
 <dd><p>int. Where do we want to round up. It accepts 0 (whole number), 1 (tenth place), 2 (hundredths), etc.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A rounded numeric value</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function is meant to address the problem of rounding in R where the approach is always round to even. The function is meant to round things following the simple rule. If the decimal is 5+ then round up, if not round down. With the 'digits' argument, one can set up the specificity of the rounding, 0= whole number, 1 = tenth place, 2=hundreds place, and so on.</p>
@@ -86,7 +90,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by ACLED.</p>
+  <p>Developed by Armed Conflict Location and Event Data ACLED, Trey Billing, Lucas Fagliano.</p>
 </div>
 
 <div class="pkgdown-footer-right">
