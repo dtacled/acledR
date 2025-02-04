@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("acled_rounding behaves as expected", {
   # Test cases where acled_rounding and round give different results
   expect_equal(acled_rounding(1.5), 2)
