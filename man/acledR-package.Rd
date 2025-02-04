@@ -4,24 +4,33 @@
 \name{acledR-package}
 \alias{acledR}
 \alias{acledR-package}
-\title{acledR: Manipulate 'ACLED' Data}
+\title{acledR: Manipulate ACLED Data}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The package allows users to easily interact with 'ACLED' data by providing wrappers for the API and other functions to manipulate 'ACLED' data.
+The official ACLED R package for extracting and manipulating ACLED data.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ACLED/acledR}
-  \item \url{https://acled.github.io/acledR/}
   \item \url{https://dtacled.github.io/acledR/}
-  \item Report bugs at \url{https://github.com/ACLED/acledR/issues}
+  \item Report bugs at \url{https://github.com/dtacled/acledR/issues}
 }
 
 }
 \author{
-\strong{Maintainer}:  ACLED \email{data@acleddata.com} [copyright holder]
+\strong{Maintainer}: Armed Conflict Location and Event Data ACLED \email{data@acleddata.com} [copyright holder]
+
+Authors:
+\itemize{
+  \item Trey Billing \email{t.billing@acleddata.com}
+  \item Lucas Fagliano
+}
+
+Other contributors:
+\itemize{
+  \item Katayoun Kishi [contributor]
+}
 
 }
 \keyword{internal}

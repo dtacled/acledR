@@ -56,9 +56,6 @@ Once you are registered, we encourage authenticating your credentials using the 
 acled_access(email = "email@example.com", key = "your_key") #  This is an example, you will need to input your credentials.
 ```
 
-```{r, echo=FALSE}
-acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
-```
 
 If the authentication was successful, you will find a message in the console stating that your credentials were authorized.
 
@@ -66,7 +63,7 @@ If the authentication was successful, you will find a message in the console sta
 
 After authenticating your credentials, you can request data from the API using the `acled_api()` function. This function accepts several fields for filtering and formatting ACLED data. As a running example, let's request all events in Argentina throughout 2022:
 
-```{r}
+```{r, eval=FALSE}
 argentinian_data <- acled_api(
   # Country of interest
   country = "Argentina",
@@ -81,11 +78,6 @@ argentinian_data <- acled_api(
   )
 ```
 
-This request returns the following data:
-
-```{r, echo=T}
-glimpse(argentinian_data)
-```
 
 Note that while this example uses only five arguments (`country`, `start_date`, `end_date`, `inter_numeric`, and `prompt`), `acled_api()` accepts several other useful arguments, descriptions of which can be found in `vignette("acled_api")`. If you do not use the `acled_access` function to store your credentials, you will also need to specify your email and API key in each request.
 
@@ -100,7 +92,7 @@ To update your dataset, provide the `acled_update` function a dataframe of your 
 
 Here is an example of how you can use `acled_update()` to update an old dataset:
 
-```{r}
+```{r, eval = FALSE}
 new_data <- acled_update(acledR::acled_old_deletion_dummy, 
                          inter_numeric = TRUE,
                          prompts = FALSE)
@@ -115,7 +107,7 @@ ACLED data has a unique structure which can complicate data manipulation. The `a
 The `acled_transform_longer()` function transforms ACLED data from a wide format, where multiple actors are represented in each row, to a long format, with separate rows for each actor. This is particularly useful for actor-based analyses.
 
 ```{r}
-long_data <- acled_transform_longer(argentinian_data, type = "full_actors")
+long_data <- acled_transform_longer(acledR::acled_old_dummy, type = "full_actors")
 
 head(long_data)
 ```
@@ -139,7 +131,7 @@ Like its counterpart, this function requires the data and type arguments.
 The `acled_transform_interaction()` function allows you to convert between numeric and text interaction codes, facilitating easier interpretation and analysis of ACLED data. The function requires your ACLED dataset and an optional boolean argument `only_inters`, which determines whether to include only `inter1` and `inter2` columns or also the `interaction` column in the output. By default, `only_inters` is set to `FALSE`. Note further that the `acled_api()` function returns interaction codes as text strings by default, making this function most useful when the original API call included the parameter value `inter_numeric = TRUE`, as in the running example.
 
 ```{r}
-transformed_data <- acled_transform_interaction(argentinian_data)
+transformed_data <- acled_transform_interaction(acledR::acled_old_dummy)
 
 # Note the inter1 and inter2 columns
 head(transformed_data)

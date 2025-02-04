@@ -3,10 +3,21 @@ Type: Package
 Title: Manipulate ACLED Data
 Version: 0.1.0
 Authors@R: c(
-    person(given = "",
+    person(given = "Armed Conflict Location and Event Data",
            family = "ACLED", 
            role = c("cph", "cre"), 
-           email ="data@acleddata.com"))
+           email ="data@acleddata.com"),
+           person(given = "Trey",
+           family = "Billing", 
+           role = c("aut"), 
+           email ="t.billing@acleddata.com"),
+           person(given = "Lucas",
+           family = "Fagliano", 
+           role = c("aut"),
+           email = "lucasfagliano@gmail.com"),
+           person(given = "Katayoun",
+           family = "Kishi", 
+           role = c("ctb")))
 Description: The official ACLED R package for extracting and manipulating ACLED data.
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -22,13 +33,11 @@ Imports:
     purrr,
     rlang,
     utils
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends: 
     R (>= 3.5.0)
-URL: https://github.com/ACLED/acledR,
-    https://acled.github.io/acledR/,
-    https://dtacled.github.io/acledR/
-BugReports: https://github.com/ACLED/acledR/issues
+URL: https://dtacled.github.io/acledR/
+BugReports: https://github.com/dtacled/acledR/issues
 Suggests: 
     knitr,
     janitor,

@@ -1,5 +1,7 @@
 # Helpers for test-acled_api.R
 
+skip_on_cran()
+
 received_data <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),country="Argentina", start_date="2022-01-01", end_date = "2022-12-31", prompt = F, acled_access = T, log = F, inter_numeric = TRUE)
 received_data_monadic <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",prompt = F, monadic = T, acled_access = F, log = F, inter_numeric = TRUE)
 log_received_data <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = c("Western Africa", "Eastern Africa", "Europe"), start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = T, inter_numeric = TRUE)

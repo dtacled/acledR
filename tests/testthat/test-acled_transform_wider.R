@@ -1,3 +1,5 @@
+skip_on_cran()
+
 # Tests for proper functioning of the function (Can they return the equivalent of what is acled_transform_longer input)----
 
 test_that("acled_transform_wider returns expected results for type = 'full_actors'", {

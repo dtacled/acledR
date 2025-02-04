@@ -1,5 +1,7 @@
 # acled_api unit testing
 
+skip_on_cran()
+
 # Basic functioning ----
 test_that("number of columns is correct", {
   expect_equal(ncol(received_data),31)
