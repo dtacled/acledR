@@ -1,3 +1,5 @@
+skip_on_cran()
+
 # Test for acled_deletions_api
 
 # Basic check ----

@@ -1,3 +1,4 @@
+skip_on_cran()
 
 # Setup for test acled_access
 

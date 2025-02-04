@@ -1,3 +1,4 @@
+skip_on_cran()
 
 
 #Proper functioning of the function ----

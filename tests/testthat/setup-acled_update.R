@@ -1,4 +1,4 @@
-
+skip_on_cran()
 
 
 dupes_checks <- acled_update(acledR::acled_old_dummy,

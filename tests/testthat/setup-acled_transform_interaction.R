@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                   country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",
                   prompt = F, acled_access = F, log = F, inter_numeric = TRUE)

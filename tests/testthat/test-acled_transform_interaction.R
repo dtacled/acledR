@@ -1,3 +1,5 @@
+skip_on_cran()
+
 # Check that it produces the same result as intended
 
 

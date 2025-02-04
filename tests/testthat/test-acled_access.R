@@ -1,3 +1,5 @@
+skip_on_cran()
+
 
 # Does it save the credentials in the enviornment? - Missing
 

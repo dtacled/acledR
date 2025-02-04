@@ -1,3 +1,5 @@
+skip_on_cran()
+
 # Test data type ----
 # Test that the function returns a tibble
 test_that("returns a tibble", {

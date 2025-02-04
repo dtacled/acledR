@@ -11,6 +11,9 @@ acled_rounding(num, digits = 0)
 
 \item{digits}{int. Where do we want to round up. It accepts 0 (whole number), 1 (tenth place), 2 (hundredths), etc.}
 }
+\value{
+A rounded numeric value
+}
 \description{
 This function addresses some of the conflicts of rounding in R, especially when trying to round up.
 }
