@@ -246,7 +246,7 @@ detailed in the <code><a href="../reference/acled_api.html">acled_api()</a></cod
 <span>                   inter_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                   prompt <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Success! Credentials authorized</span></span></code></pre>
-<pre><code><span><span class="co">## Requesting data for 13 country. Accounting for the requested time period and ACLED coverage dates, this request includes approximately 14,693 events.</span></span></code></pre>
+<pre><code><span><span class="co">## Requesting data for 13 countries from 2023-01-01 to 2023-06-01</span></span></code></pre>
 <pre><code><span><span class="co">## Processing API request</span></span></code></pre>
 <pre><code><span><span class="co">## Extracting content from API request</span></span></code></pre>
 <p>Let’s filter to events involving only the “ELN: National Liberation
@@ -262,7 +262,7 @@ Army” in any of the primary or associate actor columns:</p>
 <span>    <span class="va">assoc_actor_1</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span> <span class="op">|</span></span>
 <span>    <span class="va">assoc_actor_2</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<p>In the filtered events, there are 174 rows, meaning there were 174
+<p>In the filtered events, there are 175 rows, meaning there were 175
 events where the “ELN: National Liberation Army” were involved as an
 actor or associate actor.</p>
 <p>Instead of filtering to the events involving a particular actor, you
@@ -297,7 +297,7 @@ National Liberation Army”.</p>
 <code class="sourceCode R"><span><span class="va">actors_df_sa</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">actor</span> <span class="op">==</span> <span class="st">"ELN: National Liberation Army"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">n_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 174</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 175</span></span></code></pre>
 <p>The number of events matches the number of rows you got when first
 filtering by actor.</p>
 </div>
@@ -308,7 +308,7 @@ filtering by actor.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Armed Conflict Location and Event Data ACLED, Trey Billing, Lucas Fagliano.</p>
+  <p>Developed by Trey Billing, Lucas Fagliano.</p>
 </div>
 
 <div class="pkgdown-footer-right">

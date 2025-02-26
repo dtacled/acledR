@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Manipulate ACLED Data">
-<meta name="description" content="The official ACLED R package for extracting and manipulating ACLED data.">
-<meta property="og:description" content="The official ACLED R package for extracting and manipulating ACLED data.">
+<meta name="description" content="Tools working with data from ACLED (Armed Conflict Location and Event Data). Functions include simplified access to ACLED's API (&lt;https://apidocs.acleddata.com/&gt;), methods for keeping local versions of ACLED data up-to-date, and functions for common ACLED data transformations.">
+<meta property="og:description" content="Tools working with data from ACLED (Armed Conflict Location and Event Data). Functions include simplified access to ACLED's API (&lt;https://apidocs.acleddata.com/&gt;), methods for keeping local versions of ACLED data up-to-date, and functions for common ACLED data transformations.">
 <meta property="og:image" content="https://dtacled.github.io/acledR/logo.png">
 </head>
 <body>
@@ -70,19 +70,23 @@
 </div>
 <!-- badges: start -->
 
-<p>acledR is the official R package from the <a href="https://acleddata.com/" class="external-link">Armed Conflict Location and Event Data Project (ACLED)</a>, providing tools for extracting and manipulating ACLED data. The acledR <a href="https://dtacled.github.io/acledR">site</a> hosts more information on how to use the package, including a general overview on the <a href="https://dtacled.github.io/acledR/articles/get_started.html">Get Started</a> page.</p>
+<p>acledR is the official R package from the <a href="https://acleddata.com/" class="external-link">Armed Conflict Location and Event Data Project (ACLED)</a>, providing tools for extracting and manipulating ACLED data. The acledR <a href="https://dtacled.github.io/acledR/">site</a> hosts more information on how to use the package, including a general overview on the <a href="https://dtacled.github.io/acledR/articles/get_started.html">Get Started</a> page.</p>
 <p>To access ACLED data, please register an account at <a href="https://developer.acleddata.com" class="external-link">developer.acleddata.com</a>. You can find detailed instructions for setting up your account and retrieving an API key <a href="https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf" class="external-link">here</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>The package will be reviewed and available on CRAN shortly. In the meantime, you can install the package from Github:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ACLED/acledR"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Install via cran</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"acledR"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Install development version from github</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dtacled/acledR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=acledR" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/dtacled/acledR/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/dtacled/acledR/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -107,8 +111,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Armed Conflict Location and Event Data ACLED <br><small class="roles"> Copyright holder, maintainer </small>  </li>
-<li>Trey Billing <br><small class="roles"> Author </small>  </li>
+<li>Trey Billing <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Lucas Fagliano <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
@@ -117,8 +120,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ACLED/acledR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ACLED/acledR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/ACLED/acledR" class="external-link"><img src="https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx" alt="codecov"></a></li>
+<li><a href="https://github.com/dtacled/acledR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dtacled/acledR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/ACLED/acledR" class="external-link"><img src="https://codecov.io/gh/ACLED/acledR/graph/badge.svg?token=TDJodXhEvx" alt="codecov"></a></li>
 </ul>
 </div>
 
@@ -127,7 +130,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Armed Conflict Location and Event Data ACLED, Trey Billing, Lucas Fagliano.</p>
+  <p>Developed by Trey Billing, Lucas Fagliano.</p>
 </div>
 
 <div class="pkgdown-footer-right">
