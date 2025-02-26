@@ -28,7 +28,8 @@
 acled_deletions_api <- function(email = NULL,
                                 key = NULL,
                                 date_deleted = NULL,
-                                acled_access = TRUE, log = F) {
+                                acled_access = TRUE,
+                                log = FALSE) {
   if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null
     email <- Sys.getenv("acled_email")
     key <- Sys.getenv("acled_key")

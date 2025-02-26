@@ -4,7 +4,7 @@
 \alias{acled_transform_interaction}
 \title{Change interaction codes from numeric labels to string labels}
 \usage{
-acled_transform_interaction(df, only_inters = F)
+acled_transform_interaction(df, only_inters = FALSE)
 }
 \arguments{
 \item{df}{dataframe. ACLED data including at least inter1, inter2 columns. If \code{only_inters} is TRUE, it also requires interaction column.}

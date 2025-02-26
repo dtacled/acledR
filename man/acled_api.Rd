@@ -19,7 +19,7 @@ acled_api(
   ...,
   acled_access = TRUE,
   prompt = TRUE,
-  log = F
+  log = FALSE
 )
 }
 \arguments{

@@ -9,7 +9,7 @@ acled_deletions_api(
   key = NULL,
   date_deleted = NULL,
   acled_access = TRUE,
-  log = F
+  log = FALSE
 )
 }
 \arguments{

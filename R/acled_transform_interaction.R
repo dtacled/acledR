@@ -31,7 +31,7 @@
 #'
 
 
-acled_transform_interaction <- function(df, only_inters = F) {
+acled_transform_interaction <- function(df, only_inters = FALSE) {
   if (!"inter1" %in% colnames(df)) {
     stop("The input dataframe does not contain 'inter1' column. Please utilize a dataframe that has ACLED's column structure for the function to succeed.")
   }

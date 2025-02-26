@@ -5,11 +5,11 @@ Version: 0.1.0
 Authors@R: c(
     person(given = "Armed Conflict Location and Event Data",
            family = "ACLED", 
-           role = c("cph", "cre"), 
+           role = c("cph"), 
            email ="data@acleddata.com"),
            person(given = "Trey",
            family = "Billing", 
-           role = c("aut"), 
+           role = c("aut", "cre"), 
            email ="t.billing@acleddata.com"),
            person(given = "Lucas",
            family = "Fagliano", 
@@ -18,7 +18,7 @@ Authors@R: c(
            person(given = "Katayoun",
            family = "Kishi", 
            role = c("ctb")))
-Description: The official ACLED R package for extracting and manipulating ACLED data.
+Description: Tools working with data from ACLED (Armed Conflict Location and Event Data). Functions include simplified access to ACLED's API (<https://apidocs.acleddata.com/>), methods for keeping local versions of ACLED data up-to-date, and functions for common ACLED data transformations.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

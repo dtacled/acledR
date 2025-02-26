@@ -48,7 +48,7 @@ library(acledR)
 
 ## Authenticating your credentials - `acled_access()`
 
-ACLED API access requires an API key for authentication. To register for API access, please visit ACLED's Access Portal [here](developer.acleddata.com). You can also find a detailed guide on creating your account and obtaining your API key in [ACLED's Access Guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf).
+ACLED API access requires an API key for authentication. To register for API access, please visit ACLED's Access Portal [here](https://developer.acleddata.com/). You can also find a detailed guide on creating your account and obtaining your API key in [ACLED's Access Guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf).
 
 Once you are registered, we encourage authenticating your credentials using the `acled_access()` function. Using this function both ensures that your credentials are working as intended and saves them in your R environment, eliminating the need for repeated authentication with each API request.
 
