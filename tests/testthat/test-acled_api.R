@@ -1,19 +1,21 @@
 # acled_api unit testing
 
-skip_on_cran()
+
 
 # Basic functioning ----
 test_that("number of columns is correct", {
+  skip_on_cran()
   expect_equal(ncol(received_data),31)
 })
 
 test_that("names of columns are correct", {
+  skip_on_cran()
   expect_equal(names(received_data),columns)
 })
 
 ## test if event_type filters work----
 test_that("event_type filters work or not",{
-
+  skip_on_cran()
   expect_equal(unique(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          start_date="2022-01-01",end_date = "2022-12-31", country = "Argentina",
                          event_type = "Protests", prompt = F, acled_access = F, log = F, inter_numeric = TRUE)$event_type), "Protests" )
@@ -22,10 +24,12 @@ test_that("event_type filters work or not",{
 
 ## Handling big calls ----
 test_that("Split calls for big calls", {
+  skip_on_cran()
   expect_equal(as.numeric(ceiling(sum(log_received_data$time)/300000)),max(log_received_data$calls))
 })
 
 test_that("country days are calculated as expected",{
+  skip_on_cran()
   argentina_country_days <- acledR::acled_countries %>%
     filter(country == "Argentina") %>%
     mutate(t_end = lubridate::ymd("2021-01-01"),
@@ -40,6 +44,7 @@ test_that("country days are calculated as expected",{
 })
 
 local({
+  skip_on_cran()
 
   local_mocked_bindings(menu = function(choices,title=NULL) 1)
 
@@ -56,12 +61,13 @@ local({
 
 ## Regions are managed properly ----
 test_that("Regions in numeric work",{
+  skip_on_cran()
   expect_true(all.equal(data.frame(region="Western Africa",rows=1:nrow(received_data_numeric_region))$region,received_data_numeric_region$region))})
 
 ## Test what happens when someone requests a region and a country of another region ----
 
 test_that("Testing that when requestion a region, and a country of another region, you get both",{
-
+  skip_on_cran()
   list_countries <- acledR::acled_countries %>%
     filter(region == "Central America") %>%
     unique(x=.$country) %>%
@@ -73,7 +79,7 @@ test_that("Testing that when requestion a region, and a country of another regio
 })
 
 test_that("When requesting a region with a numeric input, and a country of another region, you get both",{
-
+  skip_on_cran()
   list_countries <- acledR::acled_countries %>%
     filter(region == "Central America") %>%
     unique(x=.$country) %>%
@@ -86,16 +92,19 @@ test_that("When requesting a region with a numeric input, and a country of anoth
 ## Timestamp works as required ----
 
 test_that("timestamp (numeric) actually gets used as filter", {
+  skip_on_cran()
   expect_gte(min(timestamp_numeric_check$timestamp), 1681622333)
 })
 
 test_that("timestamp (string) actually gets used as filter", {
+  skip_on_cran()
   expect_gte(min(timestamp_string_check$timestamp), 1681588800)
 })
 
 ## A menu is prompted when the user provides a non-recognized timestamp, allowing users to either stop or continue----
 
 local({
+  skip_on_cran()
 
   local_mocked_bindings(menu = function(choices,title=NULL) 2)
 
@@ -109,7 +118,7 @@ local({
 })
 
 local({
-
+  skip_on_cran()
   local_mocked_bindings(menu = function(choices,title=NULL) 1)
 
   test_that("A user can ignore the provided timestamp if it is not recognized",{
@@ -124,6 +133,7 @@ local({
 ## When asking for monadics, it returns monadics ----
 
 test_that("The call actually returns monadics.", {
+  skip_on_cran()
   expect_equal(min(received_data_monadic$event_date), min(received_data$event_date))
 
   expect_equal(max(received_data_monadic$event_date), max(received_data$event_date))
@@ -137,6 +147,7 @@ test_that("The call actually returns monadics.", {
 # Testing that population columns are returned when requested\
 
 test_that("Population columns are being received", {
+  skip_on_cran()
 
   population_cols <- c("population_1km","population_2km","population_5km","population_best")
 
@@ -161,11 +172,13 @@ test_that("Population columns are being received", {
 ## Error when someone requests a region that does not exist----
 
 test_that("Error prompted when region does not exist", {
+  skip_on_cran()
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = "Narnia",
                          start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE), regexp = "One or more requested region names not in the ACLED country list.")
 })
 
 test_that("Error when region number does not exist", {
+  skip_on_cran()
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),regions = 420,
                          start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
                regexp = "One or more requested region numbers not in the ACLED country list")
@@ -174,18 +187,21 @@ test_that("Error when region number does not exist", {
 
 ## Errors when a country requested doesnt exists ----
 test_that("Error when one of two countries are wrong",{
+  skip_on_cran()
           expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),country = c("Argentia","Bolivia"),
                                  start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
                        regexp = "One or more of the requested *")})
 
 ## Test what happens when someone inputs acled_access as TRUE but it includes email and key. ----
 test_that("Acled_access is ignored",{
+  skip_on_cran()
   expect_true(grepl("acledrexamples", log_received_data_check_credential$email[1]))
 })
 
 # Test errors from incorrectly input arguments. ----
 
 test_that("acled_api() throws an error when called with invalid arguments", {
+  skip_on_cran()
 
   expect_error(acled_api(Country = "Argentina",
                          start_date="2022-01-01",
@@ -236,6 +252,8 @@ test_that("acled_api() throws an error when called with invalid arguments", {
 
 # Test errors from badly utilized acled_access and key/email combination----
 test_that("If access is TRUE and credentials are null, credentials are ignored, but an error appears if Keys are empty in the enviornemt", {
+  skip_on_cran()
+
   expect_error(
     Sys.setenv("acled_key" = "") %>%
       acled_api(Country = "Argentina",
@@ -247,6 +265,7 @@ test_that("If access is TRUE and credentials are null, credentials are ignored, 
 })
 
 test_that("Users gets an error when acled_access is False, but no key or email are provided.", {
+  skip_on_cran()
 
   expect_error(acled_api(country = "Argentina", start_date="2022-01-01",
                          end_date = "2022-12-31", prompt = F, acled_access = F, inter_numeric = TRUE), regexp = "Email address required")
@@ -261,6 +280,8 @@ test_that("Users gets an error when acled_access is False, but no key or email a
 
 # Test error if start_date is after end_date ----
 test_that("start_date is after end_date", {
+  skip_on_cran()
+
   expect_error(
     acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
               country = "Argentina",
@@ -273,6 +294,7 @@ test_that("start_date is after end_date", {
 # Error when timestamp is from a date later than today ----
 
 test_that("timestamp is from a latter date than today." ,{
+  skip_on_cran()
 
  expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                         country = "Argentina",
@@ -287,6 +309,8 @@ test_that("timestamp is from a latter date than today." ,{
 # Error when requesting non-existent event types ----
 
 test_that("Error when non existent event types",{
+  skip_on_cran()
+
   expect_error(acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                          country = "Argentina",
                          start_date="2021-01-01",
@@ -300,6 +324,7 @@ test_that("Error when non existent event types",{
 # A message appears that acled_access is being ignored, and the proper credentials are being used.----
 
 test_that("A warning appears that acled_access is being ignored, and the proper credentials are being used.",{
+  skip_on_cran()
 
   alog <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                               acled_access = T, log = T, inter_numeric = TRUE)
@@ -318,6 +343,7 @@ test_that("A warning appears that acled_access is being ignored, and the proper 
 # Ensure tables do not display blanks, and display NAs instead
 
 test_that("Tables display NAs instead of blanks", {
+  skip_on_cran()
 
   expect_equal(nrow(filter(received_data, if_any(everything(), ~ sjmisc::is_empty(.x, all.na.empty = F)))), 0)
 

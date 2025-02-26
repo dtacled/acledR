@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The official ACLED R package for extracting and manipulating ACLED data.
+Tools working with data from ACLED (Armed Conflict Location and Event Data). Functions include simplified access to ACLED's API (\url{https://apidocs.acleddata.com/}), methods for keeping local versions of ACLED data up-to-date, and functions for common ACLED data transformations.
 }
 \seealso{
 Useful links:
@@ -19,16 +19,16 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Armed Conflict Location and Event Data ACLED \email{data@acleddata.com} [copyright holder]
+\strong{Maintainer}: Trey Billing \email{t.billing@acleddata.com}
 
 Authors:
 \itemize{
-  \item Trey Billing \email{t.billing@acleddata.com}
-  \item Lucas Fagliano
+  \item Lucas Fagliano \email{lucasfagliano@gmail.com}
 }
 
 Other contributors:
 \itemize{
+  \item Armed Conflict Location and Event Data ACLED \email{data@acleddata.com} [copyright holder]
   \item Katayoun Kishi [contributor]
 }
 

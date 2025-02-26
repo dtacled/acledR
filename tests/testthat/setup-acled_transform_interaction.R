@@ -1,4 +1,4 @@
-skip_on_cran()
+if(identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 test <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                   country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",
@@ -32,3 +32,4 @@ test_changes <- test %>%
                        interaction = str_replace(as.character(interaction), "6", "Protesters"),
                        interaction = str_replace(as.character(interaction), "7", "Civilians"),
                        interaction = str_replace(as.character(interaction), "8", "External/Other Forces"))
+}

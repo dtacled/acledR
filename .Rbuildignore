@@ -21,3 +21,4 @@ acled_generate_movers.R
 acled_report_api.R
 acled_actor_concentration.R
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

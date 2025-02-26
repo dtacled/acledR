@@ -1,8 +1,9 @@
-skip_on_cran()
+
 
 # Tests for proper functioning of the function (Can they return the equivalent of what is acled_transform_longer input)----
 
 test_that("acled_transform_wider returns expected results for type = 'full_actors'", {
+  skip_on_cran()
 
   # Define a simple acledR::acled_old_dummy frame
 
@@ -19,6 +20,7 @@ test_that("acled_transform_wider returns expected results for type = 'full_actor
 })
 
 test_that("acled_transform_wider returns expected results for type = 'main_actors'", {
+  skip_on_cran()
 
   # Define a simple acledR::acled_old_dummy frame
 
@@ -34,6 +36,7 @@ test_that("acled_transform_wider returns expected results for type = 'main_actor
 })
 
 test_that("acled_transform_wider returns expected results for type = 'assoc_actors'", {
+  skip_on_cran()
 
   # Transform acledR::acled_old_dummy from wide to long format
   transformed_data <- acled_transform_longer(acledR::acled_old_dummy, type = "assoc_actors")
@@ -47,6 +50,7 @@ test_that("acled_transform_wider returns expected results for type = 'assoc_acto
 })
 
 test_that("acled_transform_wider returns expected results for type = 'source'", {
+  skip_on_cran()
 
   # Transform acledR::acled_old_dummy from wide to long format
   transformed_data <- acled_transform_longer(acledR::acled_old_dummy, type = "source")
@@ -63,6 +67,7 @@ test_that("acled_transform_wider returns expected results for type = 'source'", 
 
 ## Test if function returns an error when a data frame with missing necessary columns is input----
 test_that("Function returns error with missing columns", {
+  skip_on_cran()
 
   df <- data.frame(a = c(1, 2, 3), b = c("a", "b", "c"))
 
@@ -81,6 +86,7 @@ test_that("Function returns error with missing columns", {
 
 ## Test if function returns an error when a non-existent type is input----
 test_that("Function returns NULL when non-existent type is input", {
+  skip_on_cran()
 
   df <- data.frame(actor = c("a", "b"), type_of_actor = c(1, 2), inter_type = c(1, 2), inter = c(1, 2))
 
@@ -94,6 +100,7 @@ test_that("Function returns NULL when non-existent type is input", {
 ## Test that if you request monadic data from the API, you can convert it back. ----
 
 test_that("Can you request data from the monadic api, and convert it back?", {
+  skip_on_cran()
 
   tester <- acledR::acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
                               country = "Brazil", start_date="2022-01-01",

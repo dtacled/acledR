@@ -1,4 +1,7 @@
-library(testthat)
-library(acledR)
+if(identical(Sys.getenv("NOT_CRAN"), "true")) {
 
-test_check("acledR")
+  library(testthat)
+  library(acledR)
+
+  test_check("acledR")
+}

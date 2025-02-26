@@ -72,8 +72,8 @@ acled_api <- function(email = NULL,
                       monadic = FALSE,
                       ...,
                       acled_access = TRUE,
-                      prompt = TRUE,
-                      log = F) {
+                       prompt = TRUE,
+                       log = FALSE) {
   # Acled Acess and credentials ----
 
   if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null
@@ -257,20 +257,17 @@ acled_api <- function(email = NULL,
     )
 
 
+  n_countries <- length(unique(out$country))
+
   # Note for how much data is being requested
   size_note <- paste(
     "Requesting data for",
     length(unique(ex1_df$country)),
-    "country.",
-    "Accounting for the requested time period and ACLED coverage dates, this request includes approximately",
-    format(acled_rounding(sum(ex1_df$ee_events)), big.mark = ","), "events."
+    ifelse(length(unique(ex1_df$country)) == 1, "country", "countries"),
+    "from", start_date, "to", end_date
   )
 
   message(size_note)
-
-  if (str_detect(as.character(end_date), "2024") | str_detect(as.character(start_date), "2024")) {
-    message("Your request appears include dates in 2024. Please note that estimates of 2024 are based on 2023 estimates.  ")
-  }
 
 
   # Current ceilling 400k
@@ -301,11 +298,6 @@ acled_api <- function(email = NULL,
     dates_internal <- paste0("&event_date=", paste(start_date, end_date, sep = "|"), "&event_date_where=BETWEEN")
   }
 
-  # I dont think this one immediatly below is correct. If either of these is null, it defaults to either sys today or to one year before for start_date
-  # potentiall commenting out
-  # if(is.null(start_date) != is.null(end_date)) {
-  #   stop("Both 'start_date' and 'end_date' must be specified if a specific time period is requested. To request all time periods, leave both 'start_date' and 'end_date' NULL.")
-  # }
 
   if (!is.null(start_date) & !is.null(end_date)) {
     if (start_date > end_date) {
@@ -313,10 +305,6 @@ acled_api <- function(email = NULL,
     }
   }
 
-  # Same as before, this cannot be null and null, as they have defaults already.
-  # if(is.null(start_date) & is.null(end_date)) {
-  #   dates_internal <- ""
-  # }
 
   # Where
   ## country
@@ -398,7 +386,6 @@ acled_api <- function(email = NULL,
       "Battles", "Violence against civilians", "Protests",
       "Riots", "Strategic Developments", "Explosions/Remote violence"
     )))) {
-      print(str_to_title(event_types))
 
       stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
     }
