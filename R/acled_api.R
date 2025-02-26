@@ -60,21 +60,20 @@
 #' @export
 
 acled_api <- function(email = NULL,
-                       key = NULL,
-                       country = NULL,
-                       regions = NULL,
-                       start_date = floor_date(Sys.Date(), "year") - years(1),
-                       end_date = Sys.Date(),
-                       timestamp = NULL,
-                       event_types = NULL,
-                       population = "none",
+                      key = NULL,
+                      country = NULL,
+                      regions = NULL,
+                      start_date = floor_date(Sys.Date(), "year") - years(1),
+                      end_date = Sys.Date(),
+                      timestamp = NULL,
+                      event_types = NULL,
+                      population = "none",
                       inter_numeric = FALSE,
                       monadic = FALSE,
                       ...,
                       acled_access = TRUE,
                        prompt = TRUE,
                        log = FALSE) {
-
   # Acled Acess and credentials ----
 
   if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null
@@ -142,7 +141,7 @@ acled_api <- function(email = NULL,
     stop("One or more requested region numbers not in the ACLED country list. The full list of ACLED regions is available at 'acledR::acled_regions'.")
   }
 
-  if(!population %in% c("none", "best", "full")) {
+  if (!population %in% c("none", "best", "full")) {
     stop("The 'population' argument must be one of 'none', 'best', or 'full'.")
   }
 
@@ -257,9 +256,8 @@ acled_api <- function(email = NULL,
       time = .data$t_end - .data$t_start
     )
 
+
   n_countries <- length(unique(out$country))
-
-
 
   # Note for how much data is being requested
   size_note <- paste(
@@ -312,7 +310,7 @@ acled_api <- function(email = NULL,
   ## country
 
   countries_internal <- vector("list", length = length(out_groups))
-  for (i in 1:length(out_groups)) {
+  for (i in seq_along(out_groups)) {
     countries_internal[[i]] <- paste0("&country=", paste(gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:country="))
     countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
   }
@@ -429,7 +427,7 @@ acled_api <- function(email = NULL,
 
   # Population argument
 
-  if(population == "none") {
+  if (population == "none") {
     population_internal <- ""
   } else if (population == "best") {
     population_internal <- "&population=true"
@@ -439,7 +437,7 @@ acled_api <- function(email = NULL,
 
   # Inter argument
 
-  if(inter_numeric == TRUE) {
+  if (inter_numeric == TRUE) {
     inter_internal <- "&inter_num=1"
   } else {
     inter_internal <- "&inter_num=0"
@@ -447,20 +445,22 @@ acled_api <- function(email = NULL,
 
   # Loop through country bins to define each api call
   url_internal <- vector("list", length = length(out_groups))
-  for(i in 1:length(out_groups)) {
-    url_internal[[i]] <- paste0(base_url, monadic_internal,
-                                email_internal, key_internal,
-                                countries_internal[[i]],
-                                dates_internal, timestamp_internal,
-                                event_types_internal, population_internal,
-                                inter_internal, ..., "&limit=0")
+  for (i in seq_along(out_groups)) {
+    url_internal[[i]] <- paste0(
+      base_url, monadic_internal,
+      email_internal, key_internal,
+      countries_internal[[i]],
+      dates_internal, timestamp_internal,
+      event_types_internal, population_internal,
+      inter_internal, ..., "&limit=0"
+    )
   }
 
 
   # Loop through the api requests
   response <- vector("list", length = length(out_groups))
   message("Processing API request")
-  for (i in 1:length(out_groups)) {
+  for (i in seq_along(out_groups)) {
     response[[i]] <- httr::GET(url_internal[[i]])
 
     if (response[[i]][["status_code"]] == 500) {
