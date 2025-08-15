@@ -7,6 +7,7 @@
 acled_api(
   email = NULL,
   key = NULL,
+  password = NULL,
   country = NULL,
   regions = NULL,
   start_date = floor_date(Sys.Date(), "year") - years(1),
@@ -17,7 +18,7 @@ acled_api(
   inter_numeric = FALSE,
   monadic = FALSE,
   ...,
-  acled_access = TRUE,
+  acled_access = FALSE,
   prompt = TRUE,
   log = FALSE
 )
@@ -26,6 +27,8 @@ acled_api(
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 
 \item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+
+\item{password}{character string. The password associated with your ACLED account.}
 
 \item{country}{character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.}
 
@@ -93,6 +96,7 @@ carib_acled
 
 Other API and Access: 
 \code{\link{acled_access}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()},
 \code{\link{acled_update}()}
 }

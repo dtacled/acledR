@@ -7,8 +7,9 @@
 acled_deletions_api(
   email = NULL,
   key = NULL,
+  password = NULL,
   date_deleted = NULL,
-  acled_access = TRUE,
+  acled_access = FALSE,
   log = FALSE
 )
 }
@@ -45,6 +46,7 @@ acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_update}()}
 }
 \concept{API and Access}

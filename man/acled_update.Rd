@@ -73,6 +73,7 @@ new_argen_dataset <- acled_update(acledR::acled_old_dummy,
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()}
 }
 \concept{API and Access}

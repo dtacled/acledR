@@ -26,6 +26,7 @@ Imports:
     dplyr,
     methods,
     httr,
+    httr2,
     lubridate,
     stringr,
     tidyr,

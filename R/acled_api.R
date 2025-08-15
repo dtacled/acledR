@@ -3,6 +3,7 @@
 #' @description This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the format (monadic or dyadic). The function returns a tibble of the desired ACLED events.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
+#' @param password character string. The password associated with your ACLED account.
 #' @param country character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries. within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is `1997-01-01`, which is the earliest date available.
@@ -50,6 +51,7 @@
 #' }
 #' @md
 #' @import httr
+#' @import httr2
 #' @import dplyr
 #' @import stringr
 #' @import purrr
@@ -61,6 +63,7 @@
 
 acled_api <- function(email = NULL,
                       key = NULL,
+                      password = NULL,
                       country = NULL,
                       regions = NULL,
                       start_date = floor_date(Sys.Date(), "year") - years(1),
@@ -71,19 +74,59 @@ acled_api <- function(email = NULL,
                       inter_numeric = FALSE,
                       monadic = FALSE,
                       ...,
-                      acled_access = TRUE,
-                       prompt = TRUE,
-                       log = FALSE) {
-  # Acled Acess and credentials ----
+                      acled_access = FALSE,
+                      prompt = TRUE,
+                      log = FALSE,
+                      debug = FALSE,
+                      bearer = TRUE) {
 
-  if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null
-    email <- Sys.getenv("acled_email")
-    key <- Sys.getenv("acled_key")
-    if (nchar(email) <= 1 | nchar(key) <= 1) {
-      stop("Error in credentials: \n  acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
+
+
+  if (!is.null(key)) {
+    lifecycle::deprecate_warn(when = "1.0.0",
+                              what =  "acled_api(key)",
+                              details = c("The ACLED API has transitioned to OAuth authentication and will no longer support access keys as of September 2025.",
+                                          "Please use the `password` parameter instead of `key`.",
+                                          "The `key` parameter will be removed after it's no longer functional in the ACLED API."),
+                              always = TRUE)
+  }
+
+  if (isTRUE(acled_access) & is.null(key)) {
+    lifecycle::deprecate_warn(when = "1.0.0",
+                              what =  "acled_api(acled_access)",
+                              details = c("The ACLED API has transitioned to OAuth authentication.",
+                                          "The `acled_access` function will is no longer necessary and will stop working in September 2025.",
+                                          "Please use the `email` and `password` parameters instead.",
+                                          "`acled_access` will be removed in future iterations of acledR."),
+                              always = TRUE)
+  }
+
+  # Check if going the old or new route
+  if ((acled_access %in% c(TRUE, T)) | !is.null(key)) {
+    route <- 'key'
+    # message("Using the email and key API authentication option.\nThis method is deprecated in favor of OAuth and will expire soon.\nSee xyz for details on this transition.")
+  }
+  else {
+    route <- "oauth"
+  }
+
+
+  if (route == "key") {
+    if ((acled_access %in% c(TRUE, T)) & (is.null(email) | is.null(key))) { # Access is true, and credentials are null
+      email <- Sys.getenv("acled_email")
+      key <- Sys.getenv("acled_key")
+      if (nchar(email) <= 1 | nchar(key) <= 1) {
+        stop("Error in credentials: \n  acled_access is TRUE, but email and/or key are not stored in the enviornment. Please rerun acled_access or include key and email in function")
+      }
+    } else if ((acled_access %in% c(TRUE, T)) & (!is.null(email) | !is.null(key))) {
+      message("acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
     }
-  } else if ((acled_access %in% c(TRUE, T)) & (!is.null(email) | !is.null(key))) {
-    message("acled_access is TRUE, but email and key are included in the function. Ignoring acled_access.")
+  }
+
+  if (route == "oauth") {
+    if (is.null(email)) {
+      stop("Error in credentials: \n if trying to use the OAuth route, you must specify your email and password. \n Note that the key and acled_access parameters are not used if using OAuth, only email and password.")
+    }
   }
 
 
@@ -118,16 +161,17 @@ acled_api <- function(email = NULL,
   }
 
   # Error checks for arguments ----
+  if (route == "key") {
+    if (!is.character(email) || is.null(email) || (is.character(email) && nchar(email) < 3)) {
+      stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('acled_email'). Register your email for access at https://developer.acleddata.com.")
+    }
+    email_internal <- paste0("&email=", email)
 
-  if (!is.character(email) || is.null(email) || (is.character(email) && nchar(email) < 3)) {
-    stop("Email address required for ACLED API access. 'email' must be a character string (e.g., 'name@mail.com') or a call to where your email address is located if stored as an environment variable (e.g., Sys.getenv('acled_email'). Register your email for access at https://developer.acleddata.com.")
+    if ((!is.character(key) || is.null(key) || key == "") == TRUE) {
+      stop("Key required for ACLED API access. 'key' must be a character string (e.g., 'xyz123!etc') or a call to where your ACLED API key is located if stored as an environment variable (e.g., Sys.getenv('acled_key'). Request and locate your ACLED API key at https://developer.acleddata.com.")
+    }
+    key_internal <- paste0("&key=", key)
   }
-  email_internal <- paste0("&email=", email)
-
-  if ((!is.character(key) || is.null(key) || key == "") == TRUE) {
-    stop("Key required for ACLED API access. 'key' must be a character string (e.g., 'xyz123!etc') or a call to where your ACLED API key is located if stored as an environment variable (e.g., Sys.getenv('acled_key'). Request and locate your ACLED API key at https://developer.acleddata.com.")
-  }
-  key_internal <- paste0("&key=", key)
 
   if (!is.null(country) & sum(unique(country) %in% acledR::acled_countries[["country"]]) < length(unique(country))) {
     stop("One or more of the requested countries are not in ACLED's countries list. The full list of countries is available at 'acledR::acled_countries")
@@ -146,7 +190,13 @@ acled_api <- function(email = NULL,
   }
 
   # Required components ----
-  base_url <- "https://api.acleddata.com/acled/read.csv?"
+
+  if (route == "key") {
+    base_url <- "https://api.acleddata.com/acled/read.csv?"
+  }
+  if (route == "oauth") {
+    base_url <- "https://acleddata.com/api/acled/read?_format=json"
+  }
 
   # Calculate country days ----
 
@@ -270,8 +320,8 @@ acled_api <- function(email = NULL,
   message(size_note)
 
 
-  # Current ceilling 400k
-  time_units <- ceiling(sum(ex1_df$ee_events) / 400000)
+  # Current ceiling is 1m
+  time_units <- ceiling(sum(ex1_df$ee_events) / 1000000)
 
   # Split call into roughly equally sized groups depending on how many country-days are in each country
   # This randomly assigns country into bins
@@ -308,11 +358,16 @@ acled_api <- function(email = NULL,
 
   # Where
   ## country
-
   countries_internal <- vector("list", length = length(out_groups))
   for (i in seq_along(out_groups)) {
-    countries_internal[[i]] <- paste0("&country=", paste(gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:country="))
-    countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
+
+    if (route == "key") {
+      countries_internal[[i]] <- paste0("&country=", paste(gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:country="))
+      countries_internal[[i]] <- paste0(countries_internal[[i]], "&country_where=%3D")
+    }
+    else if (route == "oauth") {
+      countries_internal[[i]] <- paste0("&country=", paste(gsub("\\s{1}", "%20", out_groups[[i]]$country), collapse = ":OR:"))
+    }
   }
 
 
@@ -343,7 +398,7 @@ acled_api <- function(email = NULL,
         },
         warning = function(w) {
           za <- menu(c("Yes", "No"),
-            title = paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n", "Do you want me to continue and ignore timestamp?")
+                     title = paste0("You indicated a timestamp, but it was not recognized. Reminder: Timestamp only accepts string as yyyy-mm-dd OR a Unix timestamp (integer).", "\n", "\n", "Do you want me to continue and ignore timestamp?")
           )
           if (za == 1) {
             do_i_include_timestamp <<- "No"
@@ -361,15 +416,17 @@ acled_api <- function(email = NULL,
       if (timestamp_parsable > lubridate::now()) {
         stop("The timestamp cannot be later than today. Please change the timestamp and try again.")
       } else {
-        timestamp_internal <- paste0("&timestamp=", timestamp_parsable)
+        timestamp_internal <- paste0("&timestamp_where=%3E%3D&timestamp=", timestamp_parsable)
       }
     } else if (do_i_include_timestamp == "Yes_but_numerical") {
-      timestamp_internal <- paste0("&timestamp=", timestamp)
+      timestamp_internal <- paste0("&timestamp_where=%3E%3D&timestamp=", timestamp)
     } else {
-      timestamp_internal <- "&timestamp="
+      # timestamp_internal <- "&timestamp_where=%3E%3D&timestamp="
+      timestamp_internal <- ""
     }
   } else {
-    timestamp_internal <- "&timestamp="
+    # timestamp_internal <- "&timestamp_where=%3E%3D&timestamp="
+    timestamp_internal <- ""
   }
 
   # How
@@ -390,7 +447,12 @@ acled_api <- function(email = NULL,
       stop("One or more requested event types are not in the ACLED data. Event types include: Battles, Violence against civilians, Protests, Riots, Strategic Developments, and Explosions/Remote violence. Leave 'event_type = NULL' to request all event types from the API. ")
     }
 
-    event_types_internal <- paste0("&event_type=", paste(gsub("\\s{1}", "%20", event_types), collapse = ":OR:event_type="))
+    if (route == "key") {
+      event_types_internal <- paste0("&event_type=", paste(gsub("\\s{1}", "%20", event_types), collapse = ":OR:event_type="))
+    }
+    else if (route == "oauth") {
+      event_types_internal <- paste0("&event_type=", paste(gsub("\\s{1}", "%20", event_types), collapse = ":OR:"))
+    }
   } else {
     event_types_internal <- ""
   }
@@ -399,7 +461,7 @@ acled_api <- function(email = NULL,
   # Interactive choice for users after prompting how many calls are required - I am nocov this one because of discrepancy between
   # covr, devtools and testthat. After testing with testthat and devtools::test() it shows that it works. But covr seems to fail.
 
-  if (prompt == TRUE) { # nocov start
+  if (prompt == TRUE & route == "key") { # nocov start
 
     message(paste0(
       "This request requires ",
@@ -411,7 +473,7 @@ acled_api <- function(email = NULL,
       user_input <- menu(title = "Proceed? (Yes/No)", choices = c("Yes", "No"))
       if (user_input == 2) {
         stop('User responded "No" when prompted about the number of API calls required. \nIf you need to increase your API quota, please contact access@acleddata.com',
-          call. = F
+             call. = F
         )
       } else {
         message(
@@ -426,7 +488,6 @@ acled_api <- function(email = NULL,
 
 
   # Population argument
-
   if (population == "none") {
     population_internal <- ""
   } else if (population == "best") {
@@ -436,7 +497,6 @@ acled_api <- function(email = NULL,
   }
 
   # Inter argument
-
   if (inter_numeric == TRUE) {
     inter_internal <- "&inter_num=1"
   } else {
@@ -444,24 +504,70 @@ acled_api <- function(email = NULL,
   }
 
   # Loop through country bins to define each api call
-  url_internal <- vector("list", length = length(out_groups))
-  for (i in seq_along(out_groups)) {
-    url_internal[[i]] <- paste0(
-      base_url, monadic_internal,
-      email_internal, key_internal,
-      countries_internal[[i]],
-      dates_internal, timestamp_internal,
-      event_types_internal, population_internal,
-      inter_internal, ..., "&limit=0"
-    )
+  if (route == "key") {
+    url_internal <- vector("list", length = length(out_groups))
+    for (i in seq_along(out_groups)) {
+      url_internal[[i]] <- paste0(
+        base_url, monadic_internal,
+        email_internal, key_internal,
+        countries_internal[[i]],
+        dates_internal, timestamp_internal,
+        event_types_internal, population_internal,
+        inter_internal, ..., "&limit=0"
+      )
+    }
   }
+
+  if (route == "oauth"){
+    url_internal <- vector("list", length = length(out_groups))
+    for (i in seq_along(out_groups)) {
+      url_internal[[i]] <- paste0(
+        base_url, monadic_internal,
+        countries_internal[[i]],
+        dates_internal, timestamp_internal,
+        event_types_internal, population_internal,
+        inter_internal, ..., "&limit=0"
+      )
+    }
+  }
+
+  message(url_internal)
 
 
   # Loop through the api requests
   response <- vector("list", length = length(out_groups))
   message("Processing API request")
   for (i in seq_along(out_groups)) {
-    response[[i]] <- httr::GET(url_internal[[i]])
+
+    if (route == "key") {
+      response[[i]] <- httr::GET(url_internal[[i]])
+    }
+
+    if (route == "oauth") {
+
+      if(bearer == TRUE) {
+        access_token <- acled_token(email = email, password = password)
+
+        # response[[i]]  <- httr2::request(url_internal[[i]]) %>%
+        #   httr2::req_headers(Authorization = paste("Bearer", access_token)) %>%
+        #   httr2::req_method("GET") %>%
+        #   httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
+
+        # response[[i]]  <- httr2::request(url_internal[[i]]) %>%
+        #   httr2::req_auth_bearer_token(access_token) %>%
+        #   httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
+
+
+      }
+      else {
+        response[[i]]  <- httr2::request(url_internal[[i]]) %>%
+          acled_auth(., username = email, password = password) %>%
+          httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
+      }
+
+    }
+
+
 
     if (response[[i]][["status_code"]] == 500) {
       stop(paste0("API request unsuccessful with status code ", response[[i]][["status_code"]], ". \n", rlang::format_error_bullets(c("Make sure you have not execeeded your API calls (2/year for a standard account)", "Verify your API credentials (key and email)", "If nothing works contact us through GitHub Issues or at access@acleddata.com."))))
@@ -470,12 +576,25 @@ acled_api <- function(email = NULL,
     }
   }
 
+
+
   # Map through each get request to convert to one tibble
   message("Extracting content from API request")
-  out <- suppressMessages(purrr::map_df(
-    .x = response,
-    ~ content(.x)
-  ))
+  if (route == "key") {
+    out <- suppressMessages(purrr::map_df(
+      .x = response,
+      ~httr::content(.x) %>%
+        as_tibble()
+    ))
+  }
+
+  if (route == "oauth") {
+    out <- suppressMessages(purrr::map_df(
+      .x = response,
+      ~httr2::resp_body_json(.x, simplifyVector = T)$data
+    )) %>%
+      as_tibble()
+  }
 
 
   return(out)
