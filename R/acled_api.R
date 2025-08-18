@@ -1,9 +1,9 @@
 #' @title Request data from ACLED API
 #' @name acled_api
 #' @description This function allows users to easily request data from the ACLED API. Users can include variables such as country, regions, dates of interest and the format (monadic or dyadic). The function returns a tibble of the desired ACLED events.
-#' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
-#' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
-#' @param password character string. The password associated with your ACLED account.
+#' @param email character string. Email associated with your ACLED account registered at <https://acleddata.com/>.
+#' @param password character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.
+#' @param key character string. Access key associated with your ACLED account registered at <https://acleddata.com/>  (deprecated).
 #' @param country character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.
 #' @param regions vector of region names (character) or region codes (numeric). Default is NULL, which will return events for all regions.  Pass a vector of regions names or codes to retrieve events from countries. within specific regions. The list of ACLED regions may be found via acledR::acled_regions.
 #' @param start_date character string. Format 'yyyy-mm-dd'. The earliest date for which to return events. The default is `1997-01-01`, which is the earliest date available.
@@ -14,14 +14,14 @@
 #' @param inter_numeric logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values.
 #' @param monadic logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.
 #' @param ... string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)
-#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.
+#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).
 #' @param log logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.
 #' @param prompt logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of estimated events, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @returns Returns a tibble of of ACLED events.
 #' @family API and Access
 #' @seealso
 #' \itemize{
-#' \item ACLED API guide. <https://apidocs.acleddata.com/>
+#' \item ACLED API guide. <https://acleddata.com/api-documentation/getting-started>
 #' }
 #' @examples
 #' \dontrun{
@@ -29,9 +29,8 @@
 #' # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 #' # in dyadic-wide form
 #' argen_acled <- acled_api(
-#'   email = "your_email", key = "your_key",
-#'   country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01",
-#'   acled_access = FALSE
+#'    email = "youremail@mail.com", password = "password",
+#'   country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01"
 #' )
 #'
 #' # tibble with all the events from Argentina where each row is one event.
@@ -40,10 +39,10 @@
 #' # Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022
 #' # in monadic-long form using email and key saved in environment
 #'
-#' acled_access(email = "your_email", key = "your_key")
 #' carib_acled <- acled_api(
+#'   email = "youremail@mail.com", password = "password",
 #'   regions = "Caribbean", start_date = "2022-01-01",
-#'   end_date = "2022-01-10", monadic = TRUE, acled_access = TRUE
+#'   end_date = "2022-01-10", monadic = TRUE,
 #' )
 #'
 #' ## Tibble with all the events from the Caribbean where each row is one actor
@@ -78,7 +77,7 @@ acled_api <- function(email = NULL,
                       prompt = TRUE,
                       log = FALSE,
                       debug = FALSE,
-                      bearer = TRUE) {
+                      bearer = FALSE) {
 
 
 
@@ -104,7 +103,6 @@ acled_api <- function(email = NULL,
   # Check if going the old or new route
   if ((acled_access %in% c(TRUE, T)) | !is.null(key)) {
     route <- 'key'
-    # message("Using the email and key API authentication option.\nThis method is deprecated in favor of OAuth and will expire soon.\nSee xyz for details on this transition.")
   }
   else {
     route <- "oauth"

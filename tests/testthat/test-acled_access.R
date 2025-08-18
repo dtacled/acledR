@@ -1,7 +1,7 @@
 skip_on_cran()
 
 
-# Does it save the credentials in the enviornment? - Missing
+# Does it save the credentials in the environment? - Missing
 
 test_that("acled_access properly stores the credentials", {
   skip_on_cran()

@@ -10,9 +10,8 @@
 #'
 #' # Load data frame
 #' argen_acled <- acled_api(
-#'   email = "your_email", key = "your_key",
-#'   country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01",
-#'   acled_access = FALSE
+#'   email = "your_email", password = "your_password",
+#'   country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01"
 #' )
 #'
 #' # Transform the interactions

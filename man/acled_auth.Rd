@@ -2,30 +2,30 @@
 % Please edit documentation in R/acled_auth.R
 \name{acled_auth}
 \alias{acled_auth}
-\title{Authenticate a request using ACLED credentials via oauth client. Used within the primary acled_api() function.}
+\title{Authenticate a request via ACLED API OAuth endpoint.}
 \usage{
 acled_auth(req, username, password = NULL)
 }
 \arguments{
 \item{req}{An ACLED API request.}
 
-\item{username}{ACLED username.}
+\item{password}{User password associated with ACLED account.}
 
-\item{password}{User password. If NULL, opens interactive prompt}
+\item{email}{Email associated with ACLED account.}
 }
 \value{
-Returns a success message if ACLED credentials are successfully authorized
+Returns a modified HTTP request that will use OAuth for the ACLED API.
 }
 \description{
-Pings the ACLED API token endpoint for authentication using username and password.
+Pings the ACLED API token endpoint for authentication using email and password.
 }
 \examples{
 \dontrun{
-req_auth(req, username = "your_email")
+acled_auth(req, email, password)
 }
 }
 \seealso{
-ACLED API Access guide \url{https://acleddata.com/download/35300/}
+ACLED API Access guide \url{https://acleddata.com/api-documentation/getting-started}
 
 Other API and Access: 
 \code{\link{acled_access}()},

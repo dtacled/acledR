@@ -2,7 +2,9 @@
 % Please edit documentation in R/acled_access.R
 \name{acled_access}
 \alias{acled_access}
-\title{Store your ACLED access information into your session.}
+\title{Store your ACLED access information into your session.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 acled_access(email, key)
 }
@@ -16,6 +18,8 @@ Returns a success message if ACLED credentials are successfully authorized
 }
 \description{
 Simple function to authenticate and store (through \code{Sys.setenv()}) ACLED access key for the acled_api() function. If email and key is stored via acled_access, the email and key arguments for acled_api can be NULL.
+
+This function is deprecated and will stop functioning in September 2025. Please use your ACLED email and password to authenticate your requests in the acled_api() and associated functions which manage ACLED OAuth tokens for you.
 }
 \examples{
 \dontrun{
