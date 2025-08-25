@@ -13,7 +13,9 @@
 #' @family Data Manipulation
 #' @examples
 #' \dontrun{
-#' # argen_acled <- acled_api(country = "Argentina", email = "youremail@mail.com", password = "password", start_date = "2022-01-01",
+#' # argen_acled <- acled_api(country = "Argentina",
+#'                            email = "youremail@mail.com", password = "password",
+#'                            start_date = "2022-01-01",
 #' #                          end_date="2022-02-01",  prompt = F)
 #'
 #' # argen_acled_long_actors <- acled_transform_wide_to_long(argen_acled,
