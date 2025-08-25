@@ -23,7 +23,7 @@ jobs:
       EMAIL_ADDRESS_EXAMPLES: ${{ secrets.EMAIL_ADDRESS_EXAMPLES}}
       EXAMPLES_KEY: ${{ secrets.EXAMPLES_KEY}}
       ACLED_API_EMAIL: ${{ secrets.ACLED_API_EMAIL}}
-      ACLED_API_PASSWORD: ${{ secrets.ACLED_API_EMAIL}}
+      ACLED_API_PASSWORD: ${{ secrets.ACLED_API_PASSWORD}}
     permissions:
       contents: write
     steps:
