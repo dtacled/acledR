@@ -109,8 +109,8 @@ The dataset has not been updated since `r as_date(latest_timestamp)`, so you may
 
 ```{r}
 new_argen_dataset <- acled_update(argen_dummy_acled_file, 
-                                  email = Sys.getenv("email_address"),
-                                  password = Sys.getenv("acled_password"),
+                                  email = Sys.getenv("ACLED_API_EMAIL"),
+                                  password = Sys.getenv("ACLED_API_PASSWORD"),
                                   additional_countries = "Argentina", 
                                   inter_numeric = TRUE) 
 ```

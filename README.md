@@ -18,10 +18,9 @@ Started](https://dtacled.github.io/acledR/articles/get_started.html)
 page.
 
 To access ACLED data, please register an account at
-[developer.acleddata.com](https://developer.acleddata.com). You can find
-detailed instructions for setting up your account and retrieving an API
-key
-[here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf).
+[myACLED](https://acleddata.com/myacled). You can find detailed
+instructions about the ACLED API
+[here](https://acleddata.com/api-documentation/).
 
 ## Installation
 
