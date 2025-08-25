@@ -1,7 +1,7 @@
 Package: acledR
 Type: Package
 Title: Manipulate ACLED Data
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: c(
     person(given = "Armed Conflict Location and Event Data",
            family = "ACLED", 
