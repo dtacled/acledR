@@ -1,7 +1,7 @@
 Package: acledR
 Type: Package
 Title: Manipulate ACLED Data
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: c(
     person(given = "Armed Conflict Location and Event Data",
            family = "ACLED", 
@@ -26,12 +26,14 @@ Imports:
     dplyr,
     methods,
     httr,
+    httr2,
     lubridate,
     stringr,
     tidyr,
     magrittr,
     purrr,
     rlang,
+    lifecycle,
     utils
 RoxygenNote: 7.3.2
 Depends: 

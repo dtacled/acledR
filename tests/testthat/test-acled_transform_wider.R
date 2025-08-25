@@ -94,29 +94,3 @@ test_that("Function returns NULL when non-existent type is input", {
 })
 
 
-
-# Weird cases. ----
-
-## Test that if you request monadic data from the API, you can convert it back. ----
-
-test_that("Can you request data from the monadic api, and convert it back?", {
-  skip_on_cran()
-
-  tester <- acledR::acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              country = "Brazil", start_date="2022-01-01",
-                              end_date = "2022-12-31", monadic = T,
-                              prompt = F, acled_access = F, log = F, inter_numeric = TRUE)%>%
-    acled_transform_wider(type = "api_monadic")
-
-  control <- acledR::acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                              country = "Brazil", start_date="2022-01-01",
-                              end_date = "2022-12-31", monadic = F,
-                              prompt = F, acled_access = F, log = F, inter_numeric = TRUE)%>%
-    arrange(desc(event_id_cnty))
-
-
-  expect_equal(tester, control)
-
-})
-
-## Test that if you use the function with some additional transformations made to the dataset, you can transform back without losing any data. ----

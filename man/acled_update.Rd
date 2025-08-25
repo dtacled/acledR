@@ -11,9 +11,10 @@ acled_update(
   additional_countries = "current countries",
   regions = NULL,
   event_types = NULL,
-  acled_access = TRUE,
+  acled_access = FALSE,
   email = NULL,
   key = NULL,
+  password = NULL,
   inter_numeric = FALSE,
   deleted = TRUE,
   prompts = TRUE
@@ -32,11 +33,13 @@ acled_update(
 
 \item{event_types}{string. The event types for which you would like events in your dataset updated.}
 
-\item{acled_access}{logical. If you have already used \code{acled_access()}, you can set this option as TRUE (default) to avoid having to input your email and access key.}
+\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
 
-\item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+\item{email}{character string. Email associated with your ACLED account registered at \url{https://acleddata.com/}.}
 
-\item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).}
+
+\item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 
 \item{inter_numeric}{logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values. Must match the inter type (numeric or string) in the dataframe being updated.}
 
@@ -55,12 +58,10 @@ Note: The function makes new API calls to gather new and modified events.
 \dontrun{
 # Updating dataset to include newer data from Argentina
 
-acledR::acled_access(email = "your_email", key = "your_key")
 
 new_argen_dataset <- acled_update(acledR::acled_old_dummy,
+ email = "youremail@mail.com", password = "password",
   additional_countries = "Argentina",
-  acled_access = TRUE,
-  prompts = FALSE
 )
 }
 
@@ -73,6 +74,7 @@ new_argen_dataset <- acled_update(acledR::acled_old_dummy,
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()}
 }
 \concept{API and Access}

@@ -14,8 +14,10 @@
 #' @family Data Manipulation
 #' @examples
 #' \dontrun{
-#' # argen_acled <- acled_api(country = "Argentina",start_date = "2022-01-01",
-#' #                          end_date="2022-02-01", acled_access = T, prompt = F)
+#' # argen_acled <- acled_api(country = "Argentina",
+#'                            email = "youremail@mail.com", password = "password",
+#'                            start_date = "2022-01-01",
+#' #                          end_date="2022-02-01")
 #' # argen_acled_long_actors <- acled_transform_longer(argen_acled,
 #' #                        type = "full_actor") # Transforming the data to long form
 #'

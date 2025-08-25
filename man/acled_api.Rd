@@ -7,6 +7,7 @@
 acled_api(
   email = NULL,
   key = NULL,
+  password = NULL,
   country = NULL,
   regions = NULL,
   start_date = floor_date(Sys.Date(), "year") - years(1),
@@ -17,15 +18,17 @@ acled_api(
   inter_numeric = FALSE,
   monadic = FALSE,
   ...,
-  acled_access = TRUE,
+  acled_access = FALSE,
   prompt = TRUE,
   log = FALSE
 )
 }
 \arguments{
-\item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+\item{email}{character string. Email associated with your ACLED account registered at \url{https://acleddata.com/}.}
 
-\item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).}
+
+\item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 
 \item{country}{character vector. Default is NULL, which will return events for all countries. Pass a vector of countries names to retrieve events from specific countries. The list of ACLED countries. names may be found via acledR::acled_countries.}
 
@@ -47,7 +50,7 @@ acled_api(
 
 \item{...}{string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)}
 
-\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required.}
+\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
 
 \item{prompt}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of estimated events, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
 
@@ -65,9 +68,8 @@ This function allows users to easily request data from the ACLED API. Users can 
 # Get all the events coded by ACLED in Argentina from 01/01/2022 until 02/01/2022
 # in dyadic-wide form
 argen_acled <- acled_api(
-  email = "your_email", key = "your_key",
-  country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01",
-  acled_access = FALSE
+   email = "youremail@mail.com", password = "password",
+  country = "Argentina", start_date = "2022-01-01", end_date = "2022-02-01"
 )
 
 # tibble with all the events from Argentina where each row is one event.
@@ -76,10 +78,10 @@ argen_acled
 # Get all events coded by ACLED in the Caribbean from 01/01/2022 to 10/01/2022
 # in monadic-long form using email and key saved in environment
 
-acled_access(email = "your_email", key = "your_key")
 carib_acled <- acled_api(
+  email = "youremail@mail.com", password = "password",
   regions = "Caribbean", start_date = "2022-01-01",
-  end_date = "2022-01-10", monadic = TRUE, acled_access = TRUE
+  end_date = "2022-01-10", monadic = TRUE,
 )
 
 ## Tibble with all the events from the Caribbean where each row is one actor
@@ -88,11 +90,12 @@ carib_acled
 }
 \seealso{
 \itemize{
-\item ACLED API guide. \url{https://apidocs.acleddata.com/}
+\item ACLED API guide. \url{https://acleddata.com/api-documentation/getting-started}
 }
 
 Other API and Access: 
 \code{\link{acled_access}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()},
 \code{\link{acled_update}()}
 }

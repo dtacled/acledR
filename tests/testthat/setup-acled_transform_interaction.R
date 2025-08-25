@@ -1,8 +1,10 @@
 if(identical(Sys.getenv("NOT_CRAN"), "true")) {
 
-test <- acled_api(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"),
-                  country = "Argentina", start_date="2022-01-01",end_date = "2022-12-31",
-                  prompt = F, acled_access = F, log = F, inter_numeric = TRUE)
+test <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
+                  password = Sys.getenv("ACLED_API_PASSWORD"),
+                  country = "Argentina",
+                  start_date="2022-01-01",end_date = "2022-12-31",
+                  inter_numeric = TRUE)
 
 test_changes <- test %>%
                 left_join(acledR::acled_interaction_codes, by = c("inter1" = "Numeric Code")) %>%

@@ -7,8 +7,9 @@
 acled_deletions_api(
   email = NULL,
   key = NULL,
+  password = NULL,
   date_deleted = NULL,
-  acled_access = TRUE,
+  acled_access = FALSE,
   log = FALSE
 )
 }
@@ -16,6 +17,8 @@ acled_deletions_api(
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
 
 \item{key}{character string. Access key associated with your ACLED account registered at \url{https://developer.acleddata.com}.}
+
+\item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 
 \item{date_deleted}{character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.}
 
@@ -45,6 +48,7 @@ acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},
+\code{\link{acled_auth}()},
 \code{\link{acled_update}()}
 }
 \concept{API and Access}

@@ -6,35 +6,24 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
+  
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
+  knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   warning = F, 
   message = F,
   cache = F
-)
+  )
 ```
-
+  
 ## Accessing the API
-
-To use ACLED's [API](https://apidocs.acleddata.com/), you must first register an account in [ACLED's Access Portal](developer.acleddata.com). You can find more information about registering your account by visiting ACLED’s [access guide](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf). 
-
-There are three ways to authenticate your credentials, outlined here from most to least recommended:
-
-### Use `acled_access()` (recommended)
-
-`acled_access()` both verifies your credentials and stores them in your local environment for a given session. After running the following code, you can make API requests without manually entering your credentials within each call. 
-
-```{r, eval = F}
-acled_access("your_email", "your_key") # to be run every session before doing an API call. 
-```
-
-### Store credentials as environmental variables
-
-You can alternatively store your credentials for permanent use across all sessions. To do so, run the following:
-
+  
+To use ACLED's [API](https://acleddata.com/api-documentation/getting-started), you must first register an account in [myACLED](https://acleddata.com/myacled). You can find more information about registering your account by visiting [myACLED's FAQs](https://acleddata.com/myacled-faqs). 
+  
+You will authenticate your API requests using your myACLED email and password. Unlike in older versions of `acledR` and the ACLED API, you will not need an API key to authenticate your requests. Instead, ACLED's API uses OAuth and `acledR` will handle OAuth tokens internally for you. We recommend storing the email and password associated with your ACLED account as environmental variables for easy and safe access in your scripts. 
+  
+To do so, run
 ```{r, eval = F}
 file.edit(file.path("~", ".Renviron"))
 ```
@@ -43,33 +32,36 @@ which will open your `.Renviron` file. Once open, set:
 
 ```{r, eval = F}
 email_address = "your_email"
-acled_key = "your_key"
+acled_password = "your_password"
 ```
 
-Afterwards, save the file and restart your R session. You can confirm that they have been properly stored by running `Sys.getenv("email_address")` to return the stored email address and `Sys.getenv("acled_key")` to return the stored ACLED key in the console. You can then enter your credentials within each API call like:
+Then save the file and restart your R session. You can confirm that they have been properly stored by running `Sys.getenv("email_address")` to return the stored email address and `Sys.getenv("acled_password")` to return the stored ACLED key in the console. You can then enter your credentials within each API call like:
 
 ```{r, eval = F}
 acled_api(
   email = Sys.getenv("email_address"),
-  key = Sys.getenv("acled_key"),
-  acled_access = FALSE,
+  password = Sys.getenv("acled_password"),
   ...)
 ```
 
 
-### Manually enter credentials within each call (not recommended)
-
-As a final option, you can manually enter your credentials within each API call. While we do not recommend this approach because it is the least secure, it may be suitable for some use cases. You can use this option by following this example:
+As an alternative, you can manually enter your credentials within each API call. While we do not recommend this approach because it is the least secure, it may be suitable for some use cases. You can use this option by following this example:
 
 ```{r, eval = F}
 acled_api(
   email = "email_address", 
-  key = "acled_key",
-  acled_access = FALSE,
+  password = "acled_password",
   ...)
-
 ```
 
+You can also leave the password field empty to open an interactive prompt for typing in your password:
+```{r, eval = F}
+acled_api(
+  email = "email_address", 
+  ...)
+```
+
+Whether you set your email and password via environmental variables, manually, or via an interactive prompt, `acledR` will manage associated OAuth tokens for you via `acledR::acledR::acled_auth()`, which relies on `httr2::req_oauth_password()`.
 
 ## ACLED API
 
@@ -77,7 +69,7 @@ acled_api(
 
 ```{r, eval = F}
 acled_api(email = NULL,
-          key = NULL,
+          password = NULL,
           country = NULL,
           regions = NULL,
           start_date = "1997-01-01",
@@ -87,9 +79,7 @@ acled_api(email = NULL,
           population = "none",
           monadic = FALSE,
           inter_numeric = FALSE,
-          ...,
-          acled_access = TRUE,
-          prompt = TRUE)
+          ...)
 
 ```
 
@@ -146,31 +136,18 @@ library(dplyr)
 
 #Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
 
-acled_access(email = "your_email", key = "your_key")
-
-df_ar <- acled_api(country = c("Argentina"),
-                   start_date = "2022-06-01",
-                   end_date = "2022-06-31",
-                   monadic = F,
-                   acled_access = TRUE,
-                   prompt = F)
+df_ar <- acled_api(
+  email = Sys.getenv("email_address"),
+  password = Sys.getenv("acled_password"),
+  country = c("Argentina"),
+  start_date = "2022-06-01",
+  end_date = "2022-06-30",
+  monadic = FALSE)
 ```
 
 ```{r, echo=FALSE}
 library(acledR)
 library(dplyr)
-
-#Note: This is simply an example–you will need to include your own credentials rather than the email and key placeholders that are included below.
-
-# acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
-# 
-# df_br <- acled_api(country = c("Brazil"),
-#                    start_date = "2022-01-01",
-#                    end_date = "2022-12-01",
-#                    monadic = F,
-#                    acled_access = TRUE,
-#                    inter_numeric = TRUE,
-#                    prompt = F)
 
 df_ar <- acledR::acled_old_dummy
 
@@ -185,59 +162,62 @@ head(df_ar, 5)
 If you wanted data from both Brazil and Colombia, you would execute the following:
 
 ```{r, eval = F}
-df_br_co <- acled_api(country = c("Brazil", "Colombia"),
-                      start_date = "2022-01-01",
-                      end_date = "2022-12-01",
-                      monadic = F,
-                      acled_access = TRUE,
-                      prompt = F)
+df_br_co <- acled_api(
+  email = Sys.getenv("email_address"),
+  password = Sys.getenv("acled_password"),
+  country = c("Brazil", "Colombia"),
+  start_date = "2022-01-01",
+  end_date = "2022-12-01",
+  monadic = FALSE)
 ```
 
 If you are interested in events occurring over a larger area, it may be simpler to omit the `country` parameter and include a `regions` argument instead. You could also include an `event_type` argument to receive only a specific type of event:
 
 ```{r, eval = F}
-df_sa <- acled_api(regions = c("South America"),
+df_sa <- acled_api(email = Sys.getenv("email_address"),
+                   password = Sys.getenv("acled_password"),
+                   regions = c("South America"),
                    start_date = "2022-01-01",
                    end_date = "2022-12-01",
                    event_type = "Protests",
-                   monadic = F,
-                   acled_access = TRUE,
-                   prompt = F)
+                   monadic = FALSE)
 ```
 
 You can use the *timestamp* column/filter to specify the dates from which you would like to receive new or updated data. You can include the argument as either a string ("yyyy-mm-dd") or a numeric Unix timestamp:
 
 ```{r, eval = F}
-df_br_co <- acled_api(country = c("Brazil", "Colombia"),
-                      start_date = "2022-01-01",
-                      end_date = "2022-12-01",
-                      monadic = F,
-                      # timestamp = "2022-01-24" -> in the case of string
-                      timestamp = 1643056974, # -> in the case of a numeric Unix timestamp
-                      acled_access = TRUE,
-                      prompt = F)
+df_br_co <- acled_api(
+  email = Sys.getenv("email_address"),
+  password = Sys.getenv("acled_password"),
+  country = c("Brazil", "Colombia"),
+  start_date = "2022-01-01",
+  end_date = "2022-12-01",
+  monadic = FALSE,
+  # timestamp = "2022-01-24" -> in the case of string
+  timestamp = 1643056974, # -> in the case of a numeric Unix timestamp)
 ```
+
 
 If you would like to include only one type of *interaction* (e.g., "Rioters versus Civilians (57)"), then you can add *interaction* code to the `...` argument:
 
 ```{r, eval = F}
-df_sa <- acled_api(country = c("Brazil", "Colombia"),
+df_sa <- acled_api(email = Sys.getenv("email_address"),
+                   password = Sys.getenv("acled_password"),
+                   country = c("Brazil", "Colombia"),
                    start_date = "2022-01-01",
                    end_date = "2022-12-01",
-                   monadic = F,
-                   ... = "&interaction=57",
-                   acled_access = TRUE,
-                   prompt = F)
+                   monadic = FALSE,
+                   ... = "&interaction=57")
 ```
 
 You could also request the monadic version of the data by setting `monadic = TRUE`:
 
 ```{r, eval = F}
-df_sa_monadic <- acled_api(regions = c("South America"),
+df_sa_monadic <- acled_api(email = Sys.getenv("email_address"),
+                           password = Sys.getenv("acled_password"),
+                           regions = c("South America"),
                            start_date = "2022-01-01",
                            end_date = "2022-01-01",
-                           monadic = T,
-                           acled_access = TRUE,
-                           prompt = F)
+                           monadic = TRUE)
 ```
 

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 acledR is the official R package from the [Armed Conflict Location and Event Data Project (ACLED)](https://acleddata.com/), providing tools for extracting and manipulating ACLED data. The acledR [site](https://dtacled.github.io/acledR/) hosts more information on how to use the package, including a general overview on the [Get Started](https://dtacled.github.io/acledR/articles/get_started.html) page.
 
-To access ACLED data, please register an account at [developer.acleddata.com](https://developer.acleddata.com). You can find detailed instructions for setting up your account and retrieving an API key [here](https://acleddata.com/acleddatanew//wp-content/uploads/2021/11/ACLED_Access-Guide_October-2020.pdf). 
+To access ACLED data, please register an account at [myACLED](https://acleddata.com/myacled). You can find detailed instructions about the ACLED API [here](https://acleddata.com/api-documentation/). 
 
 
 ## Installation
