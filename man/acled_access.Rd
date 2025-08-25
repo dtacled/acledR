@@ -3,7 +3,6 @@
 \name{acled_access}
 \alias{acled_access}
 \title{Store your ACLED access information into your session.
-
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 acled_access(email, key)

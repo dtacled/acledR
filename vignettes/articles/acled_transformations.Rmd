@@ -19,9 +19,9 @@ The ACLED dataset is designed with user readability in mind. This focus might co
 
 ## 1. From wide to long format - `acled_transform_longer()`
 
-`acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see the [ACLED API guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html#dyadic-versus-monadic-formats---export_type) for a more detailed explanation). This format generally works well if you are interested in conducting event-based analyses. Still, there are times when you may wish to conduct actor-based analyses that might require a long data format, where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
+`acled_transform_longer()` allows you to switch between wide and long formats without the need to make a new API call. Typical ACLED data is in a wide format, with multiple actors represented in each row (see the [ACLED API guide](https://acleddata.com/api-documentation/acled-endpoint) for a more detailed explanation). This format generally works well if you are interested in conducting event-based analyses. Still, there are times when you may wish to conduct actor-based analyses that might require a long data format, where each actor has a separate row, and a single event may therefore be represented in multiple rows. 
 
-Note that wide and long formats are generic terms that are more specifically referred to as dyadic and monadic data types in other ACLED documentation (see the [ACLED endpoint guide](https://acled.github.io/ACLED-api-guide/acled_endpoint.html)).
+Note that wide and long formats are generic terms that are more specifically referred to as dyadic and monadic data types in other ACLED documentation (see the [ACLED endpoint guide](https://acleddata.com/api-documentation/acled-endpoint)).
 
 ```{r setup, eval = FALSE}
 
@@ -113,30 +113,28 @@ Assume that you are interested in data from “South America” during the first
 
 library(acledR)
 
-acled_access(email = "your_email", key = "your_key") 
-
-df_sa <- acled_api(regions = "South America",
-                   start_date = "2023-01-01",
-                   end_date = "2023-06-01",
-                   monadic = F,
-                   acled_access = TRUE,
-                   inter_numeric = TRUE,
-                   prompt = F)
+df_sa <- acled_api(
+  email = Sys.getenv("email_address"),
+  password = Sys.getenv("acled_password"),
+  regions = "South America",
+  start_date = "2023-01-01",
+  end_date = "2023-06-01",
+  monadic = FALSE,
+  inter_numeric = TRUE)
 ```
 
 ```{r, echo=FALSE}
 
 library(acledR)
 
-acled_access(email = Sys.getenv("EMAIL_ADDRESS_EXAMPLES"), key = Sys.getenv("EXAMPLES_KEY"))
-
-df_sa <- acled_api(regions = "South America",
-                   start_date = "2023-01-01",
-                   end_date = "2023-06-01",
-                   monadic = F,
-                   acled_access = TRUE,
-                   inter_numeric = TRUE,
-                   prompt = F)
+df_sa <- acled_api(
+  email = Sys.getenv("email_address"),
+  password = Sys.getenv("acled_password"),
+  regions = "South America",
+  start_date = "2023-01-01",
+  end_date = "2023-06-01",
+  monadic = FALSE,
+  inter_numeric = TRUE)
 ```
 
 Let's filter to events involving only the "ELN: National Liberation Army" in any of the primary or associate actor columns: 
