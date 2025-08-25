@@ -2,6 +2,7 @@
 #' @name acled_deletions_api
 #' @description This function allows users to pull deleted ACLED event IDs from the Deletions API.
 #' @param email character string. Email associated with your ACLED account registered at <https://developer.acleddata.com>.
+#' @param password character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.
 #' @param key character string. Access key associated with your ACLED account registered at <https://developer.acleddata.com>.
 #' @param date_deleted character string. Format 'yyyy-mm-dd' or Unix timestamp. The query will return all deleted events including and after the requested date/timestamp.
 #' @param acled_access logical. If TRUE it means that you have utilized the acled_access function and there is no need for the email and key arguments.

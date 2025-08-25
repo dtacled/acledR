@@ -9,9 +9,9 @@ acled_auth(req, username, password = NULL)
 \arguments{
 \item{req}{An ACLED API request.}
 
-\item{password}{User password associated with ACLED account.}
+\item{username}{Email associated with ACLED account.}
 
-\item{email}{Email associated with ACLED account.}
+\item{password}{User password associated with ACLED account.}
 }
 \value{
 Returns a modified HTTP request that will use OAuth for the ACLED API.

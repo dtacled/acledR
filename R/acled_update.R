@@ -12,7 +12,7 @@
 #' @param email character string. Email associated with your ACLED account registered at <https://acleddata.com/>.
 #' @param password character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.
 #' @param key character string. Access key associated with your ACLED account registered at <https://acleddata.com/>  (deprecated).
-#' #' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).
+#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).
 #' @param deleted logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().
 #' @param inter_numeric logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values. Must match the inter type (numeric or string) in the dataframe being updated.
 #' @param prompts logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.

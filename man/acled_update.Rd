@@ -33,10 +33,11 @@ acled_update(
 
 \item{event_types}{string. The event types for which you would like events in your dataset updated.}
 
+\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
+
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://acleddata.com/}.}
 
-\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).
-#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
+\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).}
 
 \item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 

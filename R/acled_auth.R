@@ -2,7 +2,7 @@
 #' @name acled_auth
 #' @description Pings the ACLED API token endpoint for authentication using email and password.
 #' @param req An ACLED API request.
-#' @param email Email associated with ACLED account.
+#' @param username Email associated with ACLED account.
 #' @param password User password associated with ACLED account.
 #' @family API and Access
 #' @returns Returns a modified HTTP request that will use OAuth for the ACLED API.
