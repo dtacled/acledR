@@ -128,6 +128,13 @@ acled_deletions_api <- function(email = NULL,
 
 
   # When
+
+  # Check if timestamp or date; if date convert to timestamp
+  if(str_detect(date_deleted, "-")) {
+    date_deleted <- as.numeric(as.POSIXct("2022-07-25", format="%Y-%m-%d"))
+  }
+
+
   if (!is.null(date_deleted)) {
     dates_internal <- paste0("&deleted_timestamp_where=%3E%3D&deleted_timestamp=", date_deleted)
   } else {
@@ -152,7 +159,6 @@ acled_deletions_api <- function(email = NULL,
     )
   }
 
-  message(url)
 
   if (log == T & route == "key") {
     log_df <- tibble(email = email, key = key, date_deleted = date_deleted)
@@ -169,17 +175,9 @@ acled_deletions_api <- function(email = NULL,
   }
 
   if (route == "oauth") {
-    # response <- httr2::request(url) %>%
-    #   acled_auth(., username = email, password = password) %>%
-    #   httr2::req_perform()
-
-    access_token <- acled_token(email = email, password = password)
-
     response <- httr2::request(url) %>%
-      httr2::req_headers(Authorization = paste("Bearer", access_token)) %>%
-      httr2::req_method("GET") %>%
+      acled_auth(., username = email, password = password) %>%
       httr2::req_perform()
-
 
   }
 

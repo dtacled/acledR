@@ -1,6 +1,5 @@
 #' @name acled_access
 #' @title Store your ACLED access information into your session.
-#'
 #' `r lifecycle::badge("deprecated")`
 #'
 #' @description Simple function to authenticate and store (through `Sys.setenv()`) ACLED access key for the acled_api() function. If email and key is stored via acled_access, the email and key arguments for acled_api can be NULL.

@@ -76,8 +76,7 @@ acled_api <- function(email = NULL,
                       acled_access = FALSE,
                       prompt = TRUE,
                       log = FALSE,
-                      debug = FALSE,
-                      bearer = FALSE) {
+                      debug = FALSE) {
 
 
 
@@ -529,8 +528,6 @@ acled_api <- function(email = NULL,
     }
   }
 
-  message(url_internal)
-
 
   # Loop through the api requests
   response <- vector("list", length = length(out_groups))
@@ -543,25 +540,10 @@ acled_api <- function(email = NULL,
 
     if (route == "oauth") {
 
-      if(bearer == TRUE) {
-        access_token <- acled_token(email = email, password = password)
-
-        # response[[i]]  <- httr2::request(url_internal[[i]]) %>%
-        #   httr2::req_headers(Authorization = paste("Bearer", access_token)) %>%
-        #   httr2::req_method("GET") %>%
-        #   httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
-
-        # response[[i]]  <- httr2::request(url_internal[[i]]) %>%
-        #   httr2::req_auth_bearer_token(access_token) %>%
-        #   httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
-
-
-      }
-      else {
         response[[i]]  <- httr2::request(url_internal[[i]]) %>%
           acled_auth(., username = email, password = password) %>%
           httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
-      }
+
 
     }
 
