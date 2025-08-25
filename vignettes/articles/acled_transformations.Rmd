@@ -128,8 +128,8 @@ df_sa <- acled_api(
 library(acledR)
 
 df_sa <- acled_api(
-  email = Sys.getenv("email_address"),
-  password = Sys.getenv("acled_password"),
+  email = Sys.getenv("ACLED_API_EMAIL"),
+  password = Sys.getenv("ACLED_API_PASSWORD"),
   regions = "South America",
   start_date = "2023-01-01",
   end_date = "2023-06-01",
