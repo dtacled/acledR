@@ -4,7 +4,7 @@
 
 test_that("number of columns is correct - date", {
   skip_on_cran()
-  expect_equal(ncol(received_deleted_data_date),2)
+  expect_equal(ncol(received_deleted_data_date), 2)
 })
 
 

@@ -4,9 +4,6 @@ test <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                   password = Sys.getenv("ACLED_API_PASSWORD"),
                   country = "Argentina",
                   start_date="2022-01-01",end_date = "2022-12-31",
-                  prompt = F,
-                  acled_access = F,
-                  log = F,
                   inter_numeric = TRUE)
 
 test_changes <- test %>%

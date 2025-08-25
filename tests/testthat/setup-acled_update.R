@@ -20,7 +20,6 @@ if(identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   find_deleted_events <- acled_deletions_api(email = Sys.getenv("ACLED_API_EMAIL"),
                                              password = Sys.getenv("ACLED_API_PASSWORD"),
-                                             date_deleted = max(acledR::acled_old_deletion_dummy$timestamp),
-                                             acled_access = F)
+                                             date_deleted = max(acledR::acled_old_deletion_dummy$timestamp))
 
 }
