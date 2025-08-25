@@ -75,8 +75,7 @@ acled_api <- function(email = NULL,
                       ...,
                       acled_access = FALSE,
                       prompt = TRUE,
-                      log = FALSE,
-                      debug = FALSE) {
+                      log = FALSE) {
 
 
 
@@ -542,7 +541,7 @@ acled_api <- function(email = NULL,
 
         response[[i]]  <- httr2::request(url_internal[[i]]) %>%
           acled_auth(., username = email, password = password) %>%
-          httr2::req_perform(verbosity = ifelse(debug == TRUE, 3, 0))
+          httr2::req_perform()
 
 
     }
