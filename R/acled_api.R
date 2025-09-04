@@ -540,7 +540,7 @@ acled_api <- function(email = NULL,
     if (route == "oauth") {
 
         response[[i]]  <- httr2::request(url_internal[[i]]) %>%
-          acled_auth(., username = email, password = password) %>%
+          acled_auth(username = email, password = password) %>%
           httr2::req_perform()
 
 

@@ -11,8 +11,7 @@
 #' @family API and Access
 #' @seealso
 #' \itemize{
-#' \item \href{https://acleddata.com/download/35306/}{ACLED API guide}
-#' \item \href{https://acleddata.com/download/35179/}{Keeping ACLED data up to date guide}
+#' \item \href{https://acleddata.com/api-documentation/deleted-endpoint}{ACLED API deleted endpoint}
 #' }
 #' @examples
 #' \dontrun{
@@ -177,7 +176,7 @@ acled_deletions_api <- function(email = NULL,
 
   if (route == "oauth") {
     response <- httr2::request(url) %>%
-      acled_auth(., username = email, password = password) %>%
+      acled_auth(username = email, password = password) %>%
       httr2::req_perform()
 
   }

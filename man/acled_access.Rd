@@ -28,8 +28,6 @@ Sys.getenv("acled_key")
 }
 }
 \seealso{
-ACLED API Access guide \url{https://acleddata.com/download/35300/}
-
 Other API and Access: 
 \code{\link{acled_api}()},
 \code{\link{acled_auth}()},

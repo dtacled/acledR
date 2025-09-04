@@ -15,7 +15,6 @@
 #' Sys.getenv("acled_email")
 #' Sys.getenv("acled_key")
 #' }
-#' @seealso ACLED API Access guide <https://acleddata.com/download/35300/>
 #' @export
 #' @md
 
