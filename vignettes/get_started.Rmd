@@ -20,7 +20,7 @@ library(acledR)
 library(dplyr)
 ```
 
-This vignette provides a brief overview of the acledR package. You can find more detailed explanations and examples under the 'Using acledR' tab. For general information on ACLED’s methodology, please visit [ACLED's Knowledge Base](https://acleddata.com/knowledge-base/). 
+This vignette provides a brief overview of the acledR package. You can find more detailed explanations and examples under the 'Using acledR' tab. For general information on ACLED’s methodology, please visit [ACLED's Knowledge Base](https://acleddata.com/conflict-data/knowledge-base). 
 
 The main objectives of this package are:
 

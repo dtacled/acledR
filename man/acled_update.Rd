@@ -67,10 +67,6 @@ new_argen_dataset <- acled_update(acledR::acled_old_dummy,
 
 }
 \seealso{
-\itemize{
-\item ACLED Keeping your dataset updated guide. \url{https://acleddata.com/download/35179/}
-}
-
 Other API and Access: 
 \code{\link{acled_access}()},
 \code{\link{acled_api}()},

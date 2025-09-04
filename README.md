@@ -20,7 +20,7 @@ page.
 To access ACLED data, please register an account at
 [myACLED](https://acleddata.com/myacled). You can find detailed
 instructions about the ACLED API
-[here](https://acleddata.com/api-documentation/).
+[here](https://acleddata.com/acled-api-documentation).
 
 ## Installation
 

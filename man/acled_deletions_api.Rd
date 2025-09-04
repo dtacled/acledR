@@ -41,8 +41,7 @@ acled_deletions_api(date_deleted = "2022-01-01", acled_acess = TRUE)
 }
 \seealso{
 \itemize{
-\item \href{https://acleddata.com/download/35306/}{ACLED API guide}
-\item \href{https://acleddata.com/download/35179/}{Keeping ACLED data up to date guide}
+\item \href{https://acleddata.com/api-documentation/deleted-endpoint}{ACLED API deleted endpoint}
 }
 
 Other API and Access: 

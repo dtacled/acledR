@@ -18,10 +18,6 @@
 #' @param prompts logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @return Tibble with updated ACLED data and a newer timestamp.
 #' @family API and Access
-#' @seealso
-#' \itemize{
-#' \item ACLED Keeping your dataset updated guide. <https://acleddata.com/download/35179/>
-#' }
 #' @examples
 #' \dontrun{
 #' # Updating dataset to include newer data from Argentina
