@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">acledR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,6 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">acled_api</span><span class="op">(</span></span>
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  password <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  country <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -58,10 +57,7 @@
 <span>  population <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  inter_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  monadic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  acled_access <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  prompt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  log <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,10 +67,6 @@
 
 <dl><dt id="arg-email">email<a class="anchor" aria-label="anchor" href="#arg-email"></a></dt>
 <dd><p>character string. Email associated with your ACLED account registered at <a href="https://acleddata.com/" class="external-link">https://acleddata.com/</a>.</p></dd>
-
-
-<dt id="arg-key">key<a class="anchor" aria-label="anchor" href="#arg-key"></a></dt>
-<dd><p>character string. Access key associated with your ACLED account registered at <a href="https://acleddata.com/" class="external-link">https://acleddata.com/</a>  (deprecated).</p></dd>
 
 
 <dt id="arg-password">password<a class="anchor" aria-label="anchor" href="#arg-password"></a></dt>
@@ -120,18 +112,6 @@
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)</p></dd>
 
-
-<dt id="arg-acled-access">acled_access<a class="anchor" aria-label="anchor" href="#arg-acled-access"></a></dt>
-<dd><p>logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).</p></dd>
-
-
-<dt id="arg-prompt">prompt<a class="anchor" aria-label="anchor" href="#arg-prompt"></a></dt>
-<dd><p>logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of estimated events, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.</p></dd>
-
-
-<dt id="arg-log">log<a class="anchor" aria-label="anchor" href="#arg-log"></a></dt>
-<dd><p>logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -142,7 +122,6 @@
     <div class="dont-index">
 <ul><li><p>ACLED API guide. <a href="https://acleddata.com/api-documentation/getting-started" class="external-link">https://acleddata.com/api-documentation/getting-started</a></p></li>
 </ul><p>Other API and Access:
-<code><a href="acled_access.html">acled_access</a>()</code>,
 <code><a href="acled_auth.html">acled_auth</a>()</code>,
 <code><a href="acled_deletions_api.html">acled_deletions_api</a>()</code>,
 <code><a href="acled_update.html">acled_update</a>()</code></p></div>
