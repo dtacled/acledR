@@ -6,7 +6,6 @@
 \usage{
 acled_api(
   email = NULL,
-  key = NULL,
   password = NULL,
   country = NULL,
   regions = NULL,
@@ -17,16 +16,11 @@ acled_api(
   population = "none",
   inter_numeric = FALSE,
   monadic = FALSE,
-  ...,
-  acled_access = FALSE,
-  prompt = TRUE,
-  log = FALSE
+  ...
 )
 }
 \arguments{
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://acleddata.com/}.}
-
-\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).}
 
 \item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 
@@ -49,12 +43,6 @@ acled_api(
 \item{monadic}{logical. If FALSE (default), returns dyadic data. If TRUE, returns monadic actor1 data.}
 
 \item{...}{string. Any additional parameters that users would like to add to their API calls (e.g. interaction or ISO)}
-
-\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
-
-\item{prompt}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (countries requested, number of estimated events, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
-
-\item{log}{logical. If TRUE, it provides a dataframe with the countries and days requested, and how many calls it entails. The dataframe is provided INSTEAD of the normal ACLED dataset.}
 }
 \value{
 Returns a tibble of of ACLED events.
@@ -94,7 +82,6 @@ carib_acled
 }
 
 Other API and Access: 
-\code{\link{acled_access}()},
 \code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()},
 \code{\link{acled_update}()}

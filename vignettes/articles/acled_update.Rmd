@@ -48,9 +48,7 @@ acled_update(
   end_date = max(df$event_date),
   additional_countries = "current countries",
   regions = NULL,
-  event_types = NULL
-  email = NULL,
-  key = NULL,
+  event_types = NULL,
   deleted = TRUE)
 ```
 
@@ -68,15 +66,12 @@ The function has the following arguments:
 
 -   `event_types`: The event types for which you would like events in your dataset updated. 
 
--   `acled_access`: If you have already used `acled_access()`, you can set this option as TRUE (default) to avoid having to input your email and access key. 
+-   `email`: The email you have registered with your ACLED account.
 
--   `email`: The email you have registered in [ACLED's Access Portal](https://developer.acleddata.com/). This argument is not required if `acled_access = TRUE`. 
-
--   `key`: The key you have registered in [ACLED's Access Portal](https://developer.acleddata.com/). This argument is not required if `acled_access = TRUE`.
+-   `password`: The password associated with your ACLED account.
 
 -   `deleted`: If TRUE, in addition to updating the information in updated events, this function will also remove deleted events from your dataset by using [ACLED API's deleted endpoint](https://acled.github.io/acledR/articles/acled_deletions_api.html). 
 
--   `prompts`: If TRUE prompts from your call will be suppressed. See `acled_api()`. 
 
 ## Examples
 

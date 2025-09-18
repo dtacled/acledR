@@ -11,13 +11,10 @@ acled_update(
   additional_countries = "current countries",
   regions = NULL,
   event_types = NULL,
-  acled_access = FALSE,
   email = NULL,
-  key = NULL,
   password = NULL,
   inter_numeric = FALSE,
-  deleted = TRUE,
-  prompts = TRUE
+  deleted = TRUE
 )
 }
 \arguments{
@@ -33,19 +30,13 @@ acled_update(
 
 \item{event_types}{string. The event types for which you would like events in your dataset updated.}
 
-\item{acled_access}{logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).}
-
 \item{email}{character string. Email associated with your ACLED account registered at \url{https://acleddata.com/}.}
-
-\item{key}{character string. Access key associated with your ACLED account registered at \url{https://acleddata.com/}  (deprecated).}
 
 \item{password}{character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.}
 
 \item{inter_numeric}{logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values. Must match the inter type (numeric or string) in the dataframe being updated.}
 
 \item{deleted}{logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().}
-
-\item{prompts}{logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.}
 }
 \value{
 Tibble with updated ACLED data and a newer timestamp.
@@ -68,7 +59,6 @@ new_argen_dataset <- acled_update(acledR::acled_old_dummy,
 }
 \seealso{
 Other API and Access: 
-\code{\link{acled_access}()},
 \code{\link{acled_api}()},
 \code{\link{acled_auth}()},
 \code{\link{acled_deletions_api}()}

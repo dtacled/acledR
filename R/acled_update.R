@@ -11,11 +11,8 @@
 #' @param event_types string. The event types for which you would like events in your dataset updated.
 #' @param email character string. Email associated with your ACLED account registered at <https://acleddata.com/>.
 #' @param password character string. The password associated with your ACLED account. If NULL, you will be prompted to enter your password interactively.
-#' @param key character string. Access key associated with your ACLED account registered at <https://acleddata.com/>  (deprecated).
-#' @param acled_access logical. If TRUE (default), you have used the acled_access function and the email and key arguments are not required (deprecated).
 #' @param deleted logical. If TRUE (default), the function will also remove deleted events using acled_deletions_api().
 #' @param inter_numeric logical. If FALSE (default), interaction code columns (inter1, inter2, and interaction) returned as strings describing the actor types/interactions. If TRUE, the values are returned as numeric values. Must match the inter type (numeric or string) in the dataframe being updated.
-#' @param prompts logical. If TRUE (default), users will receive an interactive prompt providing information about their call (additional_countries requested, number of country-days, and number of API calls required) and asking if they want to proceed with the call. If FALSE, the call continues without warning, but the call is split and returns a message specifying how many calls are being made.
 #' @return Tibble with updated ACLED data and a newer timestamp.
 #' @family API and Access
 #' @examples
@@ -44,39 +41,21 @@ acled_update <- function(df,
                          additional_countries = "current countries",
                          regions = NULL,
                          event_types = NULL,
-                         acled_access = FALSE,
                          email = NULL,
-                         key = NULL,
                          password = NULL,
                          inter_numeric = FALSE,
-                         deleted = TRUE,
-                         prompts = TRUE) { ## This is added for the hasArg statements to work. Not sure why it doesn't work without it.
+                         deleted = TRUE) {
 
-  if (!is.null(key)) {
-    lifecycle::deprecate_warn(when = "1.0.0",
-                              what =  "acled_api(key)",
-                              details = c("The ACLED API has transitioned to OAuth authentication and will no longer support access keys as of September 2025.",
-                                          "Please use the `password` parameter instead of `key`.",
-                                          "The `key` parameter will be removed after it's no longer functional in the ACLED API."),
-                              always = TRUE)
+
+  if (is.null(email)) {
+    stop("Email not specified. You must include the email associated with your ACLED account in the `email` parameter.")
   }
 
-  if (isTRUE(acled_access) & is.null(key)) {
-    lifecycle::deprecate_warn(when = "1.0.0",
-                              what =  "acled_api(acled_access)",
-                              details = c("The ACLED API has transitioned to OAuth authentication.",
-                                          "The `acled_access` function will is no longer necessary and will stop working in September 2025.",
-                                          "Please use the `email` and `password` parameters instead.",
-                                          "`acled_access` will be removed in future iterations of acledR."),
-                              always = TRUE)
+  if (is.null(password)) {
+    stop("Password not specified. You must include the email associated with your ACLED account in the `password` parameter.")
   }
 
-  if ((acled_access %in% c(TRUE, T)) | !is.null(key)) {
-    route <- 'key'
-  }
-  else {
-    route <- "oauth"
-  }
+
 
 
   if (!setequal(colnames(df), colnames(acledR::acled_old_deletion_dummy))) {
@@ -110,10 +89,6 @@ acled_update <- function(df,
     additional_countries <- append(unique(df$country), additional_countries)
   }
 
-  # Check acled_access
-  if (!acled_access && (is.null(email) || is.null(key)) & route == "key") {
-    stop("Error: If acled_access is FALSE, you must provide an email and key.")
-  }
 
   # Check event_types
   if (!is.null(event_types)) {
@@ -145,12 +120,7 @@ acled_update <- function(df,
   max_timestamp <- max(df$timestamp)
 
   if (deleted == TRUE ) {
-    if(route == "key") {
-      deleted_events <- acled_deletions_api(email = email, key = key, date_deleted = max_timestamp, acled_access = acled_access)
-    }
-    else {
-      deleted_events <- acled_deletions_api(email = email, password = password, date_deleted = max_timestamp, acled_access = acled_access)
-    }
+    deleted_events <- acled_deletions_api(email = email, password = password, date_deleted = max_timestamp)
 
     after_deleted <- df %>%
       filter(!(df$event_id_cnty %in% deleted_events$event_id_cnty))
@@ -158,35 +128,17 @@ acled_update <- function(df,
     after_deleted <- df
   }
 
-  if(route == "key") {
-    new_dataset <- acled_api(
-      email = email,
-      key = key,
-      start_date = start_date,
-      end_date = end_date,
-      country = additional_countries,
-      regions = regions,
-      event_types = event_types,
-      acled_access = acled_access,
-      timestamp = max_timestamp,
-      inter_numeric = inter_numeric,
-      prompt = prompts
-    )
-  }
-  else {
-    new_dataset <- acled_api(
-      email = email,
-      password = password,
-      start_date = start_date,
-      end_date = end_date,
-      country = additional_countries,
-      regions = regions,
-      event_types = event_types,
-      timestamp = max_timestamp,
-      inter_numeric = inter_numeric,
-      prompt = prompts
-    )
-  }
+  new_dataset <- acled_api(
+    email = email,
+    password = password,
+    start_date = start_date,
+    end_date = end_date,
+    country = additional_countries,
+    regions = regions,
+    event_types = event_types,
+    timestamp = max_timestamp,
+    inter_numeric = inter_numeric
+  )
 
   updated_dataset <- after_deleted %>%
     anti_join(new_dataset, by = "event_id_cnty") %>%

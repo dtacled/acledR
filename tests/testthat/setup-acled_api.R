@@ -20,15 +20,6 @@ if(identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
 
-  log_received_data <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
-                                 password = Sys.getenv("ACLED_API_PASSWORD"),
-                                 regions = c("Western Africa", "Eastern Africa", "Europe"),
-                                 start_date="2022-01-01",end_date = "2022-12-31",
-                                 log = TRUE,
-                                 inter_numeric = TRUE)
-
-
-
   received_data_numeric_region <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                                             password = Sys.getenv("ACLED_API_PASSWORD"),
                                             regions = 7,
@@ -52,7 +43,6 @@ if(identical(Sys.getenv("NOT_CRAN"), "true")) {
                                       start_date="2023-01-01",
                                       end_date = "2023-06-06",
                                       timestamp = "2023-04-16", # as numeric
-                                      # prompt = F, acled_access = F, log = F,
                                       inter_numeric = TRUE)
 
 

@@ -28,7 +28,6 @@ acled_auth(req, email, password)
 ACLED API Access guide \url{https://acleddata.com/api-documentation/getting-started}
 
 Other API and Access: 
-\code{\link{acled_access}()},
 \code{\link{acled_api}()},
 \code{\link{acled_deletions_api}()},
 \code{\link{acled_update}()}

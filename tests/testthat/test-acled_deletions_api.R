@@ -23,12 +23,6 @@ test_that("names of columns are correct - unix", {
   expect_equal(names(received_deleted_data_unix), columns_deleted)
 })
 
-## Test that email and key are handled appropriately ----
-
-test_that("Email and key are handled as expected without acled_access",{
-  skip_on_cran()
-  expect_true(grepl("t.billing@acleddata.com", received_deleted_log$email[1]))}
-)
 
 test_that("names of columns are correct - unix", {
   skip_on_cran()

@@ -12,7 +12,7 @@ test_that("names of columns are correct", {
 })
 
 
-test_that("event_type filters work or not",{
+test_that("event_type filters work or not (single)",{
   skip_on_cran()
   expect_equal(unique(acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                                 password = Sys.getenv("ACLED_API_PASSWORD"),
@@ -22,30 +22,39 @@ test_that("event_type filters work or not",{
 
 })
 
-
-
-## Handling big calls ----
-
-test_that("Split calls for big calls", {
+test_that("event_type filters work or not (multiple)",{
   skip_on_cran()
-  expect_equal(as.numeric(ceiling(sum(log_received_data$time)/300000)),max(log_received_data$calls))
+  expect_equal(unique(acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
+                                password = Sys.getenv("ACLED_API_PASSWORD"),
+                                start_date="2022-01-01",end_date = "2022-02-01", country = "Argentina",
+                                event_type = c("Protests", "Riots"),
+                                inter_numeric = TRUE)$event_type), c("Riots", "Protests"))
+
 })
 
-
-
-test_that("country days are calculated as expected",{
+test_that("country filters work or not (multiple)",{
   skip_on_cran()
-  argentina_country_days <- acledR::acled_countries %>%
-    filter(country == "Argentina") %>%
-    mutate(t_end = lubridate::ymd("2021-01-01"),
-           unit_test = t_end - ymd(paste0(start_year, "-01-01")))
+  expect_equal(unique(acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
+                                password = Sys.getenv("ACLED_API_PASSWORD"),
+                                start_date="2022-01-01",
+                                end_date = "2022-02-01",
+                                country = c("Argentina", "Peru"),
+                                inter_numeric = TRUE)$country), c("Argentina", "Peru"))
 
-  argentina_test_call <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
-                                   password = Sys.getenv("ACLED_API_PASSWORD"),
-                                   country = "Argentina", start_date="1998-01-01",
-                                   end_date = "2021-01-01",prompt = F, acled_access = F, log = T, inter_numeric = TRUE)
+})
 
-  expect_equal(argentina_test_call$time, argentina_country_days$unit_test)
+test_that("country filters work with event_type filters (multiple)",{
+  skip_on_cran()
+  df_country_et_filters <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
+                                     password = Sys.getenv("ACLED_API_PASSWORD"),
+                                     start_date="2022-01-01",
+                                     end_date = "2022-02-01",
+                                     country = c("Argentina", "Peru"),
+                                     event_type = c("Protests", "Riots"),
+                                     inter_numeric = TRUE)
+
+  expect_equal(unique(df_country_et_filters$country), c("Argentina", "Peru"))
+  expect_equal(unique(df_country_et_filters$event_type), c("Riots", "Protests"))
 
 })
 
@@ -124,14 +133,12 @@ test_that("Population columns are being received", {
                                       password = Sys.getenv("ACLED_API_PASSWORD"),
                                   country="Argentina", start_date="2022-01-01",end_date = "2022-01-04",
                                   population='full',
-                                  # prompt = F, acled_access = F,
                                   inter_numeric = TRUE)
 
   received_data_best <- acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                                       password = Sys.getenv("ACLED_API_PASSWORD"),
                                   country="Argentina", start_date="2022-01-01",end_date = "2022-01-04",
                                   population='best',
-                                  # prompt = F, acled_access = F,
                                   inter_numeric = TRUE)
 
 
@@ -151,7 +158,8 @@ test_that("Error prompted when region does not exist", {
   expect_error(acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                          password = Sys.getenv("ACLED_API_PASSWORD"),
                          regions = "Narnia",
-                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE), regexp = "One or more requested region names not in the ACLED country list.")
+                         start_date="2022-01-01",end_date = "2022-12-31",
+                         inter_numeric = TRUE), regexp = "One or more requested region names not in the ACLED country list.")
 })
 
 test_that("Error when region number does not exist", {
@@ -160,7 +168,8 @@ test_that("Error when region number does not exist", {
   expect_error(acled_api(email = Sys.getenv("ACLED_API_EMAIL"),
                          password = Sys.getenv("ACLED_API_PASSWORD"),
                          regions = 420,
-                         start_date="2022-01-01",end_date = "2022-12-31",prompt = F, acled_access = F, log = F, inter_numeric = TRUE),
+                         start_date="2022-01-01",end_date = "2022-12-31",
+                         inter_numeric = TRUE),
                regexp = "One or more requested region numbers not in the ACLED country list")
 })
 
@@ -256,10 +265,8 @@ test_that("timestamp is from a latter date than today." ,{
                         country = "Argentina",
                         start_date="2021-01-01",
                         end_date = "2022-01-01",
-                        prompt = F,
-                        acled_access = F,
-                        timestamp = paste0(year(now())+1, "01-01"), # Way to make it always in the future
-                        log = F, inter_numeric = TRUE), regexp = "The timestamp cannot be" )
+                        timestamp = paste0(year(now()) + 1, "01-01"), # Way to make it always in the future
+                        inter_numeric = TRUE), regexp = "The timestamp cannot be" )
 })
 
 # Error when requesting non-existent event types ----

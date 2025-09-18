@@ -83,9 +83,13 @@ test_that("Warning for ealier end dates than the max requested", {
 
 test_that("Error if `additional_countries` or `regions` are not in the dataset", {
   skip_on_cran()
-  expect_error(acled_update(acledR::acled_old_dummy, additional_countries = "Unknown Country", inter_numeric = TRUE),
+  expect_error(acled_update(email = Sys.getenv("ACLED_API_EMAIL"),
+                            password = Sys.getenv("ACLED_API_PASSWORD"),
+                            acledR::acled_old_dummy, additional_countries = "Unknown Country", inter_numeric = TRUE),
                "Error: The following additional_countries are not present in acledR::acled_countries: Unknown Country")
-  expect_error(acled_update(acledR::acled_old_dummy, regions = "Unknown Region", inter_numeric = TRUE),
+  expect_error(acled_update(email = Sys.getenv("ACLED_API_EMAIL"),
+                            password = Sys.getenv("ACLED_API_PASSWORD"),
+                            acledR::acled_old_dummy, regions = "Unknown Region", inter_numeric = TRUE),
                "Error: The following regions are not present in acledR::acled_regions: Unknown Region")
 
 })
@@ -114,8 +118,10 @@ test_that("Users get an error when requesting a non existent event type",{
   expect_error(acled_update(acledR::acled_old_dummy,
                             email = Sys.getenv("ACLED_API_EMAIL"),
                             password = Sys.getenv("ACLED_API_PASSWORD"),
-                              event_types = "Snowball fights", inter_numeric = TRUE), regexp = "Error: Invalid event_type provided")
+                            event_types = "Snowball fights",
+                            inter_numeric = TRUE), regexp = "Error: Invalid event_type provided")
   })
+
 # Weird use cases ----
 
 ## Does not generate duplicates when fed a non-unique list of values. - But it takes a long time ----

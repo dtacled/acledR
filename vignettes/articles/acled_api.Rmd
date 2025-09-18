@@ -108,9 +108,6 @@ Finally, you can use the `population` argument to specify if you want to include
 The `...` parameter represents any other arguments you might want to include in your API query, such as *ISO* or *Interaction*. If you want to use these filters or others not included in the list of parameters described above, then you can write them as `&paramenter=value`. For instance, you might wish to include `&iso=4` at the end of the function. You can visit ACLED’s [API guide](https://apidocs.acleddata.com/acled_endpoint.html) to learn more about other valid parameters.
 
 
-### Function options
-
-You can use the `prompt` argument to specify how the function handles API calls that return large amounts of data. If `prompt=TRUE`, then you will receive an interactive prompt (see `Handling big API calls` immediately below). If you do not want this interactive prompt (e.g., because `acled_api()` is part of a routine script), then you can set `prompt = FALSE`.
 
 ## Handling big API calls
 
